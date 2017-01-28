@@ -17,6 +17,29 @@ namespace Distributed.Proxy
         private AbstractReceiver receiver;
         private AbstractSender sender;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="r">An Abstract Receiver</param>
+        /// <param name="s">An Abstract Sender</param>
+        /// <param name="client"></param>
+        public Proxy(AbstractReceiver r, AbstractSender s, TcpClient client)
+        {
+            this.client = client;
+            this.iostream = client.GetStream();
+            this.receiver = r;
+            this.sender = s;
+
+
+            // allow sending of messages quickly
+            client.NoDelay = true;
+            // add ourselves to the sender and receiver;
+            receiver.proxy = this;
+            sender.proxy = this;
+            // start receiving
+            receiver.Start();
+        }
+
         public Proxy(AbstractReceiver r, AbstractSender s, string host, int port)
         {
             this.client = new TcpClient(host, port);
@@ -34,22 +57,7 @@ namespace Distributed.Proxy
             receiver.Start();
         }
 
-        public Proxy(AbstractReceiver r, AbstractSender s, TcpClient client)
-        {
-            this.client = client;
-            this.iostream = client.GetStream();
-            this.receiver = r;
-            this.sender = s;
 
-
-            // allow sending of messages quickly
-            client.NoDelay = true;
-            // add ourselves to the sender and receiver;
-            receiver.proxy = this;
-            sender.proxy = this;
-            // start receiving
-            receiver.Start();
-        }
 
         /// <summary>
         /// Shutdown the TcpClient

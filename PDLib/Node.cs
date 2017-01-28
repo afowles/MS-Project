@@ -27,6 +27,9 @@ namespace Distributed.Node
         {
             // Grab the network IO stream from the proxy.
             NetworkStream iostream = proxy.iostream;
+            Byte[] bytes = new Byte[1024];
+            String data;
+
             try
             {
                 //TODO: change this to something like !ShutdownEvent.WaitOne(0)
@@ -39,9 +42,9 @@ namespace Distributed.Node
                         {
                             Thread.Sleep(1);
                         }
-                        else if (iostream.Read(data, 0, data.Length) > 0)
+                        else if (iostream.Read(bytes, 0, bytes.Length) > 0)
                         {
-                            data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                            data = System.Text.Encoding.ASCII.GetString(bytes);
                             Console.WriteLine("Received: {0}", data);
 
 
@@ -49,8 +52,8 @@ namespace Distributed.Node
 
                             byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
 
-
-                            stream.Write(msg, 0, msg.Length);
+                            // this should be sender
+                            iostream.Write(msg, 0, msg.Length);
                             Console.WriteLine("Sent: {0}", data);
                         }
                         else
