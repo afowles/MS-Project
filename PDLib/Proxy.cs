@@ -33,7 +33,24 @@ namespace Distributed.Proxy
             // start receiving
             receiver.Start();
         }
-        
+
+        public Proxy(AbstractReceiver r, AbstractSender s, TcpClient client)
+        {
+            this.client = client;
+            this.iostream = client.GetStream();
+            this.receiver = r;
+            this.sender = s;
+
+
+            // allow sending of messages quickly
+            client.NoDelay = true;
+            // add ourselves to the sender and receiver;
+            receiver.proxy = this;
+            sender.proxy = this;
+            // start receiving
+            receiver.Start();
+        }
+
         /// <summary>
         /// Shutdown the TcpClient
         /// and the underlying tcp connection.

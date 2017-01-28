@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Distributed.Node;
 
 namespace DebugApplicationUsingPDLib
 {
@@ -11,7 +12,7 @@ namespace DebugApplicationUsingPDLib
     {
         static void Main(string[] args)
         {
-            
+            NodeManager.Main();
         }
     }
 }

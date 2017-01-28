@@ -7,14 +7,8 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
-/// <summary>
-/// Probably won't keep this namespace name since
-/// it has no meaning
-/// </summary>
-/// <remarks>
-/// This xml code style is interesting...
-/// </remarks>
-/// <author>Adam Fowles</author>
+using Distributed.Proxy;
+
 namespace Distributed.Node
 {
     
@@ -25,7 +19,7 @@ namespace Distributed.Node
     /// </summary>
     public class NodeManager
     {
-        
+        const int BufferSize = 1024;
         /// <summary>
         /// 
         /// </summary>
@@ -45,7 +39,7 @@ namespace Distributed.Node
                 server = new TcpListener(localAddr, port);
                 server.Start();
 
-                Byte[] bytes = new Byte[256];
+                Byte[] bytes = new Byte[BufferSize];
                 String data = null;
 
                 while (true)
@@ -57,30 +51,14 @@ namespace Distributed.Node
                     Console.WriteLine("Connected!");
 
                     data = null;
-
             
                     NetworkStream stream = client.GetStream();
 
-                    int i;
-
-      
-                    while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
-                    {
-             
-                        data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                        Console.WriteLine("Received: {0}", data);
+                    // Pass off to Proxy, no point in storing 
+                    // that proxy object ... yet
+                    new Proxy.Proxy(new NodeReceiver(), new NodeSender(), client);
 
                     
-                        data = data.ToUpper();
-
-                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
-
-                   
-                        stream.Write(msg, 0, msg.Length);
-                        Console.WriteLine("Sent: {0}", data);
-                    }
-
-                    // Pass off to Proxy
             }
             }
             catch(SocketException e)

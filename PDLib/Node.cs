@@ -7,8 +7,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Distributed.Proxy
+using Distributed.Proxy;
+
+namespace Distributed.Node
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class NodeReceiver : AbstractReceiver
     {
         private byte[] data;
@@ -36,7 +41,17 @@ namespace Distributed.Proxy
                         }
                         else if (iostream.Read(data, 0, data.Length) > 0)
                         {
-                            // do something
+                            data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                            Console.WriteLine("Received: {0}", data);
+
+
+                            data = data.ToUpper();
+
+                            byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+
+
+                            stream.Write(msg, 0, msg.Length);
+                            Console.WriteLine("Sent: {0}", data);
                         }
                         else
                         {
@@ -57,6 +72,17 @@ namespace Distributed.Proxy
             {
                 iostream.Close();
             }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class NodeSender : AbstractSender
+    {
+        public override void Run()
+        {
+            throw new NotImplementedException();
         }
     }
 }
