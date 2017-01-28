@@ -1,0 +1,5 @@
+Base thinking on Kaminsky's tracker system
+Layout of the project is a solution (MS project) with two projects, 
+a class library and a debug application. 
+Note: I think I can organize things better
+with .net using visual studio than I could with java (sln, proj, dll) etc.. 

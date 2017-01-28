@@ -15,7 +15,7 @@ using System.Net.Sockets;
 /// This xml code style is interesting...
 /// </remarks>
 /// <author>Adam Fowles</author>
-namespace MS_Project
+namespace PD.Node
 {
     
     /// <summary>
