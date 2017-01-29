@@ -32,7 +32,8 @@ namespace Distributed.Node
 
             try
             {
-                //TODO: change this to something like !ShutdownEvent.WaitOne(0)
+                //TODO: change this to something custom like !ShutdownEvent.WaitOne(0)
+                // alternatively look for a specific shutdown message. 
                 while (true)
                 {
                     try
@@ -85,6 +86,7 @@ namespace Distributed.Node
     {
         public override void Run()
         {
+            // simply read in and send out, for test
             while (true)
             {
                 String s = Console.ReadLine();
