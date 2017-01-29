@@ -42,7 +42,14 @@ namespace Distributed.Proxy
 
         public Proxy(AbstractReceiver r, AbstractSender s, string host, int port)
         {
-            this.client = new TcpClient(host, port);
+            try
+            { 
+                this.client = new TcpClient(host, port);
+            }
+            catch(SocketException e)
+            {
+                Console.WriteLine(e);
+            }
             this.iostream = client.GetStream();
             this.receiver = r;
             this.sender = s;

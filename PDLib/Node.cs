@@ -53,7 +53,7 @@ namespace Distributed.Node
                             byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
 
                             // this should be sender
-                            iostream.Write(msg, 0, msg.Length);
+                            //iostream.Write(msg, 0, msg.Length);
                             Console.WriteLine("Sent: {0}", data);
                         }
                         else
@@ -85,7 +85,13 @@ namespace Distributed.Node
     {
         public override void Run()
         {
-            throw new NotImplementedException();
+            while (true)
+            {
+                String s = Console.ReadLine();
+                byte[] o = System.Text.Encoding.ASCII.GetBytes(s);
+                proxy.iostream.Write(o, 0, o.Length);
+                
+            }
         }
     }
 }
