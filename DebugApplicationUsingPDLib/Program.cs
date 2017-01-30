@@ -18,6 +18,7 @@ namespace DebugApplicationUsingPDLib
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            Console.WriteLine(Environment.GetCommandLineArgs()[0]);
             if (args.Length > 0)
                 NodeManager.Main();
             else
