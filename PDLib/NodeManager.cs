@@ -74,4 +74,20 @@ namespace Distributed.Node
         }
 
     }
+
+    public class NodeManagerReceiver : AbstractReceiver
+    {
+        public override void Run()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class NodeManagerSender : AbstractSender
+    {
+        public override void Run()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

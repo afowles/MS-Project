@@ -24,6 +24,7 @@ namespace DebugApplicationUsingPDLib
             else
             {
                 NodeSender n = new NodeSender();
+                var j = new NodeReceiver();
                 
                 Proxy p = new Proxy(new NodeReceiver(), n, "127.0.0.1", 12345);
                 n.Start();

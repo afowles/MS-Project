@@ -11,12 +11,33 @@ using Distributed.Proxy;
 
 namespace Distributed.Node
 {
+    public class Node
+    {
+        public static void Main(string[] args)
+        {
+            // try to connect to the NodeManager
+            int port;
+            if (!Int32.TryParse(args[1], out port))
+            {
+                Console.WriteLine("Port could not be parsed.");
+                Environment.Exit(1);
+            }
+            Proxy.Proxy p = new Proxy.Proxy(new NodeReceiver(), new NodeSender(), args[0], port));
+        }
+    }
+
+
     /// <summary>
     /// 
     /// </summary>
     public class NodeReceiver : AbstractReceiver
     {
         private byte[] data;
+        
+        public static void foo()
+        {
+
+        }
 
         /// <summary>
         /// Run method for a node receiver looks
