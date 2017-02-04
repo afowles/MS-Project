@@ -11,6 +11,5 @@
       "imports": "dnxcore50"
     }
   },
-  // Build using PDLib
   "buildOptions": {"compile": "../PDLib/*.cs"}
 }
