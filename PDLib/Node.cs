@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-
+using System.Collections.Concurrent;
 using Distributed.Proxy;
 
 namespace Distributed.Node
@@ -22,7 +18,7 @@ namespace Distributed.Node
                 Console.WriteLine("Port could not be parsed.");
                 Environment.Exit(1);
             }
-            Proxy.Proxy p = new Proxy.Proxy(new NodeReceiver(), new NodeSender(), args[0], port));
+            Proxy.Proxy p = new Proxy.Proxy(new NodeReceiver(), new NodeSender(), args[0], port);
         }
     }
 
@@ -32,12 +28,6 @@ namespace Distributed.Node
     /// </summary>
     public class NodeReceiver : AbstractReceiver
     {
-        private byte[] data;
-        
-        public static void foo()
-        {
-
-        }
 
         /// <summary>
         /// Run method for a node receiver looks
@@ -48,6 +38,7 @@ namespace Distributed.Node
         {
             // Grab the network IO stream from the proxy.
             NetworkStream iostream = proxy.iostream;
+            // setup a byte buffer
             Byte[] bytes = new Byte[1024];
             String data;
 
@@ -67,35 +58,37 @@ namespace Distributed.Node
                         else if (iostream.Read(bytes, 0, bytes.Length) > 0)
                         {
                             data = System.Text.Encoding.ASCII.GetString(bytes);
+                            //TODO: log this
                             Console.WriteLine("Received: {0}", data);
-
-
+                            // clear out buffer
+                            Array.Clear(bytes, 0, bytes.Length);
+                            // just for test
                             data = data.ToUpper();
 
-                            byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
-
-                            // this should be sender
-                            //iostream.Write(msg, 0, msg.Length);
-                            Console.WriteLine("Sent: {0}", data);
+                            // Raise the event for received data
+                            // the virtual method OnDataRecived wraps the actual call
+                            // DataReceived?.Invoke(this, e);
+                            OnDataReceived(new DataReceivedEventArgs(data));
+                          
                         }
-                        else
-                        {
-                            //terminate
-                        }
+                        
                     }
                     catch (IOException e)
                     {
-                        // Handling something
+                        //TODO: handle this
+                        Console.Write(e);
                     }
                 }
             }
             catch (Exception e)
             {
-                // Handling something
+                //TODO: handle this
+                Console.Write(e);
             }
             finally
             {
-                iostream.Close();
+                //TODO: find a way to do this 
+                //iostream.Close();
             }
         }
     }
@@ -105,11 +98,25 @@ namespace Distributed.Node
     /// </summary>
     public class NodeSender : AbstractSender
     {
+        ConcurrentQueue<string> MessageQueue = new ConcurrentQueue<string>();
+
+        public int HandleReceiverEvent(string message)
+        {
+            return 0;
+        }
+
+        public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
+        {
+            Console.WriteLine("NodeSender: HandleReceiverEvent called");
+            //MessageQueue.Enqueue(e.message);
+        }
+
         public override void Run()
         {
             // simply read in and send out, for test
             while (true)
             {
+               
                 String s = Console.ReadLine();
                 byte[] o = System.Text.Encoding.ASCII.GetBytes(s);
                 proxy.iostream.Write(o, 0, o.Length);

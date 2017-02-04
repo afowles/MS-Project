@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+
 using System.Net;
 using System.Net.Sockets;
 
 using Distributed.Proxy;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 namespace Distributed.Node
 {
@@ -19,58 +17,64 @@ namespace Distributed.Node
     /// </summary>
     public class NodeManager
     {
+        TcpListener server;
+        bool StillActive;
+        Byte[] bytes = new Byte[BufferSize];
         const int BufferSize = 1024;
         /// <summary>
         /// 
         /// </summary>
         public NodeManager()
         {
-
-        }
-
-        public static void Main()
-        {
             Int32 port = 12345;
             // null assignment for finally block
-            TcpListener server = null;
             try
-            { 
+            {
                 IPAddress localAddr = IPAddress.Parse("127.0.0.1");
                 server = new TcpListener(localAddr, port);
-                server.Start();
 
-                Byte[] bytes = new Byte[BufferSize];
-                String data = null;
-
-                while (true)
-                {
-                    Console.WriteLine("Starting");
-
-                
-                    TcpClient client = server.AcceptTcpClient();
-                    Console.WriteLine("Connected!");
-
-                    data = null;
-            
-                    NetworkStream stream = client.GetStream();
-
-                    // Pass off to Proxy, no point in storing 
-                    // that proxy object ... yet
-                    new Proxy.Proxy(new NodeReceiver(), new NodeSender(), client);
-
-                    
             }
-            }
-            catch(SocketException e)
+            catch (SocketException e)
             {
-              Console.WriteLine("SocketException: {0}", e);
+                Console.WriteLine("SocketException: {0}", e);
             }
             finally
             {
-               // Stop listening for new clients.
-               server.Stop();
+                // Stop listening for new clients.
+                server.Stop();
             }
+        }
 
+        public async void StartListening()
+        {
+            Console.WriteLine("Starting");
+            StillActive = true;
+            server.Start();
+            await AcceptConnections();
+        }
+
+        public void StopListening()
+        {
+            StillActive = false;
+            server.Stop();
+        }
+
+        private async Task AcceptConnections()
+        {
+            while (StillActive)
+            {
+                var client = await server.AcceptTcpClientAsync();
+                Console.WriteLine("Connected!");
+                // Pass off to Proxy, no point in storing 
+                // that proxy object ... yet
+                new Proxy.Proxy(new NodeReceiver(), new NodeManagerSender(), client);    
+            }
+        }
+        public static void Main()
+        {
+            NodeManager m = new NodeManager();
+            m.StartListening();
+            while (m.StillActive) { }
         }
 
     }
@@ -85,9 +89,31 @@ namespace Distributed.Node
 
     public class NodeManagerSender : AbstractSender
     {
+        ConcurrentQueue<string> MessageQueue = new ConcurrentQueue<string>();
+
+        public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
+        {
+            //TODO: log this instead
+            Console.WriteLine("NodeSender: HandleReceiverEvent called");
+            MessageQueue.Enqueue(e.message);
+        }
+
         public override void Run()
         {
-            throw new NotImplementedException();
+            // testing
+            while (true)
+            {
+                string message;
+                if (MessageQueue.TryDequeue(out message))
+                {
+                    Console.WriteLine("NodeManager Sending Message");
+                    message.ToUpper();
+                    byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
+                    proxy.iostream.Write(o, 0, o.Length);
+                }    
+
+            }
         }
     }
 }
+

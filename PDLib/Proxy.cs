@@ -18,53 +18,73 @@ namespace Distributed.Proxy
         private AbstractSender sender;
 
         /// <summary>
-        /// 
+        /// A Proxy constructor that can be passed
+        /// an already initalized TcpClient.
         /// </summary>
         /// <param name="r">An Abstract Receiver</param>
         /// <param name="s">An Abstract Sender</param>
-        /// <param name="client"></param>
+        /// <param name="client">An initalized</param>
         public Proxy(AbstractReceiver r, AbstractSender s, TcpClient client)
         {
             this.client = client;
-            this.iostream = client.GetStream();
-            this.receiver = r;
-            this.sender = s;
-
-
-            // allow sending of messages quickly
-            client.NoDelay = true;
-            // add ourselves to the sender and receiver;
-            receiver.proxy = this;
-            sender.proxy = this;
-            // start receiving
-            receiver.Start();
+            iostream = client.GetStream();
+            receiver = r;
+            sender = s;
+            ConfigureSenderReceiver();
         }
 
+        /// <summary>
+        /// A Proxy constructor that takes in the
+        /// string and port name to create a Tcp connection
+        /// </summary>
+        /// <param name="r">An Abstract Receiver</param>
+        /// <param name="s">An Abstract Sender</param>
+        /// <param name="host">host name for tcp</param>
+        /// <param name="port">port number for tcp</param>
         public Proxy(AbstractReceiver r, AbstractSender s, string host, int port)
         {
             try
-            { 
-                this.client = new TcpClient(host, port);
+            {
+                // this is not supported for .NET core...
+                //this.client = new TcpClient(host, port);
+                client = new TcpClient();
+                client.ConnectAsync(host, port);
+                // should probably use await...
+                while (!client.Connected) { }
             }
             catch(SocketException e)
             {
                 Console.WriteLine(e);
+                // should stop or throw exception
+                // without the socket no communication
+                // will happen
             }
             this.iostream = client.GetStream();
             this.receiver = r;
             this.sender = s;
-            
-            
-            // allow sending of messages quickly
-            client.NoDelay = true;
-            // add ourselves to the sender and receiver;
-            receiver.proxy = this;
-            sender.proxy = this;
-            // start receiving
-            receiver.Start();
+            ConfigureSenderReceiver();  
         }
 
-
+        /// <summary>
+        /// Configures the sender and receiver
+        /// objects correctly for Proxy constructors.
+        /// </summary>
+        public void ConfigureSenderReceiver()
+        {
+            // allow sending of messages quickly
+            client.NoDelay = true;
+            // add ourselves to the sender and receiver
+            // so that they can grab the TcpInterface
+            // and use proxy methods.
+            receiver.proxy = this;
+            sender.proxy = this;
+            // add sender to list of listeners for a data receive event
+            receiver.DataReceived += sender.HandleReceiverEvent;
+            // start receiving
+            receiver.Start();
+            // start sender
+            sender.Start();
+        }
 
         /// <summary>
         /// Shutdown the TcpClient
@@ -72,35 +92,70 @@ namespace Distributed.Proxy
         /// </summary>
         public void Shutdown()
         {
-            client.Close();
+            // alright can't close in .NET core
+            // TODO, figure something else out
+            //client.Close();
         }
 
 
     }
 
+    
     /// <summary>
-    /// Abstract receiver provides the methods
+    /// Event arguments class to hold info about the data received.
+    /// </summary>
+    /// <remarks>This should be subclassed depending
+    /// on what kind of data is being received</remarks>
+    public class DataReceivedEventArgs : EventArgs
+    {
+        private string data;
+
+        public DataReceivedEventArgs(string msg)
+        {
+            data = msg;
+        }
+
+        public string message
+        {
+            get { return data; }
+        }
+    }
+
+    /// <summary>
+    /// Provides the methods
     /// nessesary to be the receiving side of a proxy
     /// object. 
     /// </summary>
-    /// <note>
-    /// Since TcpClient provides a Network Stream
-    /// as opposed to an Input or Output stream there is no difference,
-    /// from an abstract point of view, between the methods of an abstract
-    /// receiver and an abstract sender. The classes simply provide a readable
-    /// way to differientiate the two kinds of objects. 
-    /// </note>
-    /// 
-    public abstract class AbstractReceiver : NetworkSendReceive { }
-    /// <summary>
-    /// Abstract sender provides the methods nessesary to
-    /// be the sending side of a proxy object
-    /// </summary>
-    /// <note>See abstract receiver note</note>
-    public abstract class AbstractSender : NetworkSendReceive { }
+    public abstract class AbstractReceiver : NetworkSendReceive
+    {
+        /// <summary>
+        /// The event for receiving data.
+        /// </summary>
+        /// <remarks>To use this without a delegate
+        /// the DataReceivedEventArgs class was created. </remarks>
+        public event EventHandler<DataReceivedEventArgs> DataReceived;
+
+        /// <summary>
+        /// Raises the data received event.
+        /// </summary>
+        /// <param name="e">The data received</param>
+        protected virtual void OnDataReceived(DataReceivedEventArgs e)
+        {
+            DataReceived?.Invoke(this, e);
+        }
+    }
 
     /// <summary>
-    /// Provides the methods and members 
+    /// Provides the methods nessesary to
+    /// be the sending side of a proxy object
+    /// </summary>
+    public abstract class AbstractSender : NetworkSendReceive
+    {
+        public abstract void HandleReceiverEvent(object sender, DataReceivedEventArgs e);
+    }
+
+    /// <summary>
+    /// Provides the basic methods and members 
     /// nessesary to send or receive for
     /// a proxy object.
     /// </summary>
