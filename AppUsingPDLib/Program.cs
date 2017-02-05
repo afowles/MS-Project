@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Distributed.Node;
 using Distributed.Proxy;
+using System.Diagnostics;
+
 namespace DebugApplicationUsingPDLib
 {
     class Program
@@ -18,6 +20,28 @@ namespace DebugApplicationUsingPDLib
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            Console.WriteLine("Hello World");
+            if (true)
+            {
+                Process myProcess = new Process();
+
+                try
+                {
+                    myProcess.StartInfo.UseShellExecute = false;
+                    // You can start any process, HelloWorld is a do-nothing example.
+                    myProcess.StartInfo.FileName = "";
+                    myProcess.StartInfo.CreateNoWindow = true;
+                    myProcess.Start();
+                    // This code assumes the process you are starting will terminate itself. 
+                    // Given that is is started without a window so you cannot terminate it 
+                    // on the desktop, it must terminate itself or you can do it programmatically
+                    // from this application using the Kill method.
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
             Console.WriteLine(Environment.GetCommandLineArgs()[0]);
             if (args.Length > 0)
                 NodeManager.Main();
@@ -27,6 +51,7 @@ namespace DebugApplicationUsingPDLib
                 Proxy p = new Proxy(new NodeReceiver(), new NodeSender(), "127.0.0.1", 12345);
                 
             }
+            
         }
     }
 }

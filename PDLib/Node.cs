@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Collections.Concurrent;
 using Distributed.Proxy;
+using System.Collections.Generic;
 
 namespace Distributed.Node
 {
@@ -22,7 +23,36 @@ namespace Distributed.Node
         }
     }
 
+    public class NodeComm : DataReceivedEventArgs
+    {
+        public MessageType Protocol { get; }
+        private static Dictionary<string, MessageType> MessageMap = 
+            new Dictionary<string, MessageType> {
+                { "file", MessageType.File },
+            };
+        public string[] args { get; }
 
+        public enum MessageType
+        {
+            File,
+            Unknown
+        }
+
+        public NodeComm(string msg) 
+            : base(msg)
+        {
+            args = ParseMessage(msg.ToLower());
+            Console.WriteLine(args);
+            MessageType m = MessageType.Unknown;
+            MessageMap.TryGetValue(args[0], out m);
+        }
+
+        private string[] ParseMessage(string message)
+        {
+            return message.Split(new char[] {' '});
+            
+        }
+    }
     /// <summary>
     /// 
     /// </summary>
@@ -65,10 +95,20 @@ namespace Distributed.Node
                             // just for test
                             data = data.ToUpper();
 
+                            NodeComm d = new NodeComm(data);
+                            OnDataReceived(d);
+
+                            if (d.Protocol == NodeComm.MessageType.File)
+                            {
+                                byte[] file = new byte[int.Parse(d.args[2])];
+                                Console.WriteLine("Reading file...");
+                                while (!iostream.DataAvailable) { }
+                                iostream.Read(file, 0, file.Length);
+                            }
                             // Raise the event for received data
                             // the virtual method OnDataRecived wraps the actual call
                             // DataReceived?.Invoke(this, e);
-                            OnDataReceived(new DataReceivedEventArgs(data));
+                            
                           
                         }
                         

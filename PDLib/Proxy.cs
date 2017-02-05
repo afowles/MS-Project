@@ -27,7 +27,9 @@ namespace Distributed.Proxy
         public Proxy(AbstractReceiver r, AbstractSender s, TcpClient client)
         {
             this.client = client;
+            
             iostream = client.GetStream();
+        
             receiver = r;
             sender = s;
             ConfigureSenderReceiver();
@@ -48,6 +50,8 @@ namespace Distributed.Proxy
                 // this is not supported for .NET core...
                 //this.client = new TcpClient(host, port);
                 client = new TcpClient();
+                Socket sock = client.Client;
+                
                 client.ConnectAsync(host, port);
                 // should probably use await...
                 while (!client.Connected) { }
@@ -106,7 +110,7 @@ namespace Distributed.Proxy
     /// </summary>
     /// <remarks>This should be subclassed depending
     /// on what kind of data is being received</remarks>
-    public class DataReceivedEventArgs : EventArgs
+    public abstract class DataReceivedEventArgs : EventArgs
     {
         private string data;
 
