@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Distributed.Files
 {
-    class FileReadWrite
+    static class FileRead
     {
+
     }
+
 }

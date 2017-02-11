@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileReadWrite.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

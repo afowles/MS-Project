@@ -19,22 +19,22 @@ namespace Distributed.Node
     /// </summary>
     public class NodeManager
     {
-        TcpListener server;
+        private TcpListener server;
         bool StillActive;
         Byte[] bytes = new Byte[BufferSize];
         const int BufferSize = 1024;
+        private List<Proxy.Proxy> ConnectedNodes;
+
         /// <summary>
-        /// 
+        /// Creates a node manager
         /// </summary>
         public NodeManager()
         {
             Int32 port = 12345;
-            // null assignment for finally block
             try
             {
                 IPAddress localAddr = IPAddress.Parse("127.0.0.1");
                 server = new TcpListener(localAddr, port);
-
             }
             catch (SocketException e)
             {
@@ -47,6 +47,10 @@ namespace Distributed.Node
             }
         }
 
+        /// <summary>
+        /// Call to start listening
+        /// on the server.
+        /// </summary>
         public async void StartListening()
         {
             Console.WriteLine("Starting");
@@ -55,27 +59,38 @@ namespace Distributed.Node
             await AcceptConnections();
         }
 
+        /// <summary>
+        /// Tells the server to stop listening
+        /// </summary>
         public void StopListening()
         {
             StillActive = false;
             server.Stop();
         }
 
+        /// <summary>
+        /// Accepts connection from the server
+        /// and passes them to a proxy.
+        /// </summary>
+        /// <returns></returns>
         private async Task AcceptConnections()
         {
             while (StillActive)
             {
                 var client = await server.AcceptTcpClientAsync();
                 Console.WriteLine("Connected!");
-                // Pass off to Proxy, no point in storing 
-                // that proxy object ... yet
-                new Proxy.Proxy(new NodeReceiver(), new NodeManagerSender(), client);    
+                // create a proxy
+                var proxy = new Proxy.Proxy(new NodeManagerReceiver(), new NodeManagerSender(), client);
+                // add it to the list of connected nodes
+                ConnectedNodes.Add(proxy);    
             }
         }
         public static void Main()
         {
             NodeManager m = new NodeManager();
             m.StartListening();
+            // Loop to keep main thread active
+            // while async calls happen.
             while (m.StillActive) { }
         }
 
@@ -142,14 +157,11 @@ namespace Distributed.Node
                             Console.WriteLine("Received: {0}", data);
                             // clear out buffer
                             Array.Clear(bytes, 0, bytes.Length);
-                            // just for test
-                            data = data.ToUpper();
 
+                            // Create a DataReceivedEvent
                             NodeComm d = new NodeComm(data);
                             OnDataReceived(d);
-                            Console.WriteLine(d.Protocol);
-
-
+                            
                         }
 
                     }
@@ -177,10 +189,15 @@ namespace Distributed.Node
     {
         ConcurrentQueue<DataReceivedEventArgs> MessageQueue = new ConcurrentQueue<DataReceivedEventArgs>();
 
+        public NodeManagerSender()
+        {
+            //Testing send
+            MessageQueue.Enqueue(new NodeComm("file"));
+        }
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
             //TODO: log this instead
-            Console.WriteLine("NodeSender: HandleReceiverEvent called");
+            Console.WriteLine("NodeManagerSender: HandleReceiverEvent called");
             MessageQueue.Enqueue(e);
         }
 
@@ -206,15 +223,21 @@ namespace Distributed.Node
             switch (data.Protocol)
             {
                 case NodeComm.MessageType.File:
+                    Console.Write("Input Cmd:");
                     String s = Console.ReadLine();
-                    String f = Console.ReadLine();
-                    FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read);
-                    s += " " + fs.Length;
+                   
+                    s += " " + 100;
                     Console.WriteLine(s);
                     byte[] os = System.Text.Encoding.ASCII.GetBytes(s);
                     proxy.iostream.Write(os, 0, os.Length);
                     proxy.iostream.Flush();
 
+                    
+                    break;
+                case NodeComm.MessageType.Send:
+                    Console.Write("Input File:");
+                    String f = Console.ReadLine();
+                    FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read);
                     BinaryReader binFile = new BinaryReader(fs);
                     int bytesSize = 0;
                     byte[] downBuffer = new byte[2048];
@@ -223,6 +246,8 @@ namespace Distributed.Node
                         proxy.iostream.Write(downBuffer, 0, bytesSize);
                     }
                     fs.Dispose();
+                    proxy.iostream.Flush();
+                    Console.WriteLine("Sent");
                     break;
             }
         }

@@ -1,0 +1,2 @@
+byte buffer when printed is size of buffer... took awhile to track down
+why things were not behaving right.

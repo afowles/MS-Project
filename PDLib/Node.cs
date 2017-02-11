@@ -45,7 +45,11 @@ namespace Distributed.Node
             : base(msg)
         {
             args = ParseMessage(msg.ToLower());
-            Console.WriteLine(args.ToString());
+            foreach (String s in args)
+            {
+                Console.WriteLine(s);
+            }
+            
             MessageType m;
             MessageMap.TryGetValue(args[0], out m);
             Protocol = m;
@@ -106,15 +110,32 @@ namespace Distributed.Node
                             {
                                 byte[] downBuffer = new byte[2048];
                                 int byteSize = 0;
-                                Console.WriteLine("Reading file...");
+
                                 //while (!iostream.DataAvailable) { }
                                 //iostream.Read(file, 0, file.Length);
                                 FileStream Fs = new FileStream("test.py", FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-                                while ((byteSize = iostream.Read(downBuffer, 0, downBuffer.Length)) > 0)
+                                while (!iostream.DataAvailable) { }
+                                Console.WriteLine("Reading file...");
+                                iostream.ReadTimeout = 250;
+                                try
                                 {
-                                    Fs.Write(downBuffer, 0, byteSize);
-                                   
+                                    while ((byteSize = iostream.Read(downBuffer, 0, downBuffer.Length)) > 0)
+                                    {
+                                        Fs.Write(downBuffer, 0, byteSize);
+                                    }
                                 }
+                                catch (IOException ex)
+                                {
+                                    // if the ReceiveTimeout is reached an IOException will be raised...
+                                    // with an InnerException of type SocketException and ErrorCode 10060
+                                   // var socketExept = ex.InnerException as SocketException;
+                                    //if (socketExept == null || socketExept.ErrorCode != 10060)
+                                        // if it's not the "expected" exception, let's not hide the error
+                                     //   throw ex;
+                                    // if it is the receive timeout, then reading ended
+                                  
+                                }
+
                                 Console.WriteLine("finished");
                                 Fs.Dispose();
                             }
@@ -153,11 +174,11 @@ namespace Distributed.Node
     {
         ConcurrentQueue<string> MessageQueue = new ConcurrentQueue<string>();
 
-        public int HandleReceiverEvent(string message)
-        {
-            return 0;
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
             Console.WriteLine("NodeSender: HandleReceiverEvent called");
@@ -169,12 +190,11 @@ namespace Distributed.Node
             // simply read in and send out, for test
             while (true)
             {
-               
                 string message;
                 if (MessageQueue.TryDequeue(out message))
                 {
                     Console.WriteLine("Node Sending Message");
-                    message = "Send";
+                    message = "send 30";
                     byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
                     proxy.iostream.Write(o, 0, o.Length);
                 }
