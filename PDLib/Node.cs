@@ -29,22 +29,26 @@ namespace Distributed.Node
         private static Dictionary<string, MessageType> MessageMap = 
             new Dictionary<string, MessageType> {
                 { "file", MessageType.File },
+                { "send", MessageType.Send }
             };
         public string[] args { get; }
 
         public enum MessageType
         {
+            Unknown,
             File,
-            Unknown
+            Send
+            
         }
 
         public NodeComm(string msg) 
             : base(msg)
         {
             args = ParseMessage(msg.ToLower());
-            Console.WriteLine(args);
-            MessageType m = MessageType.Unknown;
+            Console.WriteLine(args.ToString());
+            MessageType m;
             MessageMap.TryGetValue(args[0], out m);
+            Protocol = m;
         }
 
         private string[] ParseMessage(string message)
@@ -97,13 +101,22 @@ namespace Distributed.Node
 
                             NodeComm d = new NodeComm(data);
                             OnDataReceived(d);
-
+                            Console.WriteLine(d.Protocol);
                             if (d.Protocol == NodeComm.MessageType.File)
                             {
-                                byte[] file = new byte[int.Parse(d.args[2])];
+                                byte[] downBuffer = new byte[2048];
+                                int byteSize = 0;
                                 Console.WriteLine("Reading file...");
-                                while (!iostream.DataAvailable) { }
-                                iostream.Read(file, 0, file.Length);
+                                //while (!iostream.DataAvailable) { }
+                                //iostream.Read(file, 0, file.Length);
+                                FileStream Fs = new FileStream("test.py", FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+                                while ((byteSize = iostream.Read(downBuffer, 0, downBuffer.Length)) > 0)
+                                {
+                                    Fs.Write(downBuffer, 0, byteSize);
+                                   
+                                }
+                                Console.WriteLine("finished");
+                                Fs.Dispose();
                             }
                             // Raise the event for received data
                             // the virtual method OnDataRecived wraps the actual call
@@ -148,7 +161,7 @@ namespace Distributed.Node
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
             Console.WriteLine("NodeSender: HandleReceiverEvent called");
-            //MessageQueue.Enqueue(e.message);
+            MessageQueue.Enqueue(e.message);
         }
 
         public override void Run()
@@ -157,11 +170,17 @@ namespace Distributed.Node
             while (true)
             {
                
-                String s = Console.ReadLine();
-                byte[] o = System.Text.Encoding.ASCII.GetBytes(s);
-                proxy.iostream.Write(o, 0, o.Length);
-                
+                string message;
+                if (MessageQueue.TryDequeue(out message))
+                {
+                    Console.WriteLine("Node Sending Message");
+                    message = "Send";
+                    byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
+                    proxy.iostream.Write(o, 0, o.Length);
+                }
+
             }
+
         }
     }
 }

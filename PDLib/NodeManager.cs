@@ -2,10 +2,12 @@
 
 using System.Net;
 using System.Net.Sockets;
-
+using System.Threading;
 using Distributed.Proxy;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using System.IO;
+using System.Collections.Generic;
 
 namespace Distributed.Node
 {
@@ -79,23 +81,107 @@ namespace Distributed.Node
 
     }
 
+    public class NodeManagerComm : DataReceivedEventArgs
+    {
+        public MessageType Protocol { get; }
+        private static Dictionary<string, MessageType> MessageMap =
+            new Dictionary<string, MessageType> {
+                { "Send", MessageType.Send },
+            };
+        public string[] args { get; }
+
+        public enum MessageType
+        {
+            Send,
+            Unknown
+        }
+
+        public NodeManagerComm(string msg)
+            : base(msg)
+        {
+            args = ParseMessage(msg.ToLower());
+            foreach(String s in args)
+            {
+                Console.WriteLine(s);
+            }
+            MessageType m = MessageType.Unknown;
+            MessageMap.TryGetValue(args[0], out m);
+        }
+
+        private string[] ParseMessage(string message)
+        {
+            return message.Split(new char[] { ' ' });
+
+        }
+    }
     public class NodeManagerReceiver : AbstractReceiver
     {
         public override void Run()
         {
-            throw new NotImplementedException();
+            // Grab the network IO stream from the proxy.
+            NetworkStream iostream = proxy.iostream;
+            // setup a byte buffer
+            Byte[] bytes = new Byte[1024];
+            String data;
+
+            try
+            {
+                while (true)
+                {
+                    try
+                    {
+                        // check if we got something
+                        if (!iostream.DataAvailable)
+                        {
+                            Thread.Sleep(1);
+                        }
+                        else if (iostream.Read(bytes, 0, bytes.Length) > 0)
+                        {
+                            data = System.Text.Encoding.ASCII.GetString(bytes);
+                            //TODO: log this
+                            Console.WriteLine("Received: {0}", data);
+                            // clear out buffer
+                            Array.Clear(bytes, 0, bytes.Length);
+                            // just for test
+                            data = data.ToUpper();
+
+                            NodeComm d = new NodeComm(data);
+                            OnDataReceived(d);
+                            Console.WriteLine(d.Protocol);
+
+
+                        }
+
+                    }
+                    catch (IOException e)
+                    {
+                        //TODO: handle this
+                        Console.Write(e);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //TODO: handle this
+                Console.Write(e);
+            }
+            finally
+            {
+                //TODO: find a way to do this 
+                //iostream.Close();
+            }
         }
     }
 
     public class NodeManagerSender : AbstractSender
     {
-        ConcurrentQueue<string> MessageQueue = new ConcurrentQueue<string>();
+        ConcurrentQueue<DataReceivedEventArgs> MessageQueue = new ConcurrentQueue<DataReceivedEventArgs>();
 
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
             //TODO: log this instead
             Console.WriteLine("NodeSender: HandleReceiverEvent called");
-            MessageQueue.Enqueue(e.message);
+            MessageQueue.Enqueue(e);
         }
 
         public override void Run()
@@ -103,15 +189,41 @@ namespace Distributed.Node
             // testing
             while (true)
             {
-                string message;
-                if (MessageQueue.TryDequeue(out message))
+                DataReceivedEventArgs data;
+                if (MessageQueue.TryDequeue(out data))
                 {
-                    Console.WriteLine("NodeManager Sending Message");
-                    message.ToUpper();
-                    byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
-                    proxy.iostream.Write(o, 0, o.Length);
-                }    
+                    if (data is NodeComm)
+                    {
+                        HandleNodeCommunication(data as NodeComm);
+                    }
+                }
+                
+            }
+        }
 
+        private void HandleNodeCommunication(NodeComm data)
+        {
+            switch (data.Protocol)
+            {
+                case NodeComm.MessageType.File:
+                    String s = Console.ReadLine();
+                    String f = Console.ReadLine();
+                    FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read);
+                    s += " " + fs.Length;
+                    Console.WriteLine(s);
+                    byte[] os = System.Text.Encoding.ASCII.GetBytes(s);
+                    proxy.iostream.Write(os, 0, os.Length);
+                    proxy.iostream.Flush();
+
+                    BinaryReader binFile = new BinaryReader(fs);
+                    int bytesSize = 0;
+                    byte[] downBuffer = new byte[2048];
+                    while ((bytesSize = binFile.Read(downBuffer, 0, downBuffer.Length)) > 0)
+                    {
+                        proxy.iostream.Write(downBuffer, 0, bytesSize);
+                    }
+                    fs.Dispose();
+                    break;
             }
         }
     }

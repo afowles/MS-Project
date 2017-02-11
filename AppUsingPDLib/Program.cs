@@ -12,6 +12,7 @@ namespace DebugApplicationUsingPDLib
 {
     class Program
     {
+
         /// <summary>
         /// Just a simple test app, run program with some number of arguments
         /// first to start up the "server" and then run the secondary proxy
@@ -20,8 +21,9 @@ namespace DebugApplicationUsingPDLib
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+
             Console.WriteLine("Hello World");
-            if (true)
+            if (false)
             {
                 Process myProcess = new Process();
 
