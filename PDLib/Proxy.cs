@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
@@ -51,8 +52,9 @@ namespace Distributed.Proxy
                 //this.client = new TcpClient(host, port);
                 client = new TcpClient();
                 Socket sock = client.Client;
+                IPAddress ipAddress = IPAddress.Parse(host);
+                client.ConnectAsync(ipAddress, port);
                 
-                client.ConnectAsync(host, port);
                 // should probably use await...
                 while (!client.Connected) { }
             }
@@ -123,6 +125,7 @@ namespace Distributed.Proxy
         {
             get { return data; }
         }
+
     }
 
     /// <summary>
