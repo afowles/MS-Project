@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Distributed.Node;
 using Distributed.Proxy;
 using System.Diagnostics;
+using System.Threading;
 
 namespace DebugApplicationUsingPDLib
 {
@@ -46,14 +47,17 @@ namespace DebugApplicationUsingPDLib
             }
             Console.WriteLine(Environment.GetCommandLineArgs()[0]);
             if (args.Length > 0)
-                NodeManager.Main();
+            {
+                NodeManager.Main();     
+            }
             else
             {
-                
-                Proxy p = new Proxy(new NodeReceiver(), new NodeSender(), "127.0.0.1", 12345);
-                
+                //Proxy p = new Proxy(new NodeReceiver(), new NodeSender(), , 12345);
+                Node.Main(new string[] { "129.21.89.207", "12345" });
+
             }
             
         }
+        public delegate void MainMethod();
     }
 }

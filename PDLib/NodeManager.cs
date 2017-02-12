@@ -8,6 +8,7 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 namespace Distributed.Node
 {
@@ -21,19 +22,18 @@ namespace Distributed.Node
     {
         private TcpListener server;
         bool StillActive;
+        static string IpAddr = "?";
         Byte[] bytes = new Byte[BufferSize];
         const int BufferSize = 1024;
         private List<Proxy.Proxy> ConnectedNodes;
 
-        /// <summary>
-        /// Creates a node manager
-        /// </summary>
-        public NodeManager()
+        public NodeManager(string ip)
         {
             Int32 port = 12345;
+            ConnectedNodes = new List<Proxy.Proxy>();
             try
             {
-                IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+                IPAddress localAddr = IPAddress.Parse(ip);
                 server = new TcpListener(localAddr, port);
             }
             catch (SocketException e)
@@ -46,12 +46,11 @@ namespace Distributed.Node
                 server.Stop();
             }
         }
-
         /// <summary>
         /// Call to start listening
         /// on the server.
         /// </summary>
-        public async void StartListening()
+        public async Task StartListening()
         {
             Console.WriteLine("Starting");
             StillActive = true;
@@ -85,13 +84,40 @@ namespace Distributed.Node
                 ConnectedNodes.Add(proxy);    
             }
         }
+       
+
         public static void Main()
         {
-            NodeManager m = new NodeManager();
-            m.StartListening();
-            // Loop to keep main thread active
-            // while async calls happen.
-            while (m.StillActive) { }
+            // Grab the IP address
+            Task getIp = GetLocalIPAddress();
+            getIp.Wait();
+            // create a NodeManager
+            NodeManager m = new NodeManager(IpAddr);
+            // This should never finish until StillActive is set
+            // to false
+            Task t2 = m.StartListening();
+            t2.Wait();
+        }
+
+        /// <summary>
+        /// Gets the local IP address
+        /// </summary>
+        public static async Task GetLocalIPAddress()
+        {
+
+            IPHostEntry host;
+            string localIP = "?";
+            host = await Dns.GetHostEntryAsync(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    localIP = ip.ToString();
+                }
+            }
+            IpAddr = localIP;
+            Console.WriteLine(host);
+            Console.WriteLine(localIP);
         }
 
     }

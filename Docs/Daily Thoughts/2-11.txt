@@ -1,2 +1,15 @@
 byte buffer when printed is size of buffer... took awhile to track down
 why things were not behaving right.
+
+Nuget is nice for getting info but it still seems like 
+a good bit of stuff for .NET core needs to be "found"
+
+So far have needed to add
+System.Net.NetworkInformation 4.3
+System.Threading.Thread 4.3
+
+everything is async... why
+I guess using await isn't the worst thing
+
+8:36
+Gained a much better understanding of async tasks
