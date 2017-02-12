@@ -5,11 +5,28 @@ using System.Threading;
 using System.Collections.Concurrent;
 using Distributed.Proxy;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Distributed.Files;
 
+[assembly: InternalsVisibleTo("StartNode")]
+
+/// <summary>
+/// Classes in Distributed.Node are internal to PDLib_Core
+/// Uses outside of this assembly are not allowed,
+/// other than by the designated entry point.
+/// This file contains classes as part of the framework, not the library.
+/// </summary>
 namespace Distributed.Node
 {
-    public class Node
+    /// <summary>
+    /// A node in the network
+    /// </summary>
+    internal class Node
     {
+        /// <summary>
+        /// Entry point to starting up a node.
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             // try to connect to the NodeManager
@@ -23,9 +40,14 @@ namespace Distributed.Node
         }
     }
 
-    public class NodeComm : DataReceivedEventArgs
+    /// <summary>
+    /// The data received event for communication
+    /// with a node.
+    /// </summary>
+    internal class NodeComm : DataReceivedEventArgs
     {
         public MessageType Protocol { get; }
+        // a mapping of input strings to protocols
         private static Dictionary<string, MessageType> MessageMap = 
             new Dictionary<string, MessageType> {
                 { "file", MessageType.File },
@@ -38,9 +60,14 @@ namespace Distributed.Node
             Unknown,
             File,
             Send
-            
         }
 
+        /// <summary>
+        /// Data object representing a receive
+        /// event, takes in the string message
+        /// sent over the network.
+        /// </summary>
+        /// <param name="msg">message from outside source</param>
         public NodeComm(string msg) 
             : base(msg)
         {
@@ -49,22 +76,28 @@ namespace Distributed.Node
             {
                 Console.WriteLine(s);
             }
-            
             MessageType m;
             MessageMap.TryGetValue(args[0], out m);
             Protocol = m;
         }
 
+        /// <summary>
+        /// Split incoming data on space
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         private string[] ParseMessage(string message)
         {
             return message.Split(new char[] {' '});
             
         }
     }
+
     /// <summary>
-    /// 
+    /// Receiver object for a Node, handles incoming
+    /// messages and raised a data receive event.
     /// </summary>
-    public class NodeReceiver : AbstractReceiver
+    internal class NodeReceiver : AbstractReceiver
     {
 
         /// <summary>
@@ -82,7 +115,7 @@ namespace Distributed.Node
 
             try
             {
-                //TODO: change this to something custom like !ShutdownEvent.WaitOne(0)
+                // TODO: change this to something custom like !ShutdownEvent.WaitOne(0)
                 // alternatively look for a specific shutdown message. 
                 while (true)
                 {
@@ -100,49 +133,16 @@ namespace Distributed.Node
                             Console.WriteLine("Received: {0}", data);
                             // clear out buffer
                             Array.Clear(bytes, 0, bytes.Length);
-                            // just for test
-                            data = data.ToUpper();
-
+                            
+                            // raise the data received event
                             NodeComm d = new NodeComm(data);
                             OnDataReceived(d);
+
                             Console.WriteLine(d.Protocol);
                             if (d.Protocol == NodeComm.MessageType.File)
                             {
-                                byte[] downBuffer = new byte[2048];
-                                int byteSize = 0;
-
-                                //while (!iostream.DataAvailable) { }
-                                //iostream.Read(file, 0, file.Length);
-                                FileStream Fs = new FileStream("test.py", FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-                                while (!iostream.DataAvailable) { }
-                                Console.WriteLine("Reading file...");
-                                iostream.ReadTimeout = 250;
-                                try
-                                {
-                                    while ((byteSize = iostream.Read(downBuffer, 0, downBuffer.Length)) > 0)
-                                    {
-                                        Fs.Write(downBuffer, 0, byteSize);
-                                    }
-                                }
-                                catch (IOException ex)
-                                {
-                                    // if the ReceiveTimeout is reached an IOException will be raised...
-                                    // with an InnerException of type SocketException and ErrorCode 10060
-                                   // var socketExept = ex.InnerException as SocketException;
-                                    //if (socketExept == null || socketExept.ErrorCode != 10060)
-                                        // if it's not the "expected" exception, let's not hide the error
-                                     //   throw ex;
-                                    // if it is the receive timeout, then reading ended
-                                  
-                                }
-
-                                Console.WriteLine("finished");
-                                Fs.Dispose();
-                            }
-                            // Raise the event for received data
-                            // the virtual method OnDataRecived wraps the actual call
-                            // DataReceived?.Invoke(this, e);
-                            
+                                FileRead.ReadInWriteOut(iostream, "test");
+                            }                            
                           
                         }
                         
@@ -170,7 +170,7 @@ namespace Distributed.Node
     /// <summary>
     /// 
     /// </summary>
-    public class NodeSender : AbstractSender
+    internal class NodeSender : AbstractSender
     {
         ConcurrentQueue<string> MessageQueue = new ConcurrentQueue<string>();
 

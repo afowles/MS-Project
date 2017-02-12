@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Distributed.Files.FileRead" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileReadWrite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.Node" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeComm" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAgAABAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeReceiver" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeSender" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeManager" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAACAAAAAAAEAAAAggoAAAAFAAAAII=</HashCode>
+      <FileName>NodeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeManagerComm" Collapsed="true">
+    <Position X="2.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAgAABAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NodeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeManagerReceiver" Collapsed="true">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>NodeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeManagerSender" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAABAAAAgAAAAAAAAAAAAAI=</HashCode>
+      <FileName>NodeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.Proxy" Collapsed="true">
+    <Position X="11.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAIAAAAAQAAAAAEAAAABAAABAAAAAA=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.DataReceivedEventArgs" Collapsed="true">
+    <Position X="1.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAACA=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.AbstractReceiver" Collapsed="true">
+    <Position X="6.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.AbstractSender" Collapsed="true">
+    <Position X="1.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.NetworkSendReceive" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAkAAAAAAQAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

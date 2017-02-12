@@ -1,0 +1,2 @@
+Trying to make it easy for users to write programs that run anywhere
+without all the effort of publishing and moving code is hard.

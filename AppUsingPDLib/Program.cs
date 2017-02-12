@@ -53,7 +53,7 @@ namespace DebugApplicationUsingPDLib
             else
             {
                 //Proxy p = new Proxy(new NodeReceiver(), new NodeSender(), , 12345);
-                Node.Main(new string[] { "129.21.89.207", "12345" });
+                //Node.Main(new string[] { "129.21.89.207", "12345" });
 
             }
             
