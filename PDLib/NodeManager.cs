@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -8,6 +7,7 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections.Generic;
+using Distributed.Default;
 
 namespace Distributed.Node
 {
@@ -78,7 +78,7 @@ namespace Distributed.Node
                 var client = await server.AcceptTcpClientAsync();
                 Console.WriteLine("Connected!");
                 // create a proxy
-                var proxy = new Proxy.Proxy(new NodeManagerReceiver(), new NodeManagerSender(), client);
+                var proxy = new Proxy.Proxy(new DefaultReceiver(), new DefaultSender(), client);
                 // add it to the list of connected nodes
                 ConnectedNodes.Add(proxy);    
             }
@@ -128,7 +128,6 @@ namespace Distributed.Node
             new Dictionary<string, MessageType> {
                 { "Send", MessageType.Send },
             };
-        public string[] args { get; }
 
         public enum MessageType
         {
@@ -139,20 +138,15 @@ namespace Distributed.Node
         public NodeManagerComm(string msg)
             : base(msg)
         {
-            args = ParseMessage(msg.ToLower());
             foreach(String s in args)
             {
                 Console.WriteLine(s);
             }
             MessageType m = MessageType.Unknown;
             MessageMap.TryGetValue(args[0], out m);
+            Protocol = m;
         }
 
-        private string[] ParseMessage(string message)
-        {
-            return message.Split(new char[] { ' ' });
-
-        }
     }
     public class NodeManagerReceiver : AbstractReceiver
     {

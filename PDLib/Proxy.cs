@@ -75,7 +75,7 @@ namespace Distributed.Proxy
         /// Configures the sender and receiver
         /// objects correctly for Proxy constructors.
         /// </summary>
-        public void ConfigureSenderReceiver()
+        private void ConfigureSenderReceiver()
         {
             // allow sending of messages quickly
             client.NoDelay = true;
@@ -93,6 +93,18 @@ namespace Distributed.Proxy
         }
 
         /// <summary>
+        /// Hand off the sender and receiver to a new
+        /// sender and receiver object.
+        /// </summary>
+        /// <param name="r">new receiver</param>
+        /// <param name="s">new sender</param>
+        public void HandOffSendReceive(AbstractReceiver r, AbstractSender s)
+        {
+            receiver = r;
+            sender = s;
+            ConfigureSenderReceiver();
+        }
+        /// <summary>
         /// Shutdown the TcpClient
         /// and the underlying tcp connection.
         /// </summary>
@@ -106,7 +118,7 @@ namespace Distributed.Proxy
 
     }
 
-    
+
     /// <summary>
     /// Event arguments class to hold info about the data received.
     /// </summary>
@@ -115,10 +127,12 @@ namespace Distributed.Proxy
     public abstract class DataReceivedEventArgs : EventArgs
     {
         private string data;
+        public string[] args { get; }
 
         public DataReceivedEventArgs(string msg)
         {
             data = msg;
+            args = ParseMessage(msg.ToLower());
         }
 
         public string message
@@ -126,6 +140,15 @@ namespace Distributed.Proxy
             get { return data; }
         }
 
+        /// <summary>
+        /// Split incoming data on space
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected string[] ParseMessage(string message)
+        {
+            return message.Split(new char[] { ' ' });
+        }
     }
 
     /// <summary>

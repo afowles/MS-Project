@@ -46,20 +46,23 @@ namespace Distributed.Node
     /// </summary>
     internal class NodeComm : DataReceivedEventArgs
     {
+        public const string endl = "end";
+
         public MessageType Protocol { get; }
         // a mapping of input strings to protocols
         private static Dictionary<string, MessageType> MessageMap = 
             new Dictionary<string, MessageType> {
                 { "file", MessageType.File },
-                { "send", MessageType.Send }
+                { "send", MessageType.Send },
+                { "id", MessageType.Id }
             };
-        public string[] args { get; }
 
         public enum MessageType
         {
             Unknown,
             File,
-            Send
+            Send,
+            Id
         }
 
         /// <summary>
@@ -71,26 +74,12 @@ namespace Distributed.Node
         public NodeComm(string msg) 
             : base(msg)
         {
-            args = ParseMessage(msg.ToLower());
-            foreach (String s in args)
-            {
-                Console.WriteLine(s);
-            }
+            
             MessageType m;
             MessageMap.TryGetValue(args[0], out m);
             Protocol = m;
         }
 
-        /// <summary>
-        /// Split incoming data on space
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        private string[] ParseMessage(string message)
-        {
-            return message.Split(new char[] {' '});
-            
-        }
     }
 
     /// <summary>
@@ -138,7 +127,7 @@ namespace Distributed.Node
                             NodeComm d = new NodeComm(data);
                             OnDataReceived(d);
 
-                            Console.WriteLine(d.Protocol);
+                            
                             if (d.Protocol == NodeComm.MessageType.File)
                             {
                                 FileRead.ReadInWriteOut(iostream, "test");
@@ -172,8 +161,12 @@ namespace Distributed.Node
     /// </summary>
     internal class NodeSender : AbstractSender
     {
-        ConcurrentQueue<string> MessageQueue = new ConcurrentQueue<string>();
+        ConcurrentQueue<NodeComm> MessageQueue = new ConcurrentQueue<NodeComm>();
 
+        public NodeSender()
+        {
+            //MessageQueue.Enqueue(new NodeComm("node"));
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -182,7 +175,7 @@ namespace Distributed.Node
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
             Console.WriteLine("NodeSender: HandleReceiverEvent called");
-            MessageQueue.Enqueue(e.message);
+            MessageQueue.Enqueue(e as NodeComm);
         }
 
         public override void Run()
@@ -190,13 +183,24 @@ namespace Distributed.Node
             // simply read in and send out, for test
             while (true)
             {
+                NodeComm data;
                 string message;
-                if (MessageQueue.TryDequeue(out message))
+                if (MessageQueue.TryDequeue(out data))
                 {
                     Console.WriteLine("Node Sending Message");
-                    message = "send 30";
-                    byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
-                    proxy.iostream.Write(o, 0, o.Length);
+                    if (data.Protocol == NodeComm.MessageType.File)
+                    {
+                        message = "send" + " " + NodeComm.endl;
+                        byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
+                        proxy.iostream.Write(o, 0, o.Length);
+                    }
+                    if (data.Protocol == NodeComm.MessageType.Id )
+                    {
+                        Console.WriteLine("Sending Node");
+                        byte[] b = System.Text.Encoding.ASCII.GetBytes("node" + " " + NodeComm.endl);
+                        proxy.iostream.Write(b, 0, b.Length);
+                    }
+                    
                 }
 
             }

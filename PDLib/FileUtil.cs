@@ -3,13 +3,18 @@ using System.IO;
 using System.Net.Sockets;
 
 
-
 namespace Distributed.Files
 {
     static class FileRead
     {
         public const int BufferSize = 1024;
 
+        /// <summary>
+        /// Read in a file from a Network Stream
+        /// and write that file out.
+        /// </summary>
+        /// <param name="iostream">Stream to read in from</param>
+        /// <param name="filename">Filename to write out to</param>
         public static void ReadInWriteOut(NetworkStream iostream, string filename)
         {
             // create a buffer for the incoming data

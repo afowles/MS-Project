@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileReadWrite.cs" />
+    <Compile Include="Default.cs" />
+    <Compile Include="FileUtil.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
+    <Compile Include="Query.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

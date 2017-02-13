@@ -24,7 +24,8 @@ namespace DebugApplicationUsingPDLib
         {
 
             Console.WriteLine("Hello World");
-            if (false)
+            bool val = false;
+            if (val)
             {
                 Process myProcess = new Process();
 
