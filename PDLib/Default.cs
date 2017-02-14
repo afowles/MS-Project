@@ -10,8 +10,23 @@ using System.Threading;
 namespace Distributed.Default
 {
 
+    /// <summary>
+    /// A default receiver for a master node before
+    /// the connection type is known.
+    /// </summary>
+    /// <remarks>
+    /// When a connection is made to a server there
+    /// is no way of knowing immediately if that connection
+    /// belongs. Default receivers know enough to hand off
+    /// connection to a proper receiver. For the master node
+    /// manager there could be a query, job or node connection.
+    /// </remarks>
     internal class DefaultReceiver : AbstractReceiver
     {
+        /// <summary>
+        /// Default receiver uses a separate thread
+        /// with this run method.
+        /// </summary>
         public override void Run()
         {
             // Grab the network IO stream from the proxy.
@@ -25,7 +40,7 @@ namespace Distributed.Default
                 {
                     try
                     {
-                        // check if we got something
+                        // Check if we got something
                         if (!iostream.DataAvailable)
                         {
                             Thread.Sleep(1);
@@ -33,25 +48,29 @@ namespace Distributed.Default
                         else if (iostream.Read(bytes, 0, bytes.Length) > 0)
                         {
                             data = System.Text.Encoding.ASCII.GetString(bytes);
-                            
                             Console.WriteLine("Received: {0}", data);
                             // clear out buffer
                             Array.Clear(bytes, 0, bytes.Length);
 
-                            // Create a DataReceivedEvent
-                           
+                            // Create a DataReceivedEvent                     
                             DefaultDataComm d = new DefaultDataComm(data);
                             OnDataReceived(d);
-                            Console.WriteLine(d.Protocol);
-                            if (d.Protocol == DefaultDataComm.MessageType.Node)
+                            
+                            switch(d.Protocol)
                             {
-                                // hand off to proper sender and receiver
-                                proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender());
-                                // leave and stop this thread.
-                                break;
+                                case DefaultDataComm.MessageType.Node:
+                                    // hand off to proper sender and receiver
+                                    proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender());
+                                    // leave and stop this thread.
+                                    return;
+                                case DefaultDataComm.MessageType.Job:
+
+                                    return;
+                                case DefaultDataComm.MessageType.Query:
+
+                                    return;
                             }
                         }
-
                     }
                     catch (IOException e)
                     {
@@ -73,31 +92,52 @@ namespace Distributed.Default
         }
     }
 
+    /// <summary>
+    /// The default sender for the master node manager
+    /// before hand off.
+    /// </summary>
     internal class DefaultSender : AbstractSender
     {
+        // ConcurrentQueue for TryDequeue method
         ConcurrentQueue<DefaultDataComm> MessageQueue = new ConcurrentQueue<DefaultDataComm>();
+
+        /// <summary>
+        /// Constructor to add initial message of id
+        /// on start up that message will be send out to the connected host
+        /// to gather identification info.
+        /// </summary>
         public DefaultSender()
         {
             MessageQueue.Enqueue(new DefaultDataComm("id"));
         }
+
+        /// <summary>
+        /// Handles receive event, adds message to queue
+        /// which is checked by running thread.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
             MessageQueue.Enqueue(e as DefaultDataComm);
         }
 
+        /// <summary>
+        /// Default sender uses thread with run method.
+        /// </summary>
         public override void Run()
         {
             while (true)
             {
+                // grab the message
                 DefaultDataComm data;
                 if (MessageQueue.TryDequeue(out data))
                 {
-                    if (data.Protocol == DefaultDataComm.MessageType.Unknown)
+                    // if we don't know who this is, the first message
+                    // is an Id, request id.
+                    if (data.Protocol == DefaultDataComm.MessageType.Unknown 
+                        || data.Protocol == DefaultDataComm.MessageType.Id)
                     {
-
-                    }
-                    if (data.Protocol == DefaultDataComm.MessageType.Id)
-                    {                       
                         Console.WriteLine("requesting Id");
                         byte[] os = System.Text.Encoding.ASCII.GetBytes("id" + DefaultDataComm.endl);
                         proxy.iostream.Write(os, 0, os.Length);
@@ -111,11 +151,13 @@ namespace Distributed.Default
                         break;
                     }
                 }
-
             }
         }
     }
 
+    /// <summary>
+    /// Object passed between Default Receiver
+    /// </summary>
     internal class DefaultDataComm : DataReceivedEventArgs
     {
         public MessageType Protocol { get; }
@@ -142,7 +184,6 @@ namespace Distributed.Default
             : base(msg)
         {
             MessageType m = MessageType.Unknown;
-            Console.WriteLine("this is:" + args[0] + "?");
             MessageMap.TryGetValue(args[0], out m);
             Protocol = m;
         }
