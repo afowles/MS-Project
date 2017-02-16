@@ -120,8 +120,14 @@ namespace Distributed.Default
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
             MessageQueue.Enqueue(e as DefaultDataComm);
+            int i = 5;
+            math(out i);
         }
 
+        public void math(out int i)
+        {
+            i = 40;
+        }
         /// <summary>
         /// Default sender uses thread with run method.
         /// </summary>

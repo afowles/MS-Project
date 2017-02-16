@@ -79,7 +79,6 @@ namespace Distributed.Node
             MessageMap.TryGetValue(args[0], out m);
             Protocol = m;
         }
-
     }
 
     /// <summary>
