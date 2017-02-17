@@ -1,2 +1,172 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Distributed.Default.DefaultReceiver" Collapsed="true">
+    <Position X="1.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Default.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Default.DefaultSender" Collapsed="true">
+    <Position X="12.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAAAAAAAAEAI=</HashCode>
+      <FileName>Default.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Default.DefaultDataComm" Collapsed="true">
+    <Position X="2.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Default.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Files.FileRead" Collapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FileUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Job" Collapsed="true">
+    <Position X="25.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAAABAAAAAA=</HashCode>
+      <FileName>Job.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.JobReceiver" Collapsed="true">
+    <Position X="3.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Job.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.JobSender" Collapsed="true">
+    <Position X="14.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Job.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.JobTask" Collapsed="true">
+    <Position X="27.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>JobTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Query" Collapsed="true">
+    <Position X="24" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Query.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.QuerySender" Collapsed="true">
+    <Position X="19.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Query.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.QueryReceiver" Collapsed="true">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Query.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.Node" Collapsed="true">
+    <Position X="24" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeComm" Collapsed="true">
+    <Position X="5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeReceiver" Collapsed="true">
+    <Position X="10.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeSender" Collapsed="true">
+    <Position X="21.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeManager" Collapsed="true">
+    <Position X="25.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAACAAAAAAAEAAAAggoAAAAFAAAAII=</HashCode>
+      <FileName>NodeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeManagerComm" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NodeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeManagerReceiver" Collapsed="true">
+    <Position X="8" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>NodeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Node.NodeManagerSender" Collapsed="true">
+    <Position X="17" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAABAAAAgAAAAAAAAAAAAAI=</HashCode>
+      <FileName>NodeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.Proxy" Collapsed="true">
+    <Position X="27.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAABAAAAIAAAAAQAAAAAEAAAABAAABAAAAAA=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.DataReceivedEventArgs" Collapsed="true">
+    <Position X="2.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAQAAAAACA=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.AbstractReceiver" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.AbstractSender" Collapsed="true">
+    <Position X="17" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Distributed.Proxy.NetworkSendReceive" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAkAAAAAAQAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Proxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -44,11 +44,15 @@
     <Compile Include="FileUtil.cs" />
     <Compile Include="Job.cs" />
     <Compile Include="JobTask.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
     <Compile Include="Query.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

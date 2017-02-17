@@ -1,14 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Distributed.Proxy;
+
 
 namespace Distributed
 {
-    class Job
+    public abstract class Job
     {
+        private List<JobTask> tasks = new List<JobTask>();
+        public abstract void Main(string[] args);
+        
+        public void AddTask(JobTask task)
+        {
+            tasks.Add(task);
+        }
+        public string GetClassName()
+        {
+            return this.GetType().Name;
+        }
+        public void startTask(int index)
+        {
+            tasks[index].Main(new string[] { index.ToString() });
+        }
     }
 
     internal class JobReceiver : AbstractReceiver

@@ -1,17 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Distributed.Node;
 using Distributed.Proxy;
 using System.Diagnostics;
-using System.Threading;
+
+using Distributed;
 
 namespace DebugApplicationUsingPDLib
 {
-    class Program
+    public class TestAppJob : Job
+    {
+        
+        public override void Main(string[] args)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                AddTask(new TestAppJobTask());
+            }
+            
+        }
+
+    }
+
+    public class TestAppJobTask : JobTask
+    {
+        public override void Main(string[] args)
+        {
+            Console.WriteLine("Completing Job: " + args[0]);
+        }
+    }
+    class Program2
     {
 
         /// <summary>
