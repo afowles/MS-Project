@@ -1,12 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
-namespace Distributed
+namespace Distributed.Assembly
 {
-    class Loader
+    /// <summary>
+    /// An interface to an assembly loader
+    /// </summary>
+    /// <remarks>Loading assembly in .NET framework vs .NET Core
+    /// is a different task completely, supporting both frameworks
+    /// now requires different implementations. See Loader.cs in PDLib_Core</remarks>
+    interface ILoader
     {
+    }
+
+    public class Loader : ILoader
+    {
+        public Loader(string assemlyPath)
+        {
+            
+        }
     }
 }
