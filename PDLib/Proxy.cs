@@ -128,6 +128,8 @@ namespace Distributed.Proxy
     /// on what kind of data is being received</remarks>
     public abstract class DataReceivedEventArgs : EventArgs
     {
+        public const string endl = "end";
+
         private string data;
         public string[] args { get; }
 
@@ -141,6 +143,7 @@ namespace Distributed.Proxy
         {
             get { return data; }
         }
+
 
         /// <summary>
         /// Split incoming data on space
@@ -160,6 +163,7 @@ namespace Distributed.Proxy
     /// </summary>
     public abstract class AbstractReceiver : NetworkSendReceive
     {
+        public bool done = false;
 
         /// <summary>
         /// The event for receiving data.
@@ -192,7 +196,7 @@ namespace Distributed.Proxy
 
             try
             {
-                while (true)
+                while (!done)
                 {
                     try
                     {
@@ -272,6 +276,7 @@ namespace Distributed.Proxy
     {
         // Setup constant buffer size
         public const int BUFFER_SIZE = 1024;
+        public const int SERVER_PORT = 12345;
 
         // Thread object to handle from socket.
         protected Thread thread;

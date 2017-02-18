@@ -3,9 +3,6 @@ using Distributed.Proxy;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Sockets;
-using System.Threading;
 
 namespace Distributed.Default
 {
@@ -16,7 +13,6 @@ namespace Distributed.Default
     internal class DefaultDataComm : DataReceivedEventArgs
     {
         public MessageType Protocol { get; }
-        public const string endl = " end";
         private static Dictionary<string, MessageType> MessageMap =
             new Dictionary<string, MessageType> {
                 { "node", MessageType.Node },
@@ -43,19 +39,27 @@ namespace Distributed.Default
             Protocol = m;
         }
     }
-        /// <summary>
-        /// A default receiver for a master node before
-        /// the connection type is known.
-        /// </summary>
-        /// <remarks>
-        /// When a connection is made to a server there
-        /// is no way of knowing immediately if that connection
-        /// belongs. Default receivers know enough to hand off
-        /// connection to a proper receiver. For the master node
-        /// manager there could be a query, job or node connection.
-        /// </remarks>
-        internal class DefaultReceiver : AbstractReceiver
+
+    /// <summary>
+    /// A default receiver for a master node before
+    /// the connection type is known.
+    /// </summary>
+    /// <remarks>
+    /// When a connection is made to a server there
+    /// is no way of knowing immediately if that connection
+    /// belongs. Default receivers know enough to hand off
+    /// connection to a proper receiver. For the master node
+    /// manager there could be a query, job or node connection.
+    /// </remarks>
+    internal class DefaultReceiver : AbstractReceiver
     {
+        public NodeManager manager;
+
+        public DefaultReceiver(NodeManager manager)
+        {
+            this.manager = manager;
+        }
+
         public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
         {
             return new DefaultDataComm(data);
@@ -66,15 +70,13 @@ namespace Distributed.Default
             switch ((e as DefaultDataComm).Protocol)
             {
                 case DefaultDataComm.MessageType.Node:
-                    // hand off to proper sender and receiver
-                    proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender());
-                    // leave and stop this thread.
-                    return;
                 case DefaultDataComm.MessageType.Job:
-
-                    return;
                 case DefaultDataComm.MessageType.Query:
 
+                    // hand off to proper sender and receiver
+                    proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender(this));
+                    // leave and stop this thread.
+                    done = true;
                     return;
             }
         }
@@ -89,14 +91,15 @@ namespace Distributed.Default
     {
         // ConcurrentQueue for TryDequeue method
         ConcurrentQueue<DefaultDataComm> MessageQueue = new ConcurrentQueue<DefaultDataComm>();
-
+        private NodeManager manager;
         /// <summary>
         /// Constructor to add initial message of id
         /// on start up that message will be send out to the connected host
         /// to gather identification info.
         /// </summary>
-        public DefaultSender()
+        public DefaultSender(NodeManager manager)
         {
+            this.manager = manager;
             MessageQueue.Enqueue(new DefaultDataComm("id"));
         }
 

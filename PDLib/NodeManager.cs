@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using Distributed.Proxy;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 using Distributed.Default;
+using Distributed.Files;
+
+[assembly: InternalsVisibleTo("StartManager")]
 
 namespace Distributed.Node
 {
@@ -17,14 +21,15 @@ namespace Distributed.Node
     /// to nodes and pass of incoming clients. Look into
     /// possible UDP approach for no "master"
     /// </summary>
-    public class NodeManager
+    internal class NodeManager
     {
         private TcpListener server;
         private bool StillActive;
         private static string IpAddr = "?";
         private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
         
-        private List<Proxy.Proxy> ConnectedNodes;
+        public List<Proxy.Proxy> ConnectedNodes;
+        public Dictionary<int, string> jobs = new Dictionary<int, string>();
 
         /// <summary>
         /// Creates a server listening
@@ -33,12 +38,12 @@ namespace Distributed.Node
         /// <param name="ip">IP to listen on</param>
         public NodeManager(string ip)
         {
-            Int32 port = 12345;
+            
             ConnectedNodes = new List<Proxy.Proxy>();
             try
             {
                 IPAddress localAddr = IPAddress.Parse(ip);
-                server = new TcpListener(localAddr, port);
+                server = new TcpListener(localAddr, NetworkSendReceive.SERVER_PORT);
             }
             catch (SocketException e)
             {
@@ -84,7 +89,7 @@ namespace Distributed.Node
                 var client = await server.AcceptTcpClientAsync();
                 Console.WriteLine("Connected!");
                 // create a proxy
-                var proxy = new Proxy.Proxy(new DefaultReceiver(), new DefaultSender(), client);
+                var proxy = new Proxy.Proxy(new DefaultReceiver(this), new DefaultSender(this), client);
                 // add it to the list of connected nodes
                 ConnectedNodes.Add(proxy);    
             }
@@ -126,17 +131,19 @@ namespace Distributed.Node
 
     }
 
-    public class NodeManagerComm : DataReceivedEventArgs
+    internal class NodeManagerComm : DataReceivedEventArgs
     {
         public MessageType Protocol { get; }
         private static Dictionary<string, MessageType> MessageMap =
             new Dictionary<string, MessageType> {
                 { "Send", MessageType.Send },
+                { "job", MessageType.NewJob }
             };
 
         public enum MessageType
         {
             Send,
+            NewJob,
             Unknown
         }
 
@@ -159,7 +166,7 @@ namespace Distributed.Node
     /// Node Manager Receiver, most of this is handled by
     /// the default receiver.
     /// </summary>
-    public class NodeManagerReceiver : AbstractReceiver
+    internal class NodeManagerReceiver : AbstractReceiver
     {
         public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
         {
@@ -173,14 +180,16 @@ namespace Distributed.Node
 
     }
 
-    public class NodeManagerSender : AbstractSender
+    internal class NodeManagerSender : AbstractSender
     {
         ConcurrentQueue<DataReceivedEventArgs> MessageQueue = new ConcurrentQueue<DataReceivedEventArgs>();
+        public NodeManager manager;
 
-        public NodeManagerSender()
+        public NodeManagerSender(NodeManager manager)
         {
             //Testing send
-            MessageQueue.Enqueue(new NodeComm("file"));
+            //MessageQueue.Enqueue(new NodeComm("file"));
+            this.manager = manager;
         }
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
@@ -197,7 +206,7 @@ namespace Distributed.Node
                 DataReceivedEventArgs data;
                 if (MessageQueue.TryDequeue(out data))
                 {
-                    if (data is NodeComm)
+                    if (data is NodeManagerComm)
                     {
                         HandleNodeCommunication(data as NodeComm);
                     }
@@ -222,21 +231,19 @@ namespace Distributed.Node
 
                     
                     break;
+
                 case NodeComm.MessageType.Send:
-                    Console.Write("Input File:");
-                    String f = Console.ReadLine();
-                    FileStream fs = new FileStream(f, FileMode.Open, FileAccess.Read);
-                    BinaryReader binFile = new BinaryReader(fs);
-                    int bytesSize = 0;
-                    byte[] downBuffer = new byte[2048];
-                    while ((bytesSize = binFile.Read(downBuffer, 0, downBuffer.Length)) > 0)
+                    //Console.Write("Input File:");
+                    Console.WriteLine("Writing file: " + data.args[1]);
+                    foreach (Proxy.Proxy p in manager.ConnectedNodes)
                     {
-                        proxy.iostream.Write(downBuffer, 0, bytesSize);
+                        FileWrite.WriteOut(p.iostream, data.args[1]);
                     }
-                    fs.Dispose();
+                    
                     proxy.iostream.Flush();
                     Console.WriteLine("Sent");
                     break;
+                case NodeManager
             }
         }
     }

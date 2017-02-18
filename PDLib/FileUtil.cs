@@ -44,4 +44,21 @@ namespace Distributed.Files
         }
     }
 
+    static class FileWrite
+    {
+        public static void WriteOut(NetworkStream iostream, string filename)
+        {
+            FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            BinaryReader binFile = new BinaryReader(fs);
+            int bytesSize = 0;
+            byte[] downBuffer = new byte[2048];
+            while ((bytesSize = binFile.Read(downBuffer, 0, downBuffer.Length)) > 0)
+            {
+                iostream.Write(downBuffer, 0, bytesSize);
+            }
+            fs.Dispose();
+            iostream.Flush();
+        }
+    }
+
 }

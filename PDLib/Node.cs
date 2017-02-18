@@ -1,11 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Net.Sockets;
-using System.Threading;
 using System.Collections.Concurrent;
-using Distributed.Proxy;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+
+using Distributed.Proxy;
 using Distributed.Files;
 
 [assembly: InternalsVisibleTo("StartNode")]
@@ -47,8 +45,7 @@ namespace Distributed.Node
     /// </summary>
     internal class NodeComm : DataReceivedEventArgs
     {
-        public const string endl = "end";
-
+        
         public MessageType Protocol { get; }
         // a mapping of input strings to protocols
         private static Dictionary<string, MessageType> MessageMap = 
@@ -140,7 +137,7 @@ namespace Distributed.Node
                     Console.WriteLine("Node Sending Message");
                     if (data.Protocol == NodeComm.MessageType.File)
                     {
-                        message = "send" + " " + NodeComm.endl;
+                        message = "send" + " " + DataReceivedEventArgs.endl;
                         byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
                         proxy.iostream.Write(o, 0, o.Length);
                     }
