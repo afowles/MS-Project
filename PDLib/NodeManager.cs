@@ -11,7 +11,7 @@ using Distributed.Default;
 
 namespace Distributed.Node
 {
-    
+
     /// <summary>
     /// Master Slave approach, will manage connections
     /// to nodes and pass of incoming clients. Look into
@@ -20,12 +20,17 @@ namespace Distributed.Node
     public class NodeManager
     {
         private TcpListener server;
-        bool StillActive;
-        static string IpAddr = "?";
-        Byte[] bytes = new Byte[BufferSize];
-        const int BufferSize = 1024;
+        private bool StillActive;
+        private static string IpAddr = "?";
+        private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
+        
         private List<Proxy.Proxy> ConnectedNodes;
 
+        /// <summary>
+        /// Creates a server listening
+        /// on the given IP.
+        /// </summary>
+        /// <param name="ip">IP to listen on</param>
         public NodeManager(string ip)
         {
             Int32 port = 12345;
@@ -45,6 +50,7 @@ namespace Distributed.Node
                 server.Stop();
             }
         }
+
         /// <summary>
         /// Call to start listening
         /// on the server.
@@ -103,7 +109,6 @@ namespace Distributed.Node
         /// </summary>
         public static async Task GetLocalIPAddress()
         {
-
             IPHostEntry host;
             string localIP = "?";
             host = await Dns.GetHostEntryAsync(Dns.GetHostName());
@@ -148,60 +153,24 @@ namespace Distributed.Node
         }
 
     }
+
+
+    /// <summary>
+    /// Node Manager Receiver, most of this is handled by
+    /// the default receiver.
+    /// </summary>
     public class NodeManagerReceiver : AbstractReceiver
     {
-        public override void Run()
+        public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
         {
-            // Grab the network IO stream from the proxy.
-            NetworkStream iostream = proxy.iostream;
-            // setup a byte buffer
-            Byte[] bytes = new Byte[1024];
-            String data;
-
-            try
-            {
-                while (true)
-                {
-                    try
-                    {
-                        // check if we got something
-                        if (!iostream.DataAvailable)
-                        {
-                            Thread.Sleep(1);
-                        }
-                        else if (iostream.Read(bytes, 0, bytes.Length) > 0)
-                        {
-                            data = System.Text.Encoding.ASCII.GetString(bytes);
-                            //TODO: log this
-                            Console.WriteLine("Received: {0}", data);
-                            // clear out buffer
-                            Array.Clear(bytes, 0, bytes.Length);
-
-                            // Create a DataReceivedEvent
-                            NodeComm d = new NodeComm(data);
-                            OnDataReceived(d);
-                            
-                        }
-
-                    }
-                    catch (IOException e)
-                    {
-                        //TODO: handle this
-                        Console.Write(e);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                //TODO: handle this
-                Console.Write(e);
-            }
-            finally
-            {
-                //TODO: find a way to do this 
-                //iostream.Close();
-            }
+            return new NodeManagerComm(data);
         }
+
+        public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
+        {
+            
+        }
+
     }
 
     public class NodeManagerSender : AbstractSender

@@ -11,85 +11,74 @@ namespace Distributed.Default
 {
 
     /// <summary>
-    /// A default receiver for a master node before
-    /// the connection type is known.
+    /// Object passed between Default Receiver
     /// </summary>
-    /// <remarks>
-    /// When a connection is made to a server there
-    /// is no way of knowing immediately if that connection
-    /// belongs. Default receivers know enough to hand off
-    /// connection to a proper receiver. For the master node
-    /// manager there could be a query, job or node connection.
-    /// </remarks>
-    internal class DefaultReceiver : AbstractReceiver
+    internal class DefaultDataComm : DataReceivedEventArgs
     {
-        /// <summary>
-        /// Default receiver uses a separate thread
-        /// with this run method.
-        /// </summary>
-        public override void Run()
+        public MessageType Protocol { get; }
+        public const string endl = " end";
+        private static Dictionary<string, MessageType> MessageMap =
+            new Dictionary<string, MessageType> {
+                { "node", MessageType.Node },
+                { "query", MessageType.Query },
+                { "job", MessageType.Job },
+                { "id", MessageType.Id }
+            };
+
+        public enum MessageType
         {
-            // Grab the network IO stream from the proxy.
-            NetworkStream iostream = proxy.iostream;
-            // setup a byte buffer
-            Byte[] bytes = new Byte[1024];
-            String data;
-            try
-            {
-                while (true)
-                {
-                    try
-                    {
-                        // Check if we got something
-                        if (!iostream.DataAvailable)
-                        {
-                            Thread.Sleep(1);
-                        }
-                        else if (iostream.Read(bytes, 0, bytes.Length) > 0)
-                        {
-                            data = System.Text.Encoding.ASCII.GetString(bytes);
-                            Console.WriteLine("Received: {0}", data);
-                            // clear out buffer
-                            Array.Clear(bytes, 0, bytes.Length);
+            Unknown,
+            Id,
+            Node,
+            Query,
+            Job
 
-                            // Create a DataReceivedEvent                     
-                            DefaultDataComm d = new DefaultDataComm(data);
-                            OnDataReceived(d);
-                            
-                            switch(d.Protocol)
-                            {
-                                case DefaultDataComm.MessageType.Node:
-                                    // hand off to proper sender and receiver
-                                    proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender());
-                                    // leave and stop this thread.
-                                    return;
-                                case DefaultDataComm.MessageType.Job:
+        }
 
-                                    return;
-                                case DefaultDataComm.MessageType.Query:
+        public DefaultDataComm(string msg)
+            : base(msg)
+        {
+            MessageType m = MessageType.Unknown;
+            MessageMap.TryGetValue(args[0], out m);
+            Protocol = m;
+        }
+    }
+        /// <summary>
+        /// A default receiver for a master node before
+        /// the connection type is known.
+        /// </summary>
+        /// <remarks>
+        /// When a connection is made to a server there
+        /// is no way of knowing immediately if that connection
+        /// belongs. Default receivers know enough to hand off
+        /// connection to a proper receiver. For the master node
+        /// manager there could be a query, job or node connection.
+        /// </remarks>
+        internal class DefaultReceiver : AbstractReceiver
+    {
+        public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
+        {
+            return new DefaultDataComm(data);
+        }
 
-                                    return;
-                            }
-                        }
-                    }
-                    catch (IOException e)
-                    {
-                        //TODO: handle this
-                        Console.Write(e);
-                    }
-                }
-            }
-            catch (Exception e)
+        public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
+        {
+            switch ((e as DefaultDataComm).Protocol)
             {
-                //TODO: handle this
-                Console.Write(e);
-            }
-            finally
-            {
-                //TODO: find a way to do this 
-                //iostream.Close();
+                case DefaultDataComm.MessageType.Node:
+                    // hand off to proper sender and receiver
+                    proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender());
+                    // leave and stop this thread.
+                    return;
+                case DefaultDataComm.MessageType.Job:
+
+                    return;
+                case DefaultDataComm.MessageType.Query:
+
+                    return;
             }
         }
+
     }
 
     /// <summary>
@@ -120,14 +109,8 @@ namespace Distributed.Default
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
             MessageQueue.Enqueue(e as DefaultDataComm);
-            int i = 5;
-            math(out i);
         }
 
-        public void math(out int i)
-        {
-            i = 40;
-        }
         /// <summary>
         /// Default sender uses thread with run method.
         /// </summary>
@@ -160,39 +143,5 @@ namespace Distributed.Default
             }
         }
     }
-
-    /// <summary>
-    /// Object passed between Default Receiver
-    /// </summary>
-    internal class DefaultDataComm : DataReceivedEventArgs
-    {
-        public MessageType Protocol { get; }
-        public const string endl = " end";
-        private static Dictionary<string, MessageType> MessageMap =
-            new Dictionary<string, MessageType> {
-                { "node", MessageType.Node },
-                { "query", MessageType.Query },
-                { "job", MessageType.Job },
-                { "id", MessageType.Id }
-            };
-        
-        public enum MessageType
-        {
-            Unknown,
-            Id,
-            Node,
-            Query,
-            Job
-            
-        }
-
-        public DefaultDataComm(string msg)
-            : base(msg)
-        {
-            MessageType m = MessageType.Unknown;
-            MessageMap.TryGetValue(args[0], out m);
-            Protocol = m;
-        }
-
-    }
+  
 }

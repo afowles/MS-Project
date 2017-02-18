@@ -7,4 +7,6 @@ namespace Distributed
         public abstract void Main(String[] args);
 
     }
+
+
 }

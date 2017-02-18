@@ -43,6 +43,7 @@
     <Compile Include="Default.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="Job.cs" />
+    <Compile Include="JobLauncher.cs" />
     <Compile Include="JobTask.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Node.cs" />

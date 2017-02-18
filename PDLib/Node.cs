@@ -36,6 +36,7 @@ namespace Distributed.Node
                 Console.WriteLine("Port could not be parsed.");
                 Environment.Exit(1);
             }
+            Console.WriteLine("Starting");
             Proxy.Proxy p = new Proxy.Proxy(new NodeReceiver(), new NodeSender(), args[0], port);
         }
     }
@@ -88,71 +89,21 @@ namespace Distributed.Node
     internal class NodeReceiver : AbstractReceiver
     {
 
-        /// <summary>
-        /// Run method for a node receiver looks
-        /// for messages from the node manager. 
-        /// </summary>
-        /// <note> This is being run from its own thread</note>
-        public override void Run()
+        public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
         {
-            // Grab the network IO stream from the proxy.
-            NetworkStream iostream = proxy.iostream;
-            // setup a byte buffer
-            Byte[] bytes = new Byte[1024];
-            String data;
+            return new NodeComm(data);
+        }
 
-            try
-            {
-                // TODO: change this to something custom like !ShutdownEvent.WaitOne(0)
-                // alternatively look for a specific shutdown message. 
-                while (true)
-                {
-                    try
-                    {
-                        // check if we got something
-                        if (!iostream.DataAvailable)
-                        {
-                            Thread.Sleep(1);
-                        }
-                        else if (iostream.Read(bytes, 0, bytes.Length) > 0)
-                        {
-                            data = System.Text.Encoding.ASCII.GetString(bytes);
-                            //TODO: log this
-                            Console.WriteLine("Received: {0}", data);
-                            // clear out buffer
-                            Array.Clear(bytes, 0, bytes.Length);
-                            
-                            // raise the data received event
-                            NodeComm d = new NodeComm(data);
-                            OnDataReceived(d);
+        public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
+        {
+            NodeComm d = e as NodeComm;
 
-                            
-                            if (d.Protocol == NodeComm.MessageType.File)
-                            {
-                                FileRead.ReadInWriteOut(iostream, "test");
-                            }                            
-                          
-                        }
-                        
-                    }
-                    catch (IOException e)
-                    {
-                        //TODO: handle this
-                        Console.Write(e);
-                    }
-                }
-            }
-            catch (Exception e)
+            if (d.Protocol == NodeComm.MessageType.File)
             {
-                //TODO: handle this
-                Console.Write(e);
-            }
-            finally
-            {
-                //TODO: find a way to do this 
-                //iostream.Close();
+                FileRead.ReadInWriteOut(proxy.iostream, "test");
             }
         }
+
     }
 
     /// <summary>

@@ -26,6 +26,16 @@ namespace Distributed
 
     internal class QueryReceiver : AbstractReceiver
     {
+        public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void Run()
         {
             throw new NotImplementedException();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -86,6 +87,8 @@ namespace Distributed.Proxy
             sender.proxy = this;
             // add sender to list of listeners for a data receive event
             receiver.DataReceived += sender.HandleReceiverEvent;
+            // add the receivers abstract method for additional handling
+            receiver.DataReceived += receiver.HandleAdditionalReceiving;
             // start receiving
             receiver.Start();
             // start sender
@@ -104,6 +107,7 @@ namespace Distributed.Proxy
             sender = s;
             ConfigureSenderReceiver();
         }
+
         /// <summary>
         /// Shutdown the TcpClient
         /// and the underlying tcp connection.
@@ -114,8 +118,6 @@ namespace Distributed.Proxy
             // TODO, figure something else out
             //client.Close();
         }
-
-
     }
 
 
@@ -158,6 +160,7 @@ namespace Distributed.Proxy
     /// </summary>
     public abstract class AbstractReceiver : NetworkSendReceive
     {
+
         /// <summary>
         /// The event for receiving data.
         /// </summary>
@@ -173,6 +176,82 @@ namespace Distributed.Proxy
         {
             DataReceived?.Invoke(this, e);
         }
+
+        /// <summary>
+        /// Method that does the actual receiving loop
+        /// reads in the data then raises on data received
+        /// event for listeners.
+        /// </summary>
+        public override void Run()
+        {
+            // Grab the network IO stream from the proxy.
+            NetworkStream iostream = proxy.iostream;
+            // setup a byte buffer
+            Byte[] bytes = new Byte[BUFFER_SIZE];
+            String data;
+
+            try
+            {
+                while (true)
+                {
+                    try
+                    {
+                        // Check if we got something
+                        if (!iostream.DataAvailable)
+                        {
+                            // sleep a short time
+                            Thread.Sleep(1);
+                        }
+                        else if (iostream.Read(bytes, 0, bytes.Length) > 0)
+                        {
+                            data = System.Text.Encoding.ASCII.GetString(bytes);
+                            Console.WriteLine("Received: {0}", data);
+                            // Clear out buffer to prevent odd messages
+                            Array.Clear(bytes, 0, bytes.Length);
+                            // Raise the data received event
+                            OnDataReceived(CreateDataReceivedEvent(data));
+                        }
+                        else
+                        {
+                            // TODO handle failure case
+                        }
+
+                    }
+                    catch (IOException e)
+                    {
+                        //TODO: handle this
+                        Console.Write(e);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //TODO: handle this
+                Console.Write(e);
+            }
+            finally
+            {
+                //TODO: find a way to do this 
+                //iostream.Close();
+            }
+        }
+
+        /// <summary>
+        /// A subclass must be able to
+        /// create and return a data received event object
+        /// for its specific needs. 
+        /// </summary>
+        /// <param name="data">data from socket</param>
+        /// <returns>new DataRecivedEventArgs object type</returns>
+        public abstract DataReceivedEventArgs CreateDataReceivedEvent(string data);
+
+        /// <summary>
+        /// A subclass must implement any additional handling that they want done.
+        /// when data is received.
+        /// </summary>
+        /// <param name="sender">event raiser</param>
+        /// <param name="e">data from receive event</param>
+        public abstract void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e);
     }
 
     /// <summary>
@@ -191,9 +270,10 @@ namespace Distributed.Proxy
     /// </summary>
     public abstract class NetworkSendReceive
     {
-        //TODO: Add some notion of what kind of sender/receiver we are
-        // Thread object to handle  from
-        // socket.
+        // Setup constant buffer size
+        public const int BUFFER_SIZE = 1024;
+
+        // Thread object to handle from socket.
         protected Thread thread;
         // The proxy object that the sender/receiver is
         // sending/receiving for.
@@ -222,9 +302,5 @@ namespace Distributed.Proxy
             proxy.Shutdown();
         }
     }
-
-    
-
-
 
 }
