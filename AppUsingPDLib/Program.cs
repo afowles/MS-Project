@@ -1,6 +1,6 @@
 ﻿using System;
 using Distributed.Node;
-using Distributed.Proxy;
+using Distributed.Network;
 using System.Diagnostics;
 
 using Distributed;

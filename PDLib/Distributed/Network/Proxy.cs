@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace Distributed.Proxy
+namespace Distributed.Network
 {
     /// <summary>
     /// A proxy is a TcpClient wrapper
@@ -25,13 +25,11 @@ namespace Distributed.Proxy
         /// </summary>
         /// <param name="r">An Abstract Receiver</param>
         /// <param name="s">An Abstract Sender</param>
-        /// <param name="client">An initalized</param>
+        /// <param name="client">An initalized TcpClient</param>
         public Proxy(AbstractReceiver r, AbstractSender s, TcpClient client)
         {
-            this.client = client;
-            
+            this.client = client;   
             iostream = client.GetStream();
-        
             receiver = r;
             sender = s;
             ConfigureSenderReceiver();
@@ -39,7 +37,7 @@ namespace Distributed.Proxy
 
         /// <summary>
         /// A Proxy constructor that takes in the
-        /// string and port name to create a Tcp connection
+        /// string and port name to create a Tcp connection.
         /// </summary>
         /// <param name="r">An Abstract Receiver</param>
         /// <param name="s">An Abstract Sender</param>
@@ -50,13 +48,13 @@ namespace Distributed.Proxy
             try
             {
                 // this is not supported for .NET core...
-                //this.client = new TcpClient(host, port);
+                // this.client = new TcpClient(host, port);
                 client = new TcpClient();
                 Socket sock = client.Client;
                 IPAddress ipAddress = IPAddress.Parse(host);
                 client.ConnectAsync(ipAddress, port);
                 
-                // should probably use await...
+                // wait until the client is connected.
                 while (!client.Connected) { }
             }
             catch(SocketException e)
@@ -105,6 +103,7 @@ namespace Distributed.Proxy
         {
             receiver = r;
             sender = s;
+            // reconfigure
             ConfigureSenderReceiver();
         }
 
@@ -114,17 +113,16 @@ namespace Distributed.Proxy
         /// </summary>
         public void Shutdown()
         {
-            // alright can't close in .NET core
-            // TODO, figure something else out
-            //client.Close();
-            
+            // Can't call close in .NET core
+            // client.Close();
+            iostream.Dispose();   
         }
 
         /// <summary>
         /// Queue a data event for the receiver
         /// without receiving it directly from the socket.
         /// </summary>
-        /// <param name="d"></param>
+        /// <param name="d">the data to queue</param>
         public void QueueDataEvent(DataReceivedEventArgs d)
         {
             receiver.OnDataReceived(d);
@@ -136,7 +134,7 @@ namespace Distributed.Proxy
     /// Event arguments class to hold info about the data received.
     /// </summary>
     /// <remarks>This should be subclassed depending
-    /// on what kind of data is being received</remarks>
+    /// on what kind of data is being received.</remarks>
     public abstract class DataReceivedEventArgs : EventArgs
     {
         public const string endl = "end";

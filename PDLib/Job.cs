@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Distributed.Proxy;
+using Distributed.Network;
 
 
 namespace Distributed

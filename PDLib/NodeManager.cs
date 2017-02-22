@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using Distributed.Proxy;
+using Distributed.Network;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.IO;
@@ -28,7 +28,7 @@ namespace Distributed.Node
         private static string IpAddr = "?";
         private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
         
-        public List<Proxy.Proxy> ConnectedNodes;
+        public List<Network.Proxy> ConnectedNodes;
         public Dictionary<int, string> jobs = new Dictionary<int, string>();
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Distributed.Node
         public NodeManager(string ip)
         {
             
-            ConnectedNodes = new List<Proxy.Proxy>();
+            ConnectedNodes = new List<Network.Proxy>();
             try
             {
                 IPAddress localAddr = IPAddress.Parse(ip);
@@ -89,7 +89,7 @@ namespace Distributed.Node
                 var client = await server.AcceptTcpClientAsync();
                 Console.WriteLine("Connected!");
                 // create a proxy
-                var proxy = new Proxy.Proxy(new DefaultReceiver(this), new DefaultSender(this), client);
+                var proxy = new Network.Proxy(new DefaultReceiver(this), new DefaultSender(this), client);
                 // add it to the list of connected nodes
                 ConnectedNodes.Add(proxy);    
             }
@@ -226,7 +226,7 @@ namespace Distributed.Node
                     // add it to the list of jobs for later
                     Jobs.Add(data);
                     //String s = Console.ReadLine();
-                    foreach (Proxy.Proxy p in manager.ConnectedNodes)
+                    foreach (Network.Proxy p in manager.ConnectedNodes)
                     {
                         p.QueueDataEvent(new NodeManagerComm("file " + data.args[1]));
                     }
@@ -251,7 +251,7 @@ namespace Distributed.Node
                     if (Jobs.Count > 0)
                     {
                         Console.WriteLine("Writing file: " + Jobs[0].args[1]);
-                        foreach (Proxy.Proxy p in manager.ConnectedNodes)
+                        foreach (Network.Proxy p in manager.ConnectedNodes)
                         {
                             FileWrite.WriteOut(p.iostream, Jobs[0].args[1]);
                         }

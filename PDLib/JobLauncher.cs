@@ -1,5 +1,5 @@
 ﻿using System;
-using Distributed.Proxy;
+using Distributed.Network;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
@@ -15,7 +15,7 @@ namespace Distributed
         {
             // try to connect to the NodeManager
             Console.WriteLine("Starting Job Launcher");
-            Proxy.Proxy p = new Proxy.Proxy(new JobReceiver(), 
+            Network.Proxy p = new Network.Proxy(new JobReceiver(), 
                 new JobSender(args), args[0], NetworkSendReceive.SERVER_PORT);
         }
     }

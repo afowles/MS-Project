@@ -3,13 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-using Distributed.Proxy;
+using Distributed.Network;
 using Distributed.Files;
 
 [assembly: InternalsVisibleTo("StartNode")]
 
 /// <summary>
-/// Classes in Distributed.Node are internal to PDLib_Core
+/// Classes in Distributed.Node are internal to PDLib
 /// Uses outside of this assembly are not allowed,
 /// other than by the designated entry point.
 /// This file contains classes as part of the framework, not the library.
@@ -35,7 +35,7 @@ namespace Distributed.Node
                 Environment.Exit(1);
             }
             Console.WriteLine("Starting");
-            Proxy.Proxy p = new Proxy.Proxy(new NodeReceiver(), new NodeSender(), args[0], port);
+            Proxy p = new Proxy(new NodeReceiver(), new NodeSender(), args[0], port);
         }
     }
 
