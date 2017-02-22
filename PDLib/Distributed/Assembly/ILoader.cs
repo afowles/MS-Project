@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-
+﻿
 namespace Distributed.Assembly
 {
     /// <summary>
@@ -11,13 +9,5 @@ namespace Distributed.Assembly
     /// now requires different implementations. See Loader.cs in PDLib_Core</remarks>
     interface ILoader
     {
-    }
-
-    public class Loader : ILoader
-    {
-        public Loader(string assemlyPath)
-        {
-            
-        }
     }
 }

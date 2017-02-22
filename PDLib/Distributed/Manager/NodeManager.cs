@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using Distributed.Network;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using System.IO;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-using Distributed.Default;
+using Distributed.Network;
 using Distributed.Files;
 
 [assembly: InternalsVisibleTo("StartManager")]
 
-namespace Distributed.Node
+namespace Distributed.Manager
 {
 
     /// <summary>
