@@ -117,6 +117,17 @@ namespace Distributed.Proxy
             // alright can't close in .NET core
             // TODO, figure something else out
             //client.Close();
+            
+        }
+
+        /// <summary>
+        /// Queue a data event for the receiver
+        /// without receiving it directly from the socket.
+        /// </summary>
+        /// <param name="d"></param>
+        public void QueueDataEvent(DataReceivedEventArgs d)
+        {
+            receiver.OnDataReceived(d);
         }
     }
 
@@ -176,7 +187,7 @@ namespace Distributed.Proxy
         /// Raises the data received event.
         /// </summary>
         /// <param name="e">The data received</param>
-        protected virtual void OnDataReceived(DataReceivedEventArgs e)
+        public virtual void OnDataReceived(DataReceivedEventArgs e)
         {
             DataReceived?.Invoke(this, e);
         }
@@ -237,6 +248,7 @@ namespace Distributed.Proxy
             {
                 //TODO: find a way to do this 
                 //iostream.Close();
+                
             }
         }
 

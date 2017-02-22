@@ -136,14 +136,16 @@ namespace Distributed.Node
         public MessageType Protocol { get; }
         private static Dictionary<string, MessageType> MessageMap =
             new Dictionary<string, MessageType> {
-                { "Send", MessageType.Send },
-                { "job", MessageType.NewJob }
+                { "send", MessageType.Send },
+                { "job", MessageType.NewJob },
+                { "file", MessageType.File }
             };
 
         public enum MessageType
         {
             Send,
             NewJob,
+            File,
             Unknown
         }
 
@@ -183,12 +185,11 @@ namespace Distributed.Node
     internal class NodeManagerSender : AbstractSender
     {
         ConcurrentQueue<DataReceivedEventArgs> MessageQueue = new ConcurrentQueue<DataReceivedEventArgs>();
+        List<DataReceivedEventArgs> Jobs = new List<DataReceivedEventArgs>();
         public NodeManager manager;
 
         public NodeManagerSender(NodeManager manager)
         {
-            //Testing send
-            //MessageQueue.Enqueue(new NodeComm("file"));
             this.manager = manager;
         }
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
@@ -208,42 +209,64 @@ namespace Distributed.Node
                 {
                     if (data is NodeManagerComm)
                     {
-                        HandleNodeCommunication(data as NodeComm);
+                        HandleNodeCommunication(data as NodeManagerComm);
                     }
                 }
                 
             }
         }
 
-        private void HandleNodeCommunication(NodeComm data)
+        private void HandleNodeCommunication(NodeManagerComm data)
         {
             switch (data.Protocol)
             {
-                case NodeComm.MessageType.File:
-                    Console.Write("Input Cmd:");
-                    String s = Console.ReadLine();
-                   
-                    s += " " + 100;
-                    Console.WriteLine(s);
-                    byte[] os = System.Text.Encoding.ASCII.GetBytes(s);
-                    proxy.iostream.Write(os, 0, os.Length);
-                    proxy.iostream.Flush();
-
-                    
-                    break;
-
-                case NodeComm.MessageType.Send:
-                    //Console.Write("Input File:");
-                    Console.WriteLine("Writing file: " + data.args[1]);
+                // sent by a job file
+                case NodeManagerComm.MessageType.NewJob:
+                    Console.Write("Received Job File: " + data.args[1]);
+                    // add it to the list of jobs for later
+                    Jobs.Add(data);
+                    //String s = Console.ReadLine();
                     foreach (Proxy.Proxy p in manager.ConnectedNodes)
                     {
-                        FileWrite.WriteOut(p.iostream, data.args[1]);
+                        p.QueueDataEvent(new NodeManagerComm("file " + data.args[1]));
+                    }
+
+                    
+                    break;
+                // Send back to all nodes that a file will be sent, only a node
+                // will know what to do with this message, all other connections
+                // will ignore this.
+                case NodeManagerComm.MessageType.File:
+                    Console.WriteLine("Sending file to nodes");
+                    string message = "file " + data.args[1] + " " + DataReceivedEventArgs.endl;
+                    byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
+                    proxy.iostream.Write(o, 0, o.Length);
+                    break;
+
+                // the machine that submitted the job file
+                // needs to be on the same computer that the
+                // manager is running on as of now.
+                case NodeManagerComm.MessageType.Send:
+                    //Console.Write("Input File:");
+                    if (Jobs.Count > 0)
+                    {
+                        Console.WriteLine("Writing file: " + Jobs[0].args[1]);
+                        foreach (Proxy.Proxy p in manager.ConnectedNodes)
+                        {
+                            FileWrite.WriteOut(p.iostream, Jobs[0].args[1]);
+                        }
+                        proxy.iostream.Flush();
+                        Console.WriteLine("Sent file");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Jobs");
+                        break;
                     }
                     
-                    proxy.iostream.Flush();
-                    Console.WriteLine("Sent");
-                    break;
-                case NodeManager
+                
+
             }
         }
     }

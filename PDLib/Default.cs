@@ -74,7 +74,7 @@ namespace Distributed.Default
                 case DefaultDataComm.MessageType.Query:
 
                     // hand off to proper sender and receiver
-                    proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender(this));
+                    proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender(manager));
                     // leave and stop this thread.
                     done = true;
                     return;

@@ -2,33 +2,38 @@
 using Distributed.Proxy;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Distributed.Node;
+using System.Threading;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("SubmitJob")]
 
 namespace Distributed
 {
-    class JobLauncher
+    internal class JobLauncher
     {
         public static void Main(string[] args)
         {
             // try to connect to the NodeManager
             Console.WriteLine("Starting Job Launcher");
-            Proxy.Proxy p = new Proxy.Proxy(new JobReceiver(args), 
-                new JobSender(), args[0], NetworkSendReceive.SERVER_PORT);
+            Proxy.Proxy p = new Proxy.Proxy(new JobReceiver(), 
+                new JobSender(args), args[0], NetworkSendReceive.SERVER_PORT);
         }
     }
 
-    internal sealed class JobEventArgs : NodeManagerComm
+    internal sealed class JobEventArgs : DataReceivedEventArgs
     {
         public MessageType Protocol { get; }
         private static Dictionary<string, MessageType> MessageMap =
             new Dictionary<string, MessageType> {
-                { "id", MessageType.Id }
+                { "id", MessageType.Id },
+                { "accept", MessageType.Accept }
             };
 
-        public new enum MessageType
+        public enum MessageType
         {
             Unknown,
-            Id
+            Id,
+            Accept
         }
 
         public JobEventArgs(string msg) : base(msg)
@@ -41,14 +46,6 @@ namespace Distributed
 
     internal sealed class JobReceiver : AbstractReceiver
     {
-        private string PathToDLL;
-
-        public JobReceiver(string[] args)
-        {
-            PathToDLL = args[1];
-            // TODO... pass along the other args the user wants to give
-            // to their program.
-        }
 
         public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
         {
@@ -65,6 +62,16 @@ namespace Distributed
     {
         ConcurrentQueue<JobEventArgs> MessageQueue = new ConcurrentQueue<JobEventArgs>();
 
+        private string PathToDLL;
+
+        public JobSender(string[] args)
+        {
+            PathToDLL = args[1];
+            // TODO... pass along the other args the user wants to give
+            // to their program.
+            //
+        }
+
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
             MessageQueue.Enqueue(e as JobEventArgs);
@@ -76,7 +83,6 @@ namespace Distributed
             while (true)
             {
                 JobEventArgs data;
-                string message;
                 if (MessageQueue.TryDequeue(out data))
                 {
                     Console.WriteLine("Job Sending Message");
@@ -85,6 +91,12 @@ namespace Distributed
                         Console.WriteLine("Sending Job Id");
                         byte[] b = System.Text.Encoding.ASCII.GetBytes("job" + " " + DataReceivedEventArgs.endl);
                         proxy.iostream.Write(b, 0, b.Length);
+                        // TODO, do this with message passing instead
+                        // guessing at set up time
+                        Thread.Sleep(1000);
+                        // job in this context corresponds to job manager.
+                        byte[] b2 = System.Text.Encoding.ASCII.GetBytes("job" + " " + 
+                            PathToDLL + " " + DataReceivedEventArgs.endl);
                     }
 
                 }
