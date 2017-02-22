@@ -137,8 +137,8 @@ namespace Distributed.Network
     /// on what kind of data is being received.</remarks>
     public abstract class DataReceivedEventArgs : EventArgs
     {
+        // End of a message
         public const string endl = "end";
-
         private string data;
         public string[] args { get; }
 
@@ -153,13 +153,12 @@ namespace Distributed.Network
             get { return data; }
         }
 
-
         /// <summary>
-        /// Split incoming data on space
+        /// Split incoming data on space.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        protected string[] ParseMessage(string message)
+        protected static string[] ParseMessage(string message)
         {
             return message.Split(new char[] { ' ' });
         }
@@ -172,7 +171,7 @@ namespace Distributed.Network
     /// </summary>
     public abstract class AbstractReceiver : NetworkSendReceive
     {
-        public bool done = false;
+        protected bool DoneReceiving = false;
 
         /// <summary>
         /// The event for receiving data.
@@ -191,8 +190,8 @@ namespace Distributed.Network
         }
 
         /// <summary>
-        /// Method that does the actual receiving loop
-        /// reads in the data then raises on data received
+        /// Method that does the actual receiving loop,
+        /// reads in the data then raises an on data received
         /// event for listeners.
         /// </summary>
         public override void Run()
@@ -200,12 +199,12 @@ namespace Distributed.Network
             // Grab the network IO stream from the proxy.
             NetworkStream iostream = proxy.iostream;
             // setup a byte buffer
-            Byte[] bytes = new Byte[BUFFER_SIZE];
-            String data;
+            byte[] bytes = new byte[BUFFER_SIZE];
+            string data;
 
             try
             {
-                while (!done)
+                while (!DoneReceiving)
                 {
                     try
                     {
@@ -226,7 +225,7 @@ namespace Distributed.Network
                         }
                         else
                         {
-                            // TODO handle failure case
+                            // TODO: handle failure case
                         }
 
                     }
@@ -244,25 +243,30 @@ namespace Distributed.Network
             }
             finally
             {
-                //TODO: find a way to do this 
-                //iostream.Close();
-                
+                proxy.Shutdown();
             }
         }
 
         /// <summary>
+        /// Return a concrete DataReceivedEventArgs subclass, 
+        /// for handling receive events.
+        /// </summary>
+        /// <remarks>
         /// A subclass must be able to
         /// create and return a data received event object
         /// for its specific needs. 
-        /// </summary>
+        /// </remarks>
         /// <param name="data">data from socket</param>
         /// <returns>new DataRecivedEventArgs object type</returns>
         public abstract DataReceivedEventArgs CreateDataReceivedEvent(string data);
 
         /// <summary>
+        /// Process received data in addition to simply sending it to the sender object.
+        /// </summary>
+        /// <remarks>
         /// A subclass must implement any additional handling that they want done.
         /// when data is received.
-        /// </summary>
+        /// </remarks>
         /// <param name="sender">event raiser</param>
         /// <param name="e">data from receive event</param>
         public abstract void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e);
@@ -274,13 +278,18 @@ namespace Distributed.Network
     /// </summary>
     public abstract class AbstractSender : NetworkSendReceive
     {
+        /// <summary>
+        /// Handle the nessesary communication in response
+        /// to data received from the socket.
+        /// </summary>
+        /// <param name="sender">event raiser</param>
+        /// <param name="e">data from receive event</param>
         public abstract void HandleReceiverEvent(object sender, DataReceivedEventArgs e);
     }
 
     /// <summary>
     /// Provides the basic methods and members 
-    /// nessesary to send or receive for
-    /// a proxy object.
+    /// nessesary for network opperations. 
     /// </summary>
     public abstract class NetworkSendReceive
     {

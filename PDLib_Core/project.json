@@ -15,5 +15,9 @@
       "imports": "dnxcore50"
     }
   },
-  "buildOptions": {"compile": "../PDLib/*.cs"}
+  "buildOptions": {
+    "compile": {
+      "include": [ "../PDLib/*.cs", "../PDLib/Distributed/Network/*.cs" ]
+    }
+  }
 }

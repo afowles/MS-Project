@@ -4,7 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace Distributed.Default
+namespace Distributed.Network
 {
 
     /// <summary>
@@ -76,7 +76,7 @@ namespace Distributed.Default
                     // hand off to proper sender and receiver
                     proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender(manager));
                     // leave and stop this thread.
-                    done = true;
+                    DoneReceiving = true;
                     return;
             }
         }
