@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net.Sockets;
 
-
 namespace Distributed.Files
 {
     static class FileRead

@@ -17,7 +17,13 @@
   },
   "buildOptions": {
     "compile": {
-      "include": [ "../PDLib/Distributed/**" ],
+      "include": [
+        "../PDLib/Distributed/*.cs",
+        "../PDLib/Distributed/Assembly/*.cs",
+        "../PDLib/Distributed/Manager/*.cs",
+        "../PDLib/Distributed/Network/*.cs",
+        "../PDLib/Distributed/Node/*.cs"
+      ],
       "excludeFiles": ["../PDLib/Distributed/Assembly/Loader.cs"]
     }
   }

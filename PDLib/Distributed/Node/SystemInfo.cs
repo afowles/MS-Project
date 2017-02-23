@@ -17,7 +17,9 @@ namespace Distributed.Node
         {
             get
             {
-                return Environment.OSVersion.VersionString;
+                //return Environment.OSVersion.VersionString;
+                // TODO: figure out this for .NET core
+                return "";
             }
         }
 
