@@ -141,10 +141,11 @@ namespace Distributed.Manager
 
         public enum MessageType
         {
+            Unknown,
             Send,
             NewJob,
-            File,
-            Unknown
+            File
+            
         }
 
         public NodeManagerComm(string msg)
@@ -246,6 +247,7 @@ namespace Distributed.Manager
                 // manager is running on as of now.
                 case NodeManagerComm.MessageType.Send:
                     //Console.Write("Input File:");
+                    Console.WriteLine("Sending file");
                     if (Jobs.Count > 0)
                     {
                         Console.WriteLine("Writing file: " + Jobs[0].args[1]);
@@ -262,9 +264,6 @@ namespace Distributed.Manager
                         Console.WriteLine("No Jobs");
                         break;
                     }
-                    
-                
-
             }
         }
     }

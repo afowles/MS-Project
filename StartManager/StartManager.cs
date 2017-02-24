@@ -1,5 +1,5 @@
 ﻿
-using Distributed.Node;
+using Distributed.Manager;
 
 namespace StartManager
 {

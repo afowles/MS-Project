@@ -130,8 +130,7 @@ namespace Distributed.Network
                         || data.Protocol == DefaultDataComm.MessageType.Id)
                     {
                         Console.WriteLine("requesting Id");
-                        byte[] os = System.Text.Encoding.ASCII.GetBytes("id" + DefaultDataComm.endl);
-                        proxy.iostream.Write(os, 0, os.Length);
+                        SendMessage(new string[] { "id" });
                     }
                     else
                     {

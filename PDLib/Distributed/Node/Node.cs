@@ -72,7 +72,6 @@ namespace Distributed.Node
         public NodeComm(string msg) 
             : base(msg)
         {
-            
             MessageType m;
             MessageMap.TryGetValue(args[0], out m);
             Protocol = m;
@@ -131,21 +130,18 @@ namespace Distributed.Node
             while (true)
             {
                 NodeComm data;
-                string message;
                 if (MessageQueue.TryDequeue(out data))
                 {
                     Console.WriteLine("Node Sending Message");
                     if (data.Protocol == NodeComm.MessageType.File)
                     {
-                        message = "send" + " " + DataReceivedEventArgs.endl;
-                        byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
-                        proxy.iostream.Write(o, 0, o.Length);
+                        Console.WriteLine("Sending send");
+                        SendMessage(new string[] { "send" });
                     }
                     if (data.Protocol == NodeComm.MessageType.Id )
                     {
                         Console.WriteLine("Sending Node");
-                        byte[] b = System.Text.Encoding.ASCII.GetBytes("node" + " " + NodeComm.endl);
-                        proxy.iostream.Write(b, 0, b.Length);
+                        SendMessage(new string[] { "node" });
                     }
                     
                 }

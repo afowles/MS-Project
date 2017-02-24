@@ -138,7 +138,8 @@ namespace Distributed.Network
     public abstract class DataReceivedEventArgs : EventArgs
     {
         // End of a message
-        public const string endl = "end";
+        public const string endl = "end*";
+        public const char split = '|';
         private string data;
         public string[] args { get; }
 
@@ -160,7 +161,7 @@ namespace Distributed.Network
         /// <returns></returns>
         protected static string[] ParseMessage(string message)
         {
-            return message.Split(new char[] { ' ' });
+            return message.Split(new char[] { split });
         }
     }
 
@@ -217,6 +218,8 @@ namespace Distributed.Network
                         else if (iostream.Read(bytes, 0, bytes.Length) > 0)
                         {
                             data = System.Text.Encoding.ASCII.GetString(bytes);
+                            // don't print out the entire buffer (lot of extra space)
+                            data = data.Remove(data.LastIndexOf('*'), data.Substring(data.LastIndexOf('*')).Length);
                             Console.WriteLine("Received: {0}", data);
                             // Clear out buffer to prevent odd messages
                             Array.Clear(bytes, 0, bytes.Length);
@@ -238,12 +241,24 @@ namespace Distributed.Network
             }
             catch (Exception e)
             {
+                Console.WriteLine("Catching exception in Abstract");
                 //TODO: handle this
                 Console.Write(e);
             }
             finally
             {
-                proxy.Shutdown();
+                if (!DoneReceiving)
+                {
+                    Console.WriteLine("Shutting down, error happened");
+                    proxy.Shutdown();
+                }
+                else
+                {
+                    Console.WriteLine("Shutting down normally");
+                }
+                
+                
+                
             }
         }
 
@@ -285,6 +300,24 @@ namespace Distributed.Network
         /// <param name="sender">event raiser</param>
         /// <param name="e">data from receive event</param>
         public abstract void HandleReceiverEvent(object sender, DataReceivedEventArgs e);
+
+        /// <summary>
+        /// Format and send a message from an array
+        /// of string arguments.
+        /// </summary>
+        /// <param name="args">the message to send</param>
+        public virtual void SendMessage(string[] args)
+        {
+            string message = "";
+            foreach(string s in args)
+            {
+                message += s + DataReceivedEventArgs.split;
+            }
+            message += DataReceivedEventArgs.endl;
+            byte[] b = System.Text.Encoding.ASCII.GetBytes(message);
+            proxy.iostream.Write(b, 0, b.Length);
+        }
+
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 ﻿using Distributed.Node;
+using System;
 
 namespace StartNode
 {
@@ -6,8 +7,13 @@ namespace StartNode
     {
         public static void Main(string[] args)
         {
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Usage: <ip>");
+                return;
+            }
             //TODO: Figure out a better way to get IP
-            Node.Main(new string[] { "129.21.89.154", "12345" });
+            Node.Main(new string[] { args[0], "12345" });
         }
     }
 }

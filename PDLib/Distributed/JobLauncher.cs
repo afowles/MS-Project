@@ -89,14 +89,13 @@ namespace Distributed
                     if (data.Protocol == JobEventArgs.MessageType.Id)
                     {
                         Console.WriteLine("Sending Job Id");
-                        byte[] b = System.Text.Encoding.ASCII.GetBytes("job" + " " + DataReceivedEventArgs.endl);
-                        proxy.iostream.Write(b, 0, b.Length);
+                        SendMessage(new string[] { "job" });
                         // TODO, do this with message passing instead
                         // guessing at set up time
-                        Thread.Sleep(1000);
+                        Thread.Sleep(2000);
+                        Console.WriteLine("Sending Job");
                         // job in this context corresponds to job manager.
-                        byte[] b2 = System.Text.Encoding.ASCII.GetBytes("job" + " " + 
-                            PathToDLL + " " + DataReceivedEventArgs.endl);
+                        SendMessage(new string[] { "job", PathToDLL });
                     }
 
                 }
