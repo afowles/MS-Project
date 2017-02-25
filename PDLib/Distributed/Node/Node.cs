@@ -34,7 +34,7 @@ namespace Distributed.Node
                 Console.WriteLine("Port could not be parsed.");
                 Environment.Exit(1);
             }
-            Console.WriteLine("Starting");
+            Console.WriteLine("Node: Starting");
             Proxy p = new Proxy(new NodeReceiver(), new NodeSender(), args[0], port);
         }
     }
@@ -96,7 +96,9 @@ namespace Distributed.Node
 
             if (d.Protocol == NodeComm.MessageType.File)
             {
-                FileRead.ReadInWriteOut(proxy.iostream, "test");
+                // This will block on the iostream until the file reading
+                // is over.
+                FileRead.ReadInWriteOut(proxy.iostream, d.args[1]);
             }
         }
 
@@ -132,15 +134,14 @@ namespace Distributed.Node
                 NodeComm data;
                 if (MessageQueue.TryDequeue(out data))
                 {
-                    Console.WriteLine("Node Sending Message");
                     if (data.Protocol == NodeComm.MessageType.File)
                     {
-                        Console.WriteLine("Sending send");
+                        Console.WriteLine("Node: requesting file");
                         SendMessage(new string[] { "send" });
                     }
                     if (data.Protocol == NodeComm.MessageType.Id )
                     {
-                        Console.WriteLine("Sending Node");
+                        Console.WriteLine("Node: sending id");
                         SendMessage(new string[] { "node" });
                     }
                     

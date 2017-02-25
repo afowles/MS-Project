@@ -27,7 +27,6 @@ namespace Distributed.Network
             Node,
             Query,
             Job
-
         }
 
         public DefaultDataComm(string msg)
@@ -69,14 +68,30 @@ namespace Distributed.Network
             switch ((e as DefaultDataComm).Protocol)
             {
                 case DefaultDataComm.MessageType.Node:
-                case DefaultDataComm.MessageType.Job:
-                case DefaultDataComm.MessageType.Query:
-
                     // hand off to proper sender and receiver
-                    proxy.HandOffSendReceive(new NodeManagerReceiver(), new NodeManagerSender(manager));
+                    proxy.HandOffSendReceive(new NodeManagerReceiver(),
+                        new NodeManagerSender(manager), ConnectionType.NODE);
                     // leave and stop this thread.
                     DoneReceiving = true;
                     return;
+                case DefaultDataComm.MessageType.Job:
+                    // hand off to proper sender and receiver
+                    proxy.HandOffSendReceive(new NodeManagerReceiver(),
+                        new NodeManagerSender(manager), ConnectionType.JOB);
+                    // leave and stop this thread.
+                    DoneReceiving = true;
+                    return;
+                case DefaultDataComm.MessageType.Query:
+
+                    // hand off to proper sender and receiver
+                    proxy.HandOffSendReceive(new NodeManagerReceiver(), 
+                        new NodeManagerSender(manager), ConnectionType.QUERY);
+                    // leave and stop this thread.
+                    DoneReceiving = true;
+                    return;
+
+                default:
+                    break;
             }
         }
 
@@ -129,7 +144,7 @@ namespace Distributed.Network
                     if (data.Protocol == DefaultDataComm.MessageType.Unknown 
                         || data.Protocol == DefaultDataComm.MessageType.Id)
                     {
-                        Console.WriteLine("requesting Id");
+                        Console.WriteLine("Default Handler: Requesting Id");
                         SendMessage(new string[] { "id" });
                     }
                     else

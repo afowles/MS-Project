@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.IO;
 
 using Distributed.Network;
 using Distributed.Files;
@@ -25,9 +26,10 @@ namespace Distributed.Manager
         private bool StillActive;
         private static string IpAddr = "?";
         private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
-        
-        public List<Network.Proxy> ConnectedNodes;
-        public Dictionary<int, string> jobs = new Dictionary<int, string>();
+        // TODO this needs to be a thread safe collection.
+        public List<Proxy> ConnectedNodes;
+        //public Dictionary<int, string> jobs = new Dictionary<int, string>();
+        public List<DataReceivedEventArgs> Jobs = new List<DataReceivedEventArgs>();
 
         /// <summary>
         /// Creates a server listening
@@ -145,7 +147,6 @@ namespace Distributed.Manager
             Send,
             NewJob,
             File
-            
         }
 
         public NodeManagerComm(string msg)
@@ -184,7 +185,7 @@ namespace Distributed.Manager
     internal class NodeManagerSender : AbstractSender
     {
         ConcurrentQueue<DataReceivedEventArgs> MessageQueue = new ConcurrentQueue<DataReceivedEventArgs>();
-        List<DataReceivedEventArgs> Jobs = new List<DataReceivedEventArgs>();
+        
         public NodeManager manager;
 
         public NodeManagerSender(NodeManager manager)
@@ -206,6 +207,10 @@ namespace Distributed.Manager
                 DataReceivedEventArgs data;
                 if (MessageQueue.TryDequeue(out data))
                 {
+                    Console.WriteLine("in run nm sender: ");
+                    foreach (string s in data.args) { Console.Write(s + " "); };
+                    Console.WriteLine("");
+                    
                     if (data is NodeManagerComm)
                     {
                         HandleNodeCommunication(data as NodeManagerComm);
@@ -217,17 +222,23 @@ namespace Distributed.Manager
 
         private void HandleNodeCommunication(NodeManagerComm data)
         {
+            Console.WriteLine(data.Protocol);
             switch (data.Protocol)
             {
                 // sent by a job file
                 case NodeManagerComm.MessageType.NewJob:
-                    Console.Write("Received Job File: " + data.args[1]);
+                    Console.WriteLine("Received Job File: " + data.args[1]);
                     // add it to the list of jobs for later
-                    Jobs.Add(data);
+                    manager.Jobs.Add(data);
                     //String s = Console.ReadLine();
-                    foreach (Network.Proxy p in manager.ConnectedNodes)
+                    foreach (Proxy p in manager.ConnectedNodes)
                     {
-                        p.QueueDataEvent(new NodeManagerComm("file " + data.args[1]));
+                        if (p.connection == ConnectionType.NODE)
+                        {
+                            Console.WriteLine("Enquing for Node");
+                            p.QueueDataEvent(new NodeManagerComm("file|" + data.args[1]));
+                        }
+                            
                     }
 
                     
@@ -236,10 +247,8 @@ namespace Distributed.Manager
                 // will know what to do with this message, all other connections
                 // will ignore this.
                 case NodeManagerComm.MessageType.File:
-                    Console.WriteLine("Sending file to nodes");
-                    string message = "file " + data.args[1] + " " + DataReceivedEventArgs.endl;
-                    byte[] o = System.Text.Encoding.ASCII.GetBytes(message);
-                    proxy.iostream.Write(o, 0, o.Length);
+                    Console.WriteLine("Node Manager: sending file info");
+                    SendMessage(new string[] { "file", Path.GetFileName(data.args[1])});
                     break;
 
                 // the machine that submitted the job file
@@ -248,12 +257,17 @@ namespace Distributed.Manager
                 case NodeManagerComm.MessageType.Send:
                     //Console.Write("Input File:");
                     Console.WriteLine("Sending file");
-                    if (Jobs.Count > 0)
+                    if (manager.Jobs.Count > 0)
                     {
-                        Console.WriteLine("Writing file: " + Jobs[0].args[1]);
-                        foreach (Network.Proxy p in manager.ConnectedNodes)
+                        Console.WriteLine("Writing file: " + manager.Jobs[0].args[1]);
+                        foreach (Proxy p in manager.ConnectedNodes)
                         {
-                            FileWrite.WriteOut(p.iostream, Jobs[0].args[1]);
+                            if (p.connection == ConnectionType.NODE)
+                            {
+                                Console.WriteLine("Sending to file to node");
+                                FileWrite.WriteOut(p.iostream, manager.Jobs[0].args[1]);
+                            }
+                                
                         }
                         proxy.iostream.Flush();
                         Console.WriteLine("Sent file");

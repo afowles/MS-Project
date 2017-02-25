@@ -15,7 +15,7 @@ namespace Distributed.Network
     {
         private TcpClient client;
         public NetworkStream iostream { get; private set; }
-
+        public ConnectionType connection { get; set; }
         private AbstractReceiver receiver;
         private AbstractSender sender;
 
@@ -99,10 +99,12 @@ namespace Distributed.Network
         /// </summary>
         /// <param name="r">new receiver</param>
         /// <param name="s">new sender</param>
-        public void HandOffSendReceive(AbstractReceiver r, AbstractSender s)
+        public void HandOffSendReceive(AbstractReceiver r, 
+            AbstractSender s, ConnectionType c)
         {
             receiver = r;
             sender = s;
+            connection = c;
             // reconfigure
             ConfigureSenderReceiver();
         }
@@ -129,6 +131,16 @@ namespace Distributed.Network
         }
     }
 
+    /// <summary>
+    /// The type connected to the proxy
+    /// </summary>
+    public enum ConnectionType
+    {
+        DEFAULT,
+        NODE,
+        JOB,
+        QUERY
+    }
 
     /// <summary>
     /// Event arguments class to hold info about the data received.
@@ -146,7 +158,7 @@ namespace Distributed.Network
         public DataReceivedEventArgs(string msg)
         {
             data = msg;
-            args = ParseMessage(msg.ToLower());
+            args = ParseMessage(msg);
         }
 
         public string message
@@ -162,6 +174,24 @@ namespace Distributed.Network
         protected static string[] ParseMessage(string message)
         {
             return message.Split(new char[] { split });
+        }
+
+        /// <summary>
+        /// From a list of string arguments
+        /// construct a message to pass along.
+        /// </summary>
+        /// <param name="args">arguments</param>
+        /// <returns></returns>
+        protected static string ConstructMessage(string[] args)
+        {
+            string message = "";
+            foreach (string s in args)
+            {
+                message += s + DataReceivedEventArgs.split;
+            }
+            message += endl;
+            return message;
+
         }
     }
 
@@ -247,18 +277,13 @@ namespace Distributed.Network
             }
             finally
             {
+                // if we get here from anything other than
+                // a normal shutdown, close the proxy
                 if (!DoneReceiving)
                 {
-                    Console.WriteLine("Shutting down, error happened");
                     proxy.Shutdown();
                 }
-                else
-                {
-                    Console.WriteLine("Shutting down normally");
-                }
-                
-                
-                
+                   
             }
         }
 

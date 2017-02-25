@@ -13,14 +13,14 @@ namespace Distributed.Files
         /// and write that file out.
         /// </summary>
         /// <param name="iostream">Stream to read in from</param>
-        /// <param name="filename">Filename to write out to</param>
-        public static void ReadInWriteOut(NetworkStream iostream, string filename)
+        /// <param name="filepath">path to the file to write out to</param>
+        public static void ReadInWriteOut(NetworkStream iostream, string filepath)
         {
             // create a buffer for the incoming data
             byte[] buff = new byte[BufferSize];
             int byteSize = 0;
             // create a filestream for the new file
-            FileStream Fs = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+            FileStream Fs = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
             // wait for data
             while (!iostream.DataAvailable) { }
 
@@ -34,6 +34,7 @@ namespace Distributed.Files
                     Fs.Write(buff, 0, byteSize);
                 }
             }
+            // TODO handle the proper exception only, rethrow any other
             catch (IOException)
             {
                 Console.WriteLine("Read finished");
@@ -45,9 +46,9 @@ namespace Distributed.Files
 
     static class FileWrite
     {
-        public static void WriteOut(NetworkStream iostream, string filename)
+        public static void WriteOut(NetworkStream iostream, string filepath)
         {
-            FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
             BinaryReader binFile = new BinaryReader(fs);
             int bytesSize = 0;
             byte[] downBuffer = new byte[2048];
