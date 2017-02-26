@@ -7,7 +7,8 @@
     "System.Net.NetworkInformation": "4.3.0",
     "System.Net.NameResolution": "4.3.0",
     "System.Runtime.Loader": "4.0.0",
-    "System.Reflection.TypeExtensions": "4.3.0"
+    "System.Reflection.TypeExtensions": "4.3.0",
+    "System.Diagnostics.Process": "4.3.0"
   },
 
   "frameworks": {
@@ -18,13 +19,16 @@
   "buildOptions": {
     "compile": {
       "include": [
+        "../PDLib_Core/Distributed/*",
         "../PDLib/Distributed/*.cs",
         "../PDLib/Distributed/Assembly/*.cs",
         "../PDLib/Distributed/Manager/*.cs",
         "../PDLib/Distributed/Network/*.cs",
         "../PDLib/Distributed/Node/*.cs"
       ],
-      "excludeFiles": ["../PDLib/Distributed/Assembly/Loader.cs"]
+      "excludeFiles": [
+        "../PDLib/Distributed/Assembly/Loader.cs"
+      ]
     }
   }
 }

@@ -1,5 +1,4 @@
 ﻿
-using Distributed;
 
 namespace SubmitJob
 {
@@ -7,7 +6,7 @@ namespace SubmitJob
     {
         public static void Main(string[] args)
         {
-            JobLauncher.Main(args);
+            Distributed.SubmitJob.Main(args);
         }
     }
 }

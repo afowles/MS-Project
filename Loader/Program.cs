@@ -2,7 +2,10 @@
 using System.Reflection;
 using System.Runtime.Loader;
 using Distributed;
+using System.Diagnostics;
+using System.IO;
 
+using Distributed.Assembly;
 /// <summary>
 /// Loader test app, this will be migrated into 
 /// </summary>
@@ -12,6 +15,15 @@ namespace Loader
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("Got here with arguments: " + args);
+            string s = Directory.GetCurrentDirectory();
+            Console.WriteLine(s + "\\" + args[0]);
+            CoreLoader c = new CoreLoader(s + "\\" + args[0]);
+        }
+
+        public static void Main2(string[] args)
+        {
+            Process p = new Process();
             var x = AssemblyLoadContext.Default.LoadFromAssemblyPath(
                 @"C:\Users\Adam\Documents\Visual Studio 2015\Projects\MS_Project\AppUsingPDLib_Core\bin\Debug\netcoreapp1.1\AppUsingPDLib_Core.dll");
             Type[] types;

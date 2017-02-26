@@ -182,16 +182,26 @@ namespace Distributed.Network
         /// </summary>
         /// <param name="args">arguments</param>
         /// <returns></returns>
-        protected static string ConstructMessage(string[] args)
+        public static string ConstructMessage(string[] args)
         {
             string message = "";
             foreach (string s in args)
             {
-                message += s + DataReceivedEventArgs.split;
+                message += s + split;
             }
             message += endl;
             return message;
 
+        }
+
+        /// <summary>
+        /// Overloaded ConstructMessage for a single string
+        /// </summary>
+        /// <param name="arg">the argument to pass</param>
+        /// <returns>a proper constructed message</returns>
+        public static string ConstructMessage(string arg)
+        {
+            return arg + split + endl;
         }
     }
 

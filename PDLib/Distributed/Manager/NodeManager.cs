@@ -138,7 +138,8 @@ namespace Distributed.Manager
             new Dictionary<string, MessageType> {
                 { "send", MessageType.Send },
                 { "job", MessageType.NewJob },
-                { "file", MessageType.File }
+                { "file", MessageType.File },
+                { "fileread", MessageType.FileRead }
             };
 
         public enum MessageType
@@ -146,7 +147,8 @@ namespace Distributed.Manager
             Unknown,
             Send,
             NewJob,
-            File
+            File,
+            FileRead
         }
 
         public NodeManagerComm(string msg)
@@ -278,6 +280,11 @@ namespace Distributed.Manager
                         Console.WriteLine("No Jobs");
                         break;
                     }
+                case NodeManagerComm.MessageType.FileRead:
+                    Console.WriteLine("Node Manageer: Node has read file");
+                    SendMessage(new string[] { "execute" });
+                    break;
+
             }
         }
     }

@@ -21,6 +21,11 @@ namespace Distributed.Node
     /// </summary>
     internal class Node
     {
+        public Node()
+        {
+
+        }
+
         /// <summary>
         /// Entry point to starting up a node.
         /// </summary>
@@ -35,7 +40,8 @@ namespace Distributed.Node
                 Environment.Exit(1);
             }
             Console.WriteLine("Node: Starting");
-            Proxy p = new Proxy(new NodeReceiver(), new NodeSender(), args[0], port);
+            Node n = new Node();
+            Proxy p = new Proxy(new NodeReceiver(n), new NodeSender(n), args[0], port);
         }
     }
 
@@ -52,7 +58,9 @@ namespace Distributed.Node
             new Dictionary<string, MessageType> {
                 { "file", MessageType.File },
                 { "send", MessageType.Send },
-                { "id", MessageType.Id }
+                { "id", MessageType.Id },
+                { "fileread", MessageType.FileRead },
+                { "execute", MessageType.Execute }
             };
 
         public enum MessageType
@@ -60,7 +68,9 @@ namespace Distributed.Node
             Unknown,
             File,
             Send,
-            Id
+            Id,
+            FileRead,
+            Execute
         }
 
         /// <summary>
@@ -84,6 +94,13 @@ namespace Distributed.Node
     /// </summary>
     internal class NodeReceiver : AbstractReceiver
     {
+        public Node MyNode;
+        private List<String> jobs = new List<String>();
+
+        public NodeReceiver(Node n)
+        {
+            MyNode = n;
+        }
 
         public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
         {
@@ -97,8 +114,16 @@ namespace Distributed.Node
             if (d.Protocol == NodeComm.MessageType.File)
             {
                 // This will block on the iostream until the file reading
-                // is over.
+                // is over. The next thing sent over the network must be a file.
                 FileRead.ReadInWriteOut(proxy.iostream, d.args[1]);
+                jobs.Add(d.args[1]);
+                OnDataReceived(new NodeComm(NodeComm.ConstructMessage("fileread")));
+            }
+            if (d.Protocol == NodeComm.MessageType.Execute)
+            {
+                Console.WriteLine("Node: executing");
+                JobLauncher j = new JobLauncher(jobs[0]);
+                j.LaunchJob();
             }
         }
 
@@ -110,11 +135,13 @@ namespace Distributed.Node
     internal class NodeSender : AbstractSender
     {
         ConcurrentQueue<NodeComm> MessageQueue = new ConcurrentQueue<NodeComm>();
+        Node MyNode;
 
-        public NodeSender()
+        public NodeSender(Node n)
         {
-            //MessageQueue.Enqueue(new NodeComm("node"));
+            MyNode = n;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -143,6 +170,11 @@ namespace Distributed.Node
                     {
                         Console.WriteLine("Node: sending id");
                         SendMessage(new string[] { "node" });
+                    }
+                    if (data.Protocol == NodeComm.MessageType.FileRead)
+                    {
+                        Console.WriteLine("Node: sending done reading");
+                        SendMessage(new string[] { "fileread" });
                     }
                     
                 }
