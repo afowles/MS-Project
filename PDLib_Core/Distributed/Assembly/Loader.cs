@@ -49,11 +49,19 @@ namespace Distributed.Assembly
             // class
             foreach (Type t in types)
             {
-                var instance = Activator.CreateInstance(t);
-                if (instance is Job)
+                Console.WriteLine("type: " + t);
+                try
                 {
-                    JobClassType = t;
-                    JobInstance = instance;
+                    var instance = Activator.CreateInstance(t);
+                    if (instance is Job)
+                    {
+                        JobClassType = t;
+                        JobInstance = instance;
+                    }
+                }
+                catch(MissingMemberException)
+                {
+
                 }
             }
         }
@@ -67,11 +75,12 @@ namespace Distributed.Assembly
         public void CallMethod(string method, object[] methodParams)
         {
             MethodInfo methodInfo = JobClassType.GetMethod(method);
-            
+            Console.WriteLine("gets here");
             if (methodInfo != null)
             {
                 object result = null;
                 ParameterInfo[] parameters = methodInfo.GetParameters();
+                Console.WriteLine("gets here");
                 result = methodInfo.Invoke(JobInstance, methodParams);
                 Console.WriteLine(result);
             }

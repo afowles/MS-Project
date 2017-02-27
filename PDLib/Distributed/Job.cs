@@ -8,6 +8,11 @@ namespace Distributed
 {
     public abstract class Job
     {
+        public Job()
+        {
+
+        }
+
         private List<JobTask> tasks = new List<JobTask>();
         public abstract void Main(string[] args);
         
@@ -23,6 +28,7 @@ namespace Distributed
         {
             tasks[index].Main(new string[] { index.ToString() });
         }
+        //public int GetNumberTasks() { return tasks.Count; }
     }
 
 

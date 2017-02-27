@@ -19,6 +19,14 @@ namespace Loader
             string s = Directory.GetCurrentDirectory();
             Console.WriteLine(s + "\\" + args[0]);
             CoreLoader c = new CoreLoader(s + "\\" + args[0]);
+            c.FindJobClass();
+            c.CallMethod("Main", new object[] { args });
+            Console.WriteLine("Gets Here");
+            for (int i = 0; i < 2; i++)
+            {
+                Console.WriteLine("Trying to start a task");
+                c.CallMethod("startTask", new object[] { i });
+            }
         }
 
         public static void Main2(string[] args)
