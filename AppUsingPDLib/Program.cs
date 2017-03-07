@@ -36,5 +36,12 @@ namespace DebugApplicationUsingPDLib
         }
     }
 
+    public class test
+    {
+        public static void Main(string[] args)
+        {
+
+        }
     }
+
 }

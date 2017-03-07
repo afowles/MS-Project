@@ -27,9 +27,8 @@ namespace Distributed.Manager
         private static string IpAddr = "?";
         private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
         // TODO this needs to be a thread safe collection.
-        public List<Proxy> ConnectedNodes;
-        //public Dictionary<int, string> jobs = new Dictionary<int, string>();
-        public List<DataReceivedEventArgs> Jobs = new List<DataReceivedEventArgs>();
+        public List<Proxy> ConnectedNodes { get; private set; }
+        public JobManager Jobs { get; private set;}
 
         /// <summary>
         /// Creates a server listening
@@ -231,7 +230,7 @@ namespace Distributed.Manager
                 case NodeManagerComm.MessageType.NewJob:
                     Console.WriteLine("Received Job File: " + data.args[1]);
                     // add it to the list of jobs for later
-                    manager.Jobs.Add(data);
+                    manager.Jobs.AddJob(data);
                     //String s = Console.ReadLine();
                     foreach (Proxy p in manager.ConnectedNodes)
                     {
@@ -243,7 +242,6 @@ namespace Distributed.Manager
                             
                     }
 
-                    
                     break;
                 // Send back to all nodes that a file will be sent, only a node
                 // will know what to do with this message, all other connections
@@ -257,17 +255,20 @@ namespace Distributed.Manager
                 // needs to be on the same computer that the
                 // manager is running on as of now.
                 case NodeManagerComm.MessageType.Send:
-                    //Console.Write("Input File:");
+                    
                     Console.WriteLine("Sending file");
-                    if (manager.Jobs.Count > 0)
+                    DataReceivedEventArgs d;
+                    bool found = manager.Jobs.GetJob(data.args[1], out d);
+
+                    if (found)
                     {
-                        Console.WriteLine("Writing file: " + manager.Jobs[0].args[1]);
+                        Console.WriteLine("Writing file: " + d.args[1]);
                         foreach (Proxy p in manager.ConnectedNodes)
                         {
                             if (p.connection == ConnectionType.NODE)
                             {
                                 Console.WriteLine("Sending to file to node");
-                                FileWrite.WriteOut(p.iostream, manager.Jobs[0].args[1]);
+                                FileWrite.WriteOut(p.iostream, d.args[1]);
                             }
                                 
                         }
@@ -277,6 +278,7 @@ namespace Distributed.Manager
                     }
                     else
                     {
+                        // log this
                         Console.WriteLine("No Jobs");
                         break;
                     }

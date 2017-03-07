@@ -21,9 +21,22 @@ namespace Distributed.Node
     /// </summary>
     internal class Node
     {
-        public Node()
-        {
+        private Proxy proxy;
 
+        public Node(string host, int port)
+        {
+            proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port);
+        }
+
+        /// <summary>
+        /// Handles cleanup and communcation on shutdown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void CleanUp(object sender, ConsoleCancelEventArgs e)
+        {
+            Console.WriteLine("Shuting down");
+            proxy.QueueDataEvent(new NodeComm("shutdown"));
         }
 
         /// <summary>
@@ -40,8 +53,11 @@ namespace Distributed.Node
                 Environment.Exit(1);
             }
             Console.WriteLine("Node: Starting");
-            Node n = new Node();
-            Proxy p = new Proxy(new NodeReceiver(n), new NodeSender(n), args[0], port);
+            Node n = new Node(args[0], port);
+
+            // handle ctrl c
+            Console.CancelKeyPress += n.CleanUp;
+
         }
     }
 
@@ -60,7 +76,9 @@ namespace Distributed.Node
                 { "send", MessageType.Send },
                 { "id", MessageType.Id },
                 { "fileread", MessageType.FileRead },
-                { "execute", MessageType.Execute }
+                { "execute", MessageType.Execute },
+                { "shutdown", MessageType.Shutdown }
+
             };
 
         public enum MessageType
@@ -70,7 +88,8 @@ namespace Distributed.Node
             Send,
             Id,
             FileRead,
-            Execute
+            Execute,
+            Shutdown
         }
 
         /// <summary>
@@ -126,7 +145,6 @@ namespace Distributed.Node
                 j.LaunchJob();
             }
         }
-
     }
 
     /// <summary>
@@ -143,7 +161,7 @@ namespace Distributed.Node
         }
 
         /// <summary>
-        /// 
+        /// Queue up a message to respond to in run() method
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -155,28 +173,32 @@ namespace Distributed.Node
 
         public override void Run()
         {
-            // simply read in and send out, for test
             while (true)
             {
                 NodeComm data;
                 if (MessageQueue.TryDequeue(out data))
                 {
-                    if (data.Protocol == NodeComm.MessageType.File)
+                    switch(data.Protocol)
                     {
-                        Console.WriteLine("Node: requesting file");
-                        SendMessage(new string[] { "send" });
-                    }
-                    if (data.Protocol == NodeComm.MessageType.Id )
-                    {
-                        Console.WriteLine("Node: sending id");
-                        SendMessage(new string[] { "node" });
-                    }
-                    if (data.Protocol == NodeComm.MessageType.FileRead)
-                    {
-                        Console.WriteLine("Node: sending done reading");
-                        SendMessage(new string[] { "fileread" });
-                    }
-                    
+                        case NodeComm.MessageType.File:
+                            Console.WriteLine("Node: requesting file");
+                            // ask for the file with filename from data.args[1]
+                            SendMessage(new string[] { "send", data.args[1] });
+                            break;
+                        case NodeComm.MessageType.Id:
+                            Console.WriteLine("Node: sending id");
+                            // Send the type of communication, in this case node
+                            SendMessage(new string[] { "node" });
+                            break;
+                        case NodeComm.MessageType.FileRead:
+                            // let the manager know we have finished reading
+                            Console.WriteLine("Node: sending done reading");
+                            SendMessage(new string[] { "fileread" });
+                            break;
+                        case NodeComm.MessageType.Shutdown:
+                            SendMessage(new string[] { "shutdown" });
+                            break;
+                    }  
                 }
 
             }
