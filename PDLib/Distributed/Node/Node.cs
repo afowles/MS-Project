@@ -23,6 +23,12 @@ namespace Distributed.Node
     {
         private Proxy proxy;
 
+        /// <summary>
+        /// Construct a node with proxy
+        /// at host, port
+        /// </summary>
+        /// <param name="host">host for proxy to NodeManager</param>
+        /// <param name="port">port for proxy to NodeManager</param>
         public Node(string host, int port)
         {
             proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port);
