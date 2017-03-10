@@ -28,6 +28,7 @@ namespace Distributed.Manager
         private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
         // TODO this needs to be a thread safe collection.
         public List<Proxy> ConnectedNodes { get; private set; }
+        // This is thread safe
         public JobManager Jobs { get; private set;}
 
         /// <summary>
@@ -38,7 +39,8 @@ namespace Distributed.Manager
         public NodeManager(string ip)
         {
             
-            ConnectedNodes = new List<Network.Proxy>();
+            ConnectedNodes = new List<Proxy>();
+            Jobs = new JobManager();
             try
             {
                 IPAddress localAddr = IPAddress.Parse(ip);
@@ -53,6 +55,7 @@ namespace Distributed.Manager
                 // Stop listening for new clients.
                 server.Stop();
             }
+            
         }
 
         /// <summary>

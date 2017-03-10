@@ -43,6 +43,7 @@
     <Compile Include="Distributed\Assembly\ILoader.cs" />
     <Compile Include="Distributed\Assembly\Loader.cs" />
     <Compile Include="Distributed\JobLauncher.cs" />
+    <Compile Include="Distributed\Logging\Logger.cs" />
     <Compile Include="Distributed\Manager\JobManager.cs" />
     <Compile Include="Distributed\Manager\NodeManager.cs" />
     <Compile Include="Distributed\Network\Default.cs" />

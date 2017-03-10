@@ -1,5 +1,6 @@
 ﻿using Distributed.Network;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Distributed.Manager
 {
@@ -30,7 +31,7 @@ namespace Distributed.Manager
         {
             lock(JobLock)
             {
-                Jobs.Add(job.args[1], job);
+                Jobs.Add(Path.GetFileName(job.args[1]), job);
                 JobCount++;
             }
         }
