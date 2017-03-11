@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Distributed.Network
 {
@@ -91,6 +92,7 @@ namespace Distributed.Network
             receiver.Start();
             // start sender
             sender.Start();
+            
         }
 
         /// <summary>
@@ -118,6 +120,13 @@ namespace Distributed.Network
             // Can't call close in .NET core
             // client.Close();
             iostream.Dispose();   
+        }
+
+        public void ReportShutdown()
+        {
+            sender.SendMessage(new string[] { "shutdown" });
+            iostream.Flush();
+            Console.WriteLine("Message Sent");
         }
 
         /// <summary>
@@ -253,7 +262,7 @@ namespace Distributed.Network
                         if (!iostream.DataAvailable)
                         {
                             // sleep a short time
-                            Thread.Sleep(1);
+                            Thread.Sleep(100);
                         }
                         else if (iostream.Read(bytes, 0, bytes.Length) > 0)
                         {
@@ -367,6 +376,7 @@ namespace Distributed.Network
 
         // Thread object to handle from socket.
         protected Thread thread;
+
         // The proxy object that the sender/receiver is
         // sending/receiving for.
         public Proxy proxy { protected get; set; }
@@ -384,6 +394,7 @@ namespace Distributed.Network
         {
             thread = new Thread(Run);
             thread.Start();
+           
         }
 
         /// <summary>

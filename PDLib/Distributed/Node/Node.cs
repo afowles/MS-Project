@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 
 using Distributed.Network;
 using Distributed.Files;
+using System.Threading;
 
 [assembly: InternalsVisibleTo("StartNode")]
 
@@ -42,7 +43,9 @@ namespace Distributed.Node
         public void CleanUp(object sender, ConsoleCancelEventArgs e)
         {
             Console.WriteLine("Shuting down");
-            proxy.QueueDataEvent(new NodeComm("shutdown"));
+            e.Cancel = true;
+            //proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("shutdown")));
+            proxy.ReportShutdown();
         }
 
         /// <summary>
@@ -202,9 +205,18 @@ namespace Distributed.Node
                             SendMessage(new string[] { "fileread" });
                             break;
                         case NodeComm.MessageType.Shutdown:
+                            Console.WriteLine("sending shutdown");
                             SendMessage(new string[] { "shutdown" });
                             break;
+                        default:
+                            Console.WriteLine("Bad message");
+                            break;
                     }  
+                }
+                else
+                {
+                    // Sleep to avoid high CPU usage
+                    Thread.Sleep(100);
                 }
 
             }

@@ -9,6 +9,7 @@ using System.IO;
 
 using Distributed.Network;
 using Distributed.Files;
+using System.Threading;
 
 [assembly: InternalsVisibleTo("StartManager")]
 
@@ -100,11 +101,15 @@ namespace Distributed.Manager
 
         public static void Main()
         {
+            
+
             // Grab the IP address
             Task getIp = GetLocalIPAddress();
             getIp.Wait();
             // create a NodeManager
             NodeManager m = new NodeManager(IpAddr);
+            // Setup handle of ctrl c
+            Console.CancelKeyPress += m.OnUserExit;
             // This should never finish until StillActive is set
             // to false
             Task t2 = m.StartListening();
@@ -129,6 +134,21 @@ namespace Distributed.Manager
             IpAddr = localIP;
             Console.WriteLine(host);
             Console.WriteLine(localIP);
+        }
+
+        /// <summary>
+        /// When the user exits the command line
+        /// with Ctrl-C tell all nodes to shutdown.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnUserExit(object sender, ConsoleCancelEventArgs e)
+        {
+            foreach (Proxy p in ConnectedNodes)
+            {
+                p.QueueDataEvent(new NodeManagerComm(
+                    DataReceivedEventArgs.ConstructMessage("shutdown")));
+            }
         }
 
     }
@@ -156,10 +176,6 @@ namespace Distributed.Manager
         public NodeManagerComm(string msg)
             : base(msg)
         {
-            foreach(String s in args)
-            {
-                Console.WriteLine(s);
-            }
             MessageType m = MessageType.Unknown;
             MessageMap.TryGetValue(args[0], out m);
             Protocol = m;
@@ -219,6 +235,10 @@ namespace Distributed.Manager
                     {
                         HandleNodeCommunication(data as NodeManagerComm);
                     }
+                }
+                else
+                {
+                    Thread.Sleep(100);
                 }
                 
             }
