@@ -72,6 +72,7 @@ namespace Distributed.Network
                     proxy.HandOffSendReceive(new NodeManagerReceiver(),
                         new NodeManagerSender(manager), ConnectionType.NODE);
                     // leave and stop this thread.
+                    manager.AddConnectedNode(proxy);
                     DoneReceiving = true;
                     return;
                 case DefaultDataComm.MessageType.Job:

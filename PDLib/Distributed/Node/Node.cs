@@ -40,12 +40,11 @@ namespace Distributed.Node
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void CleanUp(object sender, ConsoleCancelEventArgs e)
+        public void OnUserExit(object sender, ConsoleCancelEventArgs e)
         {
             Console.WriteLine("Shuting down");
             e.Cancel = true;
-            //proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("shutdown")));
-            proxy.ReportShutdown();
+            proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("shutdown")));
         }
 
         /// <summary>
@@ -65,7 +64,7 @@ namespace Distributed.Node
             Node n = new Node(args[0], port);
 
             // handle ctrl c
-            Console.CancelKeyPress += n.CleanUp;
+            Console.CancelKeyPress += n.OnUserExit;
 
         }
     }
@@ -153,6 +152,10 @@ namespace Distributed.Node
                 JobLauncher j = new JobLauncher(jobs[0]);
                 j.LaunchJob();
             }
+            if (d.Protocol == NodeComm.MessageType.Shutdown)
+            {
+                DoneReceiving = true;
+            }
         }
     }
 
@@ -205,9 +208,9 @@ namespace Distributed.Node
                             SendMessage(new string[] { "fileread" });
                             break;
                         case NodeComm.MessageType.Shutdown:
-                            Console.WriteLine("sending shutdown");
+                            //Console.WriteLine("sending shutdown");
                             SendMessage(new string[] { "shutdown" });
-                            break;
+                            return;
                         default:
                             Console.WriteLine("Bad message");
                             break;

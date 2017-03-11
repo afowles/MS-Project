@@ -122,13 +122,6 @@ namespace Distributed.Network
             iostream.Dispose();   
         }
 
-        public void ReportShutdown()
-        {
-            sender.SendMessage(new string[] { "shutdown" });
-            iostream.Flush();
-            Console.WriteLine("Message Sent");
-        }
-
         /// <summary>
         /// Queue a data event for the receiver
         /// without receiving it directly from the socket.

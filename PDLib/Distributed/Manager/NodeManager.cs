@@ -5,11 +5,8 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.IO;
 
 using Distributed.Network;
-using Distributed.Files;
-using System.Threading;
 
 [assembly: InternalsVisibleTo("StartManager")]
 
@@ -27,8 +24,13 @@ namespace Distributed.Manager
         private bool StillActive;
         private static string IpAddr = "?";
         private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
-        // TODO this needs to be a thread safe collection.
-        public List<Proxy> ConnectedNodes { get; private set; }
+        private List<Proxy> Connections;
+        private static int NextId;
+
+        // Thread-safe, only accessed within lock
+        private object NodeLock = new object();
+        private List<NodeRef> ConnectedNodes;
+
         // This is thread safe
         public JobManager Jobs { get; private set;}
 
@@ -39,8 +41,9 @@ namespace Distributed.Manager
         /// <param name="ip">IP to listen on</param>
         public NodeManager(string ip)
         {
-            
-            ConnectedNodes = new List<Proxy>();
+            Connections = new List<Proxy>();
+            ConnectedNodes = new List<NodeRef>();
+            NextId = 1;
             Jobs = new JobManager();
             try
             {
@@ -94,15 +97,13 @@ namespace Distributed.Manager
                 // create a proxy
                 var proxy = new Network.Proxy(new DefaultReceiver(this), new DefaultSender(this), client);
                 // add it to the list of connected nodes
-                ConnectedNodes.Add(proxy);    
+                Connections.Add(proxy);    
             }
         }
        
 
         public static void Main()
-        {
-            
-
+        {     
             // Grab the IP address
             Task getIp = GetLocalIPAddress();
             getIp.Wait();
@@ -138,180 +139,67 @@ namespace Distributed.Manager
 
         /// <summary>
         /// When the user exits the command line
-        /// with Ctrl-C tell all nodes to shutdown.
+        /// with Ctrl-C tell all connections to shutdown.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void OnUserExit(object sender, ConsoleCancelEventArgs e)
         {
-            foreach (Proxy p in ConnectedNodes)
+            e.Cancel = true;
+            foreach (Proxy p in Connections)
             {
                 p.QueueDataEvent(new NodeManagerComm(
-                    DataReceivedEventArgs.ConstructMessage("shutdown")));
+                    DataReceivedEventArgs.ConstructMessage("kill")));
             }
         }
 
-    }
-
-    internal class NodeManagerComm : DataReceivedEventArgs
-    {
-        public MessageType Protocol { get; }
-        private static Dictionary<string, MessageType> MessageMap =
-            new Dictionary<string, MessageType> {
-                { "send", MessageType.Send },
-                { "job", MessageType.NewJob },
-                { "file", MessageType.File },
-                { "fileread", MessageType.FileRead }
-            };
-
-        public enum MessageType
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        public void AddConnectedNode(Proxy p)
         {
-            Unknown,
-            Send,
-            NewJob,
-            File,
-            FileRead
+            lock(NodeLock)
+            {
+                ConnectedNodes.Add(new NodeRef(p, NextId));
+                NextId++;
+            }
         }
-
-        public NodeManagerComm(string msg)
-            : base(msg)
+        /// <summary>
+        /// Send out the message that a job is available
+        /// </summary>
+        /// <param name="data"></param>
+        public void SendJobOut(NodeManagerComm data)
         {
-            MessageType m = MessageType.Unknown;
-            MessageMap.TryGetValue(args[0], out m);
-            Protocol = m;
-        }
-
-    }
-
-
-    /// <summary>
-    /// Node Manager Receiver, most of this is handled by
-    /// the default receiver.
-    /// </summary>
-    internal class NodeManagerReceiver : AbstractReceiver
-    {
-        public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
-        {
-            return new NodeManagerComm(data);
-        }
-
-        public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
-        {
+            lock(NodeLock)
+            {
+                foreach (NodeRef node in ConnectedNodes)
+                {
+                    Console.WriteLine("Enquing for Node");
+                    node.QueueDataEvent(new NodeManagerComm("file|" + data.args[1]));
+                }
+            }
             
         }
 
     }
 
-    internal class NodeManagerSender : AbstractSender
+    internal class NodeRef
     {
-        ConcurrentQueue<DataReceivedEventArgs> MessageQueue = new ConcurrentQueue<DataReceivedEventArgs>();
-        
-        public NodeManager manager;
+        private Proxy proxy;
+        private int id_;
 
-        public NodeManagerSender(NodeManager manager)
+        public NodeRef(Proxy p, int id)
         {
-            this.manager = manager;
-        }
-        public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
-        {
-            //TODO: log this instead
-            Console.WriteLine("NodeManagerSender: HandleReceiverEvent called");
-            MessageQueue.Enqueue(e);
+            proxy = p;
+            id_ = id;
         }
 
-        public override void Run()
+        public void QueueDataEvent(DataReceivedEventArgs d)
         {
-            // testing
-            while (true)
-            {
-                DataReceivedEventArgs data;
-                if (MessageQueue.TryDequeue(out data))
-                {
-                    Console.WriteLine("in run nm sender: ");
-                    foreach (string s in data.args) { Console.Write(s + " "); };
-                    Console.WriteLine("");
-                    
-                    if (data is NodeManagerComm)
-                    {
-                        HandleNodeCommunication(data as NodeManagerComm);
-                    }
-                }
-                else
-                {
-                    Thread.Sleep(100);
-                }
-                
-            }
-        }
-
-        private void HandleNodeCommunication(NodeManagerComm data)
-        {
-            Console.WriteLine(data.Protocol);
-            switch (data.Protocol)
-            {
-                // sent by a job file
-                case NodeManagerComm.MessageType.NewJob:
-                    Console.WriteLine("Received Job File: " + data.args[1]);
-                    // add it to the list of jobs for later
-                    manager.Jobs.AddJob(data);
-                    //String s = Console.ReadLine();
-                    foreach (Proxy p in manager.ConnectedNodes)
-                    {
-                        if (p.connection == ConnectionType.NODE)
-                        {
-                            Console.WriteLine("Enquing for Node");
-                            p.QueueDataEvent(new NodeManagerComm("file|" + data.args[1]));
-                        }
-                            
-                    }
-
-                    break;
-                // Send back to all nodes that a file will be sent, only a node
-                // will know what to do with this message, all other connections
-                // will ignore this.
-                case NodeManagerComm.MessageType.File:
-                    Console.WriteLine("Node Manager: sending file info");
-                    SendMessage(new string[] { "file", Path.GetFileName(data.args[1])});
-                    break;
-
-                // the machine that submitted the job file
-                // needs to be on the same computer that the
-                // manager is running on as of now.
-                case NodeManagerComm.MessageType.Send:
-                    
-                    Console.WriteLine("Sending file");
-                    DataReceivedEventArgs d;
-                    bool found = manager.Jobs.GetJob(data.args[1], out d);
-
-                    if (found)
-                    {
-                        Console.WriteLine("Writing file: " + d.args[1]);
-                        foreach (Proxy p in manager.ConnectedNodes)
-                        {
-                            if (p.connection == ConnectionType.NODE)
-                            {
-                                Console.WriteLine("Sending to file to node");
-                                FileWrite.WriteOut(p.iostream, d.args[1]);
-                            }
-                                
-                        }
-                        proxy.iostream.Flush();
-                        Console.WriteLine("Sent file");
-                        break;
-                    }
-                    else
-                    {
-                        // log this
-                        Console.WriteLine("No Jobs");
-                        break;
-                    }
-                case NodeManagerComm.MessageType.FileRead:
-                    Console.WriteLine("Node Manageer: Node has read file");
-                    SendMessage(new string[] { "execute" });
-                    break;
-
-            }
+            proxy.QueueDataEvent(d);
         }
     }
+
 }
 

@@ -26,14 +26,16 @@ namespace Distributed
         private static Dictionary<string, MessageType> MessageMap =
             new Dictionary<string, MessageType> {
                 { "id", MessageType.Id },
-                { "accept", MessageType.Accept }
+                { "accept", MessageType.Accept },
+                { "shutdown", MessageType.Shutdown }
             };
 
         public enum MessageType
         {
             Unknown,
             Id,
-            Accept
+            Accept,
+            Shutdown
         }
 
         public JobEventArgs(string msg) : base(msg)
@@ -54,7 +56,11 @@ namespace Distributed
 
         public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
         {
-            
+            JobEventArgs data = e as JobEventArgs;
+            if (data.Protocol == JobEventArgs.MessageType.Shutdown)
+            {
+                DoneReceiving = true;
+            }
         }
     }
 
@@ -97,7 +103,15 @@ namespace Distributed
                         // job in this context corresponds to job manager.
                         SendMessage(new string[] { "job", PathToDLL });
                     }
+                    if (data.Protocol == JobEventArgs.MessageType.Shutdown)
+                    {
 
+                    }
+
+                }
+                else
+                {
+                    Thread.Sleep(100);
                 }
 
             }

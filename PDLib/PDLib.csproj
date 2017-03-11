@@ -46,6 +46,7 @@
     <Compile Include="Distributed\Logging\Logger.cs" />
     <Compile Include="Distributed\Manager\JobManager.cs" />
     <Compile Include="Distributed\Manager\NodeManager.cs" />
+    <Compile Include="Distributed\Manager\NodeManagerNetworkIO.cs" />
     <Compile Include="Distributed\Network\Default.cs" />
     <Compile Include="Distributed\Node\SystemInfo.cs" />
     <Compile Include="Distributed\FileUtil.cs" />
