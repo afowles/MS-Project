@@ -2,10 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 using Distributed.Network;
 using Distributed.Files;
-using System.Threading;
+using Distributed.Logging;
+using System.IO;
 
 [assembly: InternalsVisibleTo("StartNode")]
 
@@ -23,6 +25,7 @@ namespace Distributed.Node
     internal class Node
     {
         private Proxy proxy;
+        public Logger log { get; private set; }
 
         /// <summary>
         /// Construct a node with proxy
@@ -33,6 +36,7 @@ namespace Distributed.Node
         public Node(string host, int port)
         {
             proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port);
+            log = Logger.NodeLogInstance;
         }
 
         /// <summary>
@@ -42,29 +46,25 @@ namespace Distributed.Node
         /// <param name="e"></param>
         public void OnUserExit(object sender, ConsoleCancelEventArgs e)
         {
-            Console.WriteLine("Shuting down");
+            log.Log("Node - Shuting down, user hit ctrl-c");
+            // set cancel to true so we can do our own cleanup
             e.Cancel = true;
+            // queue up the shuting down message to the server
             proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("shutdown")));
+            
         }
 
         /// <summary>
         /// Entry point to starting up a node.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">ip</param>
         public static void Main(string[] args)
         {
             // try to connect to the NodeManager
-            int port;
-            if (!Int32.TryParse(args[1], out port))
-            {
-                Console.WriteLine("Port could not be parsed.");
-                Environment.Exit(1);
-            }
-            Console.WriteLine("Node: Starting");
-            Node n = new Node(args[0], port);
-
+            Node n = new Node(args[0], NetworkSendReceive.SERVER_PORT);
+            n.log.Log("Node: Starting");
             // handle ctrl c
-            Console.CancelKeyPress += n.OnUserExit;
+            //Console.CancelKeyPress += n.OnUserExit;
 
         }
     }
@@ -75,7 +75,6 @@ namespace Distributed.Node
     /// </summary>
     internal class NodeComm : DataReceivedEventArgs
     {
-        
         public MessageType Protocol { get; }
         // a mapping of input strings to protocols
         private static Dictionary<string, MessageType> MessageMap = 
@@ -121,40 +120,59 @@ namespace Distributed.Node
     /// </summary>
     internal class NodeReceiver : AbstractReceiver
     {
-        public Node MyNode;
-        private List<String> jobs = new List<String>();
+        private Node parent;
+        //private Queue<DataReceivedEventArgs> jobs = new Queue<DataReceivedEventArgs>();
+        private DataReceivedEventArgs job;
 
+        /// <summary>
+        /// Node receiver constructor, needs to know
+        /// about container class Node.
+        /// </summary>
+        /// <param name="n">container class Node</param>
         public NodeReceiver(Node n)
         {
-            MyNode = n;
+            parent = n;
         }
 
+        /// <summary>
+        /// Create the specific data received event for a node
+        /// </summary>
+        /// <param name="data">input data from socket</param>
+        /// <returns></returns>
         public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
         {
             return new NodeComm(data);
         }
 
+        /// <summary>
+        /// Handle any additional receiving the node might want to do
+        /// in the receiver class.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
         {
-            NodeComm d = e as NodeComm;
-
-            if (d.Protocol == NodeComm.MessageType.File)
+            NodeComm receivedData = e as NodeComm;
+            switch(receivedData.Protocol)
             {
-                // This will block on the iostream until the file reading
-                // is over. The next thing sent over the network must be a file.
-                FileRead.ReadInWriteOut(proxy.iostream, d.args[1]);
-                jobs.Add(d.args[1]);
-                OnDataReceived(new NodeComm(NodeComm.ConstructMessage("fileread")));
-            }
-            if (d.Protocol == NodeComm.MessageType.Execute)
-            {
-                Console.WriteLine("Node: executing");
-                JobLauncher j = new JobLauncher(jobs[0]);
-                j.LaunchJob();
-            }
-            if (d.Protocol == NodeComm.MessageType.Shutdown)
-            {
-                DoneReceiving = true;
+                case NodeComm.MessageType.File:
+                    // This will block on the iostream until the file reading
+                    // is over. The next thing sent over the network must be a file.
+                    FileRead.ReadInWriteOut(proxy.iostream, receivedData.args[1]);
+                    job = receivedData;
+                    // after we have finished reading the data, let node manager know
+                    OnDataReceived(new NodeComm(NodeComm.ConstructMessage("fileread")));
+                    break;
+                case NodeComm.MessageType.Execute:
+                    //TODO, this should be its own task/thread
+                    parent.log.Log("Node: executing");
+                    JobLauncher j = new JobLauncher(job);
+                    j.LaunchJob();
+                    break;
+                case NodeComm.MessageType.Shutdown:
+                    // shutting down, we are done receving
+                    DoneReceiving = true;
+                    break;
             }
         }
     }
@@ -164,12 +182,12 @@ namespace Distributed.Node
     /// </summary>
     internal class NodeSender : AbstractSender
     {
-        ConcurrentQueue<NodeComm> MessageQueue = new ConcurrentQueue<NodeComm>();
-        Node MyNode;
+        private ConcurrentQueue<NodeComm> MessageQueue = new ConcurrentQueue<NodeComm>();
+        private Node parent;
 
         public NodeSender(Node n)
         {
-            MyNode = n;
+            parent = n;
         }
 
         /// <summary>
@@ -179,49 +197,61 @@ namespace Distributed.Node
         /// <param name="e"></param>
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
-            Console.WriteLine("NodeSender: HandleReceiverEvent called");
+            parent.log.Log("NodeSender: HandleReceiverEvent called");
             MessageQueue.Enqueue(e as NodeComm);
         }
 
+        /// <summary>
+        /// Main work area for sending from a node
+        /// </summary>
         public override void Run()
         {
-            while (true)
+            try
             {
-                NodeComm data;
-                if (MessageQueue.TryDequeue(out data))
+                while (true)
                 {
-                    switch(data.Protocol)
+                    NodeComm data;
+                    if (MessageQueue.TryDequeue(out data))
                     {
-                        case NodeComm.MessageType.File:
-                            Console.WriteLine("Node: requesting file");
-                            // ask for the file with filename from data.args[1]
-                            SendMessage(new string[] { "send", data.args[1] });
-                            break;
-                        case NodeComm.MessageType.Id:
-                            Console.WriteLine("Node: sending id");
-                            // Send the type of communication, in this case node
-                            SendMessage(new string[] { "node" });
-                            break;
-                        case NodeComm.MessageType.FileRead:
-                            // let the manager know we have finished reading
-                            Console.WriteLine("Node: sending done reading");
-                            SendMessage(new string[] { "fileread" });
-                            break;
-                        case NodeComm.MessageType.Shutdown:
-                            //Console.WriteLine("sending shutdown");
-                            SendMessage(new string[] { "shutdown" });
-                            return;
-                        default:
-                            Console.WriteLine("Bad message");
-                            break;
-                    }  
-                }
-                else
-                {
-                    // Sleep to avoid high CPU usage
-                    Thread.Sleep(100);
-                }
+                        switch (data.Protocol)
+                        {
+                            case NodeComm.MessageType.File:
+                                parent.log.Log("Node: requesting file");
+                                // ask for the file with filename from data.args[1]
+                                SendMessage(new string[] { "send", data.args[1] });
+                                break;
+                            case NodeComm.MessageType.Id:
+                                parent.log.Log("Node: sending id");
+                                // Send the type of communication, in this case node
+                                SendMessage(new string[] { "node" });
+                                break;
+                            case NodeComm.MessageType.FileRead:
+                                // let the manager know we have finished reading
+                                parent.log.Log("Node: sending done reading");
+                                SendMessage(new string[] { "fileread" });
+                                break;
+                            case NodeComm.MessageType.Shutdown:
+                                //Console.WriteLine("sending shutdown");
+                                //parent.log.StopLogging();
+                                SendMessage(new string[] { "shutdown" });
+                                return;
+                            default:
+                                parent.log.Log("Bad message");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        // Sleep to avoid high CPU usage
+                        Thread.Sleep(NetworkSendReceive.IO_SLEEP);
+                    }
 
+                }
+            }
+            // unavoidable, if the server fails this will be throw
+            catch(System.IO.IOException e)
+            {
+                Console.WriteLine(e.Message);
             }
 
         }

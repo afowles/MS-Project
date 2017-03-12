@@ -15,7 +15,11 @@ namespace Loader
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Got here with arguments: " + args);
+            Console.WriteLine("Got here with arguments: ");
+            foreach(string so in args)
+            {
+                Console.WriteLine(so);
+            }
             string s = Directory.GetCurrentDirectory();
             Console.WriteLine(s + "\\" + args[0]);
             CoreLoader c = new CoreLoader(s + "\\" + args[0]);

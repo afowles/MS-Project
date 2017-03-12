@@ -91,10 +91,6 @@ namespace Distributed.Manager
                 DataReceivedEventArgs data;
                 if (MessageQueue.TryDequeue(out data))
                 {
-                    Console.WriteLine("in run nm sender: ");
-                    foreach (string s in data.args) { Console.Write(s + " "); };
-                    Console.WriteLine("");
-
                     if (data is NodeManagerComm)
                     {
                         HandleNodeCommunication(data as NodeManagerComm);
@@ -121,12 +117,10 @@ namespace Distributed.Manager
                     //String s = Console.ReadLine();
                     manager.SendJobOut(data);
                     break;
-                // Send back to all nodes that a file will be sent, only a node
-                // will know what to do with this message, all other connections
-                // will ignore this.
+
                 case NodeManagerComm.MessageType.File:
                     Console.WriteLine("Node Manager: sending file info");
-                    SendMessage(new string[] { "file", Path.GetFileName(data.args[1]) });
+                    SendMessage(data.args);
                     break;
 
                 // the machine that submitted the job file
@@ -134,24 +128,13 @@ namespace Distributed.Manager
                 // manager is running on as of now.
                 case NodeManagerComm.MessageType.Send:
 
-                    Console.WriteLine("Sending file");
+                    Console.WriteLine("Sending file: " + Path.GetFileName(data.args[1]));
                     DataReceivedEventArgs d;
-                    bool found = manager.Jobs.GetJob(data.args[1], out d);
-
+                    bool found = manager.Jobs.GetJob(Path.GetFileName(data.args[1]), out d);
+                    Thread.Sleep(100);
                     if (found)
                     {
                         Console.WriteLine("Writing file: " + d.args[1]);
-                        /*
-                        foreach (Proxy p in manager.ConnectedNodes)
-                        {
-                            if (p.connection == ConnectionType.NODE)
-                            {
-                                Console.WriteLine("Sending to file to node");
-                                FileWrite.WriteOut(p.iostream, d.args[1]);
-                            }
-
-                        }
-                        */
                         FileWrite.WriteOut(proxy.iostream, d.args[1]);
                         proxy.iostream.Flush();
                         Console.WriteLine("Sent file");
@@ -169,6 +152,8 @@ namespace Distributed.Manager
                     break;
                 case NodeManagerComm.MessageType.Shutdown:
                     SendMessage(new string[] { "shutdown" });
+                    // shutdown after we have sent the message
+                    proxy.Shutdown();
                     break;
             }
         }

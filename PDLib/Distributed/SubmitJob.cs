@@ -69,13 +69,17 @@ namespace Distributed
         ConcurrentQueue<JobEventArgs> MessageQueue = new ConcurrentQueue<JobEventArgs>();
 
         private string PathToDLL;
+        private string[] UserArgs;
 
         public JobSender(string[] args)
         {
             PathToDLL = args[1];
-            // TODO... pass along the other args the user wants to give
-            // to their program.
-            //
+            // arg[0] is ip, arg[1] is dll
+            UserArgs = new string[args.Length - 2];
+            for (int i = 2; i < args.Length; i++)
+            {
+                UserArgs[i - 2] = args[i];
+            }  
         }
 
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
@@ -101,7 +105,16 @@ namespace Distributed
                         Thread.Sleep(2000);
                         Console.WriteLine("Sending Job");
                         // job in this context corresponds to job manager.
-                        SendMessage(new string[] { "job", PathToDLL });
+                        string[] args = new string[UserArgs.Length + 2];
+                        args[0] = "job";
+                        args[1] = PathToDLL;
+                        int i = 2;
+                        foreach(string s in UserArgs)
+                        {
+                            args[i] = s;
+                            i++;
+                        }
+                        SendMessage(args);
                     }
                     if (data.Protocol == JobEventArgs.MessageType.Shutdown)
                     {

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 using Distributed.Network;
+using System.Threading;
+using System.IO;
 
 [assembly: InternalsVisibleTo("StartManager")]
 
@@ -24,7 +26,7 @@ namespace Distributed.Manager
         private bool StillActive;
         private static string IpAddr = "?";
         private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
-        private List<Proxy> Connections;
+        public List<Proxy> Connections;
         private static int NextId;
 
         // Thread-safe, only accessed within lock
@@ -44,7 +46,7 @@ namespace Distributed.Manager
             Connections = new List<Proxy>();
             ConnectedNodes = new List<NodeRef>();
             NextId = 1;
-            Jobs = new JobManager();
+            Jobs = new JobManager(this);
             try
             {
                 IPAddress localAddr = IPAddress.Parse(ip);
@@ -92,6 +94,14 @@ namespace Distributed.Manager
         {
             while (StillActive)
             {
+                // check if we have a pending connection
+                if (!server.Pending())
+                {
+                    // we don't wait a bit
+                    Thread.Sleep(500);
+                    // skip to top
+                    continue;
+                }
                 var client = await server.AcceptTcpClientAsync();
                 Console.WriteLine("Connected!");
                 // create a proxy
@@ -110,11 +120,12 @@ namespace Distributed.Manager
             // create a NodeManager
             NodeManager m = new NodeManager(IpAddr);
             // Setup handle of ctrl c
-            Console.CancelKeyPress += m.OnUserExit;
+            //Console.CancelKeyPress += m.OnUserExit;
             // This should never finish until StillActive is set
             // to false
             Task t2 = m.StartListening();
             t2.Wait();
+            
         }
 
         /// <summary>
@@ -148,9 +159,11 @@ namespace Distributed.Manager
             e.Cancel = true;
             foreach (Proxy p in Connections)
             {
+                Console.WriteLine("Why");
                 p.QueueDataEvent(new NodeManagerComm(
                     DataReceivedEventArgs.ConstructMessage("kill")));
             }
+            StopListening();
         }
 
         /// <summary>
@@ -172,11 +185,16 @@ namespace Distributed.Manager
         public void SendJobOut(NodeManagerComm data)
         {
             lock(NodeLock)
-            {
+            { 
                 foreach (NodeRef node in ConnectedNodes)
                 {
-                    Console.WriteLine("Enquing for Node");
-                    node.QueueDataEvent(new NodeManagerComm("file|" + data.args[1]));
+                    Console.WriteLine("Enqueing for Node");
+                    string s = Path.GetFileName(data.args[1]) + "|";
+                    for (int i = 2; i < data.args.Length - 1; i++)
+                    {
+                        s += data.args[i] + "|";
+                    }
+                    node.QueueDataEvent(new NodeManagerComm("file|" + s ));
                 }
             }
             

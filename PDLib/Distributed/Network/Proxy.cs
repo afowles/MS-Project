@@ -366,7 +366,7 @@ namespace Distributed.Network
         // Setup constant buffer size
         public const int BUFFER_SIZE = 1024;
         public const int SERVER_PORT = 12345;
-
+        public const int IO_SLEEP = 100; // in milliseconds
         // Thread object to handle from socket.
         protected Thread thread;
 

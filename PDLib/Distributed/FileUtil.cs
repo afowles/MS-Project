@@ -1,12 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace Distributed.Files
 {
     static class FileRead
     {
         public const int BufferSize = 1024;
+        public const int NetworkSleep = 100;
 
         /// <summary>
         /// Read in a file from a Network Stream
@@ -22,7 +24,11 @@ namespace Distributed.Files
             // create a filestream for the new file
             FileStream Fs = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
             // wait for data
-            while (!iostream.DataAvailable) { }
+            Console.WriteLine("Waiting...");
+            while (!iostream.DataAvailable)
+            {
+                //Thread.Sleep(NetworkSleep);
+            }
 
             Console.WriteLine("Reading file...");
             // set a read timeout so we don't sit here forever
@@ -48,15 +54,20 @@ namespace Distributed.Files
     {
         public static void WriteOut(NetworkStream iostream, string filepath)
         {
-            FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
-            BinaryReader binFile = new BinaryReader(fs);
-            int bytesSize = 0;
-            byte[] downBuffer = new byte[2048];
-            while ((bytesSize = binFile.Read(downBuffer, 0, downBuffer.Length)) > 0)
+            using (FileStream fs = File.Open(filepath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                iostream.Write(downBuffer, 0, bytesSize);
+                using (BinaryReader binFile = new BinaryReader(fs))
+                {
+                    Console.WriteLine("IN HERE");
+                    int bytesSize = 0;
+                    byte[] downBuffer = new byte[2048];
+                    while ((bytesSize = binFile.Read(downBuffer, 0, downBuffer.Length)) > 0)
+                    {
+                        Console.WriteLine("WRITING");
+                        iostream.Write(downBuffer, 0, bytesSize);
+                    }
+                }
             }
-            fs.Dispose();
             iostream.Flush();
         }
     }

@@ -1,6 +1,8 @@
 ﻿using Distributed.Network;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace Distributed.Manager
 {
@@ -15,11 +17,36 @@ namespace Distributed.Manager
         public int JobCount { get; private set; }
         // lock object for thread safe operations
         private object JobLock = new object();
+        private bool done;
+        private NodeManager manager;
 
-        public JobManager()
+        public JobManager(NodeManager m)
         {
             JobCount = 0;
             Jobs = new Dictionary<string, DataReceivedEventArgs>();
+            done = false;
+            manager = m;
+        }
+
+        public void run()
+        {
+            while(!done)
+            {
+                if (QueryJobs())
+                {
+
+                }
+                else
+                {
+                    Thread.Sleep(500);
+                }
+            }
+        }
+
+        private bool QueryJobs()
+        {
+            
+            return true;
         }
 
         /// <summary>
@@ -31,7 +58,16 @@ namespace Distributed.Manager
         {
             lock(JobLock)
             {
-                Jobs.Add(Path.GetFileName(job.args[1]), job);
+                Console.WriteLine("Adding job: " + Path.GetFileName(job.args[1]));
+                string filename = Path.GetFileName(job.args[1]);
+                if (Jobs.ContainsKey(filename))
+                {
+                    // TODO, need to add something more specific to this
+                    Jobs.Remove(filename);
+                }
+                Jobs.Add(filename, job);
+                
+                
                 JobCount++;
             }
         }
