@@ -2,7 +2,7 @@
 using System.Diagnostics;
 
 using Distributed;
-
+using MyFSharpLibrary;
 
 namespace DebugApplicationUsingPDLib
 {
@@ -15,6 +15,8 @@ namespace DebugApplicationUsingPDLib
 
         public override void Main(string[] args)
         {
+            
+
             for (int i = 0; i < 4; i++)
             {
                 AddTask(new TestAppJobTask());
@@ -41,7 +43,9 @@ namespace DebugApplicationUsingPDLib
     {
         public static void Main(string[] args)
         {
-
+            var test = new User("Mark", 10);
+            Console.WriteLine(test::name);
+            Console.ReadKey();
         }
     }
 

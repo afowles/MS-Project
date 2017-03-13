@@ -7,6 +7,7 @@ using System.Threading;
 using Distributed.Network;
 using Distributed.Files;
 using Distributed.Logging;
+using Distributed.Manager;
 using System.IO;
 
 [assembly: InternalsVisibleTo("StartNode")]

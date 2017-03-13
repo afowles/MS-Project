@@ -42,6 +42,9 @@ namespace Distributed.Logging
 
         }
 
+        /// <summary>
+        /// Type of log
+        /// </summary>
         public enum LogType
         {
             NODE,
@@ -141,7 +144,6 @@ Console.WriteLine(logMessage);
             Writer.WriteLine("  :{0}", logMessage);
             Writer.WriteLine("-------------------------------");
             Writer.Flush();
-
         }
 
     }
