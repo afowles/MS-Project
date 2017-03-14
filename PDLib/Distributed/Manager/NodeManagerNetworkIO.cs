@@ -86,7 +86,7 @@ namespace Distributed.Manager
 
         public override void Run()
         {            
-            while (true)
+            while (!DoneSending)
             {
                 DataReceivedEventArgs data;
                 if (MessageQueue.TryDequeue(out data))
@@ -106,7 +106,7 @@ namespace Distributed.Manager
 
         private void HandleNodeCommunication(NodeManagerComm data)
         {
-            Console.WriteLine(data.Protocol);
+            Console.WriteLine("PROTOCOL:" + data.Protocol);
             switch (data.Protocol)
             {
                 // sent by a job file
@@ -153,7 +153,7 @@ namespace Distributed.Manager
                 case NodeManagerComm.MessageType.Shutdown:
                     SendMessage(new string[] { "shutdown" });
                     // shutdown after we have sent the message
-                    proxy.Shutdown();
+                    DoneSending = true;
                     break;
             }
         }

@@ -35,7 +35,7 @@ namespace DebugApplicationUsingPDLib
 
         public override void Main(string[] args)
         {
-            Console.WriteLine("Completing Job: " + args[0]);
+            Console.WriteLine("Completing Job: " + args[0] + "\n");
         }
     }
 
@@ -44,7 +44,7 @@ namespace DebugApplicationUsingPDLib
         public static void Main(string[] args)
         {
             var test = new User("Mark", 10);
-            Console.WriteLine(test::name);
+            //Console.WriteLine(test::name);
             Console.ReadKey();
         }
     }

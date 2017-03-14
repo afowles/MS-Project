@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Distributed.Network
 {
@@ -120,6 +119,20 @@ namespace Distributed.Network
             // Can't call close in .NET core
             // client.Close();
             iostream.Dispose();   
+        }
+
+        /// <summary>
+        /// Join on both send and
+        /// receive threads.
+        /// </summary>
+        /// <remarks>
+        /// Nicely wait for both threads in the proxy
+        /// to finish. This is used for clean up.
+        /// </remarks>
+        public void Join()
+        {
+            receiver.Join();
+            sender.Join();
         }
 
         /// <summary>
@@ -244,7 +257,6 @@ namespace Distributed.Network
             // setup a byte buffer
             byte[] bytes = new byte[BUFFER_SIZE];
             string data;
-
             try
             {
                 while (!DoneReceiving)
@@ -330,6 +342,8 @@ namespace Distributed.Network
     /// </summary>
     public abstract class AbstractSender : NetworkSendReceive
     {
+        protected bool DoneSending = false;
+
         /// <summary>
         /// Handle the nessesary communication in response
         /// to data received from the socket.
@@ -367,6 +381,7 @@ namespace Distributed.Network
         public const int BUFFER_SIZE = 1024;
         public const int SERVER_PORT = 12345;
         public const int IO_SLEEP = 100; // in milliseconds
+        public const int SERVER_SLEEP = 500;
         // Thread object to handle from socket.
         protected Thread thread;
 
@@ -387,7 +402,6 @@ namespace Distributed.Network
         {
             thread = new Thread(Run);
             thread.Start();
-           
         }
 
         /// <summary>
@@ -396,6 +410,14 @@ namespace Distributed.Network
         public virtual void Shutdown()
         {
             proxy.Shutdown();
+        }
+
+        /// <summary>
+        /// Join on this thread.
+        /// </summary>
+        public virtual void Join()
+        {
+            thread.Join();
         }
     }
 

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-
-using Distributed.Network;
 using System.Threading;
 using System.IO;
+
+using Distributed.Network;
+using Distributed.Logging;
 
 [assembly: InternalsVisibleTo("StartManager")]
 
@@ -23,7 +23,12 @@ namespace Distributed.Manager
     internal class NodeManager
     {
         private TcpListener server;
-        private bool StillActive;
+        // Keeps the while loop running
+        private bool DoneAccepting;
+        // Indicates whether we still want to accept
+        // connections. Different than DoneAccepting.
+        private bool AcceptingConnections;
+
         private static string IpAddr = "?";
         private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
         public List<Proxy> Connections;
@@ -36,6 +41,9 @@ namespace Distributed.Manager
         // This is thread safe
         public JobManager Jobs { get; private set;}
 
+        // Handles Logging
+        public Logger log { get; private set; }
+
         /// <summary>
         /// Creates a server listening
         /// on the given IP.
@@ -47,6 +55,8 @@ namespace Distributed.Manager
             ConnectedNodes = new List<NodeRef>();
             NextId = 1;
             Jobs = new JobManager(this);
+            log = Logger.ManagerLogInstance;
+
             try
             {
                 IPAddress localAddr = IPAddress.Parse(ip);
@@ -54,14 +64,13 @@ namespace Distributed.Manager
             }
             catch (SocketException e)
             {
-                Console.WriteLine("SocketException: {0}", e);
+                log.Log(String.Format("SocketException: { 0}", e));
             }
             finally
             {
                 // Stop listening for new clients.
                 server.Stop();
-            }
-            
+            }  
         }
 
         /// <summary>
@@ -70,8 +79,9 @@ namespace Distributed.Manager
         /// </summary>
         public async Task StartListening()
         {
-            Console.WriteLine("Starting");
-            StillActive = true;
+            log.Log("Starting Server");
+            DoneAccepting = false;
+            AcceptingConnections = true;
             server.Start();
             await AcceptConnections();
         }
@@ -81,7 +91,7 @@ namespace Distributed.Manager
         /// </summary>
         public void StopListening()
         {
-            StillActive = false;
+            DoneAccepting = true;
             server.Stop();
         }
 
@@ -92,22 +102,30 @@ namespace Distributed.Manager
         /// <returns></returns>
         private async Task AcceptConnections()
         {
-            while (StillActive)
+            while (!DoneAccepting)
             {
                 // check if we have a pending connection
                 if (!server.Pending())
                 {
                     // we don't wait a bit
-                    Thread.Sleep(500);
+                    Thread.Sleep(NetworkSendReceive.SERVER_SLEEP);
                     // skip to top
                     continue;
                 }
-                var client = await server.AcceptTcpClientAsync();
-                Console.WriteLine("Connected!");
-                // create a proxy
-                var proxy = new Network.Proxy(new DefaultReceiver(this), new DefaultSender(this), client);
-                // add it to the list of connected nodes
-                Connections.Add(proxy);    
+                // it is possible we are done accepting connections
+                // but not quite done with the while loop. During
+                // cleanup we do not want to accept connections
+                // but still need the server to be "running"
+                if (AcceptingConnections)
+                {
+                    // await the client connection, this blocks
+                    var client = await server.AcceptTcpClientAsync();
+                    log.Log("Connected!");
+                    // create a default proxy
+                    var proxy = new Network.Proxy(new DefaultReceiver(this), new DefaultSender(this), client);
+                    // add it to the list of connections
+                    Connections.Add(proxy);
+                }  
             }
         }
        
@@ -120,12 +138,11 @@ namespace Distributed.Manager
             // create a NodeManager
             NodeManager m = new NodeManager(IpAddr);
             // Setup handle of ctrl c
-            //Console.CancelKeyPress += m.OnUserExit;
+            Console.CancelKeyPress += m.OnUserExit;
             // This should never finish until StillActive is set
             // to false
             Task t2 = m.StartListening();
             t2.Wait();
-            
         }
 
         /// <summary>
@@ -151,18 +168,28 @@ namespace Distributed.Manager
         /// <summary>
         /// When the user exits the command line
         /// with Ctrl-C tell all connections to shutdown.
+        /// Cleanup all threads and stop listening on incoming connections.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void OnUserExit(object sender, ConsoleCancelEventArgs e)
         {
+            // set this to true so that we do not exit immediately
             e.Cancel = true;
+            // don't allow any more connections while we clean up.
+            AcceptingConnections = false;
+            // Queue up the kill message
+            // then join on the proxy (which joins on both
+            // of its threads) after all have finished.
+            // stop listening and quit. 
             foreach (Proxy p in Connections)
             {
-                Console.WriteLine("Why");
                 p.QueueDataEvent(new NodeManagerComm(
                     DataReceivedEventArgs.ConstructMessage("kill")));
+                p.Join();
             }
+            // stop listening for incoming connections
+            // this exits Main() do this at the end.
             StopListening();
         }
 

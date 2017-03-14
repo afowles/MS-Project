@@ -118,8 +118,7 @@ namespace Distributed.Logging
         {
             
             Writer.Write("Start Log for {0}: ", t.ToString());
-            Writer.WriteLine("{0} {1}", DateTime.Now.ToUniversalTime(),
-                DateTime.Now.Date);
+            Writer.WriteLine("{0}", DateTime.Now.ToUniversalTime());
             Writer.WriteLine("-------------------------------");
             Writer.Flush();
         }
@@ -138,9 +137,8 @@ namespace Distributed.Logging
 Console.WriteLine(logMessage);
 #endif
             Writer.Write("\r\nLog Entry : ");
-            Writer.WriteLine("{0} {1}", DateTime.Now.ToUniversalTime(),
-                DateTime.Now.Date);
-            Writer.WriteLine("  :");
+            Writer.WriteLine("{0}", DateTime.Now.ToUniversalTime());
+            //Writer.WriteLine("  :");
             Writer.WriteLine("  :{0}", logMessage);
             Writer.WriteLine("-------------------------------");
             Writer.Flush();

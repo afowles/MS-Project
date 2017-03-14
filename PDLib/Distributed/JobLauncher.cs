@@ -67,6 +67,7 @@ namespace Distributed.Manager
                 {
                     // append the output data to a string
                     outputBuilder.Append(e.Data);
+                    
                 }
             );
             string error;

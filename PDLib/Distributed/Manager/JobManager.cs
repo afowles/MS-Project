@@ -45,7 +45,6 @@ namespace Distributed.Manager
 
         private bool QueryJobs()
         {
-            
             return true;
         }
 
@@ -58,7 +57,8 @@ namespace Distributed.Manager
         {
             lock(JobLock)
             {
-                Console.WriteLine("Adding job: " + Path.GetFileName(job.args[1]));
+                // debug
+                manager.log.Log("Adding job: " + Path.GetFileName(job.args[1]));
                 string filename = Path.GetFileName(job.args[1]);
                 if (Jobs.ContainsKey(filename))
                 {
@@ -66,8 +66,6 @@ namespace Distributed.Manager
                     Jobs.Remove(filename);
                 }
                 Jobs.Add(filename, job);
-                
-                
                 JobCount++;
             }
         }
