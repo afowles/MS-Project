@@ -113,9 +113,7 @@ namespace Distributed.Manager
                 case NodeManagerComm.MessageType.NewJob:
                     Console.WriteLine("Received Job File: " + data.args[1]);
                     // add it to the list of jobs for later
-                    manager.Jobs.AddJob(data);
-                    //String s = Console.ReadLine();
-                    manager.SendJobOut(data);
+                    manager.Scheduler.AddJob(data);
                     break;
 
                 case NodeManagerComm.MessageType.File:
@@ -130,7 +128,7 @@ namespace Distributed.Manager
 
                     Console.WriteLine("Sending file: " + Path.GetFileName(data.args[1]));
                     DataReceivedEventArgs d;
-                    bool found = manager.Jobs.GetJob(Path.GetFileName(data.args[1]), out d);
+                    bool found = manager.Scheduler.GetJob(Path.GetFileName(data.args[1]), out d);
                     Thread.Sleep(100);
                     if (found)
                     {

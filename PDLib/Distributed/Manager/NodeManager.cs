@@ -39,7 +39,7 @@ namespace Distributed.Manager
         private List<NodeRef> ConnectedNodes;
 
         // This is thread safe
-        public JobManager Jobs { get; private set;}
+        public JobScheduler Scheduler { get; private set;}
 
         // Handles Logging
         public Logger log { get; private set; }
@@ -51,12 +51,15 @@ namespace Distributed.Manager
         /// <param name="ip">IP to listen on</param>
         public NodeManager(string ip)
         {
+            // create logging
+            log = Logger.ManagerLogInstance;
+
             Connections = new List<Proxy>();
             ConnectedNodes = new List<NodeRef>();
             NextId = 1;
-            Jobs = new JobManager(this);
-            log = Logger.ManagerLogInstance;
-
+            // Create and start up a job scheduler
+            Scheduler = new JobScheduler(this);
+            Scheduler.Start();
             try
             {
                 IPAddress localAddr = IPAddress.Parse(ip);
@@ -70,6 +73,8 @@ namespace Distributed.Manager
             {
                 // Stop listening for new clients.
                 server.Stop();
+                // Stop the scheduler as well
+                Scheduler.Stop();
             }  
         }
 
@@ -161,7 +166,6 @@ namespace Distributed.Manager
                 }
             }
             IpAddr = localIP;
-            Console.WriteLine(host);
             Console.WriteLine(localIP);
         }
 
@@ -178,6 +182,8 @@ namespace Distributed.Manager
             e.Cancel = true;
             // don't allow any more connections while we clean up.
             AcceptingConnections = false;
+            // stop the scheduler
+            Scheduler.Stop();
             // Queue up the kill message
             // then join on the proxy (which joins on both
             // of its threads) after all have finished.
@@ -209,35 +215,55 @@ namespace Distributed.Manager
         /// Send out the message that a job is available
         /// </summary>
         /// <param name="data"></param>
-        public void SendJobOut(NodeManagerComm data)
+        public void SendJobOut(JobRef job)
         {
             lock(NodeLock)
             { 
                 foreach (NodeRef node in ConnectedNodes)
                 {
                     Console.WriteLine("Enqueing for Node");
-                    string s = Path.GetFileName(data.args[1]) + "|";
-                    for (int i = 2; i < data.args.Length - 1; i++)
+                    string s = Path.GetFileName(job.PathToDll) + "|";
+                    foreach (string arg in job.UserArgs)
                     {
-                        s += data.args[i] + "|";
+                        s += arg + "|";
                     }
                     node.QueueDataEvent(new NodeManagerComm("file|" + s ));
+                    node.busy = true;
                 }
             }
-            
+        }
+
+        /// <summary>
+        /// Get the number of nodes not
+        /// currently working on a job.
+        /// </summary>
+        /// <returns></returns>
+        public int GetAvailableNodes()
+        {
+            int available = 0;
+            foreach(NodeRef node in ConnectedNodes)
+            {
+                if (!node.busy)
+                {
+                    available += 1;
+                }
+            }
+            return available;
         }
 
     }
 
     internal class NodeRef
     {
-        private Proxy proxy;
+        private Proxy proxy; 
         private int id_;
+        public bool busy;
 
         public NodeRef(Proxy p, int id)
         {
             proxy = p;
             id_ = id;
+            busy = false;
         }
 
         public void QueueDataEvent(DataReceivedEventArgs d)
