@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 
 using Distributed.Network;
+using System;
 
 namespace Distributed.Manager
 {
@@ -11,24 +12,36 @@ namespace Distributed.Manager
     /// </summary>
     class JobScheduler
     {
+        // manager associated with JobScheduler
+        private NodeManager manager;
+
         // Could use a concurrent dictionary but other variables
-        // such as count need a lock anyway.
-        private Dictionary<string, DataReceivedEventArgs> Jobs;
+        // need a lock anyway, keep track of users and their jobs
+        private Dictionary<string, List<JobRef>> Jobs;
+        // the queue for waiting jobs, TODO: maybe make priority queue instead
+        private Queue<JobRef> JobQueue;
+        
         public int JobCount { get; private set; }
+
         // lock object for thread safe operations
         private object JobLock = new object();
+
+        // keeps the scheduler alive
         private bool DoneScheduling;
-        private NodeManager manager;
-        private Queue<JobRef> JobQueue;
+
+        // Thread that acts as the independent scheudler
         private Thread thread;
+        // id tracker for jobs
+        private static int id;
 
         public JobScheduler(NodeManager m)
         {
             JobCount = 0;
-            Jobs = new Dictionary<string, DataReceivedEventArgs>();
+            Jobs = new Dictionary<string, List<JobRef>>();
             JobQueue = new Queue<JobRef>();
             DoneScheduling = false;
             manager = m;
+            id = 1;
         }
 
         public void Start()
@@ -49,7 +62,10 @@ namespace Distributed.Manager
             {
                 if (AvailableResources())
                 {
-                    manager.SendJobOut(JobQueue.Dequeue());
+                    lock (JobLock)
+                    {
+                        manager.SendJobOut(JobQueue.Dequeue());
+                    }
                 }
                 else
                 {
@@ -58,8 +74,20 @@ namespace Distributed.Manager
             }
         }
 
+        /// <summary>
+        /// Check if there are resources availble
+        /// to run another job. Meaning the number
+        /// of nodes requested is less than or equal to
+        /// the number of availble nodes.
+        /// </summary>
+        /// <remarks>
+        /// Requested nodes is capped at total nodes
+        /// available.
+        /// </remarks>
+        /// <returns></returns>
         private bool AvailableResources()
         {
+            // if we have at least one job
             if (JobQueue.Count > 0 &&
                 manager.GetAvailableNodes() >= JobQueue.Peek().RequestedNodes)
             {
@@ -80,50 +108,74 @@ namespace Distributed.Manager
         {
             lock(JobLock)
             {
+                JobRef j = new JobRef(job, id++);
                 // debug
-                manager.log.Log("Adding job: " + Path.GetFileName(job.args[1]));
-                JobQueue.Enqueue(new JobRef(job));
-                string filename = Path.GetFileName(job.args[1]);
-                if (Jobs.ContainsKey(filename))
-                {
-                    // TODO, need to add something more specific to this
-                    Jobs.Remove(filename);
+                manager.log.Log("Adding job: " + j);
+                // add the job to the queue
+                JobQueue.Enqueue(j);
+                // keep track of users and their job(s)
+                // if a user has already submitted a job before
+                if (Jobs.ContainsKey(j.Username))
+                { 
+                    // add this job to their list
+                    Jobs[j.Username].Add(j);
                 }
-                Jobs.Add(filename, job);
+                else
+                {
+                    List<JobRef> jl = new List<JobRef>();
+                    jl.Add(j);
+                    Jobs.Add(j.Username, jl);
+                }
+                
                 JobCount++;
             }
         }
-        
-        /// <summary>
-        /// Get the job based on the filename
-        /// </summary>
-        /// <param name="jobName"></param>
-        /// <param name="d"></param>
-        /// <returns></returns>
-        public bool GetJob(string jobName, 
-            out DataReceivedEventArgs d)
+
+        public JobRef GetJob(int job_id)
         {
-            lock(JobLock)
+            foreach(List<JobRef> jobs in Jobs.Values )
             {
-                return Jobs.TryGetValue(jobName, out d);
+                foreach(JobRef job in jobs)
+                {
+                    if (job.JobId == job_id)
+                    {
+                        return job;
+                    }
+                }
             }
+            return null;
         }
     }
 
-    class JobRef
+    /// <summary>
+    /// A class for a reference to a job
+    /// </summary>
+    internal class JobRef
     {
+        // how many nodes did this job request
         public int RequestedNodes { get; private set; }
+        // path to the dll on the users system
         public string PathToDll { get; private set; }
+        // command line arguments the user passed
         public string[] UserArgs { get; private set; }
+        // username associated with job
+        public string Username { get; private set; }
+        // the jobs id (unique)
+        public int JobId;
+
+        // TODO might want an Enum status instead
+        private bool completed = false;
 
         /// <summary>
         /// Construct a Job Reference
         /// </summary>
         /// <param name="data"></param>
-        public JobRef(DataReceivedEventArgs data)
+        public JobRef(DataReceivedEventArgs data, int id)
         {
             ParseJobMessage(data);
+            //TODO: get this from dll
             RequestedNodes = 1;
+            JobId = id;
         }
 
         /// <summary>
@@ -132,17 +184,27 @@ namespace Distributed.Manager
         /// </summary>
         /// <remarks>
         /// looks like:
-        ///     job|[path to dll]|[user args ...]|end
+        ///     job|[username]|[path to dll]|[user args ...]|end
         /// </remarks>
         /// <param name="data"></param>
         private void ParseJobMessage(DataReceivedEventArgs data)
         {
-            PathToDll = data.args[1];
-            UserArgs = new string[data.args.Length - 3];
-            for (int i = 0; i < data.args.Length - 3; i++)
+            Username = data.args[1];
+            PathToDll = data.args[2];
+            UserArgs = new string[data.args.Length - 4];
+            for (int i = 0; i < data.args.Length - 4; i++)
             {
-                UserArgs[i] = data.args[i + 2];
+                UserArgs[i] = data.args[i + 3];
             }
+        }
+
+        /// <summary>
+        /// Overridden to string method
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return "Job: " + JobId + " for user: " + Username;
         }
     }
 }

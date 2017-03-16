@@ -19,7 +19,9 @@ namespace Distributed.Manager
                 { "file", MessageType.File },
                 { "fileread", MessageType.FileRead },
                 { "shutdown", MessageType.NodeQuit },
-                { "kill", MessageType.Shutdown }
+                { "kill", MessageType.Shutdown },
+                { "submit", MessageType.SubmitJob },
+                { "finished", MessageType.NodeFinished }
             };
 
         public enum MessageType
@@ -30,7 +32,9 @@ namespace Distributed.Manager
             File,
             FileRead,
             Shutdown,
-            NodeQuit
+            NodeQuit,
+            NodeFinished,
+            SubmitJob
 
         }
 
@@ -109,6 +113,9 @@ namespace Distributed.Manager
             Console.WriteLine("PROTOCOL:" + data.Protocol);
             switch (data.Protocol)
             {
+                case NodeManagerComm.MessageType.SubmitJob:
+                    SendMessage(new string[] { "submit" });
+                    break;
                 // sent by a job file
                 case NodeManagerComm.MessageType.NewJob:
                     Console.WriteLine("Received Job File: " + data.args[1]);
@@ -126,27 +133,27 @@ namespace Distributed.Manager
                 // manager is running on as of now.
                 case NodeManagerComm.MessageType.Send:
 
-                    Console.WriteLine("Sending file: " + Path.GetFileName(data.args[1]));
-                    DataReceivedEventArgs d;
-                    bool found = manager.Scheduler.GetJob(Path.GetFileName(data.args[1]), out d);
-                    Thread.Sleep(100);
-                    if (found)
+                    JobRef j = manager.Scheduler.GetJob(int.Parse(data.args[1]));
+                    if (j != null)
                     {
-                        Console.WriteLine("Writing file: " + d.args[1]);
-                        FileWrite.WriteOut(proxy.iostream, d.args[1]);
+                        Console.WriteLine("Sending file: " + Path.GetFileName(j.PathToDll));
+                        //bool found = manager.Scheduler.GetJob(Path.GetFileName(data.args[1]), out d);
+                        Console.WriteLine("Writing file: " + j.PathToDll);
+                        FileWrite.WriteOut(proxy.iostream, j.PathToDll);
                         proxy.iostream.Flush();
                         Console.WriteLine("Sent file");
-                        break;
                     }
                     else
                     {
-                        // log this
-                        Console.WriteLine("No Jobs");
-                        break;
+                        Console.WriteLine("No jobs... bad");
                     }
+                    break;
                 case NodeManagerComm.MessageType.FileRead:
                     Console.WriteLine("Node Manageer: Node has read file");
                     SendMessage(new string[] { "execute" });
+                    break;
+                case NodeManagerComm.MessageType.NodeFinished:
+                    manager.ConnectedNodes[proxy.id].busy = false;
                     break;
                 case NodeManagerComm.MessageType.Shutdown:
                     SendMessage(new string[] { "shutdown" });

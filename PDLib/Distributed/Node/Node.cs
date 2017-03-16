@@ -36,7 +36,7 @@ namespace Distributed.Node
         /// <param name="port">port for proxy to NodeManager</param>
         public Node(string host, int port)
         {
-            proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port);
+            proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port, 0);
             log = Logger.NodeLogInstance;
         }
 
@@ -53,6 +53,11 @@ namespace Distributed.Node
             // queue up the shuting down message to the server
             proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("shutdown")));
             
+        }
+
+        public void QueueDataEvent(DataReceivedEventArgs d)
+        {
+            proxy.QueueDataEvent(d);
         }
 
         /// <summary>
@@ -85,6 +90,7 @@ namespace Distributed.Node
                 { "id", MessageType.Id },
                 { "fileread", MessageType.FileRead },
                 { "execute", MessageType.Execute },
+                { "finished", MessageType.Finished },
                 { "shutdown", MessageType.Shutdown }
 
             };
@@ -97,6 +103,7 @@ namespace Distributed.Node
             Id,
             FileRead,
             Execute,
+            Finished,
             Shutdown
         }
 
@@ -159,7 +166,7 @@ namespace Distributed.Node
                 case NodeComm.MessageType.File:
                     // This will block on the iostream until the file reading
                     // is over. The next thing sent over the network must be a file.
-                    FileRead.ReadInWriteOut(proxy.iostream, receivedData.args[1]);
+                    FileRead.ReadInWriteOut(proxy.iostream, receivedData.args[2]);
                     job = receivedData;
                     // after we have finished reading the data, let node manager know
                     OnDataReceived(new NodeComm(NodeComm.ConstructMessage("fileread")));
@@ -167,9 +174,11 @@ namespace Distributed.Node
                 case NodeComm.MessageType.Execute:
                     //TODO, this should be its own task/thread
                     parent.log.Log("Node: executing");
-                    JobLauncher j = new JobLauncher(job);
+                    JobLauncher j = new JobLauncher(job, parent);
                     j.LaunchJob();
                     break;
+                
+
                 case NodeComm.MessageType.Shutdown:
                     // shutting down, we are done receving
                     DoneReceiving = true;
@@ -218,7 +227,7 @@ namespace Distributed.Node
                         {
                             case NodeComm.MessageType.File:
                                 parent.log.Log("Node: requesting file");
-                                // ask for the file with filename from data.args[1]
+                                // ask for the file with jobid from data.args[1]
                                 SendMessage(new string[] { "send", data.args[1] });
                                 break;
                             case NodeComm.MessageType.Id:
@@ -230,6 +239,10 @@ namespace Distributed.Node
                                 // let the manager know we have finished reading
                                 parent.log.Log("Node: sending done reading");
                                 SendMessage(new string[] { "fileread" });
+                                break;
+                            case NodeComm.MessageType.Finished:
+                                parent.log.Log("Node: finished executing sending results");
+                                SendMessage(data.args);
                                 break;
                             case NodeComm.MessageType.Shutdown:
                                 //Console.WriteLine("sending shutdown");

@@ -18,6 +18,7 @@ namespace Distributed.Network
         public ConnectionType connection { get; set; }
         private AbstractReceiver receiver;
         private AbstractSender sender;
+        public int id { get; private set; }
 
         /// <summary>
         /// A Proxy constructor that can be passed
@@ -26,9 +27,11 @@ namespace Distributed.Network
         /// <param name="r">An Abstract Receiver</param>
         /// <param name="s">An Abstract Sender</param>
         /// <param name="client">An initalized TcpClient</param>
-        public Proxy(AbstractReceiver r, AbstractSender s, TcpClient client)
+        public Proxy(AbstractReceiver r, AbstractSender s, 
+            TcpClient client, int id)
         {
-            this.client = client;   
+            this.client = client;
+            this.id = id;
             iostream = client.GetStream();
             receiver = r;
             sender = s;
@@ -43,13 +46,15 @@ namespace Distributed.Network
         /// <param name="s">An Abstract Sender</param>
         /// <param name="host">host name for tcp</param>
         /// <param name="port">port number for tcp</param>
-        public Proxy(AbstractReceiver r, AbstractSender s, string host, int port)
+        public Proxy(AbstractReceiver r, AbstractSender s, 
+            string host, int port, int id)
         {
             try
             {
                 // this is not supported for .NET core...
                 // this.client = new TcpClient(host, port);
                 client = new TcpClient();
+                this.id = id;
                 Socket sock = client.Client;
                 IPAddress ipAddress = IPAddress.Parse(host);
                 client.ConnectAsync(ipAddress, port);

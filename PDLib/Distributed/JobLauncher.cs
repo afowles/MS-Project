@@ -11,15 +11,17 @@ namespace Distributed.Manager
     {
         private string dllPath;
         private DataReceivedEventArgs data;
+        private Node.Node parent;
 
         /// <summary>
         /// Constructor for a Job launcher
         /// </summary>
         /// <param name="d"></param>
-        public JobLauncher(DataReceivedEventArgs d)
+        public JobLauncher(DataReceivedEventArgs d, Node.Node p)
         {
-            dllPath = d.args[1];
+            dllPath = d.args[2];
             data = d;
+            parent = p;
         }
 
         /// <summary>
@@ -90,7 +92,7 @@ namespace Distributed.Manager
 
             // use the output
             string output = outputBuilder.ToString();
-            
+            parent.QueueDataEvent(new Node.NodeComm("finished|" + output));
             Console.WriteLine("Output finsihed!:");
             Console.WriteLine(output);
 

@@ -12,6 +12,11 @@ using Distributed.Logging;
 
 [assembly: InternalsVisibleTo("StartManager")]
 
+/// <summary>
+/// Manager namespace contains the class to handle
+/// the logic involved with the server as well a
+/// a class for a Node reference.
+/// </summary>
 namespace Distributed.Manager
 {
 
@@ -28,17 +33,16 @@ namespace Distributed.Manager
         // Indicates whether we still want to accept
         // connections. Different than DoneAccepting.
         private bool AcceptingConnections;
-
-        private static string IpAddr = "?";
+        private static string IpAddr = "";
         private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
         public List<Proxy> Connections;
         private static int NextId;
 
         // Thread-safe, only accessed within lock
         private object NodeLock = new object();
-        private List<NodeRef> ConnectedNodes;
+        public Dictionary<int, NodeRef> ConnectedNodes;
 
-        // This is thread safe
+        // This is thread safe internally
         public JobScheduler Scheduler { get; private set;}
 
         // Handles Logging
@@ -55,7 +59,7 @@ namespace Distributed.Manager
             log = Logger.ManagerLogInstance;
 
             Connections = new List<Proxy>();
-            ConnectedNodes = new List<NodeRef>();
+            ConnectedNodes = new Dictionary<int, NodeRef>();
             NextId = 1;
             // Create and start up a job scheduler
             Scheduler = new JobScheduler(this);
@@ -69,13 +73,6 @@ namespace Distributed.Manager
             {
                 log.Log(String.Format("SocketException: { 0}", e));
             }
-            finally
-            {
-                // Stop listening for new clients.
-                server.Stop();
-                // Stop the scheduler as well
-                Scheduler.Stop();
-            }  
         }
 
         /// <summary>
@@ -127,7 +124,7 @@ namespace Distributed.Manager
                     var client = await server.AcceptTcpClientAsync();
                     log.Log("Connected!");
                     // create a default proxy
-                    var proxy = new Network.Proxy(new DefaultReceiver(this), new DefaultSender(this), client);
+                    var proxy = new Proxy(new DefaultReceiver(this), new DefaultSender(this), client, NextId++);
                     // add it to the list of connections
                     Connections.Add(proxy);
                 }  
@@ -200,17 +197,17 @@ namespace Distributed.Manager
         }
 
         /// <summary>
-        /// 
+        /// Add a connection to a node
         /// </summary>
         /// <param name="p"></param>
         public void AddConnectedNode(Proxy p)
         {
             lock(NodeLock)
             {
-                ConnectedNodes.Add(new NodeRef(p, NextId));
-                NextId++;
+                ConnectedNodes.Add(p.id, new NodeRef(p, p.id));
             }
         }
+
         /// <summary>
         /// Send out the message that a job is available
         /// </summary>
@@ -219,10 +216,11 @@ namespace Distributed.Manager
         {
             lock(NodeLock)
             { 
-                foreach (NodeRef node in ConnectedNodes)
+                foreach (NodeRef node in ConnectedNodes.Values)
                 {
                     Console.WriteLine("Enqueing for Node");
-                    string s = Path.GetFileName(job.PathToDll) + "|";
+                    string s = job.JobId + "|";
+                    s += Path.GetFileName(job.PathToDll) + "|";
                     foreach (string arg in job.UserArgs)
                     {
                         s += arg + "|";
@@ -241,11 +239,15 @@ namespace Distributed.Manager
         public int GetAvailableNodes()
         {
             int available = 0;
-            foreach(NodeRef node in ConnectedNodes)
+            lock(NodeLock)
             {
-                if (!node.busy)
+                //TODO: this is not a great approach, this is called often
+                foreach (NodeRef node in ConnectedNodes.Values)
                 {
-                    available += 1;
+                    if (!node.busy)
+                    {
+                        available += 1;
+                    }
                 }
             }
             return available;
@@ -256,13 +258,14 @@ namespace Distributed.Manager
     internal class NodeRef
     {
         private Proxy proxy; 
-        private int id_;
+        public int id { get; private set; }
+
         public bool busy;
 
-        public NodeRef(Proxy p, int id)
+        public NodeRef(Proxy p, int id_)
         {
             proxy = p;
-            id_ = id;
+            id = id_;
             busy = false;
         }
 

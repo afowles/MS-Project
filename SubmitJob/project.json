@@ -9,7 +9,8 @@
       "type": "platform",
       "version": "1.0.1"
     },
-    "PDLib_Core": "1.0.0-*"
+    "PDLib_Core": "1.0.0-*",
+    "System.Xml.XmlSerializer": "4.0.11"
   },
 
   "frameworks": {

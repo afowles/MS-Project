@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Distributed.Network
 {
-
     /// <summary>
     /// Object passed between Default Receiver
     /// </summary>
@@ -79,11 +79,12 @@ namespace Distributed.Network
                     // hand off to proper sender and receiver
                     proxy.HandOffSendReceive(new NodeManagerReceiver(),
                         new NodeManagerSender(manager), ConnectionType.JOB);
+                    // tell the job to submit their job info
+                    proxy.QueueDataEvent(new NodeManagerComm("submit"));
                     // leave and stop this thread.
                     DoneReceiving = true;
                     return;
                 case DefaultDataComm.MessageType.Query:
-
                     // hand off to proper sender and receiver
                     proxy.HandOffSendReceive(new NodeManagerReceiver(), 
                         new NodeManagerSender(manager), ConnectionType.QUERY);
@@ -107,6 +108,7 @@ namespace Distributed.Network
         // ConcurrentQueue for TryDequeue method
         ConcurrentQueue<DefaultDataComm> MessageQueue = new ConcurrentQueue<DefaultDataComm>();
         private NodeManager manager;
+
         /// <summary>
         /// Constructor to add initial message of id
         /// on start up that message will be send out to the connected host
@@ -134,7 +136,7 @@ namespace Distributed.Network
         /// </summary>
         public override void Run()
         {
-            while (true)
+            while (!DoneSending)
             {
                 // grab the message
                 DefaultDataComm data;
@@ -154,8 +156,13 @@ namespace Distributed.Network
                         // and the above receive method has
                         // already called "hand off" with new sender
                         // and receivers.
+                        DoneSending = true;
                         break;
                     }
+                }
+                else
+                {
+                    Thread.Sleep(200);
                 }
             }
         }
