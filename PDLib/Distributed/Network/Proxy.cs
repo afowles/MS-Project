@@ -149,6 +149,38 @@ namespace Distributed.Network
         {
             receiver.OnDataReceived(d);
         }
+
+        /// <summary>
+        /// Override equals for Proxy
+        /// two proxy objects are equal if
+        /// their id's are equal.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            var other = obj as Proxy;
+
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.id == other.id;
+        }
+
+        /// <summary>
+        /// Override hashcode for Proxy
+        /// </summary>
+        /// <remarks>
+        /// two objects must hash to the same
+        /// thing if they are equal.
+        /// </remarks>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return this.id.GetHashCode();
+        }
     }
 
     /// <summary>
@@ -368,10 +400,12 @@ namespace Distributed.Network
             foreach(string s in args)
             {
                 message += s + DataReceivedEventArgs.split;
+                Console.WriteLine(s);
             }
             message += DataReceivedEventArgs.endl;
             byte[] b = System.Text.Encoding.ASCII.GetBytes(message);
             proxy.iostream.Write(b, 0, b.Length);
+            
         }
 
     }

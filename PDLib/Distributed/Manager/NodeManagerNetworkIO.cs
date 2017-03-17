@@ -18,7 +18,8 @@ namespace Distributed.Manager
                 { "job", MessageType.NewJob },
                 { "file", MessageType.File },
                 { "fileread", MessageType.FileRead },
-                { "shutdown", MessageType.NodeQuit },
+                { "nodequit", MessageType.NodeQuit },
+                { "connectionquit", MessageType.ConnectionQuit },
                 { "kill", MessageType.Shutdown },
                 { "submit", MessageType.SubmitJob },
                 { "finished", MessageType.NodeFinished }
@@ -33,6 +34,7 @@ namespace Distributed.Manager
             FileRead,
             Shutdown,
             NodeQuit,
+            ConnectionQuit,
             NodeFinished,
             SubmitJob
 
@@ -62,11 +64,16 @@ namespace Distributed.Manager
 
         public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
         {
-            NodeManagerComm d = e as NodeManagerComm;
-            if (d.Protocol == NodeManagerComm.MessageType.Shutdown)
+            NodeManagerComm data = e as NodeManagerComm;
+            switch(data.Protocol)
             {
-                DoneReceiving = true;
+                case NodeManagerComm.MessageType.Shutdown:
+                case NodeManagerComm.MessageType.NodeQuit:
+                case NodeManagerComm.MessageType.ConnectionQuit:
+                    DoneReceiving = true;
+                    break;
             }
+
         }
 
     }
@@ -133,7 +140,8 @@ namespace Distributed.Manager
                 // manager is running on as of now.
                 case NodeManagerComm.MessageType.Send:
 
-                    JobRef j = manager.Scheduler.GetJob(int.Parse(data.args[1]));
+                    string[] s = data.args[1].Split(',');
+                    JobRef j = manager.Scheduler.GetJob(int.Parse(s[0]));
                     if (j != null)
                     {
                         Console.WriteLine("Sending file: " + Path.GetFileName(j.PathToDll));
@@ -154,6 +162,17 @@ namespace Distributed.Manager
                     break;
                 case NodeManagerComm.MessageType.NodeFinished:
                     manager.ConnectedNodes[proxy.id].busy = false;
+                    break;
+                case NodeManagerComm.MessageType.NodeQuit:
+                    // remove the entry associated with
+                    // this proxy's id
+                    manager.ConnectedNodes.Remove(proxy.id);
+                    // goto case is not harmful (like a regular 'goto' in other languages)
+                    goto case NodeManagerComm.MessageType.ConnectionQuit;
+                case NodeManagerComm.MessageType.ConnectionQuit:
+                    // remove the connection
+                    manager.Connections.Remove(proxy);
+                    DoneSending = true;
                     break;
                 case NodeManagerComm.MessageType.Shutdown:
                     SendMessage(new string[] { "shutdown" });

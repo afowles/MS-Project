@@ -9,6 +9,7 @@ using Distributed.Files;
 using Distributed.Logging;
 using Distributed.Manager;
 using System.IO;
+using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("StartNode")]
 
@@ -45,13 +46,17 @@ namespace Distributed.Node
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void OnUserExit(object sender, ConsoleCancelEventArgs e)
+        public async void OnUserExit(object sender, ConsoleCancelEventArgs e)
         {
             log.Log("Node - Shuting down, user hit ctrl-c");
             // set cancel to true so we can do our own cleanup
             e.Cancel = true;
-            // queue up the shuting down message to the server
-            proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("shutdown")));
+            // queue up the quitting message to the server
+            proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("quit")));
+            
+            // join on both sending and receiving threads
+            proxy.Join();
+            
             
         }
 
@@ -70,7 +75,7 @@ namespace Distributed.Node
             Node n = new Node(args[0], NetworkSendReceive.SERVER_PORT);
             n.log.Log("Node: Starting");
             // handle ctrl c
-            //Console.CancelKeyPress += n.OnUserExit;
+            Console.CancelKeyPress += n.OnUserExit;
 
         }
     }
@@ -91,7 +96,8 @@ namespace Distributed.Node
                 { "fileread", MessageType.FileRead },
                 { "execute", MessageType.Execute },
                 { "finished", MessageType.Finished },
-                { "shutdown", MessageType.Shutdown }
+                { "shutdown", MessageType.Shutdown },
+                { "quit", MessageType.Quit }
 
             };
 
@@ -104,7 +110,10 @@ namespace Distributed.Node
             FileRead,
             Execute,
             Finished,
-            Shutdown
+            // shutdown is when the server asks
+            Shutdown,
+            // quit is when this application stops
+            Quit
         }
 
         /// <summary>
@@ -177,10 +186,9 @@ namespace Distributed.Node
                     JobLauncher j = new JobLauncher(job, parent);
                     j.LaunchJob();
                     break;
-                
-
                 case NodeComm.MessageType.Shutdown:
-                    // shutting down, we are done receving
+                case NodeComm.MessageType.Quit:
+                    // shutting down or quitting, we are done receving
                     DoneReceiving = true;
                     break;
             }
@@ -218,7 +226,7 @@ namespace Distributed.Node
         {
             try
             {
-                while (true)
+                while (!DoneSending)
                 {
                     NodeComm data;
                     if (MessageQueue.TryDequeue(out data))
@@ -228,7 +236,8 @@ namespace Distributed.Node
                             case NodeComm.MessageType.File:
                                 parent.log.Log("Node: requesting file");
                                 // ask for the file with jobid from data.args[1]
-                                SendMessage(new string[] { "send", data.args[1] });
+                                string[] s = data.args[1].Split(',');
+                                SendMessage(new string[] { "send", s[0] });
                                 break;
                             case NodeComm.MessageType.Id:
                                 parent.log.Log("Node: sending id");
@@ -245,12 +254,24 @@ namespace Distributed.Node
                                 SendMessage(data.args);
                                 break;
                             case NodeComm.MessageType.Shutdown:
-                                //Console.WriteLine("sending shutdown");
-                                //parent.log.StopLogging();
-                                SendMessage(new string[] { "shutdown" });
+                                DoneSending = true;
                                 return;
+                            case NodeComm.MessageType.Quit:
+                                parent.log.Log("Sending quit");
+                                SendMessage(new string[] { "nodequit" });
+                                // hack to get final message to actually send...
+                                Task t = new Task(() =>
+                                {
+                                    FlushSender();
+                                });
+                                // this will actually wait forever... 
+                                // unless given a timeout TODO find out why
+                                t.Wait(100);
+                                DoneSending = true;
+                                break;
                             default:
                                 parent.log.Log("Bad message");
+                                parent.log.Log(data.message);
                                 break;
                         }
                     }
@@ -263,11 +284,16 @@ namespace Distributed.Node
                 }
             }
             // unavoidable, if the server fails this will be throw
-            catch(System.IO.IOException e)
+            catch(IOException e)
             {
                 Console.WriteLine(e.Message);
             }
 
+        }
+
+        public async void FlushSender()
+        {
+            await proxy.iostream.FlushAsync();
         }
     }
 }

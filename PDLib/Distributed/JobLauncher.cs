@@ -44,9 +44,12 @@ namespace Distributed.Manager
             // redirect standard in, not using currently
             processStartInfo.RedirectStandardInput = true;
 
+            // give it the arguments required to section up work
+            processStartInfo.Arguments += " " + data.args[1];
+
             // Add in the user arguments
-            // arg[0] is a message type, arg[1] is the dll path
-            for (int i = 2; i < data.args.Length; i++ )
+            // arg[0] is a message type, arg[2] is the dll path
+            for (int i = 3; i < data.args.Length; i++ )
             {
                 processStartInfo.Arguments += " " + data.args[i];
             }

@@ -215,11 +215,18 @@ namespace Distributed.Manager
         public void SendJobOut(JobRef job)
         {
             lock(NodeLock)
-            { 
+            {
+                int section_id = 0;
+                int num_nodes = ConnectedNodes.Values.Count;
+                int req_nodes = job.RequestedNodes;
                 foreach (NodeRef node in ConnectedNodes.Values)
                 {
+                    if (req_nodes == 0)
+                    {
+                        break;
+                    }
                     Console.WriteLine("Enqueing for Node");
-                    string s = job.JobId + "|";
+                    string s = job.JobId + "," + section_id + "," + num_nodes + "|";
                     s += Path.GetFileName(job.PathToDll) + "|";
                     foreach (string arg in job.UserArgs)
                     {
@@ -227,6 +234,8 @@ namespace Distributed.Manager
                     }
                     node.QueueDataEvent(new NodeManagerComm("file|" + s ));
                     node.busy = true;
+                    req_nodes--;
+                    section_id++;
                 }
             }
         }

@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-
+using Distributed.Library;
 
 namespace Distributed.Assembly
 {
@@ -25,9 +25,11 @@ namespace Distributed.Assembly
         }
 
         /// <summary>
-        /// Find a job class from an assembly
+        /// Find a job class from an assembly,
+        /// if that job class does not exist in the assembly
+        /// return false.
         /// </summary>
-        public void FindJobClass()
+        public bool FindJobClass()
         {
             Type[] types;
             // try and grab all the types from
@@ -57,6 +59,7 @@ namespace Distributed.Assembly
                     {
                         JobClassType = t;
                         JobInstance = instance;
+                        return true;
                     }
                 }
                 catch(MissingMemberException)
@@ -64,6 +67,7 @@ namespace Distributed.Assembly
 
                 }
             }
+            return false;
         }
 
         /// <summary>
@@ -72,7 +76,7 @@ namespace Distributed.Assembly
         /// </summary>
         /// <param name="method"></param>
         /// <param name="methodParams"></param>
-        public void CallMethod(string method, object[] methodParams)
+        public object CallMethod(string method, object[] methodParams)
         {
             MethodInfo methodInfo = JobClassType.GetMethod(method);
             Console.WriteLine("gets here");
@@ -83,10 +87,12 @@ namespace Distributed.Assembly
                 Console.WriteLine("gets here");
                 result = methodInfo.Invoke(JobInstance, methodParams);
                 Console.WriteLine(result);
+                return result;
             }
             else
             {
                 Console.WriteLine("Error with method load");
+                return null;
             }
         }
     }

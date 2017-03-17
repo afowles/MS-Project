@@ -50,7 +50,7 @@
     <Compile Include="Distributed\Network\Default.cs" />
     <Compile Include="Distributed\Node\SystemInfo.cs" />
     <Compile Include="Distributed\FileUtil.cs" />
-    <Compile Include="Distributed\Job.cs" />
+    <Compile Include="Distributed\Library\Job.cs" />
     <Compile Include="Distributed\SubmitJob.cs" />
     <Compile Include="Distributed\JobTask.cs" />
     <Compile Include="Distributed\Node\Node.cs" />

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.Loader;
-using Distributed;
+using Distributed.Library;
 using System.Diagnostics;
 using System.IO;
 
@@ -11,7 +11,7 @@ using Distributed.Assembly;
 /// </summary>
 namespace Loader
 {
-    public class Program
+    public class Loader
     {
         public static void Main(string[] args)
         {
@@ -22,7 +22,10 @@ namespace Loader
             }
             string s = Directory.GetCurrentDirectory();
             Console.WriteLine(s + "\\" + args[0]);
+            // Create an assembly loader object
             CoreLoader c = new CoreLoader(s + "\\" + args[0]);
+            // Find the Job Class
+            int[] n = ParseTokens(args);
             c.FindJobClass();
             c.CallMethod("Main", new object[] { args });
             Console.WriteLine("Gets Here");
@@ -31,6 +34,23 @@ namespace Loader
                 Console.WriteLine("Trying to start a task");
                 c.CallMethod("startTask", new object[] { i });
             }
+        }
+
+        public static int[] ParseTokens(string[] args)
+        {
+            // jobid, sectionid, number of nodes
+            int[] result = new int[3];
+            // split on comma
+            string[] s = args[1].Split(',');
+            foreach(string so in s)
+            {
+                Console.WriteLine(so);
+            }
+            result[0] = int.Parse(s[0]);
+            result[1] = int.Parse(s[1]);
+            result[2] = int.Parse(s[2]);
+            return result;
+
         }
 
         public static void Main2(string[] args)

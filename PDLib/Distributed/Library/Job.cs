@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Distributed.Network;
 
 
-namespace Distributed
+namespace Distributed.Library
 {
     public abstract class Job
     {

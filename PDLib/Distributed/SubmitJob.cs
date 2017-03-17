@@ -6,6 +6,8 @@ using System.Threading;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Text;
+using Distributed.Logging;
+using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("SubmitJob")]
 
@@ -16,6 +18,21 @@ namespace Distributed
     /// </summary>
     internal class SubmitJob
     {
+        private Proxy proxy;
+        public Logger log { get; private set; }
+
+        /// <summary>
+        /// Construct a node with proxy
+        /// at host, port
+        /// </summary>
+        /// <param name="host">host for proxy to NodeManager</param>
+        /// <param name="port">port for proxy to NodeManager</param>
+        public SubmitJob(string host, int port, string[] args)
+        {
+            proxy = new Proxy(new JobReceiver(), new JobSender(args), host, port, 0);
+            log = Logger.NodeLogInstance;
+        }
+
         /// <summary>
         /// Main method that is invoked by SubmitJob Program
         /// </summary>
@@ -25,10 +42,8 @@ namespace Distributed
             // try to connect to the NodeManager
             Console.WriteLine("Starting Job Launcher");
             Console.WriteLine("Username is: " + GetUserName());
-            // create a proxy, this application only has one so id of 0
-            Proxy p = new Proxy(new JobReceiver(), 
-                new JobSender(args), args[0], NetworkSendReceive.SERVER_PORT, 0);
-            
+            SubmitJob sj = new SubmitJob(args[0], NetworkSendReceive.SERVER_PORT, args);
+            Console.CancelKeyPress += sj.OnUserExit;
         }
 
         /// <summary>
@@ -88,6 +103,23 @@ namespace Distributed
 
             return outputBuilder.ToString();
         }
+
+        /// <summary>
+        /// Handles cleanup and communcation on shutdown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnUserExit(object sender, ConsoleCancelEventArgs e)
+        {
+            log.Log("Submitjob - Shuting down, user hit ctrl-c");
+            // set cancel to true so we can do our own cleanup
+            e.Cancel = true;
+            // queue up the quitting message to the server
+            proxy.QueueDataEvent(new JobEventArgs("quit"));
+            // join on both sending and receiving threads
+            proxy.Join();
+
+        }
     }
 
     internal sealed class JobEventArgs : DataReceivedEventArgs
@@ -98,7 +130,8 @@ namespace Distributed
                 { "id", MessageType.Id },
                 { "accept", MessageType.Accept },
                 { "submit" , MessageType.Submit },
-                { "shutdown", MessageType.Shutdown }
+                { "shutdown", MessageType.Shutdown },
+                { "quit", MessageType.Quit }
             };
 
         public enum MessageType
@@ -107,7 +140,8 @@ namespace Distributed
             Id,
             Accept,
             Submit,
-            Shutdown
+            Shutdown,
+            Quit
         }
 
         public JobEventArgs(string msg) : base(msg)
@@ -131,6 +165,7 @@ namespace Distributed
             switch(data.Protocol)
             {
                 case JobEventArgs.MessageType.Shutdown:
+                case JobEventArgs.MessageType.Quit:
                     DoneReceiving = true;
                     break;
             }
@@ -194,6 +229,18 @@ namespace Distributed
                         case JobEventArgs.MessageType.Shutdown:
                             DoneSending = true;
                             break;
+                        case JobEventArgs.MessageType.Quit:
+                            SendMessage(new string[] { "connectionquit" });
+                            // hack to get final message to actually send...
+                            Task t = new Task(() =>
+                            {
+                                FlushSender();
+                            });
+                            // this will actually wait forever... 
+                            // unless given a timeout TODO find out why
+                            t.Wait(100);
+                            DoneSending = true;
+                            break;
                     }
                 }
                 else
@@ -202,6 +249,11 @@ namespace Distributed
                 }
 
             }
+        }
+
+        public async void FlushSender()
+        {
+            await proxy.iostream.FlushAsync();
         }
     }
 }
