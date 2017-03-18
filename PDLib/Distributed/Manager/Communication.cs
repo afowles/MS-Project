@@ -7,8 +7,13 @@ using System.Threading;
 using Distributed.Files;
 using System.IO;
 
+
 namespace Distributed.Manager
 {
+    /// <summary>
+    /// Data event class for incoming messages
+    /// to the NodeManager.
+    /// </summary>
     internal class NodeManagerComm : DataReceivedEventArgs
     {
         public MessageType Protocol { get; }
@@ -37,7 +42,6 @@ namespace Distributed.Manager
             ConnectionQuit,
             NodeFinished,
             SubmitJob
-
         }
 
         public NodeManagerComm(string msg)
@@ -57,11 +61,21 @@ namespace Distributed.Manager
     /// </summary>
     internal class NodeManagerReceiver : AbstractReceiver
     {
+        /// <summary>
+        /// Create the specific DataReceivedEvent Args type
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>Specific DataReceivedEventArgs type</returns>
         public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
         {
             return new NodeManagerComm(data);
         }
 
+        /// <summary>
+        /// Handle any additional receiving that needs to be done.
+        /// </summary>
+        /// <param name="sender">unused</param>
+        /// <param name="e">data event object from</param>
         public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
         {
             NodeManagerComm data = e as NodeManagerComm;
@@ -73,51 +87,70 @@ namespace Distributed.Manager
                     DoneReceiving = true;
                     break;
             }
-
         }
-
     }
 
+    /// <summary>
+    /// Class to handle sending of responses to clients.
+    /// </summary>
     internal class NodeManagerSender : AbstractSender
     {
-        ConcurrentQueue<DataReceivedEventArgs> MessageQueue = new ConcurrentQueue<DataReceivedEventArgs>();
-
+        private ConcurrentQueue<DataReceivedEventArgs> MessageQueue 
+            = new ConcurrentQueue<DataReceivedEventArgs>();
         public NodeManager manager;
 
+        /// <summary>
+        /// Constructor for NodeManagerSender
+        /// </summary>
+        /// <param name="manager">parent container class</param>
         public NodeManagerSender(NodeManager manager)
         {
             this.manager = manager;
         }
+
+        /// <summary>
+        /// Handle the receiving of data 
+        /// from the NodeManagerReceiver
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
-            //TODO: log this instead
-            Console.WriteLine("NodeManagerSender: HandleReceiverEvent called");
             MessageQueue.Enqueue(e);
         }
 
+        /// <summary>
+        /// Main work loop for NodeManagerSender
+        /// </summary>
         public override void Run()
-        {            
-            while (!DoneSending)
+        {
+            try
             {
-                DataReceivedEventArgs data;
-                if (MessageQueue.TryDequeue(out data))
+                while (!DoneSending)
                 {
-                    if (data is NodeManagerComm)
+                    DataReceivedEventArgs data;
+                    if (MessageQueue.TryDequeue(out data))
                     {
-                        HandleNodeCommunication(data as NodeManagerComm);
+                        if (data is NodeManagerComm)
+                        {
+                            HandleNodeCommunication(data as NodeManagerComm);
+                        }
                     }
-                }
-                else
-                {
-                    Thread.Sleep(100);
-                }
+                    else
+                    {
+                        Thread.Sleep(100);
+                    }
 
+                }
+            }
+            catch(IOException e)
+            {
+                manager.log.Log("NodeManagerSender caught exception: " + e.ToString());
             }
         }
 
         private void HandleNodeCommunication(NodeManagerComm data)
         {
-            Console.WriteLine("PROTOCOL:" + data.Protocol);
             switch (data.Protocol)
             {
                 case NodeManagerComm.MessageType.SubmitJob:
@@ -127,7 +160,7 @@ namespace Distributed.Manager
                 case NodeManagerComm.MessageType.NewJob:
                     Console.WriteLine("Received Job File: " + data.args[1]);
                     // add it to the list of jobs for later
-                    manager.Scheduler.AddJob(data);
+                    manager.Scheduler.AddJob(data, proxy.id);
                     break;
 
                 case NodeManagerComm.MessageType.File:

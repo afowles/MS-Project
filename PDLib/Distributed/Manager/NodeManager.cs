@@ -13,17 +13,15 @@ using Distributed.Logging;
 [assembly: InternalsVisibleTo("StartManager")]
 
 /// <summary>
-/// Manager namespace contains the class to handle
-/// the logic involved with the server as well a
-/// a class for a Node reference.
+/// Manager namespace contains the classes to handle
+/// the logic involved with all aspects of the node server.
 /// </summary>
 namespace Distributed.Manager
 {
 
     /// <summary>
-    /// Master Slave approach, will manage connections
-    /// to nodes and pass of incoming clients. Look into
-    /// possible UDP approach for no "master"
+    /// Master class, will manage connections
+    /// involving the adhoc cluster system.
     /// </summary>
     internal class NodeManager
     {
@@ -34,8 +32,10 @@ namespace Distributed.Manager
         // connections. Different than DoneAccepting.
         private bool AcceptingConnections;
         private static string IpAddr = "";
-        private byte[] bytes = new byte[NetworkSendReceive.BUFFER_SIZE];
+        
+        // Keep track of all connections, not just Nodes
         public List<Proxy> Connections;
+        // Next Id for a proxy
         private static int NextId;
 
         // Thread-safe, only accessed within lock
@@ -57,7 +57,6 @@ namespace Distributed.Manager
         {
             // create logging
             log = Logger.ManagerLogInstance;
-
             Connections = new List<Proxy>();
             ConnectedNodes = new Dictionary<int, NodeRef>();
             NextId = 1;
@@ -71,7 +70,7 @@ namespace Distributed.Manager
             }
             catch (SocketException e)
             {
-                log.Log(String.Format("SocketException: { 0}", e));
+                log.Log(String.Format("SocketException: {0}", e));
             }
         }
 
@@ -109,7 +108,7 @@ namespace Distributed.Manager
                 // check if we have a pending connection
                 if (!server.Pending())
                 {
-                    // we don't wait a bit
+                    // we don't so wait a bit
                     Thread.Sleep(NetworkSendReceive.SERVER_SLEEP);
                     // skip to top
                     continue;
@@ -153,7 +152,7 @@ namespace Distributed.Manager
         public static async Task GetLocalIPAddress()
         {
             IPHostEntry host;
-            string localIP = "?";
+            string localIP = "";
             host = await Dns.GetHostEntryAsync(Dns.GetHostName());
             foreach (IPAddress ip in host.AddressList)
             {
@@ -163,7 +162,7 @@ namespace Distributed.Manager
                 }
             }
             IpAddr = localIP;
-            Console.WriteLine(localIP);
+            Console.WriteLine("NodeManager IP is: " + localIP);
         }
 
         /// <summary>

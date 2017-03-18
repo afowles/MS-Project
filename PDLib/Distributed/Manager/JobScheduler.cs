@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 
 using Distributed.Network;
@@ -10,7 +9,7 @@ namespace Distributed.Manager
     /// <summary>
     /// A thread safe Job Scheduler
     /// </summary>
-    class JobScheduler
+    internal class JobScheduler
     {
         // manager associated with JobScheduler
         private NodeManager manager;
@@ -104,11 +103,12 @@ namespace Distributed.Manager
         /// contained in the DataReceivedEventArgs
         /// </summary>
         /// <param name="job"> job to add</param>
-        public void AddJob(DataReceivedEventArgs job)
+        /// <param name="proxy_id">who the job is for</param>
+        public void AddJob(DataReceivedEventArgs job, int proxy_id)
         {
             lock(JobLock)
             {
-                JobRef j = new JobRef(job, id++);
+                JobRef j = new JobRef(job, id++, proxy_id);
                 // debug
                 manager.log.Log("Adding job: " + j);
                 // add the job to the queue
@@ -163,6 +163,8 @@ namespace Distributed.Manager
         // the jobs id (unique)
         public int JobId;
 
+        public int ProxyId;
+
         // TODO might want an Enum status instead
         private bool completed = false;
 
@@ -170,12 +172,14 @@ namespace Distributed.Manager
         /// Construct a Job Reference
         /// </summary>
         /// <param name="data"></param>
-        public JobRef(DataReceivedEventArgs data, int id)
+        public JobRef(DataReceivedEventArgs data, 
+            int id, int proxy_id)
         {
             ParseJobMessage(data);
             //TODO: get this from dll
-            RequestedNodes = 1;
+            RequestedNodes = 2;
             JobId = id;
+            ProxyId = proxy_id;
         }
 
         /// <summary>
