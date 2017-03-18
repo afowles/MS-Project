@@ -266,6 +266,8 @@ namespace Distributed.Network
     {
         protected bool DoneReceiving = false;
 
+        protected string Message = "";
+
         /// <summary>
         /// The event for receiving data.
         /// </summary>
@@ -308,14 +310,34 @@ namespace Distributed.Network
                         }
                         else if (iostream.Read(bytes, 0, bytes.Length) > 0)
                         {
+                            // byte buffer to string
                             data = System.Text.Encoding.ASCII.GetString(bytes);
-                            // don't print out the entire buffer (lot of extra space)
-                            data = data.Remove(data.LastIndexOf('*'), data.Substring(data.LastIndexOf('*')).Length);
+                            // did the message fit into the buffer?
+                            if (data.Contains(DataReceivedEventArgs.endl))
+                            {
+                                // if so don't use the entire buffer (lot of extra space)
+                                int index = data.LastIndexOf('*');
+                                // but if the entire buffer is being used all the way don't try and truncate
+                                if (index > 0)
+                                {
+                                    data = data.Remove(index, data.Substring(index).Length);
+                                }
+                                // append the data to the message
+                                Message += data;
+                                // Raise the data received event
+                                OnDataReceived(CreateDataReceivedEvent(Message));
+                                // reset the message
+                                Message = "";
+                            }
+                            else
+                            {
+                                // the message is larger than the buffer
+                                Message += data;
+                            }
                             Console.WriteLine("Received: {0}", data);
                             // Clear out buffer to prevent odd messages
                             Array.Clear(bytes, 0, bytes.Length);
-                            // Raise the data received event
-                            OnDataReceived(CreateDataReceivedEvent(data));
+
                         }
                         else
                         {
