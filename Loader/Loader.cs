@@ -11,31 +11,71 @@ using Distributed.Assembly;
 /// </summary>
 namespace Loader
 {
+    /// <summary>
+    /// Class to load a user program in and run it.
+    /// </summary>
     public class Loader
     {
+        /// <summary>
+        /// Loads and runs the users program
+        /// </summary>
+        /// <param name="args">[0] is the DLL path, 
+        /// [1] is any library args separated by ','
+        /// The rest are user arguments to their program</param>
         public static void Main(string[] args)
         {
-            Console.WriteLine("Got here with arguments: ");
-            foreach(string so in args)
+            // Create a place for user arguments
+            string[] user_args = new string[args.Length - 2];
+            Console.WriteLine("Arguments: ");
+            for (int i = 0; i < args.Length - 2; i++)
             {
-                Console.WriteLine(so);
+                Console.WriteLine(args[i+2]);
+                user_args[i] = args[i + 2];
             }
-            string s = Directory.GetCurrentDirectory();
-            Console.WriteLine(s + "\\" + args[0]);
-            // Create an assembly loader object
-            CoreLoader c = new CoreLoader(s + "\\" + args[0]);
-            // Find the Job Class
-            int[] n = ParseTokens(args);
-            c.FindJobClass();
-            c.CallMethod("Main", new object[] { args });
-            Console.WriteLine("Gets Here");
-            for (int i = 0; i < 2; i++)
+            string pwd = Directory.GetCurrentDirectory();
+            // parse the arguments needed for proper execution
+            int[] lib_args = ParseTokens(args);
+
+            Console.WriteLine(pwd + "\\" + args[0]);
+            // Create an assembly loader object for the users program
+            CoreLoader coreLoader = new CoreLoader(pwd + "\\" + args[0]);
+            // Find the Job Class, this must exist to run distributed.
+            bool foundJobClass = coreLoader.FindJobClass();
+            if (foundJobClass)
             {
-                Console.WriteLine("Trying to start a task");
-                c.CallMethod("startTask", new object[] { i });
+                // if they inherited the Job class it will have Main
+                // call it with the user arguments. Nothing
+                // is exepected back from Main but an object result is returned
+                // from the call method function.
+                var result = coreLoader.CallMethod("Main", new object[] { user_args });
+                // This method does not require arguments, returns int
+                // calls Count on the internal task list being kept by the job.
+                int numTasks = (int) coreLoader.CallMethod("GetNumberTasks", new object[] { });
+                // schedule does not take any arguments
+                Schedule s = (Schedule) coreLoader.CallMethod("GetSchedule", new object[] { });
+                switch(s)
+                {
+                    case Schedule.FIXED:
+                        RunFixedSchedule(coreLoader, numTasks, lib_args);
+                        break;
+                    default:
+                        Console.WriteLine("Default called..." + s);
+                        break;
+                }
             }
+            else
+            {
+                // TODO this DLL is not valid, maybe try
+                // running static main to see what happens?
+            }
+            
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static int[] ParseTokens(string[] args)
         {
             // jobid, sectionid, number of nodes
@@ -53,64 +93,29 @@ namespace Loader
 
         }
 
-        public static void Main2(string[] args)
+        /// <summary>
+        /// Run the program with a fixed schedule
+        /// </summary>
+        /// <remarks>
+        /// libArgs = [job_id, section_id, num_nodes]
+        /// </remarks>
+        public static void RunFixedSchedule(CoreLoader coreLoader, int numTasks, int[] libArgs) 
         {
-            Process p = new Process();
-            var x = AssemblyLoadContext.Default.LoadFromAssemblyPath(
-                @"C:\Users\Adam\Documents\Visual Studio 2015\Projects\MS_Project\AppUsingPDLib_Core\bin\Debug\netcoreapp1.1\AppUsingPDLib_Core.dll");
-            Type[] types;
-            try
+            int fixed_block = numTasks / libArgs[2];
+            Console.WriteLine("FixedBlock = " + fixed_block);
+            int start = fixed_block * libArgs[1];
+            Console.WriteLine("Start = " + start);
+            int end = start + fixed_block;
+            if (end > numTasks)
             {
-               types = x.GetTypes();
+                end = numTasks;
             }
-            catch (ReflectionTypeLoadException e)
+            Console.WriteLine("End = " + end);
+            for (int i = start; i < end; i++)
             {
-                types = e.Types;
+                Console.WriteLine("Trying to start a task");
+                coreLoader.CallMethod("startTask", new object[] { i });
             }
-
-            Job userjob = null;
-
-            foreach (Type t in types)
-            {
-                try
-                {
-                    var myInstance = Activator.CreateInstance(t);
-                    MethodInfo methodInfo = t.GetMethod("Main");
-                    if (methodInfo != null)
-                    {
-                        object result = null;
-                        ParameterInfo[] parameters = methodInfo.GetParameters();
-                            // This works fine
-                        result = methodInfo.Invoke(myInstance, new object[] { new string[] { "" } });
-                        Console.WriteLine(myInstance.GetType());
-                        //Console.WriteLine((int)result);
-                        Console.WriteLine(result);
-                    }
-
-                    methodInfo = t.GetMethod("startTask");
-                    if (methodInfo != null)
-                    {
-                        object result = null;
-                        ParameterInfo[] parameters = methodInfo.GetParameters();
-                        // This works fine
-                        result = methodInfo.Invoke(myInstance, new object[] { 1 });
-                        Console.WriteLine(myInstance.GetType());
-                        //Console.WriteLine((int)result);
-                        Console.WriteLine(result);
-                    }
-                    if (myInstance is Job)
-                    {
-                        userjob = myInstance as Job;
-                    }
-                }
-                catch(MissingMemberException)
-                { }
-                
-            }
-
-            //Console.WriteLine(userjob?.GetClassName());
-            //Console.WriteLine(userjob.doWork(5));
-            Console.ReadKey();
         }
     }
 }

@@ -12,6 +12,9 @@ namespace Distributed.Manager
         private string dllPath;
         private DataReceivedEventArgs data;
         private Node.Node parent;
+        // starting at -2 for dotnet run output
+        // TODO: look for a way to suppress dotnet run
+        private static int lineCount = -2;
 
         /// <summary>
         /// Constructor for a Job launcher
@@ -71,8 +74,9 @@ namespace Distributed.Manager
                 delegate (object sender, System.Diagnostics.DataReceivedEventArgs e)
                 {
                     // append the output data to a string
-                    outputBuilder.Append(e.Data);
-                    
+                    lineCount++;
+                    outputBuilder.Append("\n[" + lineCount + "]: " + e.Data);
+
                 }
             );
             string error;
@@ -91,13 +95,12 @@ namespace Distributed.Manager
             catch(Exception e)
             {
                 error = e.ToString();
+                Console.WriteLine(error);
             }
-
+            parent.log.Log("JobLauncher: Process finished with ExitCode: " + process.ExitCode);
             // use the output
             string output = outputBuilder.ToString();
             parent.QueueDataEvent(new Node.NodeComm("finished|" + output));
-            Console.WriteLine("Output finsihed!:");
-            Console.WriteLine(output);
 
         }
     }

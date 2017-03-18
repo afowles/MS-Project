@@ -51,7 +51,7 @@ namespace Distributed.Assembly
             // class
             foreach (Type t in types)
             {
-                Console.WriteLine("type: " + t);
+                
                 try
                 {
                     var instance = Activator.CreateInstance(t);
@@ -61,10 +61,14 @@ namespace Distributed.Assembly
                         JobInstance = instance;
                         return true;
                     }
+                    else
+                    {
+                        Console.WriteLine("Not a job");
+                    }
                 }
-                catch(MissingMemberException)
+                catch(MissingMemberException e)
                 {
-
+                    Console.WriteLine("SHIT: this is" + e.ToString());
                 }
             }
             return false;
