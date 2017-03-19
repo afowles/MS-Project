@@ -75,6 +75,11 @@ namespace Distributed.Manager
                 {
                     // append the output data to a string
                     lineCount++;
+                    // remove the first two lines
+                    if (lineCount == -1 || lineCount == 0)
+                    {
+                        return;
+                    }
                     outputBuilder.Append("\n[" + lineCount + "]: " + e.Data);
 
                 }
@@ -100,8 +105,8 @@ namespace Distributed.Manager
             parent.log.Log("JobLauncher: Process finished with ExitCode: " + process.ExitCode);
             // use the output
             string output = outputBuilder.ToString();
-            parent.QueueDataEvent(new Node.NodeComm("finished|" + output));
-
+            parent.QueueDataEvent(new Node.NodeComm("finished|" 
+                + data.args[1].ToCharArray()[0] + "|" + output));
         }
     }
 }

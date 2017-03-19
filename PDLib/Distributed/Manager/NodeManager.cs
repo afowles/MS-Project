@@ -261,6 +261,23 @@ namespace Distributed.Manager
             return available;
         }
 
+        /// <summary>
+        /// Send back the job results to the user
+        /// </summary>
+        /// <param name="data"></param>
+        public void SendJobResults(DataReceivedEventArgs data)
+        {
+            JobRef j = Scheduler.GetJob(int.Parse(data.args[1]));
+            foreach(Proxy p in Connections)
+            {
+                if (p.id == j.ProxyId)
+                {
+                    p.QueueDataEvent(new NodeManagerComm("results|" + data.args[2]));
+                }
+            }
+            
+        }
+
     }
 
     internal class NodeRef

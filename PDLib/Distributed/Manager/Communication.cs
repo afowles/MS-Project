@@ -27,7 +27,8 @@ namespace Distributed.Manager
                 { "connectionquit", MessageType.ConnectionQuit },
                 { "kill", MessageType.Shutdown },
                 { "submit", MessageType.SubmitJob },
-                { "finished", MessageType.NodeFinished }
+                { "finished", MessageType.NodeFinished },
+                { "results", MessageType.Results }
             };
 
         public enum MessageType
@@ -41,6 +42,7 @@ namespace Distributed.Manager
             NodeQuit,
             ConnectionQuit,
             NodeFinished,
+            Results,
             SubmitJob
         }
 
@@ -161,6 +163,7 @@ namespace Distributed.Manager
                     Console.WriteLine("Received Job File: " + data.args[1]);
                     // add it to the list of jobs for later
                     manager.Scheduler.AddJob(data, proxy.id);
+                    Console.WriteLine("Proxy id is:" + proxy.id);
                     break;
 
                 case NodeManagerComm.MessageType.File:
@@ -195,6 +198,11 @@ namespace Distributed.Manager
                     break;
                 case NodeManagerComm.MessageType.NodeFinished:
                     manager.ConnectedNodes[proxy.id].busy = false;
+                    manager.SendJobResults(data);
+                    break;
+                case NodeManagerComm.MessageType.Results:
+                    // forward along the results to the user
+                    SendMessage(data.args);
                     break;
                 case NodeManagerComm.MessageType.NodeQuit:
                     // remove the entry associated with

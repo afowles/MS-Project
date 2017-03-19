@@ -131,7 +131,8 @@ namespace Distributed
                 { "accept", MessageType.Accept },
                 { "submit" , MessageType.Submit },
                 { "shutdown", MessageType.Shutdown },
-                { "quit", MessageType.Quit }
+                { "quit", MessageType.Quit },
+                { "results", MessageType.Results }
             };
 
         public enum MessageType
@@ -140,6 +141,7 @@ namespace Distributed
             Id,
             Accept,
             Submit,
+            Results,
             Shutdown,
             Quit
         }
@@ -225,6 +227,9 @@ namespace Distributed
                                 i++;
                             }
                             SendMessage(args);
+                            break;
+                        case JobEventArgs.MessageType.Results:
+                            Console.WriteLine(data.args[1]);
                             break;
                         case JobEventArgs.MessageType.Shutdown:
                             DoneSending = true;

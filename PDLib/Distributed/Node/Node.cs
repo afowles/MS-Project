@@ -46,7 +46,7 @@ namespace Distributed.Node
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public async void OnUserExit(object sender, ConsoleCancelEventArgs e)
+        public void OnUserExit(object sender, ConsoleCancelEventArgs e)
         {
             log.Log("Node - Shuting down, user hit ctrl-c");
             // set cancel to true so we can do our own cleanup
