@@ -73,6 +73,10 @@ namespace Distributed.Node
         {
             // try to connect to the NodeManager
             Node n = new Node(args[0], NetworkSendReceive.SERVER_PORT);
+            foreach(var v in Environment.GetEnvironmentVariables().Keys)
+            {
+                n.log.Log("Key: " + v + " -> " + Environment.GetEnvironmentVariables()[v]);
+            }
             n.log.Log("Node: Starting");
             // handle ctrl c
             Console.CancelKeyPress += n.OnUserExit;
