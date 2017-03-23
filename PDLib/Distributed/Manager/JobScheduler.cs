@@ -177,7 +177,7 @@ namespace Distributed.Manager
         {
             ParseJobMessage(data);
             //TODO: get this from dll
-            RequestedNodes = 1;
+            RequestedNodes = 4;
             JobId = id;
             ProxyId = proxy_id;
         }

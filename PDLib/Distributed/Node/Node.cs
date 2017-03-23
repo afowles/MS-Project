@@ -77,6 +77,7 @@ namespace Distributed.Node
             {
                 n.log.Log("Key: " + v + " -> " + Environment.GetEnvironmentVariables()[v]);
             }
+            Console.WriteLine(Environment.ProcessorCount);
             n.log.Log("Node: Starting");
             // handle ctrl c
             Console.CancelKeyPress += n.OnUserExit;

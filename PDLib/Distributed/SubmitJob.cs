@@ -199,6 +199,7 @@ namespace Distributed
 
         public override void Run()
         {
+            int count = 0;
             while (!DoneSending)
             {
                 JobEventArgs data;
@@ -230,6 +231,13 @@ namespace Distributed
                             break;
                         case JobEventArgs.MessageType.Results:
                             Console.WriteLine(data.args[1]);
+                            count++;
+                            if (count == 4)
+                            {
+                                Console.WriteLine("Done");
+                                proxy.QueueDataEvent(new JobEventArgs("shutdown"));
+                                Environment.Exit(0);
+                            }
                             break;
                         case JobEventArgs.MessageType.Shutdown:
                             DoneSending = true;
