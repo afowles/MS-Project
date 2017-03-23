@@ -5,42 +5,58 @@ using System.Numerics;
 
 namespace Examples.Primes
 {
+    /// <summary>
+    /// A class to run through a distributed system
+    /// to verify goldbach's conjecture. See GoldbachSeq
+    /// </summary>
     public class GoldbachDis : Job
     {
+        /// <summary>
+        /// Overridden non-static Main
+        /// </summary>
+        /// <param name="args_full"></param>
         public override void Main(string[] args_full)
         {
             foreach (string s in args_full)
             {
+                // split the input
                 string[] args = s.Split(',');
+                // create a new task for that input
                 AddTask(new GoldbachTask(args));
             }
         }
 
+        /// <summary>
+        /// A class to represent the task of verifying
+        /// one set of integers for Goldbach.
+        /// </summary>
         public class GoldbachTask : JobTask
         {
             private BigInteger upperBound, lowerBound, largestFound, sumForLargest;
             private int certainty = 100;
             private string[] args;
 
+            /// <summary>
+            /// Constructor for the Goldbach Task
+            /// </summary>
+            /// <param name="args"></param>
             public GoldbachTask(string[] args)
             {
                 this.args = args;
             }
 
-            /**
-             * Method to compute the smallest prime p such that
-             * p + q = sum where q is also prime.
-             * @param sum - the sum of two primes
-             *            assuming Goldbach's conjecture.
-             */
-            private void findTwoPrimeSummation(BigInteger sum)
+            /// <summary>
+            /// See sequential.
+            /// </summary>
+            /// <param name="sum"></param>
+            private void FindTwoPrimeSummation(BigInteger sum)
             {
                 BigInteger currentPrime = 2;
                 while (true)
                 {
                     // If q is prime
                     //if ((sum.subtract(currentPrime)).isProbablePrime(certainty))
-                    if (BigInteger.Subtract(sum, currentPrime).isProbablePrime(certainty))
+                    if (BigInteger.Subtract(sum, currentPrime).IsProbablePrime(certainty))
                     {
                         // If the current prime is >= largest found
                         //if (currentPrime.compareTo(largestFound) >= 0)
@@ -71,6 +87,15 @@ namespace Examples.Primes
                 }
             }
 
+
+            /// <summary>
+            /// Main method for the GoldbachSeq task
+            /// </summary>
+            /// <param name="args_full">
+            /// command line args passed to this main
+            ///             lowerbound - an even integer > two
+            ///             upperbound - an even integer >= lowerbound
+            /// </param>
             public override void Main(string[] args2)
             {
                 Console.WriteLine(args[0] + " " + args[1]);
@@ -107,7 +132,7 @@ namespace Examples.Primes
                 // Iterate over all even integers between <lb> and <ub>
                 for (BigInteger i = lowerBound; i < upperBound; i += 2)
                 {
-                    findTwoPrimeSummation(i);
+                    FindTwoPrimeSummation(i);
                 }
                 // Print out the largest found
                 Console.WriteLine(sumForLargest);

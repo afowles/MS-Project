@@ -1,25 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Threading.Tasks;
+
 
 namespace Examples.Primes
 {
+    /// <summary>
+    /// Class to sequentially verify Goldbachs conjecture
+    /// for each even integer greater than two in the input range
+    /// and find the largest prime such that p + q = sum where q is prime.
+    /// in that range.
+    /// </summary>
     public class GoldbachSeq
     {
         private BigInteger upperBound, lowerBound, largestFound, sumForLargest;
         private int certainty = 100;
 
-        /**
-         *
-         * Main method for the GoldbachSeq task
-         * @param args - command line args passed to this main
-         *             lowerbound - an even integer > two
-         *             upperbound - an even integer >= lowerbound
-         * @throws Exception - throwing Illegal Argument exception terminates program
-         */
-        public void main(String[] args_full)
+        /// <summary>
+        /// Main method for the GoldbachSeq task
+        /// </summary>
+        /// <param name="args_full">
+        /// command line args passed to this main
+        ///             lowerbound - an even integer > two
+        ///             upperbound - an even integer >= lowerbound
+        /// </param>
+        public void Main(String[] args_full)
         {
             foreach (string s in args_full)
             {
@@ -34,17 +38,16 @@ namespace Examples.Primes
                 }
 
                 // Java approach would be as follows
-                //try { lowerBound = new BigInteger(args[0]); }
-                //catch (NumberFormatException e) { usage("Incorrect lower bound argument given (must be int)"); }
+                // try { lowerBound = new BigInteger(args[0]); }
+                // catch (NumberFormatException e) { usage("Incorrect lower bound argument given (must be int)"); }
 
                 // C# approach
                 bool success = BigInteger.TryParse(args[0], out lowerBound);
                 if (!success) { usage("Incorrect lower bound argument given (must be int)"); }
 
+                // input checking
                 success = BigInteger.TryParse(args[1], out upperBound);
                 if (!success) { usage("Incorrect upper bound argument given (must be int)"); }
-                //try { upperBound = new BigInteger(args[1]); }
-                //catch (NumberFormatException e) { usage("Incorrect upper bound argument given (must be int)"); }
 
                 if (lowerBound <= 2) { usage("Lower bound must be > 2 "); }
 
@@ -70,12 +73,14 @@ namespace Examples.Primes
             }
         }
 
-        /**
-         * Method to compute the smallest prime p such that
-         * p + q = sum where q is also prime.
-         * @param sum - the sum of two primes
-         *            assuming Goldbach's conjecture.
-         */
+        /// <summary>
+        /// Method to compute the smallest prime p such that
+        /// p + q = sum where q is also prime.
+        /// </summary>
+        /// <param name="sum">
+        /// sum - the sum of two primes
+        /// assuming Goldbach's conjecture.
+        /// </param>
         private void findTwoPrimeSummation(BigInteger sum)
         {
             BigInteger currentPrime = 2;
@@ -83,7 +88,7 @@ namespace Examples.Primes
             {
                 // If q is prime
                 //if ((sum.subtract(currentPrime)).isProbablePrime(certainty))
-                if(BigInteger.Subtract(sum, currentPrime).isProbablePrime(certainty))
+                if(BigInteger.Subtract(sum, currentPrime).IsProbablePrime(certainty))
                 {
                     // If the current prime is >= largest found
                     //if (currentPrime.compareTo(largestFound) >= 0)
@@ -114,17 +119,17 @@ namespace Examples.Primes
             }
         }
 
-        /**
-         * Prints out the error + usage message then exits
-         * by throwing an illegal argument exception since
-         * calling system.exit() causes problems
-         * @param error - an error with command line arguments
-         *
-         */
+        /// <summary>
+        /// Prints out the error + usage message then exits
+        /// by throwing an illegal argument exception since
+        /// calling system.exit() causes problems
+        /// </summary>
+        /// <param name="error">error - an error with command line arguments</param>
         private void usage(String error)
         {
             Console.WriteLine(error +
                     "\nUsage: GoldbachSeq <lb> <ub>");
         }
+
     }
 }

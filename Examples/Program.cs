@@ -14,7 +14,7 @@ namespace Examples
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             GoldbachSeq q = new GoldbachSeq();
-            q.main(args);
+            q.Main(args);
             stopWatch.Stop();
             // Get the elapsed time as a TimeSpan value.
             TimeSpan ts = stopWatch.Elapsed;

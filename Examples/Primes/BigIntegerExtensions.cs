@@ -3,7 +3,7 @@ using System.Collections;
 using System.Numerics;
 
 /// <summary>
-/// The extension method isProbablePrime is based
+/// The extension method IsProbablePrime is based
 /// on java's implementation http://developer.classpath.org/doc/java/math/BigInteger-source.html
 /// with use of HAC (Handbook of Applied Cryptography), Alfred Menezes & al.
 /// http://cacr.uwaterloo.ca/hac/
@@ -45,45 +45,35 @@ namespace Examples.Primes
 
         /// <summary>
         /// Statically construct smallFixNums, this is called 
-        /// before any method is used
+        /// before any method is used.
         /// </summary>
         static BigIntegerExtensions()
         {
             for (int i = numFixNum; --i >= 0;)
+            {
                 smallFixNums[i] = new BigInteger(i + minFixNum);
+            }
         }
 
         /// <summary>
         /// Millar-Rabin test for probabilistic prime
         /// Based on java's implementation http://developer.classpath.org/doc/java/math/BigInteger-source.html
+        /// which in turn is based on "The Rabin-Miller algorithm pp. 259-261 of "Applied
+        /// Cryptography, Second Edition" by Bruce Schneier.
         /// </summary>
         /// <param name="bigInt"></param>
         /// <param name="certainty"></param>
         /// <returns></returns>
-        public static bool isProbablePrime(this BigInteger thisBigInt, int certainty)
+        public static bool IsProbablePrime(this BigInteger thisBigInt, int certainty)
         {
             if (certainty < 1) { return true; }
             // handle trivial cases
             if (thisBigInt == 2 || thisBigInt == 3) { return true; };
-            if (thisBigInt < 2 || thisBigInt % 2 == 0) { return false; }
+            if (thisBigInt < 2  || thisBigInt % 2 == 0) { return false; }
                 
-            /** We'll use the Rabin-Miller algorithm for doing a probabilistic
-             * primality test.  It is fast, easy and has faster decreasing odds of a
-             * composite passing than with other tests.  This means that this
-             * method will actually have a probability much greater than the
-             * 1 - .5^certainty specified in the JCL (p. 117), but I don't think
-             * anyone will complain about better performance with greater certainty.
-                   * The Rabin-Miller algorithm can be found on pp. 259-261 of "Applied
-             * Cryptography, Second Edition" by Bruce Schneier.
-             */
-
-            //BigInteger pMinus1 = add(this, -1);
             BigInteger pMinus1 = BigInteger.Add(thisBigInt, -1);
             BigInteger m = BigInteger.Add(thisBigInt, -1);
 
-            //int b = pMinus1.getLowestSetBit();
-            // Set m such that this = 1 + 2^b * m.
-            //BigInteger m = pMinus1.divide(valueOf(2L << b - 1));
             int b = 0;
             while (m % 2 == 0)
             {
@@ -126,7 +116,6 @@ namespace Examples.Primes
                     if (z == pMinus1)
                         break;            // Passes the test; may be prime.
 
-                    //z = z.modPow(valueOf(2), this);
                     z = BigInteger.ModPow(z, 2, thisBigInt);
                 }
                 if (i == b && !(z == pMinus1))
@@ -138,22 +127,21 @@ namespace Examples.Primes
         /// <summary>
         /// Counts the number of bits in
         /// a big integer
-        /// http://stackoverflow.com/questions/2709430/count-number-of-bits-in-a-64-bit-long-big-integer
         /// </summary>
         /// <param name="number">number to count</param>
         /// <returns></returns>
         public static int BitCount(this BigInteger number)
         {
-            int ret = 0;
+            int count = 0;
             // Every time you &= 
             // a number with itself minus one you
             // eliminate the last set bit in that number.
             while (number != 0)
             {
                 number &= (number - 1);
-                ret++;
+                count++;
             }
-            return ret;
+            return count;
         }
 
         /// <summary>
@@ -163,13 +151,13 @@ namespace Examples.Primes
         /// <returns></returns>
         public static BigInteger NextProbablePrime(this BigInteger number)
         {
-            BigInteger ret = number;
+            BigInteger result = number;
             while(true)
             {
-                ret += 1;
-                if (ret.isProbablePrime(100))
+                result += 1;
+                if (result.IsProbablePrime(100))
                 {
-                    return ret;
+                    return result;
                 }
             }
         }  
