@@ -63,12 +63,12 @@ namespace Distributed.Assembly
                     }
                     else
                     {
-                        Console.WriteLine("Not a job");
+                        //Console.WriteLine("Not a job");
                     }
                 }
                 catch(MissingMemberException e)
                 {
-                    Console.WriteLine("SHIT: this is" + e.ToString());
+                    //Console.WriteLine("SHIT: this is" + e.ToString());
                 }
             }
             return false;
@@ -83,14 +83,14 @@ namespace Distributed.Assembly
         public object CallMethod(string method, object[] methodParams)
         {
             MethodInfo methodInfo = JobClassType.GetMethod(method);
-            Console.WriteLine("gets here");
+            //Console.WriteLine("gets here");
             if (methodInfo != null)
             {
                 object result = null;
                 ParameterInfo[] parameters = methodInfo.GetParameters();
-                Console.WriteLine("gets here");
+                //Console.WriteLine("gets here");
                 result = methodInfo.Invoke(JobInstance, methodParams);
-                Console.WriteLine(result);
+                //Console.WriteLine(result);
                 return result;
             }
             else
