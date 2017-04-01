@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-
 using Distributed.Library;
-using MyFSharpLibrary;
 using System.Numerics;
 using System.Collections.Generic;
 
@@ -105,7 +103,6 @@ namespace DebugApplicationUsingPDLib
             {
                 tp.startTask(i);
             }
-            var test = new User("Mark", 10);
             //Console.WriteLine(test::name);
             Console.ReadKey();
         }
