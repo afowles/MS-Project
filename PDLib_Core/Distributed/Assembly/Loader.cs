@@ -66,9 +66,9 @@ namespace Distributed.Assembly
                         //Console.WriteLine("Not a job");
                     }
                 }
-                catch(MissingMemberException e)
+                catch(MissingMemberException)
                 {
-                    //Console.WriteLine("SHIT: this is" + e.ToString());
+                    
                 }
             }
             return false;

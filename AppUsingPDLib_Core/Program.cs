@@ -24,6 +24,7 @@ namespace DebugApplicationUsingPDLib
             PrimesToTest.Add(new BigInteger(858599509));
             PrimesToTest.Add(new BigInteger(472882027));
             PrimesToTest.Add(new BigInteger(256203221));
+            
         }
 
         public override void Main(string[] args)
