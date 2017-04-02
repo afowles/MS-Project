@@ -11,6 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="archive\**" />
+    <EmbeddedResource Remove="archive\**" />
+    <None Remove="archive\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Compile Remove="..\PDLib\Distributed\Assembly\Loader.cs" />
     <Compile Include="..\PDLib_Core\Distributed\*;..\PDLib\Distributed\*.cs;..\PDLib\Distributed\Assembly\*.cs;..\PDLib\Distributed\Library\*.cs;..\PDLib\Distributed\Logging\*.cs;..\PDLib\Distributed\Manager\*.cs;..\PDLib\Distributed\Network\*.cs;..\PDLib\Distributed\Node\*.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**;..\PDLib\Distributed\Assembly\Loader.cs" />
   </ItemGroup>
