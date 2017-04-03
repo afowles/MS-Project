@@ -8,13 +8,14 @@ namespace Distributed.Library
     public abstract class Job
     {
         protected Schedule TaskSchedule;
+        private readonly List<JobTask> _tasks = new List<JobTask>();
+        public List<JobResult> Results { get; }
 
         protected Job()
         {
             TaskSchedule = Schedule.FIXED;
+            Results = new List<JobResult>();
         }
-
-        private readonly List<JobTask> _tasks = new List<JobTask>();
 
         public abstract void Main(string[] args);
         
@@ -22,6 +23,12 @@ namespace Distributed.Library
         {
             _tasks.Add(task);
         }
+
+        public void AddResult(JobResult result)
+        {
+            Results.Add(result);
+        }
+
         public string GetClassName()
         {
             return this.GetType().Name;
@@ -32,7 +39,6 @@ namespace Distributed.Library
         }
 
         public int GetNumberTasks() { return _tasks.Count; }
-
         public Schedule GetSchedule() { return TaskSchedule; }
     }
 
