@@ -105,6 +105,7 @@ namespace Distributed.Manager
             parent.log.Log("JobLauncher: Process finished with ExitCode: " + process.ExitCode);
             // use the output
             string output = outputBuilder.ToString();
+            
             parent.QueueDataEvent(new Node.NodeComm("finished|" 
                 + data.args[1].ToCharArray()[0] + "|" + output));
         }

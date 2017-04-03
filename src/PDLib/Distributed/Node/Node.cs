@@ -26,7 +26,7 @@ namespace Distributed.Node
     /// </summary>
     internal class Node
     {
-        private Proxy proxy;
+        private readonly Proxy _proxy;
         public Logger log { get; private set; }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Distributed.Node
         /// <param name="port">port for proxy to NodeManager</param>
         public Node(string host, int port)
         {
-            proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port, 0);
+            _proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port, 0);
             log = Logger.NodeLogInstance;
         }
 
@@ -52,17 +52,17 @@ namespace Distributed.Node
             // set cancel to true so we can do our own cleanup
             e.Cancel = true;
             // queue up the quitting message to the server
-            proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("quit")));
+            _proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("quit")));
             
             // join on both sending and receiving threads
-            proxy.Join();
+            _proxy.Join();
             
             
         }
 
         public void QueueDataEvent(DataReceivedEventArgs d)
         {
-            proxy.QueueDataEvent(d);
+            _proxy.QueueDataEvent(d);
         }
 
         /// <summary>

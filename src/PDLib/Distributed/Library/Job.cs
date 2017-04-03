@@ -2,36 +2,38 @@
 
 namespace Distributed.Library
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class Job
     {
         protected Schedule TaskSchedule;
 
-        public Job()
+        protected Job()
         {
-
+            TaskSchedule = Schedule.FIXED;
         }
 
-        private List<JobTask> tasks = new List<JobTask>();
+        private readonly List<JobTask> _tasks = new List<JobTask>();
 
         public abstract void Main(string[] args);
         
         public void AddTask(JobTask task)
         {
-            tasks.Add(task);
+            _tasks.Add(task);
         }
         public string GetClassName()
         {
             return this.GetType().Name;
         }
-        public void startTask(int index)
+        public void StartTask(int index)
         {
-            tasks[index].Main(new string[] { index.ToString() });
+            _tasks[index].Main(new string[] { index.ToString() });
         }
 
-        public int GetNumberTasks() { return tasks.Count; }
+        public int GetNumberTasks() { return _tasks.Count; }
 
-        // User will override if they want a different schedule
-        public Schedule GetSchedule() { return Schedule.FIXED; }
+        public Schedule GetSchedule() { return TaskSchedule; }
     }
 
     public enum Schedule

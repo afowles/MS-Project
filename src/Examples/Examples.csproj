@@ -17,9 +17,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Primes/*.cs">
+      <Plugin>true</Plugin>
+    </Compile>
+    <Compile Include="Sorting/*/cs">
+      <Plugin>true</Plugin>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="archive\**" />
     <EmbeddedResource Remove="archive\**" />
     <None Remove="archive\**" />
   </ItemGroup>
   
+<Target Name="BuildPlugins">
+  <CSC Condition="%(Compile.Plugin) == 'true'" Sources="%(Compile.FullPath)" TargetType="library" OutputAssembly="$(OutputPath)%(Compile.FileName).dll" EmitDebugInformation="true" />
+</Target>
+  
+<Target Name="AfterBuild" DependsOnTargets="BuildPlugins">
+</Target>
+
 </Project>
