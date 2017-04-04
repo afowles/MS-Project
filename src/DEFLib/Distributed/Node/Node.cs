@@ -93,7 +93,7 @@ namespace Distributed.Node
     {
         public MessageType Protocol { get; }
         // a mapping of input strings to protocols
-        private static Dictionary<string, MessageType> MessageMap = 
+        private static readonly Dictionary<string, MessageType> MessageMap = 
             new Dictionary<string, MessageType> {
                 { "file", MessageType.File },
                 { "send", MessageType.Send },
@@ -142,7 +142,7 @@ namespace Distributed.Node
     /// </summary>
     internal class NodeReceiver : AbstractReceiver
     {
-        private Node parent;
+        private readonly Node parent;
         //private Queue<DataReceivedEventArgs> jobs = new Queue<DataReceivedEventArgs>();
         private DataReceivedEventArgs job;
 

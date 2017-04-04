@@ -13,13 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PDLib_Core\PDLib_Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="archive\**" />
     <EmbeddedResource Remove="archive\**" />
     <None Remove="archive\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DEFLib\DEFLib.csproj" />
   </ItemGroup>
 
 </Project>

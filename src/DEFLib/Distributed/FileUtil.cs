@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Distributed.Files
 {
-    static class FileRead
+    internal static class FileRead
     {
         public const int BufferSize = 1024;
         public const int NetworkSleep = 100;
@@ -50,7 +50,7 @@ namespace Distributed.Files
         }
     }
 
-    static class FileWrite
+    internal static class FileWrite
     {
         public static void WriteOut(NetworkStream iostream, string filepath)
         {

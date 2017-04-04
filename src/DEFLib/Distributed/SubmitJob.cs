@@ -18,7 +18,7 @@ namespace Distributed
     /// </summary>
     internal class SubmitJob
     {
-        private Proxy proxy;
+        private readonly Proxy _proxy;
         public Logger log { get; private set; }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Distributed
         /// <param name="port">port for proxy to NodeManager</param>
         public SubmitJob(string host, int port, string[] args)
         {
-            proxy = new Proxy(new JobReceiver(), new JobSender(args), host, port, 0);
+            _proxy = new Proxy(new JobReceiver(), new JobSender(args), host, port, 0);
             log = Logger.NodeLogInstance;
         }
 
@@ -115,9 +115,9 @@ namespace Distributed
             // set cancel to true so we can do our own cleanup
             e.Cancel = true;
             // queue up the quitting message to the server
-            proxy.QueueDataEvent(new JobEventArgs("quit"));
+            _proxy.QueueDataEvent(new JobEventArgs("quit"));
             // join on both sending and receiving threads
-            proxy.Join();
+            _proxy.Join();
 
         }
     }
