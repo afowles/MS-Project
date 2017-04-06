@@ -38,6 +38,14 @@ namespace Distributed.Library
             _tasks[index].Main(new string[] { index.ToString() });
         }
 
+        public void CompileResults()
+        {
+            foreach (var t in _tasks)
+            {
+                Results.AddRange(t.TaskResults);
+            }
+        }
+
         public int GetNumberTasks() { return _tasks.Count; }
         public Schedule GetSchedule() { return TaskSchedule; }
     }

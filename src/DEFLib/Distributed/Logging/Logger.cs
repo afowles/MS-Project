@@ -11,10 +11,10 @@ namespace Distributed.Logging
     {
         // instance variable, volatile to make sure that 
         // assignment completes before using the instance
-        private static volatile Logger instance;
+        private static volatile Logger _instance;
         // lock for the instance
-        private static object LoggerLock = new Object();
-        private TextWriter Writer;
+        private static readonly object LoggerLock = new object();
+        private readonly TextWriter _writer;
 
         /// <summary>
         /// Log output file name
@@ -30,14 +30,7 @@ namespace Distributed.Logging
         /// </summary>
         private Logger(LogType t)
         {
-            if (t == LogType.MANAGER)
-            {
-                Writer = File.AppendText(MANAGER_LOG);
-            }
-            else
-            {
-                Writer = File.AppendText(NODE_LOG);
-            }
+            _writer = File.AppendText(t == LogType.MANAGER ? MANAGER_LOG : NODE_LOG);
             StartLogging(t);
 
         }
@@ -64,20 +57,20 @@ namespace Distributed.Logging
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
                     // thread safety is instance
                     // is not yet initalized.
                     lock (LoggerLock)
                     {
-                        if (instance == null)
+                        if (_instance == null)
                         {
-                            instance = new Logger(LogType.NODE);
+                            _instance = new Logger(LogType.NODE);
                         }
                     }
                 }
 
-                return instance;
+                return _instance;
             }     
         }
 
@@ -94,20 +87,20 @@ namespace Distributed.Logging
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
                     // thread safety is instance
                     // is not yet initalized.
                     lock (LoggerLock)
                     {
-                        if (instance == null)
+                        if (_instance == null)
                         {
-                            instance = new Logger(LogType.MANAGER);
+                            _instance = new Logger(LogType.MANAGER);
                         }
                     }
                 }
 
-                return instance;
+                return _instance;
             }
         }
 
@@ -117,10 +110,10 @@ namespace Distributed.Logging
         private void StartLogging(LogType t)
         {
             
-            Writer.Write("Start Log for {0}: ", t.ToString());
-            Writer.WriteLine("{0}", DateTime.Now.ToUniversalTime());
-            Writer.WriteLine("-------------------------------");
-            Writer.Flush();
+            _writer.Write("Start Log for {0}: ", t.ToString());
+            _writer.WriteLine("{0}", DateTime.Now.ToUniversalTime());
+            _writer.WriteLine("-------------------------------");
+            _writer.Flush();
         }
 
         /// <summary>
@@ -136,12 +129,12 @@ namespace Distributed.Logging
 #if DEBUG
 Console.WriteLine(logMessage);
 #endif
-            Writer.Write("\r\nLog Entry : ");
-            Writer.WriteLine("{0}", DateTime.Now.ToUniversalTime());
+            _writer.Write("\r\nLog Entry : ");
+            _writer.WriteLine("{0}", DateTime.Now.ToUniversalTime());
             //Writer.WriteLine("  :");
-            Writer.WriteLine("  :{0}", logMessage);
-            Writer.WriteLine("-------------------------------");
-            Writer.Flush();
+            _writer.WriteLine("  :{0}", logMessage);
+            _writer.WriteLine("-------------------------------");
+            _writer.Flush();
         }
 
     }

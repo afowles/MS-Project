@@ -39,6 +39,7 @@ namespace Distributed.Node
         {
             _proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port, 0);
             log = Logger.NodeLogInstance;
+            Action d = () => { };
         }
 
         /// <summary>

@@ -69,21 +69,20 @@ namespace Distributed.Manager
             // for building output from standard out
             StringBuilder outputBuilder = new StringBuilder(); ;
             // add event handling for process
-            process.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler
-            (
-                delegate (object sender, System.Diagnostics.DataReceivedEventArgs e)
+            process.OutputDataReceived += delegate (object sender, System.Diagnostics.DataReceivedEventArgs e)
+            {
+                // append the output data to a string
+                lineCount++;
+                // remove the first two lines
+                if (lineCount == -1 || lineCount == 0)
                 {
-                    // append the output data to a string
-                    lineCount++;
-                    // remove the first two lines
-                    if (lineCount == -1 || lineCount == 0)
-                    {
-                        return;
-                    }
-                    outputBuilder.Append("\n[" + lineCount + "]: " + e.Data);
-
+                    return;
                 }
-            );
+                outputBuilder.Append("\n[" + lineCount + "]: " + e.Data);
+                
+                
+
+            };
             string error;
             try
             {
