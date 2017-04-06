@@ -1,5 +1,7 @@
+﻿- name: Home
+  href: index.md
 - name: Articles
   href: articles/
-- name: Api Documentation
-  href: api/
-  homepage: api/index.md
+  homepage: articles/docfx_getting_started.md
+- name: API Documentation
+  href: obj/api/
