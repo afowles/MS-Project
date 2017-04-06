@@ -1,1 +1,0 @@
-Reduced CPU usage a ton by adding in Thread.sleep() calls to my loops, hadn't thought much about that until now.

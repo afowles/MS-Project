@@ -1,2 +1,0 @@
-Try the EventHandler observer pattern for communicating between a sender and
-receiver.

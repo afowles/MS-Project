@@ -1,8 +1,0 @@
-research day mostly, can't use reflection to generate IL and then send those bytes
-(although it would be pretty cool), since symbols and other meta data are not stored
-or the same on the other end, would only be able to send a simply x + y function over tcp.
-Going to need to send the whole program/ exe. That involves writing a program that is run like
-
-testapp.exe <flags> userapp.exe <user variables > which is ugly...
-Can't inherit base class main method so that a user could subclass a super class in
-PDLib and then have that hid some of the other details. 

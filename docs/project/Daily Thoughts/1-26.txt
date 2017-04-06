@@ -1,3 +1,0 @@
-Thoughts:
-	Use message passing initially
-	Look into PJ2 tuple and object passing across network.

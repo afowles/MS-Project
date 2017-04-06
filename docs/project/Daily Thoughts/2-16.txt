@@ -1,9 +1,0 @@
-Reflection seems to solve a lot of problems...
-
-I can loop through all the types within a dll
-checking for anything that inherits from a given base class
-and then call methods that I know it must have to do work
-without knowing anything about the actual implementaiton...
-
-Will need to redirect stdio to files then send those files back
-read them in and output them to standard out (or something like that.)
