@@ -11,9 +11,9 @@ namespace Distributed.Assembly
     /// </summary>
     public class CoreLoader
     {
-        private System.Reflection.Assembly assembly;
-        private Type JobClassType;
-        private object JobInstance;
+        private readonly System.Reflection.Assembly _assembly;
+        private Type _jobClassType;
+        private object _jobInstance;
 
         /// <summary>
         /// Constructor for the CoreLoader
@@ -21,7 +21,7 @@ namespace Distributed.Assembly
         /// <param name="assemblyPath">path to the assembly (dll)</param>
         public CoreLoader(string assemblyPath)
         {
-            assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);  
+            _assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);  
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Distributed.Assembly
             // exception itself.
             try
             {
-                types = assembly.GetTypes();
+                types = _assembly.GetTypes();
             }
             catch (ReflectionTypeLoadException e)
             {
@@ -49,7 +49,7 @@ namespace Distributed.Assembly
             // loop through all the types
             // in the assmebly and try and find the job
             // class
-            foreach (Type t in types)
+            foreach (var t in types)
             {
                 
                 try
@@ -57,8 +57,8 @@ namespace Distributed.Assembly
                     var instance = Activator.CreateInstance(t);
                     if (instance is Job)
                     {
-                        JobClassType = t;
-                        JobInstance = instance;
+                        _jobClassType = t;
+                        _jobInstance = instance;
                         return true;
                     }
                     else
@@ -82,14 +82,14 @@ namespace Distributed.Assembly
         /// <param name="methodParams"></param>
         public object CallMethod(string method, object[] methodParams)
         {
-            MethodInfo methodInfo = JobClassType.GetMethod(method);
+            MethodInfo methodInfo = _jobClassType.GetMethod(method);
             //Console.WriteLine("gets here");
             if (methodInfo != null)
             {
                 object result = null;
                 ParameterInfo[] parameters = methodInfo.GetParameters();
                 //Console.WriteLine("gets here");
-                result = methodInfo.Invoke(JobInstance, methodParams);
+                result = methodInfo.Invoke(_jobInstance, methodParams);
                 //Console.WriteLine(result);
                 return result;
             }
