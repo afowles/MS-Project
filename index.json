@@ -1,187 +1,187 @@
 {
-  "api/Examples.Primes.BigIntegerExtensions.html": {
-    "href": "api/Examples.Primes.BigIntegerExtensions.html",
-    "title": "Class BigIntegerExtensions | docfx seed website",
-    "keywords": "Class BigIntegerExtensions Extension Methods for BigInteger Inheritance System.Object BigIntegerExtensions Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Examples.Primes Assembly :cs.temp.dll.dll Syntax public static class BigIntegerExtensions Methods BitCount(BigInteger) Counts the number of bits in a big integer Declaration public static int BitCount(this BigInteger number) Parameters Type Name Description BigInteger number number to count Returns Type Description System.Int32 IsProbablePrime(BigInteger, Int32) Millar-Rabin test for probabilistic prime Based on java's implementation http://developer.classpath.org/doc/java/math/BigInteger-source.html which in turn is based on \"The Rabin-Miller algorithm pp. 259-261 of \"Applied Cryptography, Second Edition\" by Bruce Schneier. Declaration public static bool IsProbablePrime(this BigInteger thisBigInt, int certainty) Parameters Type Name Description BigInteger thisBigInt System.Int32 certainty Returns Type Description System.Boolean NextProbablePrime(BigInteger) Finds the next probably prime Declaration public static BigInteger NextProbablePrime(this BigInteger number) Parameters Type Name Description BigInteger number Returns Type Description BigInteger"
+  "api/StartManager.StartManager.html": {
+    "href": "api/StartManager.StartManager.html",
+    "title": "Class StartManager | defcore",
+    "keywords": "Class StartManager Inheritance System.Object StartManager Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :StartManager Assembly :cs.temp.dll.dll Syntax public class StartManager Methods Main(String[]) Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args"
+  },
+  "api/SubmitJob.html": {
+    "href": "api/SubmitJob.html",
+    "title": "Namespace SubmitJob | defcore",
+    "keywords": "Namespace SubmitJob Classes SubmitJob"
+  },
+  "api/Distributed.Library.Job.html": {
+    "href": "api/Distributed.Library.Job.html",
+    "title": "Class Job | defcore",
+    "keywords": "Class Job Inheritance System.Object Job Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Library Assembly :cs.temp.dll.dll Syntax public abstract class Job Constructors Job() Declaration protected Job() Fields TaskSchedule Declaration protected Schedule TaskSchedule Field Value Type Description Schedule Properties Results Declaration public List<JobResult> Results { get; } Property Value Type Description List < JobResult > Methods AddResult(JobResult) Declaration public void AddResult(JobResult result) Parameters Type Name Description JobResult result AddTask(JobTask) Declaration public void AddTask(JobTask task) Parameters Type Name Description JobTask task CompileResults() Declaration public void CompileResults() GetClassName() Declaration public string GetClassName() Returns Type Description System.String GetNumberTasks() Declaration public int GetNumberTasks() Returns Type Description System.Int32 GetSchedule() Declaration public Schedule GetSchedule() Returns Type Description Schedule Main(String[]) Declaration public abstract void Main(string[] args) Parameters Type Name Description System.String [] args StartTask(Int32) Declaration public void StartTask(int index) Parameters Type Name Description System.Int32 index"
+  },
+  "api/Distributed.Library.html": {
+    "href": "api/Distributed.Library.html",
+    "title": "Namespace Distributed.Library | defcore",
+    "keywords": "Namespace Distributed.Library Classes Job JobResult JobTask Enums Schedule"
+  },
+  "api/Distributed.Logging.html": {
+    "href": "api/Distributed.Logging.html",
+    "title": "Namespace Distributed.Logging | defcore",
+    "keywords": "Namespace Distributed.Logging Classes Logger Class to handle logging, it is either a logger for a manager or for a node. Enums Logger.LogType Type of log"
+  },
+  "api/Distributed.Network.ConnectionType.html": {
+    "href": "api/Distributed.Network.ConnectionType.html",
+    "title": "Enum ConnectionType | defcore",
+    "keywords": "Enum ConnectionType The type connected to the proxy Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public enum ConnectionType Fields Name Description DEFAULT JOB NODE QUERY"
   },
   "api/Examples.Primes.html": {
     "href": "api/Examples.Primes.html",
-    "title": "Namespace Examples.Primes | docfx seed website",
+    "title": "Namespace Examples.Primes | defcore",
     "keywords": "Namespace Examples.Primes Classes BigIntegerExtensions Extension Methods for BigInteger GoldbachDis A class to run through a distributed system to verify goldbach's conjecture. See GoldbachSeq GoldbachDis.GoldbachTask A class to represent the task of verifying one set of integers for Goldbach. GoldbachSeq Class to sequentially verify Goldbachs conjecture for each even integer greater than two in the input range and find the largest prime such that p + q = sum where q is prime. in that range."
   },
   "api/Examples.html": {
     "href": "api/Examples.html",
-    "title": "Namespace Examples | docfx seed website",
+    "title": "Namespace Examples | defcore",
     "keywords": "Namespace Examples Classes Program"
-  },
-  "api/Loader.html": {
-    "href": "api/Loader.html",
-    "title": "Namespace Loader | docfx seed website",
-    "keywords": "Namespace Loader Classes Loader Class to load a user program in and run it."
-  },
-  "api/StartNode.StartNode.html": {
-    "href": "api/StartNode.StartNode.html",
-    "title": "Class StartNode | docfx seed website",
-    "keywords": "Class StartNode Inheritance System.Object StartNode Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :StartNode Assembly :cs.temp.dll.dll Syntax public class StartNode Methods Main(String[]) Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args"
-  },
-  "api/StartNode.html": {
-    "href": "api/StartNode.html",
-    "title": "Namespace StartNode | docfx seed website",
-    "keywords": "Namespace StartNode Classes StartNode"
-  },
-  "api/Distributed.Library.JobResult.html": {
-    "href": "api/Distributed.Library.JobResult.html",
-    "title": "Class JobResult | docfx seed website",
-    "keywords": "Class JobResult Inheritance System.Object JobResult Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Library Assembly :cs.temp.dll.dll Syntax public class JobResult Constructors JobResult(Int32) Declaration public JobResult(int id) Parameters Type Name Description System.Int32 id Properties JobId Declaration public int JobId { get; } Property Value Type Description System.Int32 Methods SerializeResult() Declaration public string SerializeResult() Returns Type Description System.String"
-  },
-  "api/Distributed.Logging.Logger.LogType.html": {
-    "href": "api/Distributed.Logging.Logger.LogType.html",
-    "title": "Enum Logger.LogType | docfx seed website",
-    "keywords": "Enum Logger.LogType Type of log Namespace :Distributed.Logging Assembly :cs.temp.dll.dll Syntax public enum LogType Fields Name Description MANAGER NODE"
-  },
-  "api/Distributed.Logging.html": {
-    "href": "api/Distributed.Logging.html",
-    "title": "Namespace Distributed.Logging | docfx seed website",
-    "keywords": "Namespace Distributed.Logging Classes Logger Class to handle logging, it is either a logger for a manager or for a node. Enums Logger.LogType Type of log"
-  },
-  "api/Distributed.Network.html": {
-    "href": "api/Distributed.Network.html",
-    "title": "Namespace Distributed.Network | docfx seed website",
-    "keywords": "Namespace Distributed.Network Classes AbstractReceiver Provides the methods nessesary to be the receiving side of a proxy object. AbstractSender Provides the methods nessesary to be the sending side of a proxy object DataReceivedEventArgs Event arguments class to hold info about the data received. NetworkSendReceive Provides the basic methods and members nessesary for network opperations. Proxy A proxy is a TcpClient wrapper that uses a sending and receiving object to do separte handling of stream input/output. Enums ConnectionType The type connected to the proxy"
-  },
-  "api/Examples.Primes.GoldbachDis.html": {
-    "href": "api/Examples.Primes.GoldbachDis.html",
-    "title": "Class GoldbachDis | docfx seed website",
-    "keywords": "Class GoldbachDis A class to run through a distributed system to verify goldbach's conjecture. See GoldbachSeq Inheritance System.Object GoldbachDis Namespace :Examples.Primes Assembly :cs.temp.dll.dll Syntax public class GoldbachDis : Job Methods Main(String[]) Overridden non-static Main Declaration public override void Main(string[] args_full) Parameters Type Name Description System.String [] args_full"
-  },
-  "api/Examples.Sorting.QuickSortSeq.html": {
-    "href": "api/Examples.Sorting.QuickSortSeq.html",
-    "title": "Class QuickSortSeq | docfx seed website",
-    "keywords": "Class QuickSortSeq Inheritance System.Object QuickSortSeq Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Examples.Sorting Assembly :cs.temp.dll.dll Syntax public static class QuickSortSeq"
-  },
-  "api/StartManager.StartManager.html": {
-    "href": "api/StartManager.StartManager.html",
-    "title": "Class StartManager | docfx seed website",
-    "keywords": "Class StartManager Inheritance System.Object StartManager Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :StartManager Assembly :cs.temp.dll.dll Syntax public class StartManager Methods Main(String[]) Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args"
-  },
-  "api/SubmitJob.SubmitJob.html": {
-    "href": "api/SubmitJob.SubmitJob.html",
-    "title": "Class SubmitJob | docfx seed website",
-    "keywords": "Class SubmitJob Inheritance System.Object SubmitJob Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :SubmitJob Assembly :cs.temp.dll.dll Syntax public class SubmitJob Methods Main(String[]) Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args"
-  },
-  "api/Examples.Program.html": {
-    "href": "api/Examples.Program.html",
-    "title": "Class Program | docfx seed website",
-    "keywords": "Class Program Inheritance System.Object Program Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Examples Assembly :cs.temp.dll.dll Syntax public class Program Methods Main(String[]) Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args"
-  },
-  "api/Examples.Sorting.html": {
-    "href": "api/Examples.Sorting.html",
-    "title": "Namespace Examples.Sorting | docfx seed website",
-    "keywords": "Namespace Examples.Sorting Classes QuickSortSeq"
-  },
-  "api/Loader.Loader.html": {
-    "href": "api/Loader.Loader.html",
-    "title": "Class Loader | docfx seed website",
-    "keywords": "Class Loader Class to load a user program in and run it. Inheritance System.Object Loader Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Loader Assembly :cs.temp.dll.dll Syntax public class Loader Methods Main(String[]) Loads and runs the users program Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args [0] is the DLL path, [1] is any library args separated by ',' The rest are user arguments to their program ParseTokens(String[]) Declaration public static int[] ParseTokens(string[] args) Parameters Type Name Description System.String [] args Returns Type Description System.Int32 [] RunFixedSchedule(CoreLoader, Int32, Int32[]) Run the program with a fixed schedule Declaration public static void RunFixedSchedule(CoreLoader coreLoader, int numTasks, int[] libArgs) Parameters Type Name Description CoreLoader coreLoader System.Int32 numTasks System.Int32 [] libArgs Remarks libArgs = [job_id, section_id, num_nodes]"
   },
   "api/StartManager.Test.html": {
     "href": "api/StartManager.Test.html",
-    "title": "Class Test | docfx seed website",
+    "title": "Class Test | defcore",
     "keywords": "Class Test Inheritance System.Object Test Namespace :StartManager Assembly :cs.temp.dll.dll Syntax public class Test : JobResult Constructors Test(Int32) Declaration public Test(int id) Parameters Type Name Description System.Int32 id Fields s Declaration public string s Field Value Type Description System.String"
+  },
+  "api/Distributed.Library.JobResult.html": {
+    "href": "api/Distributed.Library.JobResult.html",
+    "title": "Class JobResult | defcore",
+    "keywords": "Class JobResult Inheritance System.Object JobResult Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Library Assembly :cs.temp.dll.dll Syntax public class JobResult Constructors JobResult(Int32) Declaration public JobResult(int id) Parameters Type Name Description System.Int32 id Properties JobId Declaration public int JobId { get; } Property Value Type Description System.Int32 Methods SerializeResult() Declaration public string SerializeResult() Returns Type Description System.String"
   },
   "api/StartManager.html": {
     "href": "api/StartManager.html",
-    "title": "Namespace StartManager | docfx seed website",
+    "title": "Namespace StartManager | defcore",
     "keywords": "Namespace StartManager Classes StartManager Test"
   },
-  "api/Distributed.Library.Job.html": {
-    "href": "api/Distributed.Library.Job.html",
-    "title": "Class Job | docfx seed website",
-    "keywords": "Class Job Inheritance System.Object Job Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Library Assembly :cs.temp.dll.dll Syntax public abstract class Job Constructors Job() Declaration protected Job() Fields TaskSchedule Declaration protected Schedule TaskSchedule Field Value Type Description Schedule Properties Results Declaration public List<JobResult> Results { get; } Property Value Type Description List < JobResult > Methods AddResult(JobResult) Declaration public void AddResult(JobResult result) Parameters Type Name Description JobResult result AddTask(JobTask) Declaration public void AddTask(JobTask task) Parameters Type Name Description JobTask task CompileResults() Declaration public void CompileResults() GetClassName() Declaration public string GetClassName() Returns Type Description System.String GetNumberTasks() Declaration public int GetNumberTasks() Returns Type Description System.Int32 GetSchedule() Declaration public Schedule GetSchedule() Returns Type Description Schedule Main(String[]) Declaration public abstract void Main(string[] args) Parameters Type Name Description System.String [] args StartTask(Int32) Declaration public void StartTask(int index) Parameters Type Name Description System.Int32 index"
-  },
-  "api/Distributed.Library.Schedule.html": {
-    "href": "api/Distributed.Library.Schedule.html",
-    "title": "Enum Schedule | docfx seed website",
-    "keywords": "Enum Schedule Namespace :Distributed.Library Assembly :cs.temp.dll.dll Syntax public enum Schedule Fields Name Description FIXED LEAPFROG"
-  },
-  "api/Distributed.Network.AbstractSender.html": {
-    "href": "api/Distributed.Network.AbstractSender.html",
-    "title": "Class AbstractSender | docfx seed website",
-    "keywords": "Class AbstractSender Provides the methods nessesary to be the sending side of a proxy object Inheritance System.Object NetworkSendReceive AbstractSender Inherited Members NetworkSendReceive.BUFFER_SIZE NetworkSendReceive.SERVER_PORT NetworkSendReceive.IO_SLEEP NetworkSendReceive.SERVER_SLEEP NetworkSendReceive.thread NetworkSendReceive.proxy NetworkSendReceive.Run() NetworkSendReceive.Start() NetworkSendReceive.Shutdown() NetworkSendReceive.Join() System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public abstract class AbstractSender : NetworkSendReceive Fields DoneSending Declaration protected bool DoneSending Field Value Type Description System.Boolean Methods HandleReceiverEvent(Object, DataReceivedEventArgs) Handle the nessesary communication in response to data received from the socket. Declaration public abstract void HandleReceiverEvent(object sender, DataReceivedEventArgs e) Parameters Type Name Description System.Object sender event raiser DataReceivedEventArgs e data from receive event SendMessage(String[]) Format and send a message from an array of string arguments. Declaration public virtual void SendMessage(string[] args) Parameters Type Name Description System.String [] args the message to send"
-  },
-  "api/Distributed.Network.NetworkSendReceive.html": {
-    "href": "api/Distributed.Network.NetworkSendReceive.html",
-    "title": "Class NetworkSendReceive | docfx seed website",
-    "keywords": "Class NetworkSendReceive Provides the basic methods and members nessesary for network opperations. Inheritance System.Object NetworkSendReceive AbstractReceiver AbstractSender Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public abstract class NetworkSendReceive Fields BUFFER_SIZE Declaration public const int BUFFER_SIZE = 1024 Field Value Type Description System.Int32 IO_SLEEP Declaration public const int IO_SLEEP = 100 Field Value Type Description System.Int32 SERVER_PORT Declaration public const int SERVER_PORT = 12345 Field Value Type Description System.Int32 SERVER_SLEEP Declaration public const int SERVER_SLEEP = 500 Field Value Type Description System.Int32 thread Declaration protected Thread thread Field Value Type Description Thread Properties proxy Declaration public Proxy proxy { protected get; set; } Property Value Type Description Proxy Methods Join() Join on this thread. Declaration public virtual void Join() Run() Where the actual sending/receiving happens Declaration public abstract void Run() Shutdown() Shutdown the connection to the socket Declaration public virtual void Shutdown() Start() Start up the given sender/receiver in its own thread so that it can begin sending/receiving data. Declaration public virtual void Start()"
-  },
-  "api/Distributed.Network.ConnectionType.html": {
-    "href": "api/Distributed.Network.ConnectionType.html",
-    "title": "Enum ConnectionType | docfx seed website",
-    "keywords": "Enum ConnectionType The type connected to the proxy Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public enum ConnectionType Fields Name Description DEFAULT JOB NODE QUERY"
-  },
-  "api/Distributed.Network.Proxy.html": {
-    "href": "api/Distributed.Network.Proxy.html",
-    "title": "Class Proxy | docfx seed website",
-    "keywords": "Class Proxy A proxy is a TcpClient wrapper that uses a sending and receiving object to do separte handling of stream input/output. Inheritance System.Object Proxy Inherited Members System.Object.ToString() System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public class Proxy Constructors Proxy(AbstractReceiver, AbstractSender, String, Int32, Int32) A Proxy constructor that takes in the string and port name to create a Tcp connection. Declaration public Proxy(AbstractReceiver r, AbstractSender s, string host, int port, int id) Parameters Type Name Description AbstractReceiver r An Abstract Receiver AbstractSender s An Abstract Sender System.String host host name for tcp System.Int32 port port number for tcp System.Int32 id Proxy(AbstractReceiver, AbstractSender, TcpClient, Int32) A Proxy constructor that can be passed an already initalized TcpClient. Declaration public Proxy(AbstractReceiver r, AbstractSender s, TcpClient client, int id) Parameters Type Name Description AbstractReceiver r An Abstract Receiver AbstractSender s An Abstract Sender TcpClient client An initalized TcpClient System.Int32 id Properties connection Declaration public ConnectionType connection { get; set; } Property Value Type Description ConnectionType id Declaration public int id { get; } Property Value Type Description System.Int32 iostream Declaration public NetworkStream iostream { get; } Property Value Type Description NetworkStream Methods Equals(Object) Override equals for Proxy two proxy objects are equal if their id's are equal. Declaration public override bool Equals(object obj) Parameters Type Name Description System.Object obj Returns Type Description System.Boolean Overrides System.Object.Equals(System.Object) GetHashCode() Override hashcode for Proxy Declaration public override int GetHashCode() Returns Type Description System.Int32 Overrides System.Object.GetHashCode() Remarks two objects must hash to the same thing if they are equal. HandOffSendReceive(AbstractReceiver, AbstractSender, ConnectionType) Hand off the sender and receiver to a new sender and receiver object. Declaration public void HandOffSendReceive(AbstractReceiver r, AbstractSender s, ConnectionType c) Parameters Type Name Description AbstractReceiver r new receiver AbstractSender s new sender ConnectionType c Join() Join on both send and receive threads. Declaration public void Join() Remarks Nicely wait for both threads in the proxy to finish. This is used for clean up. QueueDataEvent(DataReceivedEventArgs) Queue a data event for the receiver without receiving it directly from the socket. Declaration public void QueueDataEvent(DataReceivedEventArgs d) Parameters Type Name Description DataReceivedEventArgs d the data to queue Shutdown() Shutdown the TcpClient and the underlying tcp connection. Declaration public void Shutdown()"
-  },
-  "api/Examples.Primes.GoldbachSeq.html": {
-    "href": "api/Examples.Primes.GoldbachSeq.html",
-    "title": "Class GoldbachSeq | docfx seed website",
-    "keywords": "Class GoldbachSeq Class to sequentially verify Goldbachs conjecture for each even integer greater than two in the input range and find the largest prime such that p + q = sum where q is prime. in that range. Inheritance System.Object GoldbachSeq Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Examples.Primes Assembly :cs.temp.dll.dll Syntax public class GoldbachSeq Methods Main(String[]) Main method for the GoldbachSeq task Declaration public void Main(string[] args_full) Parameters Type Name Description System.String [] args_full command line args passed to this main lowerbound - an even integer > two upperbound - an even integer >= lowerbound"
-  },
-  "api/SubmitJob.html": {
-    "href": "api/SubmitJob.html",
-    "title": "Namespace SubmitJob | docfx seed website",
-    "keywords": "Namespace SubmitJob Classes SubmitJob"
+  "api/StartNode.StartNode.html": {
+    "href": "api/StartNode.StartNode.html",
+    "title": "Class StartNode | defcore",
+    "keywords": "Class StartNode Inheritance System.Object StartNode Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :StartNode Assembly :cs.temp.dll.dll Syntax public class StartNode Methods Main(String[]) Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args"
   },
   "api/Distributed.Assembly.html": {
     "href": "api/Distributed.Assembly.html",
-    "title": "Namespace Distributed.Assembly | docfx seed website",
+    "title": "Namespace Distributed.Assembly | defcore",
     "keywords": "Namespace Distributed.Assembly Classes CoreLoader"
   },
-  "api/Distributed.Library.html": {
-    "href": "api/Distributed.Library.html",
-    "title": "Namespace Distributed.Library | docfx seed website",
-    "keywords": "Namespace Distributed.Library Classes Job JobResult JobTask Enums Schedule"
-  },
-  "api/Distributed.Network.AbstractReceiver.html": {
-    "href": "api/Distributed.Network.AbstractReceiver.html",
-    "title": "Class AbstractReceiver | docfx seed website",
-    "keywords": "Class AbstractReceiver Provides the methods nessesary to be the receiving side of a proxy object. Inheritance System.Object NetworkSendReceive AbstractReceiver Inherited Members NetworkSendReceive.BUFFER_SIZE NetworkSendReceive.SERVER_PORT NetworkSendReceive.IO_SLEEP NetworkSendReceive.SERVER_SLEEP NetworkSendReceive.thread NetworkSendReceive.proxy NetworkSendReceive.Start() NetworkSendReceive.Shutdown() NetworkSendReceive.Join() System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public abstract class AbstractReceiver : NetworkSendReceive Fields DoneReceiving Declaration protected bool DoneReceiving Field Value Type Description System.Boolean Message Declaration protected string Message Field Value Type Description System.String Methods CreateDataReceivedEvent(String) Return a concrete DataReceivedEventArgs subclass, for handling receive events. Declaration public abstract DataReceivedEventArgs CreateDataReceivedEvent(string data) Parameters Type Name Description System.String data data from socket Returns Type Description DataReceivedEventArgs new DataRecivedEventArgs object type Remarks A subclass must be able to create and return a data received event object for its specific needs. HandleAdditionalReceiving(Object, DataReceivedEventArgs) Process received data in addition to simply sending it to the sender object. Declaration public abstract void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e) Parameters Type Name Description System.Object sender event raiser DataReceivedEventArgs e data from receive event Remarks A subclass must implement any additional handling that they want done. when data is received. OnDataReceived(DataReceivedEventArgs) Raises the data received event. Declaration public virtual void OnDataReceived(DataReceivedEventArgs e) Parameters Type Name Description DataReceivedEventArgs e The data received Run() Method that does the actual receiving loop, reads in the data then raises an on data received event for listeners. Declaration public override void Run() Overrides NetworkSendReceive.Run() Events DataReceived The event for receiving data. Declaration public event EventHandler<DataReceivedEventArgs> DataReceived Event Type Type Description System.EventHandler < DataReceivedEventArgs > Remarks To use this without a delegate the DataReceivedEventArgs class was created."
+  "articles/intro.html": {
+    "href": "articles/intro.html",
+    "title": "Add your introductions here! | defcore",
+    "keywords": "Add your introductions here!"
   },
   "index.html": {
     "href": "index.html",
-    "title": "test homepage | docfx seed website",
+    "title": "test homepage | defcore",
     "keywords": "test homepage"
-  },
-  "README.html": {
-    "href": "README.html",
-    "title": "docfx-seed | docfx seed website",
-    "keywords": "docfx-seed Description This is a sample docfx documentation project. It contains .NET source code and markdown files. docfx.json is the configuration file for running docfx . docfx will generate a static website as similar to http://docascode.github.io/docfx-seed/index.html How to run Under Windows Download and unzip docfx.zip to run docfx.exe directly! Run docfx under current repo! Website will be generated under _site folder. Run any web hosting tool to host _site folder, e.g. docfx serve _site . Cross platform (TO BE ADDED) and use dnx As a prerequisite, you will need to install DNVM and DNX . ###Quick Start * dnvm upgrade to get the latest dnvm. * Add feed https://www.myget.org/F/aspnetrelease/api/v2/ to Nuget.config > For Windows, the nuget config file is %AppData%\\NuGet\\NuGet.config . > For Linux/OSX, the nuget config file is ~/.config/NuGet/NuGet.config . * dnu commands install docfx to install docfx as a command * Run docfx under current repo! Website will be generated under _site folder. * Run any web hosting tool to host _site folder, e.g. docfx serve _site . Further information about docfx docfx is a tool to generate documentation towards .NET source code and markdown files. Please refer to docfx to get start. The docfx website itself is generated by docfx !"
   },
   "api/Distributed.Assembly.CoreLoader.html": {
     "href": "api/Distributed.Assembly.CoreLoader.html",
-    "title": "Class CoreLoader | docfx seed website",
+    "title": "Class CoreLoader | defcore",
     "keywords": "Class CoreLoader Inheritance System.Object CoreLoader Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Assembly Assembly :cs.temp.dll.dll Syntax public class CoreLoader Constructors CoreLoader(String) Constructor for the CoreLoader Declaration public CoreLoader(string assemblyPath) Parameters Type Name Description System.String assemblyPath path to the assembly (dll) Methods CallMethod(String, Object[]) Call a method with the specified params for an object of the Job Class Declaration public object CallMethod(string method, object[] methodParams) Parameters Type Name Description System.String method System.Object [] methodParams Returns Type Description System.Object FindJobClass() Find a job class from an assembly, if that job class does not exist in the assembly return false. Declaration public bool FindJobClass() Returns Type Description System.Boolean"
   },
   "api/Distributed.Library.JobTask.html": {
     "href": "api/Distributed.Library.JobTask.html",
-    "title": "Class JobTask | docfx seed website",
+    "title": "Class JobTask | defcore",
     "keywords": "Class JobTask Inheritance System.Object JobTask Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Library Assembly :cs.temp.dll.dll Syntax public abstract class JobTask Constructors JobTask() Declaration protected JobTask() Properties TaskResults Declaration public List<JobResult> TaskResults { get; } Property Value Type Description List < JobResult > Methods AddResult(JobResult) Declaration public void AddResult(JobResult j) Parameters Type Name Description JobResult j Main(String[]) Declaration public abstract void Main(string[] args) Parameters Type Name Description System.String [] args"
+  },
+  "api/Distributed.Network.NetworkSendReceive.html": {
+    "href": "api/Distributed.Network.NetworkSendReceive.html",
+    "title": "Class NetworkSendReceive | defcore",
+    "keywords": "Class NetworkSendReceive Provides the basic methods and members nessesary for network opperations. Inheritance System.Object NetworkSendReceive AbstractReceiver AbstractSender Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public abstract class NetworkSendReceive Fields BUFFER_SIZE Declaration public const int BUFFER_SIZE = 1024 Field Value Type Description System.Int32 IO_SLEEP Declaration public const int IO_SLEEP = 100 Field Value Type Description System.Int32 SERVER_PORT Declaration public const int SERVER_PORT = 12345 Field Value Type Description System.Int32 SERVER_SLEEP Declaration public const int SERVER_SLEEP = 500 Field Value Type Description System.Int32 thread Declaration protected Thread thread Field Value Type Description Thread Properties proxy Declaration public Proxy proxy { protected get; set; } Property Value Type Description Proxy Methods Join() Join on this thread. Declaration public virtual void Join() Run() Where the actual sending/receiving happens Declaration public abstract void Run() Shutdown() Shutdown the connection to the socket Declaration public virtual void Shutdown() Start() Start up the given sender/receiver in its own thread so that it can begin sending/receiving data. Declaration public virtual void Start()"
+  },
+  "api/Distributed.Network.html": {
+    "href": "api/Distributed.Network.html",
+    "title": "Namespace Distributed.Network | defcore",
+    "keywords": "Namespace Distributed.Network Classes AbstractReceiver Provides the methods nessesary to be the receiving side of a proxy object. AbstractSender Provides the methods nessesary to be the sending side of a proxy object DataReceivedEventArgs Event arguments class to hold info about the data received. NetworkSendReceive Provides the basic methods and members nessesary for network opperations. Proxy A proxy is a TcpClient wrapper that uses a sending and receiving object to do separte handling of stream input/output. Enums ConnectionType The type connected to the proxy"
+  },
+  "api/Examples.Primes.GoldbachDis.html": {
+    "href": "api/Examples.Primes.GoldbachDis.html",
+    "title": "Class GoldbachDis | defcore",
+    "keywords": "Class GoldbachDis A class to run through a distributed system to verify goldbach's conjecture. See GoldbachSeq Inheritance System.Object GoldbachDis Namespace :Examples.Primes Assembly :cs.temp.dll.dll Syntax public class GoldbachDis : Job Methods Main(String[]) Overridden non-static Main Declaration public override void Main(string[] args_full) Parameters Type Name Description System.String [] args_full"
+  },
+  "api/Examples.Sorting.QuickSortSeq.html": {
+    "href": "api/Examples.Sorting.QuickSortSeq.html",
+    "title": "Class QuickSortSeq | defcore",
+    "keywords": "Class QuickSortSeq Inheritance System.Object QuickSortSeq Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Examples.Sorting Assembly :cs.temp.dll.dll Syntax public static class QuickSortSeq"
+  },
+  "api/StartNode.html": {
+    "href": "api/StartNode.html",
+    "title": "Namespace StartNode | defcore",
+    "keywords": "Namespace StartNode Classes StartNode"
+  },
+  "api/SubmitJob.SubmitJob.html": {
+    "href": "api/SubmitJob.SubmitJob.html",
+    "title": "Class SubmitJob | defcore",
+    "keywords": "Class SubmitJob Inheritance System.Object SubmitJob Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :SubmitJob Assembly :cs.temp.dll.dll Syntax public class SubmitJob Methods Main(String[]) Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args"
+  },
+  "api/Distributed.Logging.Logger.LogType.html": {
+    "href": "api/Distributed.Logging.Logger.LogType.html",
+    "title": "Enum Logger.LogType | defcore",
+    "keywords": "Enum Logger.LogType Type of log Namespace :Distributed.Logging Assembly :cs.temp.dll.dll Syntax public enum LogType Fields Name Description MANAGER NODE"
   },
   "api/Distributed.Logging.Logger.html": {
     "href": "api/Distributed.Logging.Logger.html",
-    "title": "Class Logger | docfx seed website",
+    "title": "Class Logger | defcore",
     "keywords": "Class Logger Class to handle logging, it is either a logger for a manager or for a node. Inheritance System.Object Logger Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Logging Assembly :cs.temp.dll.dll Syntax public sealed class Logger Properties ManagerLogInstance Accesser for the Manager logger instance Declaration public static Logger ManagerLogInstance { get; } Property Value Type Description Logger Remarks Whichever property gets called first is what the Logger instance will be. since a Node and NodeManager are not running the same instance this will not be an issue. NodeLogInstance Accesser for the logger instance Declaration public static Logger NodeLogInstance { get; } Property Value Type Description Logger Remarks Whichever property gets called first is what the Logger instance will be. since a Node and NodeManager are not running the same instance this will not be an issue. Methods Log(String) Log a message to the text file Declaration public void Log(string logMessage) Parameters Type Name Description System.String logMessage Remarks Print to console if in debug"
   },
-  "api/Distributed.Network.DataReceivedEventArgs.html": {
-    "href": "api/Distributed.Network.DataReceivedEventArgs.html",
-    "title": "Class DataReceivedEventArgs | docfx seed website",
-    "keywords": "Class DataReceivedEventArgs Event arguments class to hold info about the data received. Inheritance System.Object System.EventArgs DataReceivedEventArgs Inherited Members System.EventArgs.Empty System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public abstract class DataReceivedEventArgs : EventArgs Remarks This should be subclassed depending on what kind of data is being received. Constructors DataReceivedEventArgs(String) Declaration public DataReceivedEventArgs(string msg) Parameters Type Name Description System.String msg Fields endl Declaration public const string endl = \"end*\" Field Value Type Description System.String split Declaration public const char split = '|' Field Value Type Description System.Char Properties args Declaration public string[] args { get; } Property Value Type Description System.String [] message Declaration public string message { get; } Property Value Type Description System.String Methods ConstructMessage(String) Overloaded ConstructMessage for a single string Declaration public static string ConstructMessage(string arg) Parameters Type Name Description System.String arg the argument to pass Returns Type Description System.String a proper constructed message ConstructMessage(String[]) From a list of string arguments construct a message to pass along. Declaration public static string ConstructMessage(string[] args) Parameters Type Name Description System.String [] args arguments Returns Type Description System.String ParseMessage(String) Split incoming data on space. Declaration protected static string[] ParseMessage(string message) Parameters Type Name Description System.String message Returns Type Description System.String []"
+  "api/Distributed.Network.AbstractSender.html": {
+    "href": "api/Distributed.Network.AbstractSender.html",
+    "title": "Class AbstractSender | defcore",
+    "keywords": "Class AbstractSender Provides the methods nessesary to be the sending side of a proxy object Inheritance System.Object NetworkSendReceive AbstractSender Inherited Members NetworkSendReceive.BUFFER_SIZE NetworkSendReceive.SERVER_PORT NetworkSendReceive.IO_SLEEP NetworkSendReceive.SERVER_SLEEP NetworkSendReceive.thread NetworkSendReceive.proxy NetworkSendReceive.Run() NetworkSendReceive.Start() NetworkSendReceive.Shutdown() NetworkSendReceive.Join() System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public abstract class AbstractSender : NetworkSendReceive Fields DoneSending Declaration protected bool DoneSending Field Value Type Description System.Boolean Methods HandleReceiverEvent(Object, DataReceivedEventArgs) Handle the nessesary communication in response to data received from the socket. Declaration public abstract void HandleReceiverEvent(object sender, DataReceivedEventArgs e) Parameters Type Name Description System.Object sender event raiser DataReceivedEventArgs e data from receive event SendMessage(String[]) Format and send a message from an array of string arguments. Declaration public virtual void SendMessage(string[] args) Parameters Type Name Description System.String [] args the message to send"
+  },
+  "api/Distributed.Network.Proxy.html": {
+    "href": "api/Distributed.Network.Proxy.html",
+    "title": "Class Proxy | defcore",
+    "keywords": "Class Proxy A proxy is a TcpClient wrapper that uses a sending and receiving object to do separte handling of stream input/output. Inheritance System.Object Proxy Inherited Members System.Object.ToString() System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public class Proxy Constructors Proxy(AbstractReceiver, AbstractSender, String, Int32, Int32) A Proxy constructor that takes in the string and port name to create a Tcp connection. Declaration public Proxy(AbstractReceiver r, AbstractSender s, string host, int port, int id) Parameters Type Name Description AbstractReceiver r An Abstract Receiver AbstractSender s An Abstract Sender System.String host host name for tcp System.Int32 port port number for tcp System.Int32 id Proxy(AbstractReceiver, AbstractSender, TcpClient, Int32) A Proxy constructor that can be passed an already initalized TcpClient. Declaration public Proxy(AbstractReceiver r, AbstractSender s, TcpClient client, int id) Parameters Type Name Description AbstractReceiver r An Abstract Receiver AbstractSender s An Abstract Sender TcpClient client An initalized TcpClient System.Int32 id Properties connection Declaration public ConnectionType connection { get; set; } Property Value Type Description ConnectionType id Declaration public int id { get; } Property Value Type Description System.Int32 iostream Declaration public NetworkStream iostream { get; } Property Value Type Description NetworkStream Methods Equals(Object) Override equals for Proxy two proxy objects are equal if their id's are equal. Declaration public override bool Equals(object obj) Parameters Type Name Description System.Object obj Returns Type Description System.Boolean Overrides System.Object.Equals(System.Object) GetHashCode() Override hashcode for Proxy Declaration public override int GetHashCode() Returns Type Description System.Int32 Overrides System.Object.GetHashCode() Remarks two objects must hash to the same thing if they are equal. HandOffSendReceive(AbstractReceiver, AbstractSender, ConnectionType) Hand off the sender and receiver to a new sender and receiver object. Declaration public void HandOffSendReceive(AbstractReceiver r, AbstractSender s, ConnectionType c) Parameters Type Name Description AbstractReceiver r new receiver AbstractSender s new sender ConnectionType c Join() Join on both send and receive threads. Declaration public void Join() Remarks Nicely wait for both threads in the proxy to finish. This is used for clean up. QueueDataEvent(DataReceivedEventArgs) Queue a data event for the receiver without receiving it directly from the socket. Declaration public void QueueDataEvent(DataReceivedEventArgs d) Parameters Type Name Description DataReceivedEventArgs d the data to queue Shutdown() Shutdown the TcpClient and the underlying tcp connection. Declaration public void Shutdown()"
   },
   "api/Examples.Primes.GoldbachDis.GoldbachTask.html": {
     "href": "api/Examples.Primes.GoldbachDis.GoldbachTask.html",
-    "title": "Class GoldbachDis.GoldbachTask | docfx seed website",
+    "title": "Class GoldbachDis.GoldbachTask | defcore",
     "keywords": "Class GoldbachDis.GoldbachTask A class to represent the task of verifying one set of integers for Goldbach. Inheritance System.Object GoldbachDis.GoldbachTask Namespace :Examples.Primes Assembly :cs.temp.dll.dll Syntax public class GoldbachTask : JobTask Constructors GoldbachTask(String[]) Constructor for the Goldbach Task Declaration public GoldbachTask(string[] args) Parameters Type Name Description System.String [] args Methods Main(String[]) Main method for the GoldbachSeq task Declaration public override void Main(string[] args2) Parameters Type Name Description System.String [] args2"
+  },
+  "api/Examples.Program.html": {
+    "href": "api/Examples.Program.html",
+    "title": "Class Program | defcore",
+    "keywords": "Class Program Inheritance System.Object Program Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Examples Assembly :cs.temp.dll.dll Syntax public class Program Methods Main(String[]) Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args"
+  },
+  "api/Loader.Loader.html": {
+    "href": "api/Loader.Loader.html",
+    "title": "Class Loader | defcore",
+    "keywords": "Class Loader Class to load a user program in and run it. Inheritance System.Object Loader Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Loader Assembly :cs.temp.dll.dll Syntax public class Loader Methods Main(String[]) Loads and runs the users program Declaration public static void Main(string[] args) Parameters Type Name Description System.String [] args [0] is the DLL path, [1] is any library args separated by ',' The rest are user arguments to their program ParseTokens(String[]) Declaration public static int[] ParseTokens(string[] args) Parameters Type Name Description System.String [] args Returns Type Description System.Int32 [] RunFixedSchedule(CoreLoader, Int32, Int32[]) Run the program with a fixed schedule Declaration public static void RunFixedSchedule(CoreLoader coreLoader, int numTasks, int[] libArgs) Parameters Type Name Description CoreLoader coreLoader System.Int32 numTasks System.Int32 [] libArgs Remarks libArgs = [job_id, section_id, num_nodes]"
+  },
+  "api/Distributed.Library.Schedule.html": {
+    "href": "api/Distributed.Library.Schedule.html",
+    "title": "Enum Schedule | defcore",
+    "keywords": "Enum Schedule Namespace :Distributed.Library Assembly :cs.temp.dll.dll Syntax public enum Schedule Fields Name Description FIXED LEAPFROG"
+  },
+  "api/Distributed.Network.AbstractReceiver.html": {
+    "href": "api/Distributed.Network.AbstractReceiver.html",
+    "title": "Class AbstractReceiver | defcore",
+    "keywords": "Class AbstractReceiver Provides the methods nessesary to be the receiving side of a proxy object. Inheritance System.Object NetworkSendReceive AbstractReceiver Inherited Members NetworkSendReceive.BUFFER_SIZE NetworkSendReceive.SERVER_PORT NetworkSendReceive.IO_SLEEP NetworkSendReceive.SERVER_SLEEP NetworkSendReceive.thread NetworkSendReceive.proxy NetworkSendReceive.Start() NetworkSendReceive.Shutdown() NetworkSendReceive.Join() System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public abstract class AbstractReceiver : NetworkSendReceive Fields DoneReceiving Declaration protected bool DoneReceiving Field Value Type Description System.Boolean Message Declaration protected string Message Field Value Type Description System.String Methods CreateDataReceivedEvent(String) Return a concrete DataReceivedEventArgs subclass, for handling receive events. Declaration public abstract DataReceivedEventArgs CreateDataReceivedEvent(string data) Parameters Type Name Description System.String data data from socket Returns Type Description DataReceivedEventArgs new DataRecivedEventArgs object type Remarks A subclass must be able to create and return a data received event object for its specific needs. HandleAdditionalReceiving(Object, DataReceivedEventArgs) Process received data in addition to simply sending it to the sender object. Declaration public abstract void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e) Parameters Type Name Description System.Object sender event raiser DataReceivedEventArgs e data from receive event Remarks A subclass must implement any additional handling that they want done. when data is received. OnDataReceived(DataReceivedEventArgs) Raises the data received event. Declaration public virtual void OnDataReceived(DataReceivedEventArgs e) Parameters Type Name Description DataReceivedEventArgs e The data received Run() Method that does the actual receiving loop, reads in the data then raises an on data received event for listeners. Declaration public override void Run() Overrides NetworkSendReceive.Run() Events DataReceived The event for receiving data. Declaration public event EventHandler<DataReceivedEventArgs> DataReceived Event Type Type Description System.EventHandler < DataReceivedEventArgs > Remarks To use this without a delegate the DataReceivedEventArgs class was created."
+  },
+  "api/Distributed.Network.DataReceivedEventArgs.html": {
+    "href": "api/Distributed.Network.DataReceivedEventArgs.html",
+    "title": "Class DataReceivedEventArgs | defcore",
+    "keywords": "Class DataReceivedEventArgs Event arguments class to hold info about the data received. Inheritance System.Object System.EventArgs DataReceivedEventArgs Inherited Members System.EventArgs.Empty System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Distributed.Network Assembly :cs.temp.dll.dll Syntax public abstract class DataReceivedEventArgs : EventArgs Remarks This should be subclassed depending on what kind of data is being received. Constructors DataReceivedEventArgs(String) Declaration public DataReceivedEventArgs(string msg) Parameters Type Name Description System.String msg Fields endl Declaration public const string endl = \"end*\" Field Value Type Description System.String split Declaration public const char split = '|' Field Value Type Description System.Char Properties args Declaration public string[] args { get; } Property Value Type Description System.String [] message Declaration public string message { get; } Property Value Type Description System.String Methods ConstructMessage(String) Overloaded ConstructMessage for a single string Declaration public static string ConstructMessage(string arg) Parameters Type Name Description System.String arg the argument to pass Returns Type Description System.String a proper constructed message ConstructMessage(String[]) From a list of string arguments construct a message to pass along. Declaration public static string ConstructMessage(string[] args) Parameters Type Name Description System.String [] args arguments Returns Type Description System.String ParseMessage(String) Split incoming data on space. Declaration protected static string[] ParseMessage(string message) Parameters Type Name Description System.String message Returns Type Description System.String []"
+  },
+  "api/Examples.Primes.BigIntegerExtensions.html": {
+    "href": "api/Examples.Primes.BigIntegerExtensions.html",
+    "title": "Class BigIntegerExtensions | defcore",
+    "keywords": "Class BigIntegerExtensions Extension Methods for BigInteger Inheritance System.Object BigIntegerExtensions Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Examples.Primes Assembly :cs.temp.dll.dll Syntax public static class BigIntegerExtensions Methods BitCount(BigInteger) Counts the number of bits in a big integer Declaration public static int BitCount(this BigInteger number) Parameters Type Name Description BigInteger number number to count Returns Type Description System.Int32 IsProbablePrime(BigInteger, Int32) Millar-Rabin test for probabilistic prime Based on java's implementation http://developer.classpath.org/doc/java/math/BigInteger-source.html which in turn is based on \"The Rabin-Miller algorithm pp. 259-261 of \"Applied Cryptography, Second Edition\" by Bruce Schneier. Declaration public static bool IsProbablePrime(this BigInteger thisBigInt, int certainty) Parameters Type Name Description BigInteger thisBigInt System.Int32 certainty Returns Type Description System.Boolean NextProbablePrime(BigInteger) Finds the next probably prime Declaration public static BigInteger NextProbablePrime(this BigInteger number) Parameters Type Name Description BigInteger number Returns Type Description BigInteger"
+  },
+  "api/Examples.Primes.GoldbachSeq.html": {
+    "href": "api/Examples.Primes.GoldbachSeq.html",
+    "title": "Class GoldbachSeq | defcore",
+    "keywords": "Class GoldbachSeq Class to sequentially verify Goldbachs conjecture for each even integer greater than two in the input range and find the largest prime such that p + q = sum where q is prime. in that range. Inheritance System.Object GoldbachSeq Inherited Members System.Object.ToString() System.Object.Equals(System.Object) System.Object.Equals(System.Object, System.Object) System.Object.ReferenceEquals(System.Object, System.Object) System.Object.GetHashCode() System.Object.GetType() System.Object.MemberwiseClone() Namespace :Examples.Primes Assembly :cs.temp.dll.dll Syntax public class GoldbachSeq Methods Main(String[]) Main method for the GoldbachSeq task Declaration public void Main(string[] args_full) Parameters Type Name Description System.String [] args_full command line args passed to this main lowerbound - an even integer > two upperbound - an even integer >= lowerbound"
+  },
+  "api/Examples.Sorting.html": {
+    "href": "api/Examples.Sorting.html",
+    "title": "Namespace Examples.Sorting | defcore",
+    "keywords": "Namespace Examples.Sorting Classes QuickSortSeq"
+  },
+  "api/Loader.html": {
+    "href": "api/Loader.html",
+    "title": "Namespace Loader | defcore",
+    "keywords": "Namespace Loader Classes Loader Class to load a user program in and run it."
   }
 }
