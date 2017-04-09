@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-using Distributed.Library;
+using Defcore.Distributed.Jobs;
 
 namespace Defcore.Distributed.Assembly
 {

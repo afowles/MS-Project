@@ -1,8 +1,9 @@
-﻿using Distributed.Network;
+﻿using Defcore.Distributed.Network;
+using Defcore.Distributed.Nodes;
 using System;
 using System.Text;
 
-namespace Distributed.Manager
+namespace Defcore.Distributed
 {
     /// <summary>
     /// Class to launch a job
@@ -11,7 +12,7 @@ namespace Distributed.Manager
     {
         private string dllPath;
         private DataReceivedEventArgs data;
-        private Node.Node parent;
+        private Node parent;
         // starting at -2 for dotnet run output
         // TODO: look for a way to suppress dotnet run
         private static int lineCount = -2;
@@ -20,7 +21,7 @@ namespace Distributed.Manager
         /// Constructor for a Job launcher
         /// </summary>
         /// <param name="d"></param>
-        public JobLauncher(DataReceivedEventArgs d, Node.Node p)
+        public JobLauncher(DataReceivedEventArgs d, Node p)
         {
             dllPath = d.args[2];
             data = d;
@@ -105,7 +106,7 @@ namespace Distributed.Manager
             // use the output
             string output = outputBuilder.ToString();
             
-            parent.QueueDataEvent(new Node.NodeComm("finished|" 
+            parent.QueueDataEvent(new NodeComm("finished|" 
                 + data.args[1].ToCharArray()[0] + "|" + output));
         }
     }

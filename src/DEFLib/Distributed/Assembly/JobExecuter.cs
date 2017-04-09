@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.CompilerServices;
-using Distributed.Library;
+
+using Defcore.Distributed.Jobs;
 
 [assembly: InternalsVisibleTo("Loader")]
 

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 
-using Distributed.Network;
+using Defcore.Distributed.Network;
 using System;
 
-namespace Distributed.Manager
+namespace Defcore.Distributed.Manager
 {
     /// <summary>
     /// A thread safe Job Scheduler

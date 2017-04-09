@@ -1,10 +1,10 @@
-﻿using Distributed.Manager;
+﻿using Defcore.Distributed.Manager;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Distributed.Network
+namespace Defcore.Distributed.Network
 {
     /// <summary>
     /// Object passed between Default Receiver

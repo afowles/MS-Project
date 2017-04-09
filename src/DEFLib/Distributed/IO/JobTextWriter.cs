@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace DEFLib.Distributed.IO
+namespace Defcore.Distributed.IO
 {
     /// <summary>
     /// JobTextWriter is replaced 

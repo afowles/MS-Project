@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Distributed.Library
+namespace Defcore.Distributed.Jobs
 {
     /// <summary>
     /// 

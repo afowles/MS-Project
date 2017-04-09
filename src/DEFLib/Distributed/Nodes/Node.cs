@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-using Distributed.Network;
-using Distributed.Files;
-using Distributed.Logging;
-using Distributed.Manager;
+using Defcore.Distributed.Network;
+using Defcore.Distributed.IO;
+using Defcore.Distributed.Logging;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -19,7 +18,7 @@ using System.Threading.Tasks;
 /// other than by the designated entry point.
 /// This file contains classes as part of the framework, not the library.
 /// </summary>
-namespace Distributed.Node
+namespace Defcore.Distributed.Nodes
 {
     /// <summary>
     /// A node in the network

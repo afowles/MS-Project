@@ -1,7 +1,7 @@
 ﻿using System;
-using Distributed.Network;
+using Defcore.Distributed.Network;
 
-namespace Distributed
+namespace Defcore.Distributed
 {
     class Query
     {

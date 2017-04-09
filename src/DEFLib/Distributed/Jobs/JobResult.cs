@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Distributed.Library
+namespace Defcore.Distributed.Jobs
 {
     public class JobResult
     {

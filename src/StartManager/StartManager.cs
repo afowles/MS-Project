@@ -1,7 +1,7 @@
 ﻿
 using System;
-using Distributed.Library;
-using Distributed.Manager;
+using Defcore.Distributed.Jobs;
+using Defcore.Distributed.Manager;
 
 namespace StartManager
 {

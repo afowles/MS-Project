@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Distributed.Node
+namespace Defcore.Distributed.Nodes
 {
     class NodeSystemInfo
     {

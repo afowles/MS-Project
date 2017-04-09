@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.Loader;
-using Distributed.Library;
+using Defcore.Distributed.Jobs;
 using System.Diagnostics;
 using System.IO;
 
-using Distributed.Assembly;
+using Defcore.Distributed.Assembly;
 
 /// <summary>
 /// Loader test app, this will be migrated into 

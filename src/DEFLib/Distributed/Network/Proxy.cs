@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace Distributed.Network
+namespace Defcore.Distributed.Network
 {
     /// <summary>
     /// A proxy is a TcpClient wrapper

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Distributed.Library
+namespace Defcore.Distributed.Jobs
 {
     public abstract class JobTask
     {

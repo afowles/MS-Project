@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Distributed.Logging
+namespace Defcore.Distributed.Logging
 {
     /// <summary>
     /// Class to handle logging, it is either a logger

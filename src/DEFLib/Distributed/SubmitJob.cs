@@ -1,17 +1,16 @@
 ﻿using System;
-using Distributed.Network;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Runtime.CompilerServices;
-using System.Security;
 using System.Text;
-using Distributed.Logging;
+using Defcore.Distributed.Logging;
+using Defcore.Distributed.Network;
 using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("SubmitJob")]
 
-namespace Distributed
+namespace Defcore.Distributed
 {
     /// <summary>
     /// Class to submit a job to the cluster

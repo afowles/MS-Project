@@ -7,8 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.IO;
 
-using Distributed.Network;
-using Distributed.Logging;
+using Defcore.Distributed.Network;
+using Defcore.Distributed.Logging;
 
 [assembly: InternalsVisibleTo("StartManager")]
 
@@ -16,7 +16,7 @@ using Distributed.Logging;
 /// Manager namespace contains the classes to handle
 /// the logic involved with all aspects of the node server.
 /// </summary>
-namespace Distributed.Manager
+namespace Defcore.Distributed.Manager
 {
 
     /// <summary>

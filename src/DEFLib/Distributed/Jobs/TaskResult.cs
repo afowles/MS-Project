@@ -1,4 +1,4 @@
-﻿namespace Lib.Distributed.Library
+﻿namespace Defcore.Distributed.Jobs
 {
     internal class TaskResult
     {

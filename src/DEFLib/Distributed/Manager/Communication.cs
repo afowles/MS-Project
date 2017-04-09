@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using Distributed.Network;
+using Defcore.Distributed.Network;
 using System.Collections.Concurrent;
 using System.Threading;
-using Distributed.Files;
 using System.IO;
 
+using Defcore.Distributed.IO;
 
-namespace Distributed.Manager
+namespace Defcore.Distributed.Manager
 {
     /// <summary>
     /// Data event class for incoming messages

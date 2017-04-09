@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net.Sockets;
 
-namespace Distributed.Files
+namespace Defcore.Distributed.IO
 {
     internal static class FileRead
     {
