@@ -4,7 +4,7 @@ using System.Runtime.Loader;
 
 using Distributed.Library;
 
-namespace Distributed.Assembly
+namespace Defcore.Distributed.Assembly
 {
     /// <summary>
     /// 
