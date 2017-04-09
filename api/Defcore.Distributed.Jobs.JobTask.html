@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Logger
+    <title>Class JobTask
    | defcore </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Logger
+    <meta name="title" content="Class JobTask
    | defcore ">
     <meta name="generator" content="docfx 2.15.5.0">
     
@@ -78,16 +78,14 @@
             <article class="content wrap" id="_content">
               
               
-              <h1 id="Distributed_Logging_Logger" data-uid="Distributed.Logging.Logger">Class Logger
+              <h1 id="Defcore_Distributed_Jobs_JobTask" data-uid="Defcore.Distributed.Jobs.JobTask">Class JobTask
               </h1>
-              <div class="markdown level0 summary"><p>Class to handle logging, it is either a logger
-for a manager or for a node.</p>
-</div>
+              <div class="markdown level0 summary"></div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
                   <div class="level0"><span class="xref">System.Object</span></div>
-                  <div class="level1"><span class="xref">Logger</span></div>
+                  <div class="level1"><span class="xref">JobTask</span></div>
               </div>
               <div class="inheritedMembers">
                 <h5>Inherited Members</h5>
@@ -113,24 +111,35 @@ for a manager or for a node.</p>
                   <span class="xref">System.Object.MemberwiseClone()</span>
                 </div>
               </div>
-              <h6><strong>Namespace</strong>:Distributed.Logging</h6>
+              <h6><strong>Namespace</strong>:Defcore.Distributed.Jobs</h6>
               <h6><strong>Assembly</strong>:cs.temp.dll.dll</h6>
-              <h5 id="Distributed_Logging_Logger_syntax">Syntax</h5>
+              <h5 id="Defcore_Distributed_Jobs_JobTask_syntax">Syntax</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public sealed class Logger</code></pre>
+                <pre><code class="lang-csharp hljs">public abstract class JobTask</code></pre>
+              </div>
+              <h3 id="constructors">Constructors
+              </h3>
+              
+              
+              <a id="Defcore_Distributed_Jobs_JobTask__ctor_" data-uid="Defcore.Distributed.Jobs.JobTask.#ctor*"></a>
+              <h4 id="Defcore_Distributed_Jobs_JobTask__ctor" data-uid="Defcore.Distributed.Jobs.JobTask.#ctor">JobTask()</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">protected JobTask()</code></pre>
               </div>
               <h3 id="properties">Properties
               </h3>
               
               
-              <a id="Distributed_Logging_Logger_ManagerLogInstance_" data-uid="Distributed.Logging.Logger.ManagerLogInstance*"></a>
-              <h4 id="Distributed_Logging_Logger_ManagerLogInstance" data-uid="Distributed.Logging.Logger.ManagerLogInstance">ManagerLogInstance</h4>
-              <div class="markdown level1 summary"><p>Accesser for the Manager logger instance</p>
-</div>
+              <a id="Defcore_Distributed_Jobs_JobTask_TaskResults_" data-uid="Defcore.Distributed.Jobs.JobTask.TaskResults*"></a>
+              <h4 id="Defcore_Distributed_Jobs_JobTask_TaskResults" data-uid="Defcore.Distributed.Jobs.JobTask.TaskResults">TaskResults</h4>
+              <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public static Logger ManagerLogInstance { get; }</code></pre>
+                <pre><code class="lang-csharp hljs">public List&lt;JobResult&gt; TaskResults { get; }</code></pre>
               </div>
               <h5 class="propertyValue">Property Value</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -142,61 +151,22 @@ for a manager or for a node.</p>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="Distributed.Logging.Logger.html">Logger</a></td>
+                    <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Defcore.Distributed.Jobs.JobResult.html">JobResult</a>&gt;</td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
-              <h5 id="Distributed_Logging_Logger_ManagerLogInstance_remarks">Remarks</h5>
-              <div class="markdown level1 remarks"><p>Whichever property gets called first
-is what the Logger instance will be.
-since a Node and NodeManager are not running
-the same instance this will not be an issue.</p>
-</div>
-              
-              
-              <a id="Distributed_Logging_Logger_NodeLogInstance_" data-uid="Distributed.Logging.Logger.NodeLogInstance*"></a>
-              <h4 id="Distributed_Logging_Logger_NodeLogInstance" data-uid="Distributed.Logging.Logger.NodeLogInstance">NodeLogInstance</h4>
-              <div class="markdown level1 summary"><p>Accesser for the logger instance</p>
-</div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public static Logger NodeLogInstance { get; }</code></pre>
-              </div>
-              <h5 class="propertyValue">Property Value</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a class="xref" href="Distributed.Logging.Logger.html">Logger</a></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              <h5 id="Distributed_Logging_Logger_NodeLogInstance_remarks">Remarks</h5>
-              <div class="markdown level1 remarks"><p>Whichever property gets called first
-is what the Logger instance will be.
-since a Node and NodeManager are not running
-the same instance this will not be an issue.</p>
-</div>
               <h3 id="methods">Methods
               </h3>
               
               
-              <a id="Distributed_Logging_Logger_Log_" data-uid="Distributed.Logging.Logger.Log*"></a>
-              <h4 id="Distributed_Logging_Logger_Log_System_String_" data-uid="Distributed.Logging.Logger.Log(System.String)">Log(String)</h4>
-              <div class="markdown level1 summary"><p>Log a message to the text file</p>
-</div>
+              <a id="Defcore_Distributed_Jobs_JobTask_AddResult_" data-uid="Defcore.Distributed.Jobs.JobTask.AddResult*"></a>
+              <h4 id="Defcore_Distributed_Jobs_JobTask_AddResult_Defcore_Distributed_Jobs_JobResult_" data-uid="Defcore.Distributed.Jobs.JobTask.AddResult(Defcore.Distributed.Jobs.JobResult)">AddResult(JobResult)</h4>
+              <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public void Log(string logMessage)</code></pre>
+                <pre><code class="lang-csharp hljs">public void AddResult(JobResult j)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -209,15 +179,39 @@ the same instance this will not be an issue.</p>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="xref">System.String</span></td>
-                    <td><span class="parametername">logMessage</span></td>
+                    <td><a class="xref" href="Defcore.Distributed.Jobs.JobResult.html">JobResult</a></td>
+                    <td><span class="parametername">j</span></td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
-              <h5 id="Distributed_Logging_Logger_Log_System_String__remarks">Remarks</h5>
-              <div class="markdown level1 remarks"><p>Print to console if in debug</p>
-</div>
+              
+              
+              <a id="Defcore_Distributed_Jobs_JobTask_Main_" data-uid="Defcore.Distributed.Jobs.JobTask.Main*"></a>
+              <h4 id="Defcore_Distributed_Jobs_JobTask_Main_System_String___" data-uid="Defcore.Distributed.Jobs.JobTask.Main(System.String[])">Main(String[])</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public abstract void Main(string[] args)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span>[]</td>
+                    <td><span class="parametername">args</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
                         </article>
           </div>
           

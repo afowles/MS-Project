@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>test homepage | defcore </title>
+    <title>defcore | defcore </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="test homepage | defcore ">
+    <meta name="title" content="defcore | defcore ">
     <meta name="generator" content="docfx 2.15.5.0">
     
     <link rel="shortcut icon" href="icons/favicon.ico">
@@ -67,8 +67,21 @@
         <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="test-homepage">test homepage</h1>
+              <h1 id="defcore">defcore</h1>
               
+<h2 id="masters-project">Masters Project</h2>
+<p>A distributed environment and framework for .NET Core applications</p>
+<p>The Distributed Environment and Framework Library (DEFLib) contains enviromental code for deploying</p>
+<p>applications in a distributed nature along with a framework for writing distributed programs.</p>
+<p>All code is built against .NET Core 1.1</p>
+<p>Separate projects are used for each target, src resides in the framework projects with both _Core projects compiling against them.</p>
+<h2 id="building-net-core-projects">Building .NET Core Projects</h2>
+<p>After checking out, run &quot;dotnet restore&quot; in each of the following projects:
+Loader, PDLib_Core, StartManager, StartNode and SubmitJob</p>
+<p>Then run &quot;dotnet build&quot; in any of the projects to run it, this will build the library if it has not been built yet.</p>
+<p>Start the NodeManager first (&#39;dotnet run&#39; in that project), record the IP address for use with Nodes.</p>
+<p>Start each Node.</p>
+<p>Submit a dll to be run, note: submit a job on the same system that the manager is running on so it can find the proper file.</p>
 
             </article>
           </div>

@@ -1,843 +1,924 @@
 ### YamlMime:XRefMap
 sorted: true
 references:
-- uid: Distributed.Assembly
-  name: Distributed.Assembly
-  href: api/Distributed.Assembly.html
-  commentId: N:Distributed.Assembly
-  fullName: Distributed.Assembly
-  nameWithType: Distributed.Assembly
-- uid: Distributed.Assembly.CoreLoader
+- uid: defcore
+  name: defcore
+  href: api/defcore.html
+  commentId: N:defcore
+  fullName: defcore
+  nameWithType: defcore
+- uid: Defcore.Distributed.Assembly
+  name: Defcore.Distributed.Assembly
+  href: api/Defcore.Distributed.Assembly.html
+  commentId: N:Defcore.Distributed.Assembly
+  fullName: Defcore.Distributed.Assembly
+  nameWithType: Defcore.Distributed.Assembly
+- uid: Defcore.Distributed.Assembly.CoreLoader
   name: CoreLoader
-  href: api/Distributed.Assembly.CoreLoader.html
-  commentId: T:Distributed.Assembly.CoreLoader
-  fullName: Distributed.Assembly.CoreLoader
+  href: api/Defcore.Distributed.Assembly.CoreLoader.html
+  commentId: T:Defcore.Distributed.Assembly.CoreLoader
+  fullName: Defcore.Distributed.Assembly.CoreLoader
   nameWithType: CoreLoader
-- uid: Distributed.Assembly.CoreLoader.#ctor(System.String)
+- uid: Defcore.Distributed.Assembly.CoreLoader.#ctor(System.String)
   name: CoreLoader(String)
-  href: api/Distributed.Assembly.CoreLoader.html#Distributed_Assembly_CoreLoader__ctor_System_String_
-  commentId: M:Distributed.Assembly.CoreLoader.#ctor(System.String)
-  fullName: Distributed.Assembly.CoreLoader.CoreLoader(System.String)
+  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader__ctor_System_String_
+  commentId: M:Defcore.Distributed.Assembly.CoreLoader.#ctor(System.String)
+  fullName: Defcore.Distributed.Assembly.CoreLoader.CoreLoader(System.String)
   nameWithType: CoreLoader.CoreLoader(String)
-- uid: Distributed.Assembly.CoreLoader.#ctor*
+- uid: Defcore.Distributed.Assembly.CoreLoader.#ctor*
   name: CoreLoader
-  href: api/Distributed.Assembly.CoreLoader.html#Distributed_Assembly_CoreLoader__ctor_
-  commentId: Overload:Distributed.Assembly.CoreLoader.#ctor
-  fullName: Distributed.Assembly.CoreLoader.CoreLoader
+  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader__ctor_
+  commentId: Overload:Defcore.Distributed.Assembly.CoreLoader.#ctor
+  fullName: Defcore.Distributed.Assembly.CoreLoader.CoreLoader
   nameWithType: CoreLoader.CoreLoader
-- uid: Distributed.Assembly.CoreLoader.CallMethod(System.String,System.Object[])
+- uid: Defcore.Distributed.Assembly.CoreLoader.CallMethod(System.String,System.Object[])
   name: CallMethod(String, Object[])
-  href: api/Distributed.Assembly.CoreLoader.html#Distributed_Assembly_CoreLoader_CallMethod_System_String_System_Object___
-  commentId: M:Distributed.Assembly.CoreLoader.CallMethod(System.String,System.Object[])
+  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader_CallMethod_System_String_System_Object___
+  commentId: M:Defcore.Distributed.Assembly.CoreLoader.CallMethod(System.String,System.Object[])
   name.vb: CallMethod(String, Object())
-  fullName: Distributed.Assembly.CoreLoader.CallMethod(System.String, System.Object[])
-  fullName.vb: Distributed.Assembly.CoreLoader.CallMethod(System.String, System.Object())
+  fullName: Defcore.Distributed.Assembly.CoreLoader.CallMethod(System.String, System.Object[])
+  fullName.vb: Defcore.Distributed.Assembly.CoreLoader.CallMethod(System.String, System.Object())
   nameWithType: CoreLoader.CallMethod(String, Object[])
   nameWithType.vb: CoreLoader.CallMethod(String, Object())
-- uid: Distributed.Assembly.CoreLoader.CallMethod*
+- uid: Defcore.Distributed.Assembly.CoreLoader.CallMethod*
   name: CallMethod
-  href: api/Distributed.Assembly.CoreLoader.html#Distributed_Assembly_CoreLoader_CallMethod_
-  commentId: Overload:Distributed.Assembly.CoreLoader.CallMethod
-  fullName: Distributed.Assembly.CoreLoader.CallMethod
+  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader_CallMethod_
+  commentId: Overload:Defcore.Distributed.Assembly.CoreLoader.CallMethod
+  fullName: Defcore.Distributed.Assembly.CoreLoader.CallMethod
   nameWithType: CoreLoader.CallMethod
-- uid: Distributed.Assembly.CoreLoader.FindJobClass
+- uid: Defcore.Distributed.Assembly.CoreLoader.FindJobClass
   name: FindJobClass()
-  href: api/Distributed.Assembly.CoreLoader.html#Distributed_Assembly_CoreLoader_FindJobClass
-  commentId: M:Distributed.Assembly.CoreLoader.FindJobClass
-  fullName: Distributed.Assembly.CoreLoader.FindJobClass()
+  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader_FindJobClass
+  commentId: M:Defcore.Distributed.Assembly.CoreLoader.FindJobClass
+  fullName: Defcore.Distributed.Assembly.CoreLoader.FindJobClass()
   nameWithType: CoreLoader.FindJobClass()
-- uid: Distributed.Assembly.CoreLoader.FindJobClass*
+- uid: Defcore.Distributed.Assembly.CoreLoader.FindJobClass*
   name: FindJobClass
-  href: api/Distributed.Assembly.CoreLoader.html#Distributed_Assembly_CoreLoader_FindJobClass_
-  commentId: Overload:Distributed.Assembly.CoreLoader.FindJobClass
-  fullName: Distributed.Assembly.CoreLoader.FindJobClass
+  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader_FindJobClass_
+  commentId: Overload:Defcore.Distributed.Assembly.CoreLoader.FindJobClass
+  fullName: Defcore.Distributed.Assembly.CoreLoader.FindJobClass
   nameWithType: CoreLoader.FindJobClass
-- uid: Distributed.Library
-  name: Distributed.Library
-  href: api/Distributed.Library.html
-  commentId: N:Distributed.Library
-  fullName: Distributed.Library
-  nameWithType: Distributed.Library
-- uid: Distributed.Library.Job
+- uid: Defcore.Distributed.IO
+  name: Defcore.Distributed.IO
+  href: api/Defcore.Distributed.IO.html
+  commentId: N:Defcore.Distributed.IO
+  fullName: Defcore.Distributed.IO
+  nameWithType: Defcore.Distributed.IO
+- uid: Defcore.Distributed.IO.FileRead
+  name: FileRead
+  href: api/Defcore.Distributed.IO.FileRead.html
+  commentId: T:Defcore.Distributed.IO.FileRead
+  fullName: Defcore.Distributed.IO.FileRead
+  nameWithType: FileRead
+- uid: Defcore.Distributed.IO.FileRead.BufferSize
+  name: BufferSize
+  href: api/Defcore.Distributed.IO.FileRead.html#Defcore_Distributed_IO_FileRead_BufferSize
+  commentId: F:Defcore.Distributed.IO.FileRead.BufferSize
+  fullName: Defcore.Distributed.IO.FileRead.BufferSize
+  nameWithType: FileRead.BufferSize
+- uid: Defcore.Distributed.IO.FileRead.NetworkSleep
+  name: NetworkSleep
+  href: api/Defcore.Distributed.IO.FileRead.html#Defcore_Distributed_IO_FileRead_NetworkSleep
+  commentId: F:Defcore.Distributed.IO.FileRead.NetworkSleep
+  fullName: Defcore.Distributed.IO.FileRead.NetworkSleep
+  nameWithType: FileRead.NetworkSleep
+- uid: Defcore.Distributed.IO.FileRead.ReadInWriteOut(NetworkStream,System.String)
+  name: ReadInWriteOut(NetworkStream, String)
+  href: api/Defcore.Distributed.IO.FileRead.html#Defcore_Distributed_IO_FileRead_ReadInWriteOut_NetworkStream_System_String_
+  commentId: M:Defcore.Distributed.IO.FileRead.ReadInWriteOut(NetworkStream,System.String)
+  fullName: Defcore.Distributed.IO.FileRead.ReadInWriteOut(NetworkStream, System.String)
+  nameWithType: FileRead.ReadInWriteOut(NetworkStream, String)
+- uid: Defcore.Distributed.IO.FileRead.ReadInWriteOut*
+  name: ReadInWriteOut
+  href: api/Defcore.Distributed.IO.FileRead.html#Defcore_Distributed_IO_FileRead_ReadInWriteOut_
+  commentId: Overload:Defcore.Distributed.IO.FileRead.ReadInWriteOut
+  fullName: Defcore.Distributed.IO.FileRead.ReadInWriteOut
+  nameWithType: FileRead.ReadInWriteOut
+- uid: Defcore.Distributed.IO.FileWrite
+  name: FileWrite
+  href: api/Defcore.Distributed.IO.FileWrite.html
+  commentId: T:Defcore.Distributed.IO.FileWrite
+  fullName: Defcore.Distributed.IO.FileWrite
+  nameWithType: FileWrite
+- uid: Defcore.Distributed.IO.FileWrite.WriteOut(NetworkStream,System.String)
+  name: WriteOut(NetworkStream, String)
+  href: api/Defcore.Distributed.IO.FileWrite.html#Defcore_Distributed_IO_FileWrite_WriteOut_NetworkStream_System_String_
+  commentId: M:Defcore.Distributed.IO.FileWrite.WriteOut(NetworkStream,System.String)
+  fullName: Defcore.Distributed.IO.FileWrite.WriteOut(NetworkStream, System.String)
+  nameWithType: FileWrite.WriteOut(NetworkStream, String)
+- uid: Defcore.Distributed.IO.FileWrite.WriteOut*
+  name: WriteOut
+  href: api/Defcore.Distributed.IO.FileWrite.html#Defcore_Distributed_IO_FileWrite_WriteOut_
+  commentId: Overload:Defcore.Distributed.IO.FileWrite.WriteOut
+  fullName: Defcore.Distributed.IO.FileWrite.WriteOut
+  nameWithType: FileWrite.WriteOut
+- uid: Defcore.Distributed.Jobs
+  name: Defcore.Distributed.Jobs
+  href: api/Defcore.Distributed.Jobs.html
+  commentId: N:Defcore.Distributed.Jobs
+  fullName: Defcore.Distributed.Jobs
+  nameWithType: Defcore.Distributed.Jobs
+- uid: Defcore.Distributed.Jobs.Job
   name: Job
-  href: api/Distributed.Library.Job.html
-  commentId: T:Distributed.Library.Job
-  fullName: Distributed.Library.Job
+  href: api/Defcore.Distributed.Jobs.Job.html
+  commentId: T:Defcore.Distributed.Jobs.Job
+  fullName: Defcore.Distributed.Jobs.Job
   nameWithType: Job
-- uid: Distributed.Library.Job.#ctor
+- uid: Defcore.Distributed.Jobs.Job.#ctor
   name: Job()
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job__ctor
-  commentId: M:Distributed.Library.Job.#ctor
-  fullName: Distributed.Library.Job.Job()
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job__ctor
+  commentId: M:Defcore.Distributed.Jobs.Job.#ctor
+  fullName: Defcore.Distributed.Jobs.Job.Job()
   nameWithType: Job.Job()
-- uid: Distributed.Library.Job.#ctor*
+- uid: Defcore.Distributed.Jobs.Job.#ctor*
   name: Job
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job__ctor_
-  commentId: Overload:Distributed.Library.Job.#ctor
-  fullName: Distributed.Library.Job.Job
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job__ctor_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.#ctor
+  fullName: Defcore.Distributed.Jobs.Job.Job
   nameWithType: Job.Job
-- uid: Distributed.Library.Job.AddResult(Distributed.Library.JobResult)
+- uid: Defcore.Distributed.Jobs.Job.AddResult(Defcore.Distributed.Jobs.JobResult)
   name: AddResult(JobResult)
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_AddResult_Distributed_Library_JobResult_
-  commentId: M:Distributed.Library.Job.AddResult(Distributed.Library.JobResult)
-  fullName: Distributed.Library.Job.AddResult(Distributed.Library.JobResult)
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_AddResult_Defcore_Distributed_Jobs_JobResult_
+  commentId: M:Defcore.Distributed.Jobs.Job.AddResult(Defcore.Distributed.Jobs.JobResult)
+  fullName: Defcore.Distributed.Jobs.Job.AddResult(Defcore.Distributed.Jobs.JobResult)
   nameWithType: Job.AddResult(JobResult)
-- uid: Distributed.Library.Job.AddResult*
+- uid: Defcore.Distributed.Jobs.Job.AddResult*
   name: AddResult
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_AddResult_
-  commentId: Overload:Distributed.Library.Job.AddResult
-  fullName: Distributed.Library.Job.AddResult
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_AddResult_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.AddResult
+  fullName: Defcore.Distributed.Jobs.Job.AddResult
   nameWithType: Job.AddResult
-- uid: Distributed.Library.Job.AddTask(Distributed.Library.JobTask)
+- uid: Defcore.Distributed.Jobs.Job.AddTask(Defcore.Distributed.Jobs.JobTask)
   name: AddTask(JobTask)
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_AddTask_Distributed_Library_JobTask_
-  commentId: M:Distributed.Library.Job.AddTask(Distributed.Library.JobTask)
-  fullName: Distributed.Library.Job.AddTask(Distributed.Library.JobTask)
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_AddTask_Defcore_Distributed_Jobs_JobTask_
+  commentId: M:Defcore.Distributed.Jobs.Job.AddTask(Defcore.Distributed.Jobs.JobTask)
+  fullName: Defcore.Distributed.Jobs.Job.AddTask(Defcore.Distributed.Jobs.JobTask)
   nameWithType: Job.AddTask(JobTask)
-- uid: Distributed.Library.Job.AddTask*
+- uid: Defcore.Distributed.Jobs.Job.AddTask*
   name: AddTask
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_AddTask_
-  commentId: Overload:Distributed.Library.Job.AddTask
-  fullName: Distributed.Library.Job.AddTask
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_AddTask_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.AddTask
+  fullName: Defcore.Distributed.Jobs.Job.AddTask
   nameWithType: Job.AddTask
-- uid: Distributed.Library.Job.CompileResults
+- uid: Defcore.Distributed.Jobs.Job.CompileResults
   name: CompileResults()
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_CompileResults
-  commentId: M:Distributed.Library.Job.CompileResults
-  fullName: Distributed.Library.Job.CompileResults()
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_CompileResults
+  commentId: M:Defcore.Distributed.Jobs.Job.CompileResults
+  fullName: Defcore.Distributed.Jobs.Job.CompileResults()
   nameWithType: Job.CompileResults()
-- uid: Distributed.Library.Job.CompileResults*
+- uid: Defcore.Distributed.Jobs.Job.CompileResults*
   name: CompileResults
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_CompileResults_
-  commentId: Overload:Distributed.Library.Job.CompileResults
-  fullName: Distributed.Library.Job.CompileResults
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_CompileResults_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.CompileResults
+  fullName: Defcore.Distributed.Jobs.Job.CompileResults
   nameWithType: Job.CompileResults
-- uid: Distributed.Library.Job.GetClassName
+- uid: Defcore.Distributed.Jobs.Job.GetClassName
   name: GetClassName()
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_GetClassName
-  commentId: M:Distributed.Library.Job.GetClassName
-  fullName: Distributed.Library.Job.GetClassName()
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_GetClassName
+  commentId: M:Defcore.Distributed.Jobs.Job.GetClassName
+  fullName: Defcore.Distributed.Jobs.Job.GetClassName()
   nameWithType: Job.GetClassName()
-- uid: Distributed.Library.Job.GetClassName*
+- uid: Defcore.Distributed.Jobs.Job.GetClassName*
   name: GetClassName
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_GetClassName_
-  commentId: Overload:Distributed.Library.Job.GetClassName
-  fullName: Distributed.Library.Job.GetClassName
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_GetClassName_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.GetClassName
+  fullName: Defcore.Distributed.Jobs.Job.GetClassName
   nameWithType: Job.GetClassName
-- uid: Distributed.Library.Job.GetNumberTasks
+- uid: Defcore.Distributed.Jobs.Job.GetNumberTasks
   name: GetNumberTasks()
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_GetNumberTasks
-  commentId: M:Distributed.Library.Job.GetNumberTasks
-  fullName: Distributed.Library.Job.GetNumberTasks()
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_GetNumberTasks
+  commentId: M:Defcore.Distributed.Jobs.Job.GetNumberTasks
+  fullName: Defcore.Distributed.Jobs.Job.GetNumberTasks()
   nameWithType: Job.GetNumberTasks()
-- uid: Distributed.Library.Job.GetNumberTasks*
+- uid: Defcore.Distributed.Jobs.Job.GetNumberTasks*
   name: GetNumberTasks
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_GetNumberTasks_
-  commentId: Overload:Distributed.Library.Job.GetNumberTasks
-  fullName: Distributed.Library.Job.GetNumberTasks
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_GetNumberTasks_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.GetNumberTasks
+  fullName: Defcore.Distributed.Jobs.Job.GetNumberTasks
   nameWithType: Job.GetNumberTasks
-- uid: Distributed.Library.Job.GetSchedule
+- uid: Defcore.Distributed.Jobs.Job.GetSchedule
   name: GetSchedule()
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_GetSchedule
-  commentId: M:Distributed.Library.Job.GetSchedule
-  fullName: Distributed.Library.Job.GetSchedule()
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_GetSchedule
+  commentId: M:Defcore.Distributed.Jobs.Job.GetSchedule
+  fullName: Defcore.Distributed.Jobs.Job.GetSchedule()
   nameWithType: Job.GetSchedule()
-- uid: Distributed.Library.Job.GetSchedule*
+- uid: Defcore.Distributed.Jobs.Job.GetSchedule*
   name: GetSchedule
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_GetSchedule_
-  commentId: Overload:Distributed.Library.Job.GetSchedule
-  fullName: Distributed.Library.Job.GetSchedule
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_GetSchedule_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.GetSchedule
+  fullName: Defcore.Distributed.Jobs.Job.GetSchedule
   nameWithType: Job.GetSchedule
-- uid: Distributed.Library.Job.Main(System.String[])
+- uid: Defcore.Distributed.Jobs.Job.Main(System.String[])
   name: Main(String[])
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_Main_System_String___
-  commentId: M:Distributed.Library.Job.Main(System.String[])
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_Main_System_String___
+  commentId: M:Defcore.Distributed.Jobs.Job.Main(System.String[])
   name.vb: Main(String())
-  fullName: Distributed.Library.Job.Main(System.String[])
-  fullName.vb: Distributed.Library.Job.Main(System.String())
+  fullName: Defcore.Distributed.Jobs.Job.Main(System.String[])
+  fullName.vb: Defcore.Distributed.Jobs.Job.Main(System.String())
   nameWithType: Job.Main(String[])
   nameWithType.vb: Job.Main(String())
-- uid: Distributed.Library.Job.Main*
+- uid: Defcore.Distributed.Jobs.Job.Main*
   name: Main
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_Main_
-  commentId: Overload:Distributed.Library.Job.Main
-  fullName: Distributed.Library.Job.Main
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_Main_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.Main
+  fullName: Defcore.Distributed.Jobs.Job.Main
   nameWithType: Job.Main
-- uid: Distributed.Library.Job.Results
+- uid: Defcore.Distributed.Jobs.Job.Results
   name: Results
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_Results
-  commentId: P:Distributed.Library.Job.Results
-  fullName: Distributed.Library.Job.Results
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_Results
+  commentId: P:Defcore.Distributed.Jobs.Job.Results
+  fullName: Defcore.Distributed.Jobs.Job.Results
   nameWithType: Job.Results
-- uid: Distributed.Library.Job.Results*
+- uid: Defcore.Distributed.Jobs.Job.Results*
   name: Results
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_Results_
-  commentId: Overload:Distributed.Library.Job.Results
-  fullName: Distributed.Library.Job.Results
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_Results_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.Results
+  fullName: Defcore.Distributed.Jobs.Job.Results
   nameWithType: Job.Results
-- uid: Distributed.Library.Job.StartTask(System.Int32)
+- uid: Defcore.Distributed.Jobs.Job.StartTask(System.Int32)
   name: StartTask(Int32)
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_StartTask_System_Int32_
-  commentId: M:Distributed.Library.Job.StartTask(System.Int32)
-  fullName: Distributed.Library.Job.StartTask(System.Int32)
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_StartTask_System_Int32_
+  commentId: M:Defcore.Distributed.Jobs.Job.StartTask(System.Int32)
+  fullName: Defcore.Distributed.Jobs.Job.StartTask(System.Int32)
   nameWithType: Job.StartTask(Int32)
-- uid: Distributed.Library.Job.StartTask*
+- uid: Defcore.Distributed.Jobs.Job.StartTask*
   name: StartTask
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_StartTask_
-  commentId: Overload:Distributed.Library.Job.StartTask
-  fullName: Distributed.Library.Job.StartTask
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_StartTask_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.StartTask
+  fullName: Defcore.Distributed.Jobs.Job.StartTask
   nameWithType: Job.StartTask
-- uid: Distributed.Library.Job.TaskSchedule
+- uid: Defcore.Distributed.Jobs.Job.TaskSchedule
   name: TaskSchedule
-  href: api/Distributed.Library.Job.html#Distributed_Library_Job_TaskSchedule
-  commentId: F:Distributed.Library.Job.TaskSchedule
-  fullName: Distributed.Library.Job.TaskSchedule
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_TaskSchedule
+  commentId: F:Defcore.Distributed.Jobs.Job.TaskSchedule
+  fullName: Defcore.Distributed.Jobs.Job.TaskSchedule
   nameWithType: Job.TaskSchedule
-- uid: Distributed.Library.JobResult
+- uid: Defcore.Distributed.Jobs.JobResult
   name: JobResult
-  href: api/Distributed.Library.JobResult.html
-  commentId: T:Distributed.Library.JobResult
-  fullName: Distributed.Library.JobResult
+  href: api/Defcore.Distributed.Jobs.JobResult.html
+  commentId: T:Defcore.Distributed.Jobs.JobResult
+  fullName: Defcore.Distributed.Jobs.JobResult
   nameWithType: JobResult
-- uid: Distributed.Library.JobResult.#ctor(System.Int32)
+- uid: Defcore.Distributed.Jobs.JobResult.#ctor(System.Int32)
   name: JobResult(Int32)
-  href: api/Distributed.Library.JobResult.html#Distributed_Library_JobResult__ctor_System_Int32_
-  commentId: M:Distributed.Library.JobResult.#ctor(System.Int32)
-  fullName: Distributed.Library.JobResult.JobResult(System.Int32)
+  href: api/Defcore.Distributed.Jobs.JobResult.html#Defcore_Distributed_Jobs_JobResult__ctor_System_Int32_
+  commentId: M:Defcore.Distributed.Jobs.JobResult.#ctor(System.Int32)
+  fullName: Defcore.Distributed.Jobs.JobResult.JobResult(System.Int32)
   nameWithType: JobResult.JobResult(Int32)
-- uid: Distributed.Library.JobResult.#ctor*
+- uid: Defcore.Distributed.Jobs.JobResult.#ctor*
   name: JobResult
-  href: api/Distributed.Library.JobResult.html#Distributed_Library_JobResult__ctor_
-  commentId: Overload:Distributed.Library.JobResult.#ctor
-  fullName: Distributed.Library.JobResult.JobResult
+  href: api/Defcore.Distributed.Jobs.JobResult.html#Defcore_Distributed_Jobs_JobResult__ctor_
+  commentId: Overload:Defcore.Distributed.Jobs.JobResult.#ctor
+  fullName: Defcore.Distributed.Jobs.JobResult.JobResult
   nameWithType: JobResult.JobResult
-- uid: Distributed.Library.JobResult.JobId
+- uid: Defcore.Distributed.Jobs.JobResult.JobId
   name: JobId
-  href: api/Distributed.Library.JobResult.html#Distributed_Library_JobResult_JobId
-  commentId: P:Distributed.Library.JobResult.JobId
-  fullName: Distributed.Library.JobResult.JobId
+  href: api/Defcore.Distributed.Jobs.JobResult.html#Defcore_Distributed_Jobs_JobResult_JobId
+  commentId: P:Defcore.Distributed.Jobs.JobResult.JobId
+  fullName: Defcore.Distributed.Jobs.JobResult.JobId
   nameWithType: JobResult.JobId
-- uid: Distributed.Library.JobResult.JobId*
+- uid: Defcore.Distributed.Jobs.JobResult.JobId*
   name: JobId
-  href: api/Distributed.Library.JobResult.html#Distributed_Library_JobResult_JobId_
-  commentId: Overload:Distributed.Library.JobResult.JobId
-  fullName: Distributed.Library.JobResult.JobId
+  href: api/Defcore.Distributed.Jobs.JobResult.html#Defcore_Distributed_Jobs_JobResult_JobId_
+  commentId: Overload:Defcore.Distributed.Jobs.JobResult.JobId
+  fullName: Defcore.Distributed.Jobs.JobResult.JobId
   nameWithType: JobResult.JobId
-- uid: Distributed.Library.JobResult.SerializeResult
+- uid: Defcore.Distributed.Jobs.JobResult.SerializeResult
   name: SerializeResult()
-  href: api/Distributed.Library.JobResult.html#Distributed_Library_JobResult_SerializeResult
-  commentId: M:Distributed.Library.JobResult.SerializeResult
-  fullName: Distributed.Library.JobResult.SerializeResult()
+  href: api/Defcore.Distributed.Jobs.JobResult.html#Defcore_Distributed_Jobs_JobResult_SerializeResult
+  commentId: M:Defcore.Distributed.Jobs.JobResult.SerializeResult
+  fullName: Defcore.Distributed.Jobs.JobResult.SerializeResult()
   nameWithType: JobResult.SerializeResult()
-- uid: Distributed.Library.JobResult.SerializeResult*
+- uid: Defcore.Distributed.Jobs.JobResult.SerializeResult*
   name: SerializeResult
-  href: api/Distributed.Library.JobResult.html#Distributed_Library_JobResult_SerializeResult_
-  commentId: Overload:Distributed.Library.JobResult.SerializeResult
-  fullName: Distributed.Library.JobResult.SerializeResult
+  href: api/Defcore.Distributed.Jobs.JobResult.html#Defcore_Distributed_Jobs_JobResult_SerializeResult_
+  commentId: Overload:Defcore.Distributed.Jobs.JobResult.SerializeResult
+  fullName: Defcore.Distributed.Jobs.JobResult.SerializeResult
   nameWithType: JobResult.SerializeResult
-- uid: Distributed.Library.JobTask
+- uid: Defcore.Distributed.Jobs.JobTask
   name: JobTask
-  href: api/Distributed.Library.JobTask.html
-  commentId: T:Distributed.Library.JobTask
-  fullName: Distributed.Library.JobTask
+  href: api/Defcore.Distributed.Jobs.JobTask.html
+  commentId: T:Defcore.Distributed.Jobs.JobTask
+  fullName: Defcore.Distributed.Jobs.JobTask
   nameWithType: JobTask
-- uid: Distributed.Library.JobTask.#ctor
+- uid: Defcore.Distributed.Jobs.JobTask.#ctor
   name: JobTask()
-  href: api/Distributed.Library.JobTask.html#Distributed_Library_JobTask__ctor
-  commentId: M:Distributed.Library.JobTask.#ctor
-  fullName: Distributed.Library.JobTask.JobTask()
+  href: api/Defcore.Distributed.Jobs.JobTask.html#Defcore_Distributed_Jobs_JobTask__ctor
+  commentId: M:Defcore.Distributed.Jobs.JobTask.#ctor
+  fullName: Defcore.Distributed.Jobs.JobTask.JobTask()
   nameWithType: JobTask.JobTask()
-- uid: Distributed.Library.JobTask.#ctor*
+- uid: Defcore.Distributed.Jobs.JobTask.#ctor*
   name: JobTask
-  href: api/Distributed.Library.JobTask.html#Distributed_Library_JobTask__ctor_
-  commentId: Overload:Distributed.Library.JobTask.#ctor
-  fullName: Distributed.Library.JobTask.JobTask
+  href: api/Defcore.Distributed.Jobs.JobTask.html#Defcore_Distributed_Jobs_JobTask__ctor_
+  commentId: Overload:Defcore.Distributed.Jobs.JobTask.#ctor
+  fullName: Defcore.Distributed.Jobs.JobTask.JobTask
   nameWithType: JobTask.JobTask
-- uid: Distributed.Library.JobTask.AddResult(Distributed.Library.JobResult)
+- uid: Defcore.Distributed.Jobs.JobTask.AddResult(Defcore.Distributed.Jobs.JobResult)
   name: AddResult(JobResult)
-  href: api/Distributed.Library.JobTask.html#Distributed_Library_JobTask_AddResult_Distributed_Library_JobResult_
-  commentId: M:Distributed.Library.JobTask.AddResult(Distributed.Library.JobResult)
-  fullName: Distributed.Library.JobTask.AddResult(Distributed.Library.JobResult)
+  href: api/Defcore.Distributed.Jobs.JobTask.html#Defcore_Distributed_Jobs_JobTask_AddResult_Defcore_Distributed_Jobs_JobResult_
+  commentId: M:Defcore.Distributed.Jobs.JobTask.AddResult(Defcore.Distributed.Jobs.JobResult)
+  fullName: Defcore.Distributed.Jobs.JobTask.AddResult(Defcore.Distributed.Jobs.JobResult)
   nameWithType: JobTask.AddResult(JobResult)
-- uid: Distributed.Library.JobTask.AddResult*
+- uid: Defcore.Distributed.Jobs.JobTask.AddResult*
   name: AddResult
-  href: api/Distributed.Library.JobTask.html#Distributed_Library_JobTask_AddResult_
-  commentId: Overload:Distributed.Library.JobTask.AddResult
-  fullName: Distributed.Library.JobTask.AddResult
+  href: api/Defcore.Distributed.Jobs.JobTask.html#Defcore_Distributed_Jobs_JobTask_AddResult_
+  commentId: Overload:Defcore.Distributed.Jobs.JobTask.AddResult
+  fullName: Defcore.Distributed.Jobs.JobTask.AddResult
   nameWithType: JobTask.AddResult
-- uid: Distributed.Library.JobTask.Main(System.String[])
+- uid: Defcore.Distributed.Jobs.JobTask.Main(System.String[])
   name: Main(String[])
-  href: api/Distributed.Library.JobTask.html#Distributed_Library_JobTask_Main_System_String___
-  commentId: M:Distributed.Library.JobTask.Main(System.String[])
+  href: api/Defcore.Distributed.Jobs.JobTask.html#Defcore_Distributed_Jobs_JobTask_Main_System_String___
+  commentId: M:Defcore.Distributed.Jobs.JobTask.Main(System.String[])
   name.vb: Main(String())
-  fullName: Distributed.Library.JobTask.Main(System.String[])
-  fullName.vb: Distributed.Library.JobTask.Main(System.String())
+  fullName: Defcore.Distributed.Jobs.JobTask.Main(System.String[])
+  fullName.vb: Defcore.Distributed.Jobs.JobTask.Main(System.String())
   nameWithType: JobTask.Main(String[])
   nameWithType.vb: JobTask.Main(String())
-- uid: Distributed.Library.JobTask.Main*
+- uid: Defcore.Distributed.Jobs.JobTask.Main*
   name: Main
-  href: api/Distributed.Library.JobTask.html#Distributed_Library_JobTask_Main_
-  commentId: Overload:Distributed.Library.JobTask.Main
-  fullName: Distributed.Library.JobTask.Main
+  href: api/Defcore.Distributed.Jobs.JobTask.html#Defcore_Distributed_Jobs_JobTask_Main_
+  commentId: Overload:Defcore.Distributed.Jobs.JobTask.Main
+  fullName: Defcore.Distributed.Jobs.JobTask.Main
   nameWithType: JobTask.Main
-- uid: Distributed.Library.JobTask.TaskResults
+- uid: Defcore.Distributed.Jobs.JobTask.TaskResults
   name: TaskResults
-  href: api/Distributed.Library.JobTask.html#Distributed_Library_JobTask_TaskResults
-  commentId: P:Distributed.Library.JobTask.TaskResults
-  fullName: Distributed.Library.JobTask.TaskResults
+  href: api/Defcore.Distributed.Jobs.JobTask.html#Defcore_Distributed_Jobs_JobTask_TaskResults
+  commentId: P:Defcore.Distributed.Jobs.JobTask.TaskResults
+  fullName: Defcore.Distributed.Jobs.JobTask.TaskResults
   nameWithType: JobTask.TaskResults
-- uid: Distributed.Library.JobTask.TaskResults*
+- uid: Defcore.Distributed.Jobs.JobTask.TaskResults*
   name: TaskResults
-  href: api/Distributed.Library.JobTask.html#Distributed_Library_JobTask_TaskResults_
-  commentId: Overload:Distributed.Library.JobTask.TaskResults
-  fullName: Distributed.Library.JobTask.TaskResults
+  href: api/Defcore.Distributed.Jobs.JobTask.html#Defcore_Distributed_Jobs_JobTask_TaskResults_
+  commentId: Overload:Defcore.Distributed.Jobs.JobTask.TaskResults
+  fullName: Defcore.Distributed.Jobs.JobTask.TaskResults
   nameWithType: JobTask.TaskResults
-- uid: Distributed.Library.Schedule
+- uid: Defcore.Distributed.Jobs.Schedule
   name: Schedule
-  href: api/Distributed.Library.Schedule.html
-  commentId: T:Distributed.Library.Schedule
-  fullName: Distributed.Library.Schedule
+  href: api/Defcore.Distributed.Jobs.Schedule.html
+  commentId: T:Defcore.Distributed.Jobs.Schedule
+  fullName: Defcore.Distributed.Jobs.Schedule
   nameWithType: Schedule
-- uid: Distributed.Library.Schedule.FIXED
+- uid: Defcore.Distributed.Jobs.Schedule.FIXED
   name: FIXED
-  href: api/Distributed.Library.Schedule.html#Distributed_Library_Schedule_FIXED
-  commentId: F:Distributed.Library.Schedule.FIXED
-  fullName: Distributed.Library.Schedule.FIXED
+  href: api/Defcore.Distributed.Jobs.Schedule.html#Defcore_Distributed_Jobs_Schedule_FIXED
+  commentId: F:Defcore.Distributed.Jobs.Schedule.FIXED
+  fullName: Defcore.Distributed.Jobs.Schedule.FIXED
   nameWithType: Schedule.FIXED
-- uid: Distributed.Library.Schedule.LEAPFROG
+- uid: Defcore.Distributed.Jobs.Schedule.LEAPFROG
   name: LEAPFROG
-  href: api/Distributed.Library.Schedule.html#Distributed_Library_Schedule_LEAPFROG
-  commentId: F:Distributed.Library.Schedule.LEAPFROG
-  fullName: Distributed.Library.Schedule.LEAPFROG
+  href: api/Defcore.Distributed.Jobs.Schedule.html#Defcore_Distributed_Jobs_Schedule_LEAPFROG
+  commentId: F:Defcore.Distributed.Jobs.Schedule.LEAPFROG
+  fullName: Defcore.Distributed.Jobs.Schedule.LEAPFROG
   nameWithType: Schedule.LEAPFROG
-- uid: Distributed.Logging
-  name: Distributed.Logging
-  href: api/Distributed.Logging.html
-  commentId: N:Distributed.Logging
-  fullName: Distributed.Logging
-  nameWithType: Distributed.Logging
-- uid: Distributed.Logging.Logger
+- uid: Defcore.Distributed.Logging
+  name: Defcore.Distributed.Logging
+  href: api/Defcore.Distributed.Logging.html
+  commentId: N:Defcore.Distributed.Logging
+  fullName: Defcore.Distributed.Logging
+  nameWithType: Defcore.Distributed.Logging
+- uid: Defcore.Distributed.Logging.Logger
   name: Logger
-  href: api/Distributed.Logging.Logger.html
-  commentId: T:Distributed.Logging.Logger
-  fullName: Distributed.Logging.Logger
+  href: api/Defcore.Distributed.Logging.Logger.html
+  commentId: T:Defcore.Distributed.Logging.Logger
+  fullName: Defcore.Distributed.Logging.Logger
   nameWithType: Logger
-- uid: Distributed.Logging.Logger.Log(System.String)
+- uid: Defcore.Distributed.Logging.Logger.Log(System.String)
   name: Log(String)
-  href: api/Distributed.Logging.Logger.html#Distributed_Logging_Logger_Log_System_String_
-  commentId: M:Distributed.Logging.Logger.Log(System.String)
-  fullName: Distributed.Logging.Logger.Log(System.String)
+  href: api/Defcore.Distributed.Logging.Logger.html#Defcore_Distributed_Logging_Logger_Log_System_String_
+  commentId: M:Defcore.Distributed.Logging.Logger.Log(System.String)
+  fullName: Defcore.Distributed.Logging.Logger.Log(System.String)
   nameWithType: Logger.Log(String)
-- uid: Distributed.Logging.Logger.Log*
+- uid: Defcore.Distributed.Logging.Logger.Log*
   name: Log
-  href: api/Distributed.Logging.Logger.html#Distributed_Logging_Logger_Log_
-  commentId: Overload:Distributed.Logging.Logger.Log
-  fullName: Distributed.Logging.Logger.Log
+  href: api/Defcore.Distributed.Logging.Logger.html#Defcore_Distributed_Logging_Logger_Log_
+  commentId: Overload:Defcore.Distributed.Logging.Logger.Log
+  fullName: Defcore.Distributed.Logging.Logger.Log
   nameWithType: Logger.Log
-- uid: Distributed.Logging.Logger.LogType
+- uid: Defcore.Distributed.Logging.Logger.LogType
   name: Logger.LogType
-  href: api/Distributed.Logging.Logger.LogType.html
-  commentId: T:Distributed.Logging.Logger.LogType
-  fullName: Distributed.Logging.Logger.LogType
+  href: api/Defcore.Distributed.Logging.Logger.LogType.html
+  commentId: T:Defcore.Distributed.Logging.Logger.LogType
+  fullName: Defcore.Distributed.Logging.Logger.LogType
   nameWithType: Logger.LogType
-- uid: Distributed.Logging.Logger.LogType.MANAGER
+- uid: Defcore.Distributed.Logging.Logger.LogType.MANAGER
   name: MANAGER
-  href: api/Distributed.Logging.Logger.LogType.html#Distributed_Logging_Logger_LogType_MANAGER
-  commentId: F:Distributed.Logging.Logger.LogType.MANAGER
-  fullName: Distributed.Logging.Logger.LogType.MANAGER
+  href: api/Defcore.Distributed.Logging.Logger.LogType.html#Defcore_Distributed_Logging_Logger_LogType_MANAGER
+  commentId: F:Defcore.Distributed.Logging.Logger.LogType.MANAGER
+  fullName: Defcore.Distributed.Logging.Logger.LogType.MANAGER
   nameWithType: Logger.LogType.MANAGER
-- uid: Distributed.Logging.Logger.LogType.NODE
+- uid: Defcore.Distributed.Logging.Logger.LogType.NODE
   name: NODE
-  href: api/Distributed.Logging.Logger.LogType.html#Distributed_Logging_Logger_LogType_NODE
-  commentId: F:Distributed.Logging.Logger.LogType.NODE
-  fullName: Distributed.Logging.Logger.LogType.NODE
+  href: api/Defcore.Distributed.Logging.Logger.LogType.html#Defcore_Distributed_Logging_Logger_LogType_NODE
+  commentId: F:Defcore.Distributed.Logging.Logger.LogType.NODE
+  fullName: Defcore.Distributed.Logging.Logger.LogType.NODE
   nameWithType: Logger.LogType.NODE
-- uid: Distributed.Logging.Logger.ManagerLogInstance
+- uid: Defcore.Distributed.Logging.Logger.ManagerLogInstance
   name: ManagerLogInstance
-  href: api/Distributed.Logging.Logger.html#Distributed_Logging_Logger_ManagerLogInstance
-  commentId: P:Distributed.Logging.Logger.ManagerLogInstance
-  fullName: Distributed.Logging.Logger.ManagerLogInstance
+  href: api/Defcore.Distributed.Logging.Logger.html#Defcore_Distributed_Logging_Logger_ManagerLogInstance
+  commentId: P:Defcore.Distributed.Logging.Logger.ManagerLogInstance
+  fullName: Defcore.Distributed.Logging.Logger.ManagerLogInstance
   nameWithType: Logger.ManagerLogInstance
-- uid: Distributed.Logging.Logger.ManagerLogInstance*
+- uid: Defcore.Distributed.Logging.Logger.ManagerLogInstance*
   name: ManagerLogInstance
-  href: api/Distributed.Logging.Logger.html#Distributed_Logging_Logger_ManagerLogInstance_
-  commentId: Overload:Distributed.Logging.Logger.ManagerLogInstance
-  fullName: Distributed.Logging.Logger.ManagerLogInstance
+  href: api/Defcore.Distributed.Logging.Logger.html#Defcore_Distributed_Logging_Logger_ManagerLogInstance_
+  commentId: Overload:Defcore.Distributed.Logging.Logger.ManagerLogInstance
+  fullName: Defcore.Distributed.Logging.Logger.ManagerLogInstance
   nameWithType: Logger.ManagerLogInstance
-- uid: Distributed.Logging.Logger.NodeLogInstance
+- uid: Defcore.Distributed.Logging.Logger.NodeLogInstance
   name: NodeLogInstance
-  href: api/Distributed.Logging.Logger.html#Distributed_Logging_Logger_NodeLogInstance
-  commentId: P:Distributed.Logging.Logger.NodeLogInstance
-  fullName: Distributed.Logging.Logger.NodeLogInstance
+  href: api/Defcore.Distributed.Logging.Logger.html#Defcore_Distributed_Logging_Logger_NodeLogInstance
+  commentId: P:Defcore.Distributed.Logging.Logger.NodeLogInstance
+  fullName: Defcore.Distributed.Logging.Logger.NodeLogInstance
   nameWithType: Logger.NodeLogInstance
-- uid: Distributed.Logging.Logger.NodeLogInstance*
+- uid: Defcore.Distributed.Logging.Logger.NodeLogInstance*
   name: NodeLogInstance
-  href: api/Distributed.Logging.Logger.html#Distributed_Logging_Logger_NodeLogInstance_
-  commentId: Overload:Distributed.Logging.Logger.NodeLogInstance
-  fullName: Distributed.Logging.Logger.NodeLogInstance
+  href: api/Defcore.Distributed.Logging.Logger.html#Defcore_Distributed_Logging_Logger_NodeLogInstance_
+  commentId: Overload:Defcore.Distributed.Logging.Logger.NodeLogInstance
+  fullName: Defcore.Distributed.Logging.Logger.NodeLogInstance
   nameWithType: Logger.NodeLogInstance
-- uid: Distributed.Network
-  name: Distributed.Network
-  href: api/Distributed.Network.html
-  commentId: N:Distributed.Network
-  fullName: Distributed.Network
-  nameWithType: Distributed.Network
-- uid: Distributed.Network.AbstractReceiver
+- uid: Defcore.Distributed.Network
+  name: Defcore.Distributed.Network
+  href: api/Defcore.Distributed.Network.html
+  commentId: N:Defcore.Distributed.Network
+  fullName: Defcore.Distributed.Network
+  nameWithType: Defcore.Distributed.Network
+- uid: Defcore.Distributed.Network.AbstractReceiver
   name: AbstractReceiver
-  href: api/Distributed.Network.AbstractReceiver.html
-  commentId: T:Distributed.Network.AbstractReceiver
-  fullName: Distributed.Network.AbstractReceiver
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html
+  commentId: T:Defcore.Distributed.Network.AbstractReceiver
+  fullName: Defcore.Distributed.Network.AbstractReceiver
   nameWithType: AbstractReceiver
-- uid: Distributed.Network.AbstractReceiver.CreateDataReceivedEvent(System.String)
+- uid: Defcore.Distributed.Network.AbstractReceiver.CreateDataReceivedEvent(System.String)
   name: CreateDataReceivedEvent(String)
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_CreateDataReceivedEvent_System_String_
-  commentId: M:Distributed.Network.AbstractReceiver.CreateDataReceivedEvent(System.String)
-  fullName: Distributed.Network.AbstractReceiver.CreateDataReceivedEvent(System.String)
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_CreateDataReceivedEvent_System_String_
+  commentId: M:Defcore.Distributed.Network.AbstractReceiver.CreateDataReceivedEvent(System.String)
+  fullName: Defcore.Distributed.Network.AbstractReceiver.CreateDataReceivedEvent(System.String)
   nameWithType: AbstractReceiver.CreateDataReceivedEvent(String)
-- uid: Distributed.Network.AbstractReceiver.CreateDataReceivedEvent*
+- uid: Defcore.Distributed.Network.AbstractReceiver.CreateDataReceivedEvent*
   name: CreateDataReceivedEvent
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_CreateDataReceivedEvent_
-  commentId: Overload:Distributed.Network.AbstractReceiver.CreateDataReceivedEvent
-  fullName: Distributed.Network.AbstractReceiver.CreateDataReceivedEvent
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_CreateDataReceivedEvent_
+  commentId: Overload:Defcore.Distributed.Network.AbstractReceiver.CreateDataReceivedEvent
+  fullName: Defcore.Distributed.Network.AbstractReceiver.CreateDataReceivedEvent
   nameWithType: AbstractReceiver.CreateDataReceivedEvent
-- uid: Distributed.Network.AbstractReceiver.DataReceived
+- uid: Defcore.Distributed.Network.AbstractReceiver.DataReceived
   name: DataReceived
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_DataReceived
-  commentId: E:Distributed.Network.AbstractReceiver.DataReceived
-  fullName: Distributed.Network.AbstractReceiver.DataReceived
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_DataReceived
+  commentId: E:Defcore.Distributed.Network.AbstractReceiver.DataReceived
+  fullName: Defcore.Distributed.Network.AbstractReceiver.DataReceived
   nameWithType: AbstractReceiver.DataReceived
-- uid: Distributed.Network.AbstractReceiver.DoneReceiving
+- uid: Defcore.Distributed.Network.AbstractReceiver.DoneReceiving
   name: DoneReceiving
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_DoneReceiving
-  commentId: F:Distributed.Network.AbstractReceiver.DoneReceiving
-  fullName: Distributed.Network.AbstractReceiver.DoneReceiving
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_DoneReceiving
+  commentId: F:Defcore.Distributed.Network.AbstractReceiver.DoneReceiving
+  fullName: Defcore.Distributed.Network.AbstractReceiver.DoneReceiving
   nameWithType: AbstractReceiver.DoneReceiving
-- uid: Distributed.Network.AbstractReceiver.HandleAdditionalReceiving(System.Object,Distributed.Network.DataReceivedEventArgs)
+- uid: Defcore.Distributed.Network.AbstractReceiver.HandleAdditionalReceiving(System.Object,Defcore.Distributed.Network.DataReceivedEventArgs)
   name: HandleAdditionalReceiving(Object, DataReceivedEventArgs)
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_HandleAdditionalReceiving_System_Object_Distributed_Network_DataReceivedEventArgs_
-  commentId: M:Distributed.Network.AbstractReceiver.HandleAdditionalReceiving(System.Object,Distributed.Network.DataReceivedEventArgs)
-  fullName: Distributed.Network.AbstractReceiver.HandleAdditionalReceiving(System.Object, Distributed.Network.DataReceivedEventArgs)
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_HandleAdditionalReceiving_System_Object_Defcore_Distributed_Network_DataReceivedEventArgs_
+  commentId: M:Defcore.Distributed.Network.AbstractReceiver.HandleAdditionalReceiving(System.Object,Defcore.Distributed.Network.DataReceivedEventArgs)
+  fullName: Defcore.Distributed.Network.AbstractReceiver.HandleAdditionalReceiving(System.Object, Defcore.Distributed.Network.DataReceivedEventArgs)
   nameWithType: AbstractReceiver.HandleAdditionalReceiving(Object, DataReceivedEventArgs)
-- uid: Distributed.Network.AbstractReceiver.HandleAdditionalReceiving*
+- uid: Defcore.Distributed.Network.AbstractReceiver.HandleAdditionalReceiving*
   name: HandleAdditionalReceiving
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_HandleAdditionalReceiving_
-  commentId: Overload:Distributed.Network.AbstractReceiver.HandleAdditionalReceiving
-  fullName: Distributed.Network.AbstractReceiver.HandleAdditionalReceiving
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_HandleAdditionalReceiving_
+  commentId: Overload:Defcore.Distributed.Network.AbstractReceiver.HandleAdditionalReceiving
+  fullName: Defcore.Distributed.Network.AbstractReceiver.HandleAdditionalReceiving
   nameWithType: AbstractReceiver.HandleAdditionalReceiving
-- uid: Distributed.Network.AbstractReceiver.Message
+- uid: Defcore.Distributed.Network.AbstractReceiver.Message
   name: Message
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_Message
-  commentId: F:Distributed.Network.AbstractReceiver.Message
-  fullName: Distributed.Network.AbstractReceiver.Message
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_Message
+  commentId: F:Defcore.Distributed.Network.AbstractReceiver.Message
+  fullName: Defcore.Distributed.Network.AbstractReceiver.Message
   nameWithType: AbstractReceiver.Message
-- uid: Distributed.Network.AbstractReceiver.OnDataReceived(Distributed.Network.DataReceivedEventArgs)
+- uid: Defcore.Distributed.Network.AbstractReceiver.OnDataReceived(Defcore.Distributed.Network.DataReceivedEventArgs)
   name: OnDataReceived(DataReceivedEventArgs)
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_OnDataReceived_Distributed_Network_DataReceivedEventArgs_
-  commentId: M:Distributed.Network.AbstractReceiver.OnDataReceived(Distributed.Network.DataReceivedEventArgs)
-  fullName: Distributed.Network.AbstractReceiver.OnDataReceived(Distributed.Network.DataReceivedEventArgs)
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_OnDataReceived_Defcore_Distributed_Network_DataReceivedEventArgs_
+  commentId: M:Defcore.Distributed.Network.AbstractReceiver.OnDataReceived(Defcore.Distributed.Network.DataReceivedEventArgs)
+  fullName: Defcore.Distributed.Network.AbstractReceiver.OnDataReceived(Defcore.Distributed.Network.DataReceivedEventArgs)
   nameWithType: AbstractReceiver.OnDataReceived(DataReceivedEventArgs)
-- uid: Distributed.Network.AbstractReceiver.OnDataReceived*
+- uid: Defcore.Distributed.Network.AbstractReceiver.OnDataReceived*
   name: OnDataReceived
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_OnDataReceived_
-  commentId: Overload:Distributed.Network.AbstractReceiver.OnDataReceived
-  fullName: Distributed.Network.AbstractReceiver.OnDataReceived
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_OnDataReceived_
+  commentId: Overload:Defcore.Distributed.Network.AbstractReceiver.OnDataReceived
+  fullName: Defcore.Distributed.Network.AbstractReceiver.OnDataReceived
   nameWithType: AbstractReceiver.OnDataReceived
-- uid: Distributed.Network.AbstractReceiver.Run
+- uid: Defcore.Distributed.Network.AbstractReceiver.Run
   name: Run()
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_Run
-  commentId: M:Distributed.Network.AbstractReceiver.Run
-  fullName: Distributed.Network.AbstractReceiver.Run()
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_Run
+  commentId: M:Defcore.Distributed.Network.AbstractReceiver.Run
+  fullName: Defcore.Distributed.Network.AbstractReceiver.Run()
   nameWithType: AbstractReceiver.Run()
-- uid: Distributed.Network.AbstractReceiver.Run*
+- uid: Defcore.Distributed.Network.AbstractReceiver.Run*
   name: Run
-  href: api/Distributed.Network.AbstractReceiver.html#Distributed_Network_AbstractReceiver_Run_
-  commentId: Overload:Distributed.Network.AbstractReceiver.Run
-  fullName: Distributed.Network.AbstractReceiver.Run
+  href: api/Defcore.Distributed.Network.AbstractReceiver.html#Defcore_Distributed_Network_AbstractReceiver_Run_
+  commentId: Overload:Defcore.Distributed.Network.AbstractReceiver.Run
+  fullName: Defcore.Distributed.Network.AbstractReceiver.Run
   nameWithType: AbstractReceiver.Run
-- uid: Distributed.Network.AbstractSender
+- uid: Defcore.Distributed.Network.AbstractSender
   name: AbstractSender
-  href: api/Distributed.Network.AbstractSender.html
-  commentId: T:Distributed.Network.AbstractSender
-  fullName: Distributed.Network.AbstractSender
+  href: api/Defcore.Distributed.Network.AbstractSender.html
+  commentId: T:Defcore.Distributed.Network.AbstractSender
+  fullName: Defcore.Distributed.Network.AbstractSender
   nameWithType: AbstractSender
-- uid: Distributed.Network.AbstractSender.DoneSending
+- uid: Defcore.Distributed.Network.AbstractSender.DoneSending
   name: DoneSending
-  href: api/Distributed.Network.AbstractSender.html#Distributed_Network_AbstractSender_DoneSending
-  commentId: F:Distributed.Network.AbstractSender.DoneSending
-  fullName: Distributed.Network.AbstractSender.DoneSending
+  href: api/Defcore.Distributed.Network.AbstractSender.html#Defcore_Distributed_Network_AbstractSender_DoneSending
+  commentId: F:Defcore.Distributed.Network.AbstractSender.DoneSending
+  fullName: Defcore.Distributed.Network.AbstractSender.DoneSending
   nameWithType: AbstractSender.DoneSending
-- uid: Distributed.Network.AbstractSender.HandleReceiverEvent(System.Object,Distributed.Network.DataReceivedEventArgs)
+- uid: Defcore.Distributed.Network.AbstractSender.HandleReceiverEvent(System.Object,Defcore.Distributed.Network.DataReceivedEventArgs)
   name: HandleReceiverEvent(Object, DataReceivedEventArgs)
-  href: api/Distributed.Network.AbstractSender.html#Distributed_Network_AbstractSender_HandleReceiverEvent_System_Object_Distributed_Network_DataReceivedEventArgs_
-  commentId: M:Distributed.Network.AbstractSender.HandleReceiverEvent(System.Object,Distributed.Network.DataReceivedEventArgs)
-  fullName: Distributed.Network.AbstractSender.HandleReceiverEvent(System.Object, Distributed.Network.DataReceivedEventArgs)
+  href: api/Defcore.Distributed.Network.AbstractSender.html#Defcore_Distributed_Network_AbstractSender_HandleReceiverEvent_System_Object_Defcore_Distributed_Network_DataReceivedEventArgs_
+  commentId: M:Defcore.Distributed.Network.AbstractSender.HandleReceiverEvent(System.Object,Defcore.Distributed.Network.DataReceivedEventArgs)
+  fullName: Defcore.Distributed.Network.AbstractSender.HandleReceiverEvent(System.Object, Defcore.Distributed.Network.DataReceivedEventArgs)
   nameWithType: AbstractSender.HandleReceiverEvent(Object, DataReceivedEventArgs)
-- uid: Distributed.Network.AbstractSender.HandleReceiverEvent*
+- uid: Defcore.Distributed.Network.AbstractSender.HandleReceiverEvent*
   name: HandleReceiverEvent
-  href: api/Distributed.Network.AbstractSender.html#Distributed_Network_AbstractSender_HandleReceiverEvent_
-  commentId: Overload:Distributed.Network.AbstractSender.HandleReceiverEvent
-  fullName: Distributed.Network.AbstractSender.HandleReceiverEvent
+  href: api/Defcore.Distributed.Network.AbstractSender.html#Defcore_Distributed_Network_AbstractSender_HandleReceiverEvent_
+  commentId: Overload:Defcore.Distributed.Network.AbstractSender.HandleReceiverEvent
+  fullName: Defcore.Distributed.Network.AbstractSender.HandleReceiverEvent
   nameWithType: AbstractSender.HandleReceiverEvent
-- uid: Distributed.Network.AbstractSender.SendMessage(System.String[])
+- uid: Defcore.Distributed.Network.AbstractSender.SendMessage(System.String[])
   name: SendMessage(String[])
-  href: api/Distributed.Network.AbstractSender.html#Distributed_Network_AbstractSender_SendMessage_System_String___
-  commentId: M:Distributed.Network.AbstractSender.SendMessage(System.String[])
+  href: api/Defcore.Distributed.Network.AbstractSender.html#Defcore_Distributed_Network_AbstractSender_SendMessage_System_String___
+  commentId: M:Defcore.Distributed.Network.AbstractSender.SendMessage(System.String[])
   name.vb: SendMessage(String())
-  fullName: Distributed.Network.AbstractSender.SendMessage(System.String[])
-  fullName.vb: Distributed.Network.AbstractSender.SendMessage(System.String())
+  fullName: Defcore.Distributed.Network.AbstractSender.SendMessage(System.String[])
+  fullName.vb: Defcore.Distributed.Network.AbstractSender.SendMessage(System.String())
   nameWithType: AbstractSender.SendMessage(String[])
   nameWithType.vb: AbstractSender.SendMessage(String())
-- uid: Distributed.Network.AbstractSender.SendMessage*
+- uid: Defcore.Distributed.Network.AbstractSender.SendMessage*
   name: SendMessage
-  href: api/Distributed.Network.AbstractSender.html#Distributed_Network_AbstractSender_SendMessage_
-  commentId: Overload:Distributed.Network.AbstractSender.SendMessage
-  fullName: Distributed.Network.AbstractSender.SendMessage
+  href: api/Defcore.Distributed.Network.AbstractSender.html#Defcore_Distributed_Network_AbstractSender_SendMessage_
+  commentId: Overload:Defcore.Distributed.Network.AbstractSender.SendMessage
+  fullName: Defcore.Distributed.Network.AbstractSender.SendMessage
   nameWithType: AbstractSender.SendMessage
-- uid: Distributed.Network.ConnectionType
+- uid: Defcore.Distributed.Network.ConnectionType
   name: ConnectionType
-  href: api/Distributed.Network.ConnectionType.html
-  commentId: T:Distributed.Network.ConnectionType
-  fullName: Distributed.Network.ConnectionType
+  href: api/Defcore.Distributed.Network.ConnectionType.html
+  commentId: T:Defcore.Distributed.Network.ConnectionType
+  fullName: Defcore.Distributed.Network.ConnectionType
   nameWithType: ConnectionType
-- uid: Distributed.Network.ConnectionType.DEFAULT
+- uid: Defcore.Distributed.Network.ConnectionType.DEFAULT
   name: DEFAULT
-  href: api/Distributed.Network.ConnectionType.html#Distributed_Network_ConnectionType_DEFAULT
-  commentId: F:Distributed.Network.ConnectionType.DEFAULT
-  fullName: Distributed.Network.ConnectionType.DEFAULT
+  href: api/Defcore.Distributed.Network.ConnectionType.html#Defcore_Distributed_Network_ConnectionType_DEFAULT
+  commentId: F:Defcore.Distributed.Network.ConnectionType.DEFAULT
+  fullName: Defcore.Distributed.Network.ConnectionType.DEFAULT
   nameWithType: ConnectionType.DEFAULT
-- uid: Distributed.Network.ConnectionType.JOB
+- uid: Defcore.Distributed.Network.ConnectionType.JOB
   name: JOB
-  href: api/Distributed.Network.ConnectionType.html#Distributed_Network_ConnectionType_JOB
-  commentId: F:Distributed.Network.ConnectionType.JOB
-  fullName: Distributed.Network.ConnectionType.JOB
+  href: api/Defcore.Distributed.Network.ConnectionType.html#Defcore_Distributed_Network_ConnectionType_JOB
+  commentId: F:Defcore.Distributed.Network.ConnectionType.JOB
+  fullName: Defcore.Distributed.Network.ConnectionType.JOB
   nameWithType: ConnectionType.JOB
-- uid: Distributed.Network.ConnectionType.NODE
+- uid: Defcore.Distributed.Network.ConnectionType.NODE
   name: NODE
-  href: api/Distributed.Network.ConnectionType.html#Distributed_Network_ConnectionType_NODE
-  commentId: F:Distributed.Network.ConnectionType.NODE
-  fullName: Distributed.Network.ConnectionType.NODE
+  href: api/Defcore.Distributed.Network.ConnectionType.html#Defcore_Distributed_Network_ConnectionType_NODE
+  commentId: F:Defcore.Distributed.Network.ConnectionType.NODE
+  fullName: Defcore.Distributed.Network.ConnectionType.NODE
   nameWithType: ConnectionType.NODE
-- uid: Distributed.Network.ConnectionType.QUERY
+- uid: Defcore.Distributed.Network.ConnectionType.QUERY
   name: QUERY
-  href: api/Distributed.Network.ConnectionType.html#Distributed_Network_ConnectionType_QUERY
-  commentId: F:Distributed.Network.ConnectionType.QUERY
-  fullName: Distributed.Network.ConnectionType.QUERY
+  href: api/Defcore.Distributed.Network.ConnectionType.html#Defcore_Distributed_Network_ConnectionType_QUERY
+  commentId: F:Defcore.Distributed.Network.ConnectionType.QUERY
+  fullName: Defcore.Distributed.Network.ConnectionType.QUERY
   nameWithType: ConnectionType.QUERY
-- uid: Distributed.Network.DataReceivedEventArgs
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs
   name: DataReceivedEventArgs
-  href: api/Distributed.Network.DataReceivedEventArgs.html
-  commentId: T:Distributed.Network.DataReceivedEventArgs
-  fullName: Distributed.Network.DataReceivedEventArgs
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html
+  commentId: T:Defcore.Distributed.Network.DataReceivedEventArgs
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs
   nameWithType: DataReceivedEventArgs
-- uid: Distributed.Network.DataReceivedEventArgs.#ctor(System.String)
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.#ctor(System.String)
   name: DataReceivedEventArgs(String)
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs__ctor_System_String_
-  commentId: M:Distributed.Network.DataReceivedEventArgs.#ctor(System.String)
-  fullName: Distributed.Network.DataReceivedEventArgs.DataReceivedEventArgs(System.String)
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs__ctor_System_String_
+  commentId: M:Defcore.Distributed.Network.DataReceivedEventArgs.#ctor(System.String)
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.DataReceivedEventArgs(System.String)
   nameWithType: DataReceivedEventArgs.DataReceivedEventArgs(String)
-- uid: Distributed.Network.DataReceivedEventArgs.#ctor*
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.#ctor*
   name: DataReceivedEventArgs
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs__ctor_
-  commentId: Overload:Distributed.Network.DataReceivedEventArgs.#ctor
-  fullName: Distributed.Network.DataReceivedEventArgs.DataReceivedEventArgs
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs__ctor_
+  commentId: Overload:Defcore.Distributed.Network.DataReceivedEventArgs.#ctor
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.DataReceivedEventArgs
   nameWithType: DataReceivedEventArgs.DataReceivedEventArgs
-- uid: Distributed.Network.DataReceivedEventArgs.args
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.args
   name: args
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_args
-  commentId: P:Distributed.Network.DataReceivedEventArgs.args
-  fullName: Distributed.Network.DataReceivedEventArgs.args
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_args
+  commentId: P:Defcore.Distributed.Network.DataReceivedEventArgs.args
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.args
   nameWithType: DataReceivedEventArgs.args
-- uid: Distributed.Network.DataReceivedEventArgs.args*
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.args*
   name: args
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_args_
-  commentId: Overload:Distributed.Network.DataReceivedEventArgs.args
-  fullName: Distributed.Network.DataReceivedEventArgs.args
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_args_
+  commentId: Overload:Defcore.Distributed.Network.DataReceivedEventArgs.args
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.args
   nameWithType: DataReceivedEventArgs.args
-- uid: Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String)
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String)
   name: ConstructMessage(String)
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_ConstructMessage_System_String_
-  commentId: M:Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String)
-  fullName: Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String)
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_ConstructMessage_System_String_
+  commentId: M:Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String)
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String)
   nameWithType: DataReceivedEventArgs.ConstructMessage(String)
-- uid: Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String[])
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String[])
   name: ConstructMessage(String[])
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_ConstructMessage_System_String___
-  commentId: M:Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String[])
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_ConstructMessage_System_String___
+  commentId: M:Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String[])
   name.vb: ConstructMessage(String())
-  fullName: Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String[])
-  fullName.vb: Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String())
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String[])
+  fullName.vb: Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String())
   nameWithType: DataReceivedEventArgs.ConstructMessage(String[])
   nameWithType.vb: DataReceivedEventArgs.ConstructMessage(String())
-- uid: Distributed.Network.DataReceivedEventArgs.ConstructMessage*
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage*
   name: ConstructMessage
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_ConstructMessage_
-  commentId: Overload:Distributed.Network.DataReceivedEventArgs.ConstructMessage
-  fullName: Distributed.Network.DataReceivedEventArgs.ConstructMessage
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_ConstructMessage_
+  commentId: Overload:Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage
   nameWithType: DataReceivedEventArgs.ConstructMessage
-- uid: Distributed.Network.DataReceivedEventArgs.endl
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.endl
   name: endl
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_endl
-  commentId: F:Distributed.Network.DataReceivedEventArgs.endl
-  fullName: Distributed.Network.DataReceivedEventArgs.endl
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_endl
+  commentId: F:Defcore.Distributed.Network.DataReceivedEventArgs.endl
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.endl
   nameWithType: DataReceivedEventArgs.endl
-- uid: Distributed.Network.DataReceivedEventArgs.message
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.message
   name: message
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_message
-  commentId: P:Distributed.Network.DataReceivedEventArgs.message
-  fullName: Distributed.Network.DataReceivedEventArgs.message
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_message
+  commentId: P:Defcore.Distributed.Network.DataReceivedEventArgs.message
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.message
   nameWithType: DataReceivedEventArgs.message
-- uid: Distributed.Network.DataReceivedEventArgs.message*
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.message*
   name: message
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_message_
-  commentId: Overload:Distributed.Network.DataReceivedEventArgs.message
-  fullName: Distributed.Network.DataReceivedEventArgs.message
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_message_
+  commentId: Overload:Defcore.Distributed.Network.DataReceivedEventArgs.message
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.message
   nameWithType: DataReceivedEventArgs.message
-- uid: Distributed.Network.DataReceivedEventArgs.ParseMessage(System.String)
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.ParseMessage(System.String)
   name: ParseMessage(String)
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_ParseMessage_System_String_
-  commentId: M:Distributed.Network.DataReceivedEventArgs.ParseMessage(System.String)
-  fullName: Distributed.Network.DataReceivedEventArgs.ParseMessage(System.String)
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_ParseMessage_System_String_
+  commentId: M:Defcore.Distributed.Network.DataReceivedEventArgs.ParseMessage(System.String)
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.ParseMessage(System.String)
   nameWithType: DataReceivedEventArgs.ParseMessage(String)
-- uid: Distributed.Network.DataReceivedEventArgs.ParseMessage*
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.ParseMessage*
   name: ParseMessage
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_ParseMessage_
-  commentId: Overload:Distributed.Network.DataReceivedEventArgs.ParseMessage
-  fullName: Distributed.Network.DataReceivedEventArgs.ParseMessage
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_ParseMessage_
+  commentId: Overload:Defcore.Distributed.Network.DataReceivedEventArgs.ParseMessage
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.ParseMessage
   nameWithType: DataReceivedEventArgs.ParseMessage
-- uid: Distributed.Network.DataReceivedEventArgs.split
+- uid: Defcore.Distributed.Network.DataReceivedEventArgs.split
   name: split
-  href: api/Distributed.Network.DataReceivedEventArgs.html#Distributed_Network_DataReceivedEventArgs_split
-  commentId: F:Distributed.Network.DataReceivedEventArgs.split
-  fullName: Distributed.Network.DataReceivedEventArgs.split
+  href: api/Defcore.Distributed.Network.DataReceivedEventArgs.html#Defcore_Distributed_Network_DataReceivedEventArgs_split
+  commentId: F:Defcore.Distributed.Network.DataReceivedEventArgs.split
+  fullName: Defcore.Distributed.Network.DataReceivedEventArgs.split
   nameWithType: DataReceivedEventArgs.split
-- uid: Distributed.Network.NetworkSendReceive
+- uid: Defcore.Distributed.Network.NetworkSendReceive
   name: NetworkSendReceive
-  href: api/Distributed.Network.NetworkSendReceive.html
-  commentId: T:Distributed.Network.NetworkSendReceive
-  fullName: Distributed.Network.NetworkSendReceive
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html
+  commentId: T:Defcore.Distributed.Network.NetworkSendReceive
+  fullName: Defcore.Distributed.Network.NetworkSendReceive
   nameWithType: NetworkSendReceive
-- uid: Distributed.Network.NetworkSendReceive.BUFFER_SIZE
+- uid: Defcore.Distributed.Network.NetworkSendReceive.BUFFER_SIZE
   name: BUFFER_SIZE
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_BUFFER_SIZE
-  commentId: F:Distributed.Network.NetworkSendReceive.BUFFER_SIZE
-  fullName: Distributed.Network.NetworkSendReceive.BUFFER_SIZE
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_BUFFER_SIZE
+  commentId: F:Defcore.Distributed.Network.NetworkSendReceive.BUFFER_SIZE
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.BUFFER_SIZE
   nameWithType: NetworkSendReceive.BUFFER_SIZE
-- uid: Distributed.Network.NetworkSendReceive.IO_SLEEP
+- uid: Defcore.Distributed.Network.NetworkSendReceive.IO_SLEEP
   name: IO_SLEEP
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_IO_SLEEP
-  commentId: F:Distributed.Network.NetworkSendReceive.IO_SLEEP
-  fullName: Distributed.Network.NetworkSendReceive.IO_SLEEP
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_IO_SLEEP
+  commentId: F:Defcore.Distributed.Network.NetworkSendReceive.IO_SLEEP
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.IO_SLEEP
   nameWithType: NetworkSendReceive.IO_SLEEP
-- uid: Distributed.Network.NetworkSendReceive.Join
+- uid: Defcore.Distributed.Network.NetworkSendReceive.Join
   name: Join()
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_Join
-  commentId: M:Distributed.Network.NetworkSendReceive.Join
-  fullName: Distributed.Network.NetworkSendReceive.Join()
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Join
+  commentId: M:Defcore.Distributed.Network.NetworkSendReceive.Join
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.Join()
   nameWithType: NetworkSendReceive.Join()
-- uid: Distributed.Network.NetworkSendReceive.Join*
+- uid: Defcore.Distributed.Network.NetworkSendReceive.Join*
   name: Join
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_Join_
-  commentId: Overload:Distributed.Network.NetworkSendReceive.Join
-  fullName: Distributed.Network.NetworkSendReceive.Join
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Join_
+  commentId: Overload:Defcore.Distributed.Network.NetworkSendReceive.Join
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.Join
   nameWithType: NetworkSendReceive.Join
-- uid: Distributed.Network.NetworkSendReceive.proxy
+- uid: Defcore.Distributed.Network.NetworkSendReceive.proxy
   name: proxy
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_proxy
-  commentId: P:Distributed.Network.NetworkSendReceive.proxy
-  fullName: Distributed.Network.NetworkSendReceive.proxy
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_proxy
+  commentId: P:Defcore.Distributed.Network.NetworkSendReceive.proxy
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.proxy
   nameWithType: NetworkSendReceive.proxy
-- uid: Distributed.Network.NetworkSendReceive.proxy*
+- uid: Defcore.Distributed.Network.NetworkSendReceive.proxy*
   name: proxy
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_proxy_
-  commentId: Overload:Distributed.Network.NetworkSendReceive.proxy
-  fullName: Distributed.Network.NetworkSendReceive.proxy
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_proxy_
+  commentId: Overload:Defcore.Distributed.Network.NetworkSendReceive.proxy
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.proxy
   nameWithType: NetworkSendReceive.proxy
-- uid: Distributed.Network.NetworkSendReceive.Run
+- uid: Defcore.Distributed.Network.NetworkSendReceive.Run
   name: Run()
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_Run
-  commentId: M:Distributed.Network.NetworkSendReceive.Run
-  fullName: Distributed.Network.NetworkSendReceive.Run()
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Run
+  commentId: M:Defcore.Distributed.Network.NetworkSendReceive.Run
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.Run()
   nameWithType: NetworkSendReceive.Run()
-- uid: Distributed.Network.NetworkSendReceive.Run*
+- uid: Defcore.Distributed.Network.NetworkSendReceive.Run*
   name: Run
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_Run_
-  commentId: Overload:Distributed.Network.NetworkSendReceive.Run
-  fullName: Distributed.Network.NetworkSendReceive.Run
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Run_
+  commentId: Overload:Defcore.Distributed.Network.NetworkSendReceive.Run
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.Run
   nameWithType: NetworkSendReceive.Run
-- uid: Distributed.Network.NetworkSendReceive.SERVER_PORT
+- uid: Defcore.Distributed.Network.NetworkSendReceive.SERVER_PORT
   name: SERVER_PORT
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_SERVER_PORT
-  commentId: F:Distributed.Network.NetworkSendReceive.SERVER_PORT
-  fullName: Distributed.Network.NetworkSendReceive.SERVER_PORT
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_SERVER_PORT
+  commentId: F:Defcore.Distributed.Network.NetworkSendReceive.SERVER_PORT
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.SERVER_PORT
   nameWithType: NetworkSendReceive.SERVER_PORT
-- uid: Distributed.Network.NetworkSendReceive.SERVER_SLEEP
+- uid: Defcore.Distributed.Network.NetworkSendReceive.SERVER_SLEEP
   name: SERVER_SLEEP
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_SERVER_SLEEP
-  commentId: F:Distributed.Network.NetworkSendReceive.SERVER_SLEEP
-  fullName: Distributed.Network.NetworkSendReceive.SERVER_SLEEP
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_SERVER_SLEEP
+  commentId: F:Defcore.Distributed.Network.NetworkSendReceive.SERVER_SLEEP
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.SERVER_SLEEP
   nameWithType: NetworkSendReceive.SERVER_SLEEP
-- uid: Distributed.Network.NetworkSendReceive.Shutdown
+- uid: Defcore.Distributed.Network.NetworkSendReceive.Shutdown
   name: Shutdown()
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_Shutdown
-  commentId: M:Distributed.Network.NetworkSendReceive.Shutdown
-  fullName: Distributed.Network.NetworkSendReceive.Shutdown()
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Shutdown
+  commentId: M:Defcore.Distributed.Network.NetworkSendReceive.Shutdown
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.Shutdown()
   nameWithType: NetworkSendReceive.Shutdown()
-- uid: Distributed.Network.NetworkSendReceive.Shutdown*
+- uid: Defcore.Distributed.Network.NetworkSendReceive.Shutdown*
   name: Shutdown
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_Shutdown_
-  commentId: Overload:Distributed.Network.NetworkSendReceive.Shutdown
-  fullName: Distributed.Network.NetworkSendReceive.Shutdown
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Shutdown_
+  commentId: Overload:Defcore.Distributed.Network.NetworkSendReceive.Shutdown
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.Shutdown
   nameWithType: NetworkSendReceive.Shutdown
-- uid: Distributed.Network.NetworkSendReceive.Start
+- uid: Defcore.Distributed.Network.NetworkSendReceive.Start
   name: Start()
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_Start
-  commentId: M:Distributed.Network.NetworkSendReceive.Start
-  fullName: Distributed.Network.NetworkSendReceive.Start()
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Start
+  commentId: M:Defcore.Distributed.Network.NetworkSendReceive.Start
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.Start()
   nameWithType: NetworkSendReceive.Start()
-- uid: Distributed.Network.NetworkSendReceive.Start*
+- uid: Defcore.Distributed.Network.NetworkSendReceive.Start*
   name: Start
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_Start_
-  commentId: Overload:Distributed.Network.NetworkSendReceive.Start
-  fullName: Distributed.Network.NetworkSendReceive.Start
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Start_
+  commentId: Overload:Defcore.Distributed.Network.NetworkSendReceive.Start
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.Start
   nameWithType: NetworkSendReceive.Start
-- uid: Distributed.Network.NetworkSendReceive.thread
+- uid: Defcore.Distributed.Network.NetworkSendReceive.thread
   name: thread
-  href: api/Distributed.Network.NetworkSendReceive.html#Distributed_Network_NetworkSendReceive_thread
-  commentId: F:Distributed.Network.NetworkSendReceive.thread
-  fullName: Distributed.Network.NetworkSendReceive.thread
+  href: api/Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_thread
+  commentId: F:Defcore.Distributed.Network.NetworkSendReceive.thread
+  fullName: Defcore.Distributed.Network.NetworkSendReceive.thread
   nameWithType: NetworkSendReceive.thread
-- uid: Distributed.Network.Proxy
+- uid: Defcore.Distributed.Network.Proxy
   name: Proxy
-  href: api/Distributed.Network.Proxy.html
-  commentId: T:Distributed.Network.Proxy
-  fullName: Distributed.Network.Proxy
+  href: api/Defcore.Distributed.Network.Proxy.html
+  commentId: T:Defcore.Distributed.Network.Proxy
+  fullName: Defcore.Distributed.Network.Proxy
   nameWithType: Proxy
-- uid: Distributed.Network.Proxy.#ctor(Distributed.Network.AbstractReceiver,Distributed.Network.AbstractSender,System.String,System.Int32,System.Int32)
+- uid: Defcore.Distributed.Network.Proxy.#ctor(Defcore.Distributed.Network.AbstractReceiver,Defcore.Distributed.Network.AbstractSender,System.String,System.Int32,System.Int32)
   name: Proxy(AbstractReceiver, AbstractSender, String, Int32, Int32)
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy__ctor_Distributed_Network_AbstractReceiver_Distributed_Network_AbstractSender_System_String_System_Int32_System_Int32_
-  commentId: M:Distributed.Network.Proxy.#ctor(Distributed.Network.AbstractReceiver,Distributed.Network.AbstractSender,System.String,System.Int32,System.Int32)
-  fullName: Distributed.Network.Proxy.Proxy(Distributed.Network.AbstractReceiver, Distributed.Network.AbstractSender, System.String, System.Int32, System.Int32)
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy__ctor_Defcore_Distributed_Network_AbstractReceiver_Defcore_Distributed_Network_AbstractSender_System_String_System_Int32_System_Int32_
+  commentId: M:Defcore.Distributed.Network.Proxy.#ctor(Defcore.Distributed.Network.AbstractReceiver,Defcore.Distributed.Network.AbstractSender,System.String,System.Int32,System.Int32)
+  fullName: Defcore.Distributed.Network.Proxy.Proxy(Defcore.Distributed.Network.AbstractReceiver, Defcore.Distributed.Network.AbstractSender, System.String, System.Int32, System.Int32)
   nameWithType: Proxy.Proxy(AbstractReceiver, AbstractSender, String, Int32, Int32)
-- uid: Distributed.Network.Proxy.#ctor(Distributed.Network.AbstractReceiver,Distributed.Network.AbstractSender,TcpClient,System.Int32)
+- uid: Defcore.Distributed.Network.Proxy.#ctor(Defcore.Distributed.Network.AbstractReceiver,Defcore.Distributed.Network.AbstractSender,TcpClient,System.Int32)
   name: Proxy(AbstractReceiver, AbstractSender, TcpClient, Int32)
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy__ctor_Distributed_Network_AbstractReceiver_Distributed_Network_AbstractSender_TcpClient_System_Int32_
-  commentId: M:Distributed.Network.Proxy.#ctor(Distributed.Network.AbstractReceiver,Distributed.Network.AbstractSender,TcpClient,System.Int32)
-  fullName: Distributed.Network.Proxy.Proxy(Distributed.Network.AbstractReceiver, Distributed.Network.AbstractSender, TcpClient, System.Int32)
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy__ctor_Defcore_Distributed_Network_AbstractReceiver_Defcore_Distributed_Network_AbstractSender_TcpClient_System_Int32_
+  commentId: M:Defcore.Distributed.Network.Proxy.#ctor(Defcore.Distributed.Network.AbstractReceiver,Defcore.Distributed.Network.AbstractSender,TcpClient,System.Int32)
+  fullName: Defcore.Distributed.Network.Proxy.Proxy(Defcore.Distributed.Network.AbstractReceiver, Defcore.Distributed.Network.AbstractSender, TcpClient, System.Int32)
   nameWithType: Proxy.Proxy(AbstractReceiver, AbstractSender, TcpClient, Int32)
-- uid: Distributed.Network.Proxy.#ctor*
+- uid: Defcore.Distributed.Network.Proxy.#ctor*
   name: Proxy
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy__ctor_
-  commentId: Overload:Distributed.Network.Proxy.#ctor
-  fullName: Distributed.Network.Proxy.Proxy
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy__ctor_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.#ctor
+  fullName: Defcore.Distributed.Network.Proxy.Proxy
   nameWithType: Proxy.Proxy
-- uid: Distributed.Network.Proxy.connection
+- uid: Defcore.Distributed.Network.Proxy.connection
   name: connection
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_connection
-  commentId: P:Distributed.Network.Proxy.connection
-  fullName: Distributed.Network.Proxy.connection
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_connection
+  commentId: P:Defcore.Distributed.Network.Proxy.connection
+  fullName: Defcore.Distributed.Network.Proxy.connection
   nameWithType: Proxy.connection
-- uid: Distributed.Network.Proxy.connection*
+- uid: Defcore.Distributed.Network.Proxy.connection*
   name: connection
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_connection_
-  commentId: Overload:Distributed.Network.Proxy.connection
-  fullName: Distributed.Network.Proxy.connection
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_connection_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.connection
+  fullName: Defcore.Distributed.Network.Proxy.connection
   nameWithType: Proxy.connection
-- uid: Distributed.Network.Proxy.Equals(System.Object)
+- uid: Defcore.Distributed.Network.Proxy.Equals(System.Object)
   name: Equals(Object)
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_Equals_System_Object_
-  commentId: M:Distributed.Network.Proxy.Equals(System.Object)
-  fullName: Distributed.Network.Proxy.Equals(System.Object)
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_Equals_System_Object_
+  commentId: M:Defcore.Distributed.Network.Proxy.Equals(System.Object)
+  fullName: Defcore.Distributed.Network.Proxy.Equals(System.Object)
   nameWithType: Proxy.Equals(Object)
-- uid: Distributed.Network.Proxy.Equals*
+- uid: Defcore.Distributed.Network.Proxy.Equals*
   name: Equals
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_Equals_
-  commentId: Overload:Distributed.Network.Proxy.Equals
-  fullName: Distributed.Network.Proxy.Equals
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_Equals_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.Equals
+  fullName: Defcore.Distributed.Network.Proxy.Equals
   nameWithType: Proxy.Equals
-- uid: Distributed.Network.Proxy.GetHashCode
+- uid: Defcore.Distributed.Network.Proxy.GetHashCode
   name: GetHashCode()
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_GetHashCode
-  commentId: M:Distributed.Network.Proxy.GetHashCode
-  fullName: Distributed.Network.Proxy.GetHashCode()
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_GetHashCode
+  commentId: M:Defcore.Distributed.Network.Proxy.GetHashCode
+  fullName: Defcore.Distributed.Network.Proxy.GetHashCode()
   nameWithType: Proxy.GetHashCode()
-- uid: Distributed.Network.Proxy.GetHashCode*
+- uid: Defcore.Distributed.Network.Proxy.GetHashCode*
   name: GetHashCode
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_GetHashCode_
-  commentId: Overload:Distributed.Network.Proxy.GetHashCode
-  fullName: Distributed.Network.Proxy.GetHashCode
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_GetHashCode_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.GetHashCode
+  fullName: Defcore.Distributed.Network.Proxy.GetHashCode
   nameWithType: Proxy.GetHashCode
-- uid: Distributed.Network.Proxy.HandOffSendReceive(Distributed.Network.AbstractReceiver,Distributed.Network.AbstractSender,Distributed.Network.ConnectionType)
+- uid: Defcore.Distributed.Network.Proxy.HandOffSendReceive(Defcore.Distributed.Network.AbstractReceiver,Defcore.Distributed.Network.AbstractSender,Defcore.Distributed.Network.ConnectionType)
   name: HandOffSendReceive(AbstractReceiver, AbstractSender, ConnectionType)
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_HandOffSendReceive_Distributed_Network_AbstractReceiver_Distributed_Network_AbstractSender_Distributed_Network_ConnectionType_
-  commentId: M:Distributed.Network.Proxy.HandOffSendReceive(Distributed.Network.AbstractReceiver,Distributed.Network.AbstractSender,Distributed.Network.ConnectionType)
-  fullName: Distributed.Network.Proxy.HandOffSendReceive(Distributed.Network.AbstractReceiver, Distributed.Network.AbstractSender, Distributed.Network.ConnectionType)
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_HandOffSendReceive_Defcore_Distributed_Network_AbstractReceiver_Defcore_Distributed_Network_AbstractSender_Defcore_Distributed_Network_ConnectionType_
+  commentId: M:Defcore.Distributed.Network.Proxy.HandOffSendReceive(Defcore.Distributed.Network.AbstractReceiver,Defcore.Distributed.Network.AbstractSender,Defcore.Distributed.Network.ConnectionType)
+  fullName: Defcore.Distributed.Network.Proxy.HandOffSendReceive(Defcore.Distributed.Network.AbstractReceiver, Defcore.Distributed.Network.AbstractSender, Defcore.Distributed.Network.ConnectionType)
   nameWithType: Proxy.HandOffSendReceive(AbstractReceiver, AbstractSender, ConnectionType)
-- uid: Distributed.Network.Proxy.HandOffSendReceive*
+- uid: Defcore.Distributed.Network.Proxy.HandOffSendReceive*
   name: HandOffSendReceive
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_HandOffSendReceive_
-  commentId: Overload:Distributed.Network.Proxy.HandOffSendReceive
-  fullName: Distributed.Network.Proxy.HandOffSendReceive
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_HandOffSendReceive_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.HandOffSendReceive
+  fullName: Defcore.Distributed.Network.Proxy.HandOffSendReceive
   nameWithType: Proxy.HandOffSendReceive
-- uid: Distributed.Network.Proxy.id
+- uid: Defcore.Distributed.Network.Proxy.id
   name: id
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_id
-  commentId: P:Distributed.Network.Proxy.id
-  fullName: Distributed.Network.Proxy.id
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_id
+  commentId: P:Defcore.Distributed.Network.Proxy.id
+  fullName: Defcore.Distributed.Network.Proxy.id
   nameWithType: Proxy.id
-- uid: Distributed.Network.Proxy.id*
+- uid: Defcore.Distributed.Network.Proxy.id*
   name: id
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_id_
-  commentId: Overload:Distributed.Network.Proxy.id
-  fullName: Distributed.Network.Proxy.id
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_id_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.id
+  fullName: Defcore.Distributed.Network.Proxy.id
   nameWithType: Proxy.id
-- uid: Distributed.Network.Proxy.iostream
+- uid: Defcore.Distributed.Network.Proxy.iostream
   name: iostream
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_iostream
-  commentId: P:Distributed.Network.Proxy.iostream
-  fullName: Distributed.Network.Proxy.iostream
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_iostream
+  commentId: P:Defcore.Distributed.Network.Proxy.iostream
+  fullName: Defcore.Distributed.Network.Proxy.iostream
   nameWithType: Proxy.iostream
-- uid: Distributed.Network.Proxy.iostream*
+- uid: Defcore.Distributed.Network.Proxy.iostream*
   name: iostream
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_iostream_
-  commentId: Overload:Distributed.Network.Proxy.iostream
-  fullName: Distributed.Network.Proxy.iostream
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_iostream_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.iostream
+  fullName: Defcore.Distributed.Network.Proxy.iostream
   nameWithType: Proxy.iostream
-- uid: Distributed.Network.Proxy.Join
+- uid: Defcore.Distributed.Network.Proxy.Join
   name: Join()
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_Join
-  commentId: M:Distributed.Network.Proxy.Join
-  fullName: Distributed.Network.Proxy.Join()
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_Join
+  commentId: M:Defcore.Distributed.Network.Proxy.Join
+  fullName: Defcore.Distributed.Network.Proxy.Join()
   nameWithType: Proxy.Join()
-- uid: Distributed.Network.Proxy.Join*
+- uid: Defcore.Distributed.Network.Proxy.Join*
   name: Join
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_Join_
-  commentId: Overload:Distributed.Network.Proxy.Join
-  fullName: Distributed.Network.Proxy.Join
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_Join_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.Join
+  fullName: Defcore.Distributed.Network.Proxy.Join
   nameWithType: Proxy.Join
-- uid: Distributed.Network.Proxy.QueueDataEvent(Distributed.Network.DataReceivedEventArgs)
+- uid: Defcore.Distributed.Network.Proxy.QueueDataEvent(Defcore.Distributed.Network.DataReceivedEventArgs)
   name: QueueDataEvent(DataReceivedEventArgs)
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_QueueDataEvent_Distributed_Network_DataReceivedEventArgs_
-  commentId: M:Distributed.Network.Proxy.QueueDataEvent(Distributed.Network.DataReceivedEventArgs)
-  fullName: Distributed.Network.Proxy.QueueDataEvent(Distributed.Network.DataReceivedEventArgs)
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_QueueDataEvent_Defcore_Distributed_Network_DataReceivedEventArgs_
+  commentId: M:Defcore.Distributed.Network.Proxy.QueueDataEvent(Defcore.Distributed.Network.DataReceivedEventArgs)
+  fullName: Defcore.Distributed.Network.Proxy.QueueDataEvent(Defcore.Distributed.Network.DataReceivedEventArgs)
   nameWithType: Proxy.QueueDataEvent(DataReceivedEventArgs)
-- uid: Distributed.Network.Proxy.QueueDataEvent*
+- uid: Defcore.Distributed.Network.Proxy.QueueDataEvent*
   name: QueueDataEvent
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_QueueDataEvent_
-  commentId: Overload:Distributed.Network.Proxy.QueueDataEvent
-  fullName: Distributed.Network.Proxy.QueueDataEvent
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_QueueDataEvent_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.QueueDataEvent
+  fullName: Defcore.Distributed.Network.Proxy.QueueDataEvent
   nameWithType: Proxy.QueueDataEvent
-- uid: Distributed.Network.Proxy.Shutdown
+- uid: Defcore.Distributed.Network.Proxy.Shutdown
   name: Shutdown()
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_Shutdown
-  commentId: M:Distributed.Network.Proxy.Shutdown
-  fullName: Distributed.Network.Proxy.Shutdown()
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_Shutdown
+  commentId: M:Defcore.Distributed.Network.Proxy.Shutdown
+  fullName: Defcore.Distributed.Network.Proxy.Shutdown()
   nameWithType: Proxy.Shutdown()
-- uid: Distributed.Network.Proxy.Shutdown*
+- uid: Defcore.Distributed.Network.Proxy.Shutdown*
   name: Shutdown
-  href: api/Distributed.Network.Proxy.html#Distributed_Network_Proxy_Shutdown_
-  commentId: Overload:Distributed.Network.Proxy.Shutdown
-  fullName: Distributed.Network.Proxy.Shutdown
+  href: api/Defcore.Distributed.Network.Proxy.html#Defcore_Distributed_Network_Proxy_Shutdown_
+  commentId: Overload:Defcore.Distributed.Network.Proxy.Shutdown
+  fullName: Defcore.Distributed.Network.Proxy.Shutdown
   nameWithType: Proxy.Shutdown
+- uid: defcore.Program
+  name: Program
+  href: api/defcore.Program.html
+  commentId: T:defcore.Program
+  fullName: defcore.Program
+  nameWithType: Program
+- uid: defcore.Program.Main(System.String[])
+  name: Main(String[])
+  href: api/defcore.Program.html#defcore_Program_Main_System_String___
+  commentId: M:defcore.Program.Main(System.String[])
+  name.vb: Main(String())
+  fullName: defcore.Program.Main(System.String[])
+  fullName.vb: defcore.Program.Main(System.String())
+  nameWithType: Program.Main(String[])
+  nameWithType.vb: Program.Main(String())
+- uid: defcore.Program.Main*
+  name: Main
+  href: api/defcore.Program.html#defcore_Program_Main_
+  commentId: Overload:defcore.Program.Main
+  fullName: defcore.Program.Main
+  nameWithType: Program.Main
 - uid: Examples
   name: Examples
   href: api/Examples.html
@@ -1030,36 +1111,6 @@ references:
   commentId: Overload:Loader.Loader.Main
   fullName: Loader.Loader.Main
   nameWithType: Loader.Main
-- uid: Loader.Loader.ParseTokens(System.String[])
-  name: ParseTokens(String[])
-  href: api/Loader.Loader.html#Loader_Loader_ParseTokens_System_String___
-  commentId: M:Loader.Loader.ParseTokens(System.String[])
-  name.vb: ParseTokens(String())
-  fullName: Loader.Loader.ParseTokens(System.String[])
-  fullName.vb: Loader.Loader.ParseTokens(System.String())
-  nameWithType: Loader.ParseTokens(String[])
-  nameWithType.vb: Loader.ParseTokens(String())
-- uid: Loader.Loader.ParseTokens*
-  name: ParseTokens
-  href: api/Loader.Loader.html#Loader_Loader_ParseTokens_
-  commentId: Overload:Loader.Loader.ParseTokens
-  fullName: Loader.Loader.ParseTokens
-  nameWithType: Loader.ParseTokens
-- uid: Loader.Loader.RunFixedSchedule(CoreLoader,System.Int32,System.Int32[])
-  name: RunFixedSchedule(CoreLoader, Int32, Int32[])
-  href: api/Loader.Loader.html#Loader_Loader_RunFixedSchedule_CoreLoader_System_Int32_System_Int32___
-  commentId: M:Loader.Loader.RunFixedSchedule(CoreLoader,System.Int32,System.Int32[])
-  name.vb: RunFixedSchedule(CoreLoader, Int32, Int32())
-  fullName: Loader.Loader.RunFixedSchedule(CoreLoader, System.Int32, System.Int32[])
-  fullName.vb: Loader.Loader.RunFixedSchedule(CoreLoader, System.Int32, System.Int32())
-  nameWithType: Loader.RunFixedSchedule(CoreLoader, Int32, Int32[])
-  nameWithType.vb: Loader.RunFixedSchedule(CoreLoader, Int32, Int32())
-- uid: Loader.Loader.RunFixedSchedule*
-  name: RunFixedSchedule
-  href: api/Loader.Loader.html#Loader_Loader_RunFixedSchedule_
-  commentId: Overload:Loader.Loader.RunFixedSchedule
-  fullName: Loader.Loader.RunFixedSchedule
-  nameWithType: Loader.RunFixedSchedule
 - uid: StartManager
   name: StartManager
   href: api/StartManager.html

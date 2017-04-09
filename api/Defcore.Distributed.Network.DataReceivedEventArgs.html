@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class NetworkSendReceive
+    <title>Class DataReceivedEventArgs
    | defcore </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class NetworkSendReceive
+    <meta name="title" content="Class DataReceivedEventArgs
    | defcore ">
     <meta name="generator" content="docfx 2.15.5.0">
     
@@ -78,21 +78,22 @@
             <article class="content wrap" id="_content">
               
               
-              <h1 id="Distributed_Network_NetworkSendReceive" data-uid="Distributed.Network.NetworkSendReceive">Class NetworkSendReceive
+              <h1 id="Defcore_Distributed_Network_DataReceivedEventArgs" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs">Class DataReceivedEventArgs
               </h1>
-              <div class="markdown level0 summary"><p>Provides the basic methods and members 
-nessesary for network opperations. </p>
+              <div class="markdown level0 summary"><p>Event arguments class to hold info about the data received.</p>
 </div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
                   <div class="level0"><span class="xref">System.Object</span></div>
-                  <div class="level1"><span class="xref">NetworkSendReceive</span></div>
-                  <div class="level2"><a class="xref" href="Distributed.Network.AbstractReceiver.html">AbstractReceiver</a></div>
-                  <div class="level2"><a class="xref" href="Distributed.Network.AbstractSender.html">AbstractSender</a></div>
+                  <div class="level1"><span class="xref">System.EventArgs</span></div>
+                  <div class="level2"><span class="xref">DataReceivedEventArgs</span></div>
               </div>
               <div class="inheritedMembers">
                 <h5>Inherited Members</h5>
+                <div>
+                  <span class="xref">System.EventArgs.Empty</span>
+                </div>
                 <div>
                   <span class="xref">System.Object.ToString()</span>
                 </div>
@@ -115,22 +116,55 @@ nessesary for network opperations. </p>
                   <span class="xref">System.Object.MemberwiseClone()</span>
                 </div>
               </div>
-              <h6><strong>Namespace</strong>:Distributed.Network</h6>
+              <h6><strong>Namespace</strong>:Defcore.Distributed.Network</h6>
               <h6><strong>Assembly</strong>:cs.temp.dll.dll</h6>
-              <h5 id="Distributed_Network_NetworkSendReceive_syntax">Syntax</h5>
+              <h5 id="Defcore_Distributed_Network_DataReceivedEventArgs_syntax">Syntax</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public abstract class NetworkSendReceive</code></pre>
+                <pre><code class="lang-csharp hljs">public abstract class DataReceivedEventArgs : EventArgs</code></pre>
               </div>
+              <h5 id="Defcore_Distributed_Network_DataReceivedEventArgs_remarks"><strong>Remarks</strong></h5>
+              <div class="markdown level0 remarks"><p>This should be subclassed depending
+on what kind of data is being received.</p>
+</div>
+              <h3 id="constructors">Constructors
+              </h3>
+              
+              
+              <a id="Defcore_Distributed_Network_DataReceivedEventArgs__ctor_" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.#ctor*"></a>
+              <h4 id="Defcore_Distributed_Network_DataReceivedEventArgs__ctor_System_String_" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.#ctor(System.String)">DataReceivedEventArgs(String)</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public DataReceivedEventArgs(string msg)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><span class="parametername">msg</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
               <h3 id="fields">Fields
               </h3>
               
               
-              <h4 id="Distributed_Network_NetworkSendReceive_BUFFER_SIZE" data-uid="Distributed.Network.NetworkSendReceive.BUFFER_SIZE">BUFFER_SIZE</h4>
+              <h4 id="Defcore_Distributed_Network_DataReceivedEventArgs_endl" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.endl">endl</h4>
               <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public const int BUFFER_SIZE = 1024</code></pre>
+                <pre><code class="lang-csharp hljs">public const string endl = &quot;end*&quot;</code></pre>
               </div>
               <h5 class="fieldValue">Field Value</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -142,19 +176,19 @@ nessesary for network opperations. </p>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="xref">System.Int32</span></td>
+                    <td><span class="xref">System.String</span></td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
               
               
-              <h4 id="Distributed_Network_NetworkSendReceive_IO_SLEEP" data-uid="Distributed.Network.NetworkSendReceive.IO_SLEEP">IO_SLEEP</h4>
+              <h4 id="Defcore_Distributed_Network_DataReceivedEventArgs_split" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.split">split</h4>
               <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public const int IO_SLEEP = 100</code></pre>
+                <pre><code class="lang-csharp hljs">public const char split = '|'</code></pre>
               </div>
               <h5 class="fieldValue">Field Value</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -166,79 +200,7 @@ nessesary for network opperations. </p>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="xref">System.Int32</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              
-              
-              <h4 id="Distributed_Network_NetworkSendReceive_SERVER_PORT" data-uid="Distributed.Network.NetworkSendReceive.SERVER_PORT">SERVER_PORT</h4>
-              <div class="markdown level1 summary"></div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public const int SERVER_PORT = 12345</code></pre>
-              </div>
-              <h5 class="fieldValue">Field Value</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.Int32</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              
-              
-              <h4 id="Distributed_Network_NetworkSendReceive_SERVER_SLEEP" data-uid="Distributed.Network.NetworkSendReceive.SERVER_SLEEP">SERVER_SLEEP</h4>
-              <div class="markdown level1 summary"></div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public const int SERVER_SLEEP = 500</code></pre>
-              </div>
-              <h5 class="fieldValue">Field Value</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.Int32</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              
-              
-              <h4 id="Distributed_Network_NetworkSendReceive_thread" data-uid="Distributed.Network.NetworkSendReceive.thread">thread</h4>
-              <div class="markdown level1 summary"></div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">protected Thread thread</code></pre>
-              </div>
-              <h5 class="fieldValue">Field Value</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">Thread</span></td>
+                    <td><span class="xref">System.Char</span></td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -247,13 +209,13 @@ nessesary for network opperations. </p>
               </h3>
               
               
-              <a id="Distributed_Network_NetworkSendReceive_proxy_" data-uid="Distributed.Network.NetworkSendReceive.proxy*"></a>
-              <h4 id="Distributed_Network_NetworkSendReceive_proxy" data-uid="Distributed.Network.NetworkSendReceive.proxy">proxy</h4>
+              <a id="Defcore_Distributed_Network_DataReceivedEventArgs_args_" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.args*"></a>
+              <h4 id="Defcore_Distributed_Network_DataReceivedEventArgs_args" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.args">args</h4>
               <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public Proxy proxy { protected get; set; }</code></pre>
+                <pre><code class="lang-csharp hljs">public string[] args { get; }</code></pre>
               </div>
               <h5 class="propertyValue">Property Value</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -265,7 +227,32 @@ nessesary for network opperations. </p>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="Distributed.Network.Proxy.html">Proxy</a></td>
+                    <td><span class="xref">System.String</span>[]</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <a id="Defcore_Distributed_Network_DataReceivedEventArgs_message_" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.message*"></a>
+              <h4 id="Defcore_Distributed_Network_DataReceivedEventArgs_message" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.message">message</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public string message { get; }</code></pre>
+              </div>
+              <h5 class="propertyValue">Property Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -274,49 +261,137 @@ nessesary for network opperations. </p>
               </h3>
               
               
-              <a id="Distributed_Network_NetworkSendReceive_Join_" data-uid="Distributed.Network.NetworkSendReceive.Join*"></a>
-              <h4 id="Distributed_Network_NetworkSendReceive_Join" data-uid="Distributed.Network.NetworkSendReceive.Join">Join()</h4>
-              <div class="markdown level1 summary"><p>Join on this thread.</p>
+              <a id="Defcore_Distributed_Network_DataReceivedEventArgs_ConstructMessage_" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage*"></a>
+              <h4 id="Defcore_Distributed_Network_DataReceivedEventArgs_ConstructMessage_System_String_" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String)">ConstructMessage(String)</h4>
+              <div class="markdown level1 summary"><p>Overloaded ConstructMessage for a single string</p>
 </div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public virtual void Join()</code></pre>
+                <pre><code class="lang-csharp hljs">public static string ConstructMessage(string arg)</code></pre>
               </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><span class="parametername">arg</span></td>
+                    <td><p>the argument to pass</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><p>a proper constructed message</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
               
               
-              <a id="Distributed_Network_NetworkSendReceive_Run_" data-uid="Distributed.Network.NetworkSendReceive.Run*"></a>
-              <h4 id="Distributed_Network_NetworkSendReceive_Run" data-uid="Distributed.Network.NetworkSendReceive.Run">Run()</h4>
-              <div class="markdown level1 summary"><p>Where the actual sending/receiving happens</p>
+              <a id="Defcore_Distributed_Network_DataReceivedEventArgs_ConstructMessage_" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage*"></a>
+              <h4 id="Defcore_Distributed_Network_DataReceivedEventArgs_ConstructMessage_System_String___" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.ConstructMessage(System.String[])">ConstructMessage(String[])</h4>
+              <div class="markdown level1 summary"><p>From a list of string arguments
+construct a message to pass along.</p>
 </div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public abstract void Run()</code></pre>
+                <pre><code class="lang-csharp hljs">public static string ConstructMessage(string[] args)</code></pre>
               </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span>[]</td>
+                    <td><span class="parametername">args</span></td>
+                    <td><p>arguments</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
               
               
-              <a id="Distributed_Network_NetworkSendReceive_Shutdown_" data-uid="Distributed.Network.NetworkSendReceive.Shutdown*"></a>
-              <h4 id="Distributed_Network_NetworkSendReceive_Shutdown" data-uid="Distributed.Network.NetworkSendReceive.Shutdown">Shutdown()</h4>
-              <div class="markdown level1 summary"><p>Shutdown the connection to the socket</p>
+              <a id="Defcore_Distributed_Network_DataReceivedEventArgs_ParseMessage_" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.ParseMessage*"></a>
+              <h4 id="Defcore_Distributed_Network_DataReceivedEventArgs_ParseMessage_System_String_" data-uid="Defcore.Distributed.Network.DataReceivedEventArgs.ParseMessage(System.String)">ParseMessage(String)</h4>
+              <div class="markdown level1 summary"><p>Split incoming data on space.</p>
 </div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public virtual void Shutdown()</code></pre>
+                <pre><code class="lang-csharp hljs">protected static string[] ParseMessage(string message)</code></pre>
               </div>
-              
-              
-              <a id="Distributed_Network_NetworkSendReceive_Start_" data-uid="Distributed.Network.NetworkSendReceive.Start*"></a>
-              <h4 id="Distributed_Network_NetworkSendReceive_Start" data-uid="Distributed.Network.NetworkSendReceive.Start">Start()</h4>
-              <div class="markdown level1 summary"><p>Start up the given sender/receiver in its own thread
-so that it can begin sending/receiving data.</p>
-</div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public virtual void Start()</code></pre>
-              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><span class="parametername">message</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span>[]</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
                         </article>
           </div>
           

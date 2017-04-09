@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Job
+    <title>Class NetworkSendReceive
    | defcore </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Job
+    <meta name="title" content="Class NetworkSendReceive
    | defcore ">
     <meta name="generator" content="docfx 2.15.5.0">
     
@@ -78,14 +78,18 @@
             <article class="content wrap" id="_content">
               
               
-              <h1 id="Distributed_Library_Job" data-uid="Distributed.Library.Job">Class Job
+              <h1 id="Defcore_Distributed_Network_NetworkSendReceive" data-uid="Defcore.Distributed.Network.NetworkSendReceive">Class NetworkSendReceive
               </h1>
-              <div class="markdown level0 summary"></div>
+              <div class="markdown level0 summary"><p>Provides the basic methods and members 
+nessesary for network opperations. </p>
+</div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
                   <div class="level0"><span class="xref">System.Object</span></div>
-                  <div class="level1"><span class="xref">Job</span></div>
+                  <div class="level1"><span class="xref">NetworkSendReceive</span></div>
+                  <div class="level2"><a class="xref" href="Defcore.Distributed.Network.AbstractReceiver.html">AbstractReceiver</a></div>
+                  <div class="level2"><a class="xref" href="Defcore.Distributed.Network.AbstractSender.html">AbstractSender</a></div>
               </div>
               <div class="inheritedMembers">
                 <h5>Inherited Members</h5>
@@ -111,34 +115,22 @@
                   <span class="xref">System.Object.MemberwiseClone()</span>
                 </div>
               </div>
-              <h6><strong>Namespace</strong>:Distributed.Library</h6>
+              <h6><strong>Namespace</strong>:Defcore.Distributed.Network</h6>
               <h6><strong>Assembly</strong>:cs.temp.dll.dll</h6>
-              <h5 id="Distributed_Library_Job_syntax">Syntax</h5>
+              <h5 id="Defcore_Distributed_Network_NetworkSendReceive_syntax">Syntax</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public abstract class Job</code></pre>
-              </div>
-              <h3 id="constructors">Constructors
-              </h3>
-              
-              
-              <a id="Distributed_Library_Job__ctor_" data-uid="Distributed.Library.Job.#ctor*"></a>
-              <h4 id="Distributed_Library_Job__ctor" data-uid="Distributed.Library.Job.#ctor">Job()</h4>
-              <div class="markdown level1 summary"></div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">protected Job()</code></pre>
+                <pre><code class="lang-csharp hljs">public abstract class NetworkSendReceive</code></pre>
               </div>
               <h3 id="fields">Fields
               </h3>
               
               
-              <h4 id="Distributed_Library_Job_TaskSchedule" data-uid="Distributed.Library.Job.TaskSchedule">TaskSchedule</h4>
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_BUFFER_SIZE" data-uid="Defcore.Distributed.Network.NetworkSendReceive.BUFFER_SIZE">BUFFER_SIZE</h4>
               <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">protected Schedule TaskSchedule</code></pre>
+                <pre><code class="lang-csharp hljs">public const int BUFFER_SIZE = 1024</code></pre>
               </div>
               <h5 class="fieldValue">Field Value</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -150,7 +142,103 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="Distributed.Library.Schedule.html">Schedule</a></td>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_IO_SLEEP" data-uid="Defcore.Distributed.Network.NetworkSendReceive.IO_SLEEP">IO_SLEEP</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public const int IO_SLEEP = 100</code></pre>
+              </div>
+              <h5 class="fieldValue">Field Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_SERVER_PORT" data-uid="Defcore.Distributed.Network.NetworkSendReceive.SERVER_PORT">SERVER_PORT</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public const int SERVER_PORT = 12345</code></pre>
+              </div>
+              <h5 class="fieldValue">Field Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_SERVER_SLEEP" data-uid="Defcore.Distributed.Network.NetworkSendReceive.SERVER_SLEEP">SERVER_SLEEP</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public const int SERVER_SLEEP = 500</code></pre>
+              </div>
+              <h5 class="fieldValue">Field Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_thread" data-uid="Defcore.Distributed.Network.NetworkSendReceive.thread">thread</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">protected Thread thread</code></pre>
+              </div>
+              <h5 class="fieldValue">Field Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">Thread</span></td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -159,13 +247,13 @@
               </h3>
               
               
-              <a id="Distributed_Library_Job_Results_" data-uid="Distributed.Library.Job.Results*"></a>
-              <h4 id="Distributed_Library_Job_Results" data-uid="Distributed.Library.Job.Results">Results</h4>
+              <a id="Defcore_Distributed_Network_NetworkSendReceive_proxy_" data-uid="Defcore.Distributed.Network.NetworkSendReceive.proxy*"></a>
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_proxy" data-uid="Defcore.Distributed.Network.NetworkSendReceive.proxy">proxy</h4>
               <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public List&lt;JobResult&gt; Results { get; }</code></pre>
+                <pre><code class="lang-csharp hljs">public Proxy proxy { protected get; set; }</code></pre>
               </div>
               <h5 class="propertyValue">Property Value</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -177,7 +265,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="xref">List</span>&lt;<a class="xref" href="Distributed.Library.JobResult.html">JobResult</a>&gt;</td>
+                    <td><a class="xref" href="Defcore.Distributed.Network.Proxy.html">Proxy</a></td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -186,197 +274,49 @@
               </h3>
               
               
-              <a id="Distributed_Library_Job_AddResult_" data-uid="Distributed.Library.Job.AddResult*"></a>
-              <h4 id="Distributed_Library_Job_AddResult_Distributed_Library_JobResult_" data-uid="Distributed.Library.Job.AddResult(Distributed.Library.JobResult)">AddResult(JobResult)</h4>
-              <div class="markdown level1 summary"></div>
+              <a id="Defcore_Distributed_Network_NetworkSendReceive_Join_" data-uid="Defcore.Distributed.Network.NetworkSendReceive.Join*"></a>
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_Join" data-uid="Defcore.Distributed.Network.NetworkSendReceive.Join">Join()</h4>
+              <div class="markdown level1 summary"><p>Join on this thread.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public void AddResult(JobResult result)</code></pre>
+                <pre><code class="lang-csharp hljs">public virtual void Join()</code></pre>
               </div>
-              <h5 class="parameters">Parameters</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a class="xref" href="Distributed.Library.JobResult.html">JobResult</a></td>
-                    <td><span class="parametername">result</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
               
               
-              <a id="Distributed_Library_Job_AddTask_" data-uid="Distributed.Library.Job.AddTask*"></a>
-              <h4 id="Distributed_Library_Job_AddTask_Distributed_Library_JobTask_" data-uid="Distributed.Library.Job.AddTask(Distributed.Library.JobTask)">AddTask(JobTask)</h4>
-              <div class="markdown level1 summary"></div>
+              <a id="Defcore_Distributed_Network_NetworkSendReceive_Run_" data-uid="Defcore.Distributed.Network.NetworkSendReceive.Run*"></a>
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_Run" data-uid="Defcore.Distributed.Network.NetworkSendReceive.Run">Run()</h4>
+              <div class="markdown level1 summary"><p>Where the actual sending/receiving happens</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public void AddTask(JobTask task)</code></pre>
+                <pre><code class="lang-csharp hljs">public abstract void Run()</code></pre>
               </div>
-              <h5 class="parameters">Parameters</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a class="xref" href="Distributed.Library.JobTask.html">JobTask</a></td>
-                    <td><span class="parametername">task</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
               
               
-              <a id="Distributed_Library_Job_CompileResults_" data-uid="Distributed.Library.Job.CompileResults*"></a>
-              <h4 id="Distributed_Library_Job_CompileResults" data-uid="Distributed.Library.Job.CompileResults">CompileResults()</h4>
-              <div class="markdown level1 summary"></div>
+              <a id="Defcore_Distributed_Network_NetworkSendReceive_Shutdown_" data-uid="Defcore.Distributed.Network.NetworkSendReceive.Shutdown*"></a>
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_Shutdown" data-uid="Defcore.Distributed.Network.NetworkSendReceive.Shutdown">Shutdown()</h4>
+              <div class="markdown level1 summary"><p>Shutdown the connection to the socket</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public void CompileResults()</code></pre>
+                <pre><code class="lang-csharp hljs">public virtual void Shutdown()</code></pre>
               </div>
               
               
-              <a id="Distributed_Library_Job_GetClassName_" data-uid="Distributed.Library.Job.GetClassName*"></a>
-              <h4 id="Distributed_Library_Job_GetClassName" data-uid="Distributed.Library.Job.GetClassName">GetClassName()</h4>
-              <div class="markdown level1 summary"></div>
+              <a id="Defcore_Distributed_Network_NetworkSendReceive_Start_" data-uid="Defcore.Distributed.Network.NetworkSendReceive.Start*"></a>
+              <h4 id="Defcore_Distributed_Network_NetworkSendReceive_Start" data-uid="Defcore.Distributed.Network.NetworkSendReceive.Start">Start()</h4>
+              <div class="markdown level1 summary"><p>Start up the given sender/receiver in its own thread
+so that it can begin sending/receiving data.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public string GetClassName()</code></pre>
+                <pre><code class="lang-csharp hljs">public virtual void Start()</code></pre>
               </div>
-              <h5 class="returns">Returns</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.String</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              
-              
-              <a id="Distributed_Library_Job_GetNumberTasks_" data-uid="Distributed.Library.Job.GetNumberTasks*"></a>
-              <h4 id="Distributed_Library_Job_GetNumberTasks" data-uid="Distributed.Library.Job.GetNumberTasks">GetNumberTasks()</h4>
-              <div class="markdown level1 summary"></div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public int GetNumberTasks()</code></pre>
-              </div>
-              <h5 class="returns">Returns</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.Int32</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              
-              
-              <a id="Distributed_Library_Job_GetSchedule_" data-uid="Distributed.Library.Job.GetSchedule*"></a>
-              <h4 id="Distributed_Library_Job_GetSchedule" data-uid="Distributed.Library.Job.GetSchedule">GetSchedule()</h4>
-              <div class="markdown level1 summary"></div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public Schedule GetSchedule()</code></pre>
-              </div>
-              <h5 class="returns">Returns</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a class="xref" href="Distributed.Library.Schedule.html">Schedule</a></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              
-              
-              <a id="Distributed_Library_Job_Main_" data-uid="Distributed.Library.Job.Main*"></a>
-              <h4 id="Distributed_Library_Job_Main_System_String___" data-uid="Distributed.Library.Job.Main(System.String[])">Main(String[])</h4>
-              <div class="markdown level1 summary"></div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public abstract void Main(string[] args)</code></pre>
-              </div>
-              <h5 class="parameters">Parameters</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.String</span>[]</td>
-                    <td><span class="parametername">args</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-              
-              
-              <a id="Distributed_Library_Job_StartTask_" data-uid="Distributed.Library.Job.StartTask*"></a>
-              <h4 id="Distributed_Library_Job_StartTask_System_Int32_" data-uid="Distributed.Library.Job.StartTask(System.Int32)">StartTask(Int32)</h4>
-              <div class="markdown level1 summary"></div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public void StartTask(int index)</code></pre>
-              </div>
-              <h5 class="parameters">Parameters</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.Int32</span></td>
-                    <td><span class="parametername">index</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
                         </article>
           </div>
           
