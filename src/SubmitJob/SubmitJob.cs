@@ -13,7 +13,7 @@ namespace SubmitJob
         {
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            Distributed.SubmitJob.Main(args);
+            Defcore.Distributed.SubmitJob.Main(args);
             stopWatch.Stop();
             // Get the elapsed time as a TimeSpan value.
             TimeSpan ts = stopWatch.Elapsed;

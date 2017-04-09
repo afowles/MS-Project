@@ -4,7 +4,7 @@ using System.Net.Sockets;
 
 namespace Defcore.Distributed.IO
 {
-    internal static class FileRead
+    public static class FileRead
     {
         public const int BufferSize = 1024;
         public const int NetworkSleep = 100;
@@ -49,7 +49,7 @@ namespace Defcore.Distributed.IO
         }
     }
 
-    internal static class FileWrite
+    public static class FileWrite
     {
         public static void WriteOut(NetworkStream iostream, string filepath)
         {

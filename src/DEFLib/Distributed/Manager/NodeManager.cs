@@ -11,6 +11,7 @@ using Defcore.Distributed.Network;
 using Defcore.Distributed.Logging;
 
 [assembly: InternalsVisibleTo("StartManager")]
+[assembly: InternalsVisibleTo("defcore")]
 
 /// <summary>
 /// Manager namespace contains the classes to handle
@@ -210,7 +211,7 @@ namespace Defcore.Distributed.Manager
         /// <summary>
         /// Send out the message that a job is available
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="job"></param>
         public void SendJobOut(JobRef job)
         {
             lock(NodeLock)

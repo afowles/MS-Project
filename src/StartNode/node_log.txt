@@ -1,0 +1,226 @@
+Start Log for NODE: 4/9/2017 2:14:03 PM
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: USERPROFILE -> C:\Users\Adam
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: ComSpec -> C:\WINDOWS\system32\cmd.exe
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: NUMBER_OF_PROCESSORS -> 4
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: windir -> C:\WINDOWS
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: READYAPPS -> C:\ProgramData\Lenovo\ReadyApps
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: asl.log -> Destination=file
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: PROCESSOR_IDENTIFIER -> Intel64 Family 6 Model 69 Stepping 1, GenuineIntel
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: SystemDrive -> C:
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: FSHARPINSTALLDIR -> C:\Program Files (x86)\Microsoft SDKs\F#\4.1\Framework\v4.0\
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: USERDOMAIN_ROAMINGPROFILE -> CORTANA
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: ProgramW6432 -> C:\Program Files
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: PROCESSOR_LEVEL -> 6
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: TEMP -> C:\Users\Adam\AppData\Local\Temp
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: PROCESSOR_ARCHITEW6432 -> AMD64
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: APPDATA -> C:\Users\Adam\AppData\Roaming
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: PATHEXT -> .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: ALLUSERSPROFILE -> C:\ProgramData
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: ProgramFiles -> C:\Program Files (x86)
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: LOGONSERVER -> \\CORTANA
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: FP_NO_HOST_CHECK -> NO
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: configsetroot -> C:\WINDOWS\ConfigSetRoot
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: SystemRoot -> C:\WINDOWS
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: TMP -> C:\Users\Adam\AppData\Local\Temp
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: PROCESSOR_REVISION -> 4501
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: TVT -> C:\Program Files (x86)\Lenovo
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: Path -> C:\Program Files\MariaDB 10.0\bin\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Lenovo\Fingerprint Manager Pro\;C:\Program Files (x86)\Common Files\lenovo\easyplussdk\bin;C:\ProgramData\Lenovo\ReadyApps;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Java\jdk1.8.0_31\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Python\Python35;C:\Python\Python35\Scripts;C:\Program Files\R\R-3.2.3\bin;C:\Program Files\Maven\apache-maven-3.3.9\bin;C:\Program Files (x86)\Notepad++;C:\Program Files\MongoDB\Server\3.2\bin;C:\Program Files\nodejs\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\Android\Android Studio\gradle\gradle-2.10\bin;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\doxygen\bin;C:\Program Files (x86)\dotnet\;C:\Program Files\dotnet\;C:\ProgramData\chocolatey\bin;C:\Users\Adam\AppData\Roaming\npm;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;;C:\Program Files (x86)\dotnet\shared\Microsoft.NETCore.App\1.1.1;C:\Program Files (x86)\dotnet\shared\Microsoft.NETCore.App\1.1.1
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: COMPUTERNAME -> CORTANA
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: ChocolateyInstall -> C:\ProgramData\chocolatey
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: VS140COMNTOOLS -> C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: easyplussdk -> "C:\Program Files (x86)\Common Files\lenovo\easyplussdk\bin"
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: OS -> Windows_NT
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: JAVA_HOME -> C:\Program Files\Java\jdk1.8.0_31
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: VS120COMNTOOLS -> C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: OneDrive -> C:\Users\Adam\OneDrive
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: USERDOMAIN -> CORTANA
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: ProgramFiles(x86) -> C:\Program Files (x86)
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: USERNAME -> Adam
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: HOMEDRIVE -> C:
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: VSSDK140Install -> C:\Program Files (x86)\Microsoft Visual Studio 14.0\VSSDK\
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: CommonProgramFiles(x86) -> C:\Program Files (x86)\Common Files
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: PROMPT -> $P$G
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: PSModulePath -> C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules\
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: ChocolateyLastPathUpdate -> Thu Apr  6 11:17:23 2017
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: PROCESSOR_ARCHITECTURE -> x86
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: HOMEPATH -> \Users\Adam
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: LOCALAPPDATA -> C:\Users\Adam\AppData\Local
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: VS110COMNTOOLS -> C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: ProgramData -> C:\ProgramData
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: CommonProgramFiles -> C:\Program Files (x86)\Common Files
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: SESSIONNAME -> Console
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: PUBLIC -> C:\Users\Public
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Key: CommonProgramW6432 -> C:\Program Files\Common Files
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Node: Starting
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :NodeSender: HandleReceiverEvent called
+-------------------------------
+
+Log Entry : 4/9/2017 2:14:03 PM
+  :Node: sending id
+-------------------------------
+
+Log Entry : 4/9/2017 2:31:52 PM
+  :NodeSender: HandleReceiverEvent called
+-------------------------------

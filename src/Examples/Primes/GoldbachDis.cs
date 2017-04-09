@@ -1,6 +1,6 @@
 ﻿
 using System;
-using Distributed.Library;
+using Defcore.Distributed.Jobs;
 using System.Numerics;
 
 namespace Examples.Primes
