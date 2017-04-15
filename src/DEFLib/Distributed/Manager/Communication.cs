@@ -6,6 +6,7 @@ using System.Threading;
 using System.IO;
 
 using Defcore.Distributed.IO;
+using Newtonsoft.Json;
 
 namespace Defcore.Distributed.Manager
 {
@@ -161,7 +162,8 @@ namespace Defcore.Distributed.Manager
                 case NodeManagerComm.MessageType.NewJob:
                     Console.WriteLine("Received Job File: " + data.args[1]);
                     // add it to the list of jobs for later
-                    manager.Scheduler.AddJob(data, proxy.id);
+                    var jobRef = JsonConvert.DeserializeObject<JobRef>(data.args[1]);
+                    manager.Scheduler.AddJob(jobRef, proxy.id);
                     Console.WriteLine("Proxy id is:" + proxy.id);
                     break;
 

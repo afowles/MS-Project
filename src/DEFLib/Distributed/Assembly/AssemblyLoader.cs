@@ -19,20 +19,20 @@ namespace Defcore.Distributed.Assembly
         /// </summary>
         /// <remarks>The full path to the assembly must be provided</remarks>
         /// <param name="assemblyPath">Full path to the assembly (dll)</param>
-        /// <exception cref="TypeLoadException">If the generic type could not be found</exception>
+        /// <exception cref="TypeLoadException">Thrown if the generic type could not be found</exception>
         public CoreLoader(string assemblyPath)
         {
             _assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
             if (!FindClassType())
             {
-                throw (new TypeLoadException());
+                throw (new TypeLoadException("Could not load type: " + typeof(T)));
             }
         }
 
         
         /// <summary>
-        /// Find a class from an assembly and create an instance
-        /// of it. If that job class does not exist in the assembly
+        /// Finds the generic class from an assembly and create an instance
+        /// of it. If that class does not exist in the assembly
         /// return false.
         /// </summary>
         private bool FindClassType()
@@ -53,23 +53,17 @@ namespace Defcore.Distributed.Assembly
             }
 
             // Loop through all the types in the
-            // assmebly and try and find the job class
+            // assmebly and try and find the generic class
             foreach (var t in types)
             {
                 try
                 {
                     // create an instance of type to try
                     var instance = Activator.CreateInstance(t);
-                    T tempType = (T)instance;
-                    if (tempType != null)
-                    {
-                        _instance = tempType;
-                        return true;
-                    }
-                    else
-                    {
-                        //Console.WriteLine("Not a job");
-                    }
+                    var tempType = (T)instance;
+                    if (tempType == null) {continue;}
+                    _instance = tempType;
+                    return true;
                 }
                 catch(MissingMemberException) { }
                 catch(InvalidCastException) { }
@@ -79,47 +73,29 @@ namespace Defcore.Distributed.Assembly
 
         /// <summary>
         /// Call a method with the specified params
-        /// for an object of the Job Class
+        /// for an object of the generic class
         /// </summary>
-        /// <param name="method"></param>
-        /// <param name="methodParams"></param>
+        /// <param name="method">the method name</param>
+        /// <param name="methodParams">an array of object which 
+        /// contains that methods arguments parameters</param>
+        /// <exception cref="TargetException">If something goes 
+        /// wrong invoking the method</exception>
         public object CallMethod(string method, object[] methodParams)
         {
             
-            MethodInfo methodInfo = _instance.GetType().GetMethod(method);
-            //Console.WriteLine("gets here");
-            if (methodInfo != null)
-            {
-                object result = null;
-                ParameterInfo[] parameters = methodInfo.GetParameters();
-                //Console.WriteLine("gets here");
-                result = methodInfo.Invoke(_instance, methodParams);
-                //Console.WriteLine(result);
-                return result;
-            }
-            else
-            {
-                Console.WriteLine("Error with method load");
-                return null;
-            }
+            var methodInfo = _instance.GetType().GetMethod(method);
+            var result = methodInfo?.Invoke(_instance, methodParams);
+            return result;
         }
 
         /// <summary>
-        /// Get a property from the job object
+        /// Get a property from the generic object
         /// </summary>
-        /// <param name="property"></param>
-        /// <returns></returns>
+        /// <param name="property">the properties name</param>
+        /// <returns>the property as an object</returns>
         public object GetProperty(string property)
         {
-            object result = null;
-            try
-            {
-                result = typeof(T).GetProperty(property).GetValue(_instance, null);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            var result = typeof(T).GetProperty(property).GetValue(_instance, null);
             return result;
         }
     }

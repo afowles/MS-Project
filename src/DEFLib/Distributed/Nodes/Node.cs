@@ -12,12 +12,6 @@ using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("StartNode")]
 
-/// <summary>
-/// Classes in Distributed.Node are internal to PDLib
-/// Uses outside of this assembly are not allowed,
-/// other than by the designated entry point.
-/// This file contains classes as part of the framework, not the library.
-/// </summary>
 namespace Defcore.Distributed.Nodes
 {
     /// <summary>

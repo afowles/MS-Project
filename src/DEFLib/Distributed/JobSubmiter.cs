@@ -9,6 +9,8 @@ using Defcore.Distributed.Network;
 using System.Threading.Tasks;
 using Defcore.Distributed.Assembly;
 using Defcore.Distributed.Jobs;
+using Defcore.Distributed.Manager;
+using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo("SubmitJob")]
 
@@ -20,18 +22,19 @@ namespace Defcore.Distributed
     internal class SubmitJob
     {
         private readonly Proxy _proxy;
-        public Logger log { get; private set; }
+        public Logger Logger { get; }
 
         /// <summary>
-        /// Construct a node with proxy
-        /// at host, port
+        /// construct a submit node at host and port
+        /// with job reference information.
         /// </summary>
         /// <param name="host">host for proxy to NodeManager</param>
         /// <param name="port">port for proxy to NodeManager</param>
-        public SubmitJob(string host, int port, string[] args)
+        /// <param name="job">job reference for the job to be submitted</param>
+        public SubmitJob(string host, int port, JobRef job)
         {
-            _proxy = new Proxy(new JobReceiver(), new JobSender(args), host, port, 0);
-            log = Logger.NodeLogInstance;
+            _proxy = new Proxy(new JobReceiver(), new JobSender(job), host, port, 0);
+            Logger = Logger.NodeLogInstance;
         }
 
         /// <summary>
@@ -43,7 +46,20 @@ namespace Defcore.Distributed
             // try to connect to the NodeManager
             Console.WriteLine("Starting Job Launcher");
             Console.WriteLine("Username is: " + GetUserName());
-            SubmitJob sj = new SubmitJob(args[0], NetworkSendReceive.SERVER_PORT, args);
+            var jobRef = new JobRef();
+            var loader = new CoreLoader<Job>(args[1]);
+            var userArgs = new string[args.Length - 2];
+            for (var i = 2; i < args.Length; i++)
+            {
+                userArgs[i - 2] = args[i];
+            }
+            // setup the job reference
+            jobRef.RequestedNodes = (int)loader.GetProperty("RequestedNodes");
+            jobRef.Username = GetUserName();
+            jobRef.PathToDll = args[1];
+            jobRef.UserArgs = userArgs;
+
+            var sj = new SubmitJob(args[0], NetworkSendReceive.SERVER_PORT, jobRef);
             Console.CancelKeyPress += sj.OnUserExit;
         }
 
@@ -112,7 +128,7 @@ namespace Defcore.Distributed
         /// <param name="e"></param>
         public void OnUserExit(object sender, ConsoleCancelEventArgs e)
         {
-            log.Log("Submitjob - Shuting down, user hit ctrl-c");
+            Logger.Log("Submitjob - Shuting down, user hit ctrl-c");
             // set cancel to true so we can do our own cleanup
             e.Cancel = true;
             // queue up the quitting message to the server
@@ -177,25 +193,18 @@ namespace Defcore.Distributed
 
     internal sealed class JobSender : AbstractSender
     {
-        ConcurrentQueue<JobEventArgs> MessageQueue = new ConcurrentQueue<JobEventArgs>();
+        private readonly ConcurrentQueue<JobEventArgs> _messageQueue = new ConcurrentQueue<JobEventArgs>();
 
-        private string PathToDLL;
-        private string[] UserArgs;
+        private readonly JobRef _job;
 
-        public JobSender(string[] args)
+        public JobSender(JobRef job)
         {
-            PathToDLL = args[1];
-            // arg[0] is ip, arg[1] is dll
-            UserArgs = new string[args.Length - 2];
-            for (int i = 2; i < args.Length; i++)
-            {
-                UserArgs[i - 2] = args[i];
-            }  
+            _job = job;
         }
 
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
-            MessageQueue.Enqueue(e as JobEventArgs);
+            _messageQueue.Enqueue(e as JobEventArgs);
         }
 
         public override void Run()
@@ -204,7 +213,7 @@ namespace Defcore.Distributed
             while (!DoneSending)
             {
                 JobEventArgs data;
-                if (MessageQueue.TryDequeue(out data))
+                if (_messageQueue.TryDequeue(out data))
                 {
                     Console.WriteLine("Job Sending Message");
                     switch (data.Protocol)
@@ -216,23 +225,9 @@ namespace Defcore.Distributed
                         case JobEventArgs.MessageType.Submit:
                             Console.WriteLine("Sending Job");
                             // job in this context corresponds to job manager.
-                            List<string> args = new List<string>();
-                            
-                            //string[] args = new string[UserArgs.Length + 3];
-                            // get the username of whoever is running this job
-                            string username = SubmitJob.GetUserName();
-
-                            args.Add("job");
-                            args.Add(username);
-                            args.Add(PathToDLL);
-
-                            var loader = new CoreLoader<Job>(PathToDLL);
-                            var rNodes = loader.GetProperty("RequestedNodes");
-                            Console.WriteLine("requested: " + rNodes);
-                            args.Add(rNodes.ToString());
-                            args.AddRange(UserArgs);
-
+                            var args = new List<string> {"job", JsonConvert.SerializeObject(_job)};
                             SendMessage(args.ToArray());
+
                             break;
                         case JobEventArgs.MessageType.Results:
                             Console.WriteLine(data.args[1]);
