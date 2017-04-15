@@ -11,10 +11,13 @@ namespace Defcore.Distributed.Jobs
         private readonly List<JobTask> _tasks = new List<JobTask>();
         public List<JobResult> Results { get; }
 
+        public int RequestedNodes { get; set; }
+
         protected Job()
         {
             TaskSchedule = Schedule.FIXED;
             Results = new List<JobResult>();
+            RequestedNodes = 1;
         }
 
         public abstract void Main(string[] args);
@@ -35,7 +38,10 @@ namespace Defcore.Distributed.Jobs
         }
         public void StartTask(int index)
         {
-            _tasks[index].Main(new string[] { index.ToString() });
+            if (_tasks.Count > index)
+            {
+                _tasks[index].Main(new string[] {index.ToString()});
+            }
         }
 
         public void CompileResults()

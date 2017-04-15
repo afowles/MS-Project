@@ -8,3 +8,442 @@ Log Entry : 4/9/2017 2:13:05 PM
 Log Entry : 4/9/2017 2:14:03 PM
   :Connected!
 -------------------------------
+Start Log for MANAGER: 4/13/2017 11:40:43 PM
+-------------------------------
+
+Log Entry : 4/13/2017 11:40:43 PM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/13/2017 11:41:17 PM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/13/2017 11:46:23 PM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/13/2017 11:47:09 PM
+  :NodeManagerSender caught exception: System.IO.IOException: Unable to write data to the transport connection: An existing connection was forcibly closed by the remote host. ---> System.Net.Sockets.SocketException: An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.Send(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at Defcore.Distributed.Network.AbstractSender.SendMessage(String[] args) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Network\Proxy.cs:line 429
+   at Defcore.Distributed.Manager.NodeManagerSender.HandleNodeCommunication(NodeManagerComm data) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 218
+   at Defcore.Distributed.Manager.NodeManagerSender.Run() in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 137
+-------------------------------
+Start Log for MANAGER: 4/13/2017 11:47:21 PM
+-------------------------------
+
+Log Entry : 4/13/2017 11:47:21 PM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/13/2017 11:47:25 PM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/13/2017 11:47:42 PM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 12:36:45 AM
+  :NodeManagerSender caught exception: System.IO.IOException: Unable to write data to the transport connection: An existing connection was forcibly closed by the remote host. ---> System.Net.Sockets.SocketException: An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.Send(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at Defcore.Distributed.Network.AbstractSender.SendMessage(String[] args) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Network\Proxy.cs:line 429
+   at Defcore.Distributed.Manager.NodeManagerSender.HandleNodeCommunication(NodeManagerComm data) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 218
+   at Defcore.Distributed.Manager.NodeManagerSender.Run() in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 137
+-------------------------------
+Start Log for MANAGER: 4/14/2017 12:36:59 AM
+-------------------------------
+
+Log Entry : 4/14/2017 12:36:59 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 12:37:10 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 12:37:22 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 12:40:08 AM
+  :NodeManagerSender caught exception: System.IO.IOException: Unable to write data to the transport connection: An existing connection was forcibly closed by the remote host. ---> System.Net.Sockets.SocketException: An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.Send(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at Defcore.Distributed.Network.AbstractSender.SendMessage(String[] args) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Network\Proxy.cs:line 429
+   at Defcore.Distributed.Manager.NodeManagerSender.HandleNodeCommunication(NodeManagerComm data) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 218
+   at Defcore.Distributed.Manager.NodeManagerSender.Run() in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 137
+-------------------------------
+Start Log for MANAGER: 4/14/2017 12:41:03 AM
+-------------------------------
+
+Log Entry : 4/14/2017 12:41:03 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 12:41:08 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 12:42:07 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 12:47:23 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 12:49:49 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+
+Log Entry : 4/14/2017 12:57:17 AM
+  :NodeManagerSender caught exception: System.IO.IOException: Unable to write data to the transport connection: An existing connection was forcibly closed by the remote host. ---> System.Net.Sockets.SocketException: An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.Send(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at Defcore.Distributed.Network.AbstractSender.SendMessage(String[] args) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Network\Proxy.cs:line 429
+   at Defcore.Distributed.Manager.NodeManagerSender.HandleNodeCommunication(NodeManagerComm data) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 218
+   at Defcore.Distributed.Manager.NodeManagerSender.Run() in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 137
+-------------------------------
+
+Log Entry : 4/14/2017 12:57:17 AM
+  :NodeManagerSender caught exception: System.IO.IOException: Unable to write data to the transport connection: An established connection was aborted by the software in your host machine. ---> System.Net.Sockets.SocketException: An established connection was aborted by the software in your host machine
+   at System.Net.Sockets.Socket.Send(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at Defcore.Distributed.Network.AbstractSender.SendMessage(String[] args) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Network\Proxy.cs:line 429
+   at Defcore.Distributed.Manager.NodeManagerSender.HandleNodeCommunication(NodeManagerComm data) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 218
+   at Defcore.Distributed.Manager.NodeManagerSender.Run() in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 137
+-------------------------------
+Start Log for MANAGER: 4/14/2017 12:57:26 AM
+-------------------------------
+
+Log Entry : 4/14/2017 12:57:26 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 12:57:45 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 12:57:53 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 12:57:53 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/14/2017 1:07:46 AM
+-------------------------------
+
+Log Entry : 4/14/2017 1:07:46 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 1:08:29 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 1:08:44 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 1:08:44 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/14/2017 1:24:01 AM
+-------------------------------
+
+Log Entry : 4/14/2017 1:24:01 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 1:24:14 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 1:24:22 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 1:24:22 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/14/2017 1:28:11 AM
+-------------------------------
+
+Log Entry : 4/14/2017 1:28:11 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 1:28:19 AM
+  :Connected!
+-------------------------------
+Start Log for MANAGER: 4/14/2017 1:34:57 AM
+-------------------------------
+
+Log Entry : 4/14/2017 1:34:57 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 1:35:07 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 1:36:04 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 1:36:05 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/14/2017 1:56:09 AM
+-------------------------------
+
+Log Entry : 4/14/2017 1:56:09 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 1:56:52 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 1:57:00 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 1:57:01 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/14/2017 2:12:38 AM
+-------------------------------
+
+Log Entry : 4/14/2017 2:12:38 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 2:12:47 AM
+  :Connected!
+-------------------------------
+Start Log for MANAGER: 4/14/2017 2:13:17 AM
+-------------------------------
+
+Log Entry : 4/14/2017 2:13:17 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 2:13:32 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 2:13:46 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 2:13:46 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/14/2017 2:21:25 AM
+-------------------------------
+
+Log Entry : 4/14/2017 2:21:25 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 2:21:34 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 2:21:51 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 2:21:51 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/14/2017 2:56:23 AM
+-------------------------------
+
+Log Entry : 4/14/2017 2:56:23 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 3:11:59 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 3:12:06 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 3:12:07 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/14/2017 3:14:39 AM
+-------------------------------
+
+Log Entry : 4/14/2017 3:14:39 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 3:14:44 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 3:14:50 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 3:14:51 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/14/2017 3:21:22 AM
+-------------------------------
+
+Log Entry : 4/14/2017 3:21:22 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/14/2017 3:21:28 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 3:21:33 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/14/2017 3:21:34 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+
+Log Entry : 4/15/2017 12:14:52 AM
+  :NodeManagerSender caught exception: System.IO.IOException: Unable to write data to the transport connection: An existing connection was forcibly closed by the remote host. ---> System.Net.Sockets.SocketException: An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.Send(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at Defcore.Distributed.Network.AbstractSender.SendMessage(String[] args) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Network\Proxy.cs:line 429
+   at Defcore.Distributed.Manager.NodeManagerSender.HandleNodeCommunication(NodeManagerComm data) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 218
+   at Defcore.Distributed.Manager.NodeManagerSender.Run() in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 137
+-------------------------------
+
+Log Entry : 4/15/2017 12:14:52 AM
+  :NodeManagerSender caught exception: System.IO.IOException: Unable to write data to the transport connection: An existing connection was forcibly closed by the remote host. ---> System.Net.Sockets.SocketException: An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.Send(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at Defcore.Distributed.Network.AbstractSender.SendMessage(String[] args) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Network\Proxy.cs:line 429
+   at Defcore.Distributed.Manager.NodeManagerSender.HandleNodeCommunication(NodeManagerComm data) in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 218
+   at Defcore.Distributed.Manager.NodeManagerSender.Run() in C:\Users\Adam\Documents\Visual Studio 2017\Projects\MS-Project\src\DEFLib\Distributed\Manager\Communication.cs:line 137
+-------------------------------
+Start Log for MANAGER: 4/15/2017 12:15:41 AM
+-------------------------------
+
+Log Entry : 4/15/2017 12:15:41 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/15/2017 12:16:47 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 12:17:00 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 12:17:01 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/15/2017 12:25:06 AM
+-------------------------------
+
+Log Entry : 4/15/2017 12:25:06 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/15/2017 12:25:15 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 12:26:10 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 12:26:10 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+
+Log Entry : 4/15/2017 2:58:26 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 2:58:26 AM
+  :Adding job: Job: 2 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/15/2017 3:19:53 AM
+-------------------------------
+
+Log Entry : 4/15/2017 3:19:53 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/15/2017 3:21:45 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 3:21:51 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 3:21:51 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/15/2017 3:31:39 AM
+-------------------------------
+
+Log Entry : 4/15/2017 3:31:39 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/15/2017 3:31:45 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 3:32:01 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 3:32:02 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------
+Start Log for MANAGER: 4/15/2017 3:37:30 AM
+-------------------------------
+
+Log Entry : 4/15/2017 3:37:30 AM
+  :Starting Server
+-------------------------------
+
+Log Entry : 4/15/2017 3:37:41 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 3:37:53 AM
+  :Connected!
+-------------------------------
+
+Log Entry : 4/15/2017 3:37:53 AM
+  :Adding job: Job: 1 for user: cortana\adam
+-------------------------------

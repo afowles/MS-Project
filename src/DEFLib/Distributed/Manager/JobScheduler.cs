@@ -176,8 +176,6 @@ namespace Defcore.Distributed.Manager
             int id, int proxy_id)
         {
             ParseJobMessage(data);
-            //TODO: get this from dll
-            RequestedNodes = 4;
             JobId = id;
             ProxyId = proxy_id;
         }
@@ -195,10 +193,16 @@ namespace Defcore.Distributed.Manager
         {
             Username = data.args[1];
             PathToDll = data.args[2];
-            UserArgs = new string[data.args.Length - 4];
-            for (int i = 0; i < data.args.Length - 4; i++)
+            RequestedNodes = int.Parse(data.args[3]);
+            if (RequestedNodes > 4)
             {
-                UserArgs[i] = data.args[i + 3];
+                RequestedNodes = 4;
+            }
+            Console.WriteLine("Requested = ");
+            UserArgs = new string[data.args.Length - 5];
+            for (int i = 0; i < data.args.Length - 5; i++)
+            {
+                UserArgs[i] = data.args[i + 4];
             }
         }
 

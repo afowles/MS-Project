@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Defcore.Distributed.IO
 {
@@ -10,7 +10,7 @@ namespace Defcore.Distributed.IO
     internal class JobTextWriter : TextWriter
     {
 
-        private UserOutput _userOutput;
+        private readonly UserOutput _userOutput;
 
         public JobTextWriter()
         {
@@ -19,24 +19,25 @@ namespace Defcore.Distributed.IO
 
         public override void Write(char value)
         {
-            _userOutput.ConsoleOutput.Add(value.ToString());
+            _userOutput.ConsoleOutput += value;
         }
 
-        public override void WriteLine(string value)
+
+        public override Encoding Encoding => Encoding.ASCII;
+
+        public string GetJsonResult()
         {
-            _userOutput.ConsoleOutput.Add(value);
+            return JsonConvert.SerializeObject(_userOutput);
         }
 
-        public override Encoding Encoding {
-            get
-            {
-                return Encoding.ASCII;
-            }
+        public string GetString()
+        {
+            return _userOutput.ConsoleOutput;
         }
     }
 
     internal sealed class UserOutput
     {
-        public List<string> ConsoleOutput { get; set; }
+        public string ConsoleOutput { get; set; } = "";
     }
 }

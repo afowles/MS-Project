@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.CompilerServices;
-
+using Defcore.Distributed.IO;
 using Defcore.Distributed.Jobs;
 
 [assembly: InternalsVisibleTo("Loader")]
@@ -18,35 +18,49 @@ namespace Defcore.Distributed.Assembly
         /// The rest are user arguments to their program</param>
         public static void Main(string[] args)
         {
+            // save off the console.out text writer
+            // before changing it. 
+            var originalOut = Console.Out;
+            // set the output writer to a text writer
+            JobTextWriter textWriter = new JobTextWriter();
+            Console.SetOut(textWriter);
+
+         
             // Create a place for user arguments
             string[] user_args = new string[args.Length - 2];
             //Console.WriteLine("Arguments: ");
             for (int i = 0; i < args.Length - 2; i++)
             {
-                // Console.WriteLine(args[i+2]);
+                Console.WriteLine(args[i+2]);
                 user_args[i] = args[i + 2];
             }
             string pwd = Directory.GetCurrentDirectory();
+            try
+            {
+
+            
             // parse the arguments needed for proper execution
             int[] lib_args = ParseTokens(args);
 
             //Console.WriteLine(pwd + "\\" + args[0]);
             // Create an assembly loader object for the users program
-            CoreLoader coreLoader = new CoreLoader(pwd + "\\" + args[0]);
+            CoreLoader<Job> coreLoader = new CoreLoader<Job>(pwd + "\\" + args[0]);
             // Find the Job Class, this must exist to run distributed.
-            bool foundJobClass = coreLoader.FindJobClass();
-            if (foundJobClass)
-            {
+            
+            
                 // if they inherited the Job class it will have Main
                 // call it with the user arguments. Nothing
                 // is exepected back from Main but an object result is returned
                 // from the call method function.
                 var result = coreLoader.CallMethod("Main", new object[] { user_args });
+                
                 // This method does not require arguments, returns int
                 // calls Count on the internal task list being kept by the job.
                 int numTasks = (int)coreLoader.CallMethod("GetNumberTasks", new object[] { });
+                
                 // schedule does not take any arguments
                 Schedule s = (Schedule)coreLoader.CallMethod("GetSchedule", new object[] { });
+                
                 switch (s)
                 {
                     case Schedule.FIXED:
@@ -56,13 +70,21 @@ namespace Defcore.Distributed.Assembly
                         Console.WriteLine("Default called..." + s);
                         break;
                 }
-            }
-            else
-            {
-                // TODO this DLL is not valid, maybe try
-                // running static main to see what happens?
-            }
+                // restore the output stream
+                Console.SetOut(originalOut);
+                // output the result as a json object
+                Console.WriteLine("Output is...: " + textWriter.GetJsonResult());
+                
+                //coreLoader.CallMethod()
 
+            }
+            catch (Exception e)
+            {
+                Console.SetOut(originalOut);
+                Console.WriteLine(e);
+                Console.WriteLine("WHAT: " + e.Message);
+                Console.WriteLine(textWriter.GetJsonResult());
+            }
         }
 
         /// <summary>
@@ -75,10 +97,10 @@ namespace Defcore.Distributed.Assembly
             // jobid, sectionid, number of nodes
             int[] result = new int[3];
             // split on comma
-            string[] s = args[1].Split(',');
-            foreach (string so in s)
+            var s = args[1].Split(',');
+            foreach (var so in s)
             {
-                //Console.WriteLine(so);
+                Console.WriteLine(so);
             }
             result[0] = int.Parse(s[0]);
             result[1] = int.Parse(s[1]);
@@ -93,22 +115,22 @@ namespace Defcore.Distributed.Assembly
         /// <remarks>
         /// libArgs = [job_id, section_id, num_nodes]
         /// </remarks>
-        public static void RunFixedSchedule(CoreLoader coreLoader, int numTasks, int[] libArgs)
+        public static void RunFixedSchedule(CoreLoader<Job> coreLoader, int numTasks, int[] libArgs)
         {
-            int fixed_block = numTasks / libArgs[2];
-            //Console.WriteLine("FixedBlock = " + fixed_block);
-            int start = fixed_block * libArgs[1];
-            //Console.WriteLine("Start = " + start);
-            int end = start + fixed_block;
+            var fixedBlock = numTasks / libArgs[2];
+            Console.WriteLine("FixedBlock = " + fixedBlock);
+            var start = fixedBlock * libArgs[1];
+            Console.WriteLine("Start = " + start);
+            var end = start + fixedBlock;
             if (end > numTasks)
             {
                 end = numTasks;
             }
-            //Console.WriteLine("End = " + end);
-            for (int i = start; i < end; i++)
+            Console.WriteLine("End = " + end);
+            for (var i = start; i < end; i++)
             {
-                //Console.WriteLine("Trying to start a task");
-                coreLoader.CallMethod("startTask", new object[] { i });
+                Console.WriteLine("Trying to start a task");
+                coreLoader.CallMethod("StartTask", new object[] { i });
             }
         }
     }

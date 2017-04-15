@@ -8,7 +8,7 @@ using Defcore.Distributed.Manager;
 
 namespace defcore
 {
-    public class Program
+    internal class Program
     {
         public static void Main(string[] args)
         {

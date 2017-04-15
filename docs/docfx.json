@@ -5,7 +5,7 @@
         {
           "cwd":  "../",
           "files": [
-            "src/**.cs"
+			"src/**.cs"
           ],
           "exclude": [ "**/bin/**", "**/obj/**" ],
           
@@ -27,15 +27,15 @@
     ],
     "resource": [
       {
-        "files": [ "articles/images/**"]
+        "files": [ "articles/images/**", "icons/**"]
       }
     ],
-    "overwrite": "specs/*.md",
     "globalMetadata": {
       "_appTitle": "defcore",
       "_enableSearch": true,
 	  "_appFooter" : "Copyright © 2017 Adam Fowles",
-	  "_appLogoPath" : ""
+	  "_appLogoPath" : "icons/logo.svg",
+	  "_appFaviconPath" : "icons/favicon.ico"
     },
     "dest": "_site"
   }

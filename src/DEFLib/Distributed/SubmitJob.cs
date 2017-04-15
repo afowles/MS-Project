@@ -7,6 +7,8 @@ using System.Text;
 using Defcore.Distributed.Logging;
 using Defcore.Distributed.Network;
 using System.Threading.Tasks;
+using Defcore.Distributed.Assembly;
+using Defcore.Distributed.Jobs;
 
 [assembly: InternalsVisibleTo("SubmitJob")]
 
@@ -214,19 +216,23 @@ namespace Defcore.Distributed
                         case JobEventArgs.MessageType.Submit:
                             Console.WriteLine("Sending Job");
                             // job in this context corresponds to job manager.
-                            string[] args = new string[UserArgs.Length + 3];
+                            List<string> args = new List<string>();
+                            
+                            //string[] args = new string[UserArgs.Length + 3];
                             // get the username of whoever is running this job
                             string username = SubmitJob.GetUserName();
-                            args[0] = "job";
-                            args[1] = username;
-                            args[2] = PathToDLL;
-                            int i = 3;
-                            foreach (string s in UserArgs)
-                            {
-                                args[i] = s;
-                                i++;
-                            }
-                            SendMessage(args);
+
+                            args.Add("job");
+                            args.Add(username);
+                            args.Add(PathToDLL);
+
+                            var loader = new CoreLoader<Job>(PathToDLL);
+                            var rNodes = loader.GetProperty("RequestedNodes");
+                            Console.WriteLine("requested: " + rNodes);
+                            args.Add(rNodes.ToString());
+                            args.AddRange(UserArgs);
+
+                            SendMessage(args.ToArray());
                             break;
                         case JobEventArgs.MessageType.Results:
                             Console.WriteLine(data.args[1]);

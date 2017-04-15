@@ -77,7 +77,7 @@ namespace Defcore.Distributed
                 // remove the first two lines
                 if (lineCount == -1 || lineCount == 0)
                 {
-                    return;
+                    //return;
                 }
                 outputBuilder.Append("\n[" + lineCount + "]: " + e.Data);
                 
