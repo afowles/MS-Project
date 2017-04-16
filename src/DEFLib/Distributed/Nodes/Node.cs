@@ -9,6 +9,8 @@ using Defcore.Distributed.IO;
 using Defcore.Distributed.Logging;
 using System.IO;
 using System.Threading.Tasks;
+using Defcore.Distributed.Manager;
+using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo("StartNode")]
 
@@ -138,7 +140,7 @@ namespace Defcore.Distributed.Nodes
     {
         private readonly Node parent;
         //private Queue<DataReceivedEventArgs> jobs = new Queue<DataReceivedEventArgs>();
-        private DataReceivedEventArgs job;
+        private JobRef _job;
 
         /// <summary>
         /// Node receiver constructor, needs to know
@@ -174,15 +176,16 @@ namespace Defcore.Distributed.Nodes
                 case NodeComm.MessageType.File:
                     // This will block on the iostream until the file reading
                     // is over. The next thing sent over the network must be a file.
-                    FileRead.ReadInWriteOut(proxy.iostream, receivedData.args[2]);
-                    job = receivedData;
+                    _job = JsonConvert.DeserializeObject<JobRef>(receivedData.args[1]);
+                    FileRead.ReadInWriteOut(proxy.iostream, Path.GetFileName(_job.PathToDll));
+                    //job = receivedData;
                     // after we have finished reading the data, let node manager know
                     OnDataReceived(new NodeComm(NodeComm.ConstructMessage("fileread")));
                     break;
                 case NodeComm.MessageType.Execute:
                     //TODO, this should be its own task/thread
                     parent.log.Log("Node: executing");
-                    JobLauncher j = new JobLauncher(job, parent);
+                    JobLauncher j = new JobLauncher(_job, parent);
                     j.LaunchJob();
                     break;
                 case NodeComm.MessageType.Shutdown:
@@ -235,8 +238,9 @@ namespace Defcore.Distributed.Nodes
                             case NodeComm.MessageType.File:
                                 parent.log.Log("Node: requesting file");
                                 // ask for the file with jobid from data.args[1]
-                                string[] s = data.args[1].Split(',');
-                                SendMessage(new string[] { "send", s[0] });
+                                //string[] s = data.args[1].Split(',');
+                                var jobId = JsonConvert.DeserializeObject<JobRef>(data.args[1]).JobId;
+                                SendMessage(new string[] { "send", jobId.ToString() });
                                 break;
                             case NodeComm.MessageType.Id:
                                 parent.log.Log("Node: sending id");

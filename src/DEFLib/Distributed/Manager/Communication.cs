@@ -177,8 +177,9 @@ namespace Defcore.Distributed.Manager
                 // manager is running on as of now.
                 case NodeManagerComm.MessageType.Send:
 
-                    string[] s = data.args[1].Split(',');
-                    JobRef j = manager.Scheduler.GetJob(int.Parse(s[0]));
+                    var jobId = int.Parse(data.args[1]);
+                    //var job = JsonConvert.DeserializeObject<JobRef>(data.args[1]);
+                    var j = manager.Scheduler.GetJob(jobId);
                     if (j != null)
                     {
                         Console.WriteLine("Sending file: " + Path.GetFileName(j.PathToDll));
@@ -221,6 +222,11 @@ namespace Defcore.Distributed.Manager
                     // shutdown after we have sent the message
                     DoneSending = true;
                     break;
+                case NodeManagerComm.MessageType.Unknown:
+                    break;
+                default:
+                    // should never get here, unknown handles it
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

@@ -1,7 +1,9 @@
 ﻿using Defcore.Distributed.Network;
 using Defcore.Distributed.Nodes;
 using System;
+using System.IO;
 using System.Text;
+using Defcore.Distributed.Manager;
 
 namespace Defcore.Distributed
 {
@@ -10,8 +12,8 @@ namespace Defcore.Distributed
     /// </summary>
     class JobLauncher
     {
-        private string dllPath;
-        private DataReceivedEventArgs data;
+        private string _DLLName;
+        private JobRef _job;
         private Node parent;
         // starting at -2 for dotnet run output
         // TODO: look for a way to suppress dotnet run
@@ -21,10 +23,10 @@ namespace Defcore.Distributed
         /// Constructor for a Job launcher
         /// </summary>
         /// <param name="d"></param>
-        public JobLauncher(DataReceivedEventArgs d, Node p)
+        public JobLauncher(JobRef job, Node p)
         {
-            dllPath = d.args[2];
-            data = d;
+            _job = job;
+            _DLLName = Path.GetFileName(_job.PathToDll);
             parent = p;
         }
 
@@ -42,20 +44,19 @@ namespace Defcore.Distributed
             // it was read in.
             processStartInfo.FileName = "dotnet";
             // argumnets to donet run
-            processStartInfo.Arguments = "run ../StartNode/" + dllPath;
+            processStartInfo.Arguments = "run ../StartNode/" + _DLLName;
             // redirect standard output so we can send it back
             processStartInfo.RedirectStandardOutput = true;
             // redirect standard in, not using currently
             processStartInfo.RedirectStandardInput = true;
 
             // give it the arguments required to section up work
-            processStartInfo.Arguments += " " + data.args[1];
+            processStartInfo.Arguments += " " + _job.JobId + "," + _job.SectionId + "," + _job.TotalNodes;
 
             // Add in the user arguments
-            // arg[0] is a message type, arg[2] is the dll path
-            for (int i = 3; i < data.args.Length; i++ )
+            foreach (var arg in _job.UserArgs)
             {
-                processStartInfo.Arguments += " " + data.args[i];
+                processStartInfo.Arguments += " " + arg;
             }
             // run in the loader directory
             processStartInfo.WorkingDirectory = "../Loader/";
@@ -107,7 +108,7 @@ namespace Defcore.Distributed
             string output = outputBuilder.ToString();
             
             parent.QueueDataEvent(new NodeComm("finished|" 
-                + data.args[1].ToCharArray()[0] + "|" + output));
+                + _job.JobId + "|" + output));
         }
     }
 }

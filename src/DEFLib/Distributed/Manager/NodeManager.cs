@@ -9,6 +9,7 @@ using System.IO;
 
 using Defcore.Distributed.Network;
 using Defcore.Distributed.Logging;
+using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo("StartManager")]
 [assembly: InternalsVisibleTo("defcore")]
@@ -216,26 +217,21 @@ namespace Defcore.Distributed.Manager
         {
             lock(NodeLock)
             {
-                int section_id = 0;
-                int num_nodes = ConnectedNodes.Values.Count;
-                int req_nodes = job.RequestedNodes;
-                foreach (NodeRef node in ConnectedNodes.Values)
+                var sectionId = 0;
+                var reqNodes = job.RequestedNodes;
+                foreach (var node in ConnectedNodes.Values)
                 {
-                    if (req_nodes == 0)
+                    if (reqNodes == 0)
                     {
                         break;
                     }
                     Console.WriteLine("Enqueing for Node");
-                    string s = job.JobId + "," + section_id + "," + num_nodes + "|";
-                    s += Path.GetFileName(job.PathToDll) + "|";
-                    foreach (string arg in job.UserArgs)
-                    {
-                        s += arg + "|";
-                    }
-                    node.QueueDataEvent(new NodeManagerComm("file|" + s ));
+                    job.SectionId = sectionId;
+                    job.TotalNodes = ConnectedNodes.Values.Count;
+                    node.QueueDataEvent(new NodeManagerComm("file|" + JsonConvert.SerializeObject(job)));
                     node.busy = true;
-                    req_nodes--;
-                    section_id++;
+                    reqNodes--;
+                    sectionId++;
                 }
             }
         }

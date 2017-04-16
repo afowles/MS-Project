@@ -4,39 +4,41 @@ using System.Net.Sockets;
 
 namespace Defcore.Distributed.IO
 {
+    /// <summary>
+    /// Static class to handle File Reading
+    /// </summary>
     public static class FileRead
     {
         public const int BufferSize = 1024;
         public const int NetworkSleep = 100;
+        public const int ReadTimeout = 250;
 
         /// <summary>
         /// Read in a file from a Network Stream
         /// and write that file out.
         /// </summary>
         /// <param name="iostream">Stream to read in from</param>
-        /// <param name="filepath">path to the file to write out to</param>
+        /// <param name="filepath">path to write the resulting file</param>
         public static void ReadInWriteOut(NetworkStream iostream, string filepath)
         {
             // create a buffer for the incoming data
-            byte[] buff = new byte[BufferSize];
-            int byteSize = 0;
+            var buff = new byte[BufferSize];
             // create a filestream for the new file
-            FileStream Fs = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+            var fs = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
             // wait for data
-            Console.WriteLine("Waiting...");
             while (!iostream.DataAvailable)
             {
                 //Thread.Sleep(NetworkSleep);
             }
 
-            Console.WriteLine("Reading file...");
             // set a read timeout so we don't sit here forever
-            iostream.ReadTimeout = 250;
+            iostream.ReadTimeout = ReadTimeout;
             try
             {
+                int byteSize;
                 while ((byteSize = iostream.Read(buff, 0, buff.Length)) > 0)
                 {
-                    Fs.Write(buff, 0, byteSize);
+                    fs.Write(buff, 0, byteSize);
                 }
             }
             // TODO handle the proper exception only, rethrow any other
@@ -44,25 +46,31 @@ namespace Defcore.Distributed.IO
             {
                 Console.WriteLine("Read finished");
             }
-            Fs.Dispose();
+            fs.Dispose();
             iostream.Flush();
         }
     }
 
+    /// <summary>
+    /// Static class to handle File Writing
+    /// </summary>
     public static class FileWrite
     {
+        /// <summary>
+        /// Write a file out to the given network stream
+        /// </summary>
+        /// <param name="iostream">the network stream to write to</param>
+        /// <param name="filepath">the file to be written</param>
         public static void WriteOut(NetworkStream iostream, string filepath)
         {
-            using (FileStream fs = File.Open(filepath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var fs = File.Open(filepath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                using (BinaryReader binFile = new BinaryReader(fs))
+                using (var binFile = new BinaryReader(fs))
                 {
-                    Console.WriteLine("IN HERE");
-                    int bytesSize = 0;
-                    byte[] downBuffer = new byte[2048];
+                    int bytesSize;
+                    var downBuffer = new byte[2048];
                     while ((bytesSize = binFile.Read(downBuffer, 0, downBuffer.Length)) > 0)
                     {
-                        Console.WriteLine("WRITING");
                         iostream.Write(downBuffer, 0, bytesSize);
                     }
                 }

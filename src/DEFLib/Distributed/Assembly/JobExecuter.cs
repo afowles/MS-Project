@@ -18,56 +18,56 @@ namespace Defcore.Distributed.Assembly
         /// The rest are user arguments to their program</param>
         public static void Main(string[] args)
         {
-            // save off the console.out text writer
-            // before changing it. 
+            // Save off the console.out text writer
+            // before changing it, to restore at the end.
             var originalOut = Console.Out;
-            // set the output writer to a text writer
-            JobTextWriter textWriter = new JobTextWriter();
+            // Set the console output writer to a text writer
+            // to capture output.
+            var textWriter = new JobTextWriter();
             Console.SetOut(textWriter);
 
          
             // Create a place for user arguments
-            string[] user_args = new string[args.Length - 2];
+            var userArgs = new string[args.Length - 2];
             //Console.WriteLine("Arguments: ");
-            for (int i = 0; i < args.Length - 2; i++)
+            for (var i = 0; i < args.Length - 2; i++)
             {
                 Console.WriteLine(args[i+2]);
-                user_args[i] = args[i + 2];
+                userArgs[i] = args[i + 2];
             }
-            string pwd = Directory.GetCurrentDirectory();
+            var cwd = Directory.GetCurrentDirectory();
             try
             {
 
             
-            // parse the arguments needed for proper execution
-            int[] lib_args = ParseTokens(args);
+                // parse the arguments needed for proper execution
+                var libArgs = ParseTokens(args);
 
-            //Console.WriteLine(pwd + "\\" + args[0]);
-            // Create an assembly loader object for the users program
-            CoreLoader<Job> coreLoader = new CoreLoader<Job>(pwd + "\\" + args[0]);
-            // Find the Job Class, this must exist to run distributed.
+                // Create an assembly loader object for the users program
+                var coreLoader = new CoreLoader<Job>(cwd + "\\" + args[0]);
+                // Find the Job Class, this must exist to run distributed.
             
             
-                // if they inherited the Job class it will have Main
-                // call it with the user arguments. Nothing
+                // If they inherited the Job class it will have Main.
+                // Call it with the user arguments. Nothing
                 // is exepected back from Main but an object result is returned
                 // from the call method function.
-                var result = coreLoader.CallMethod("Main", new object[] { user_args });
+                coreLoader.CallMethod("Main", new object[] { userArgs });
                 
-                // This method does not require arguments, returns int
-                // calls Count on the internal task list being kept by the job.
-                int numTasks = (int)coreLoader.CallMethod("GetNumberTasks", new object[] { });
+                // This method does not require arguments.
+                // Calls Count on the internal task list being kept by the job.
+                var numTasks = (int)coreLoader.CallMethod("GetNumberTasks", new object[] { });
                 
                 // schedule does not take any arguments
-                Schedule s = (Schedule)coreLoader.CallMethod("GetSchedule", new object[] { });
+                var schedule = (Schedule)coreLoader.CallMethod("GetSchedule", new object[] { });
                 
-                switch (s)
+                switch (schedule)
                 {
                     case Schedule.FIXED:
-                        RunFixedSchedule(coreLoader, numTasks, lib_args);
+                        RunFixedSchedule(coreLoader, numTasks, libArgs);
                         break;
                     default:
-                        Console.WriteLine("Default called..." + s);
+                        Console.WriteLine("Default called..." + schedule);
                         break;
                 }
                 // restore the output stream
@@ -95,7 +95,7 @@ namespace Defcore.Distributed.Assembly
         public static int[] ParseTokens(string[] args)
         {
             // jobid, sectionid, number of nodes
-            int[] result = new int[3];
+            var result = new int[3];
             // split on comma
             var s = args[1].Split(',');
             foreach (var so in s)

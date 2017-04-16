@@ -23,42 +23,9 @@ namespace Defcore.Distributed.Manager
         // TODO might want an Enum status instead
         private bool completed = false;
 
-        /// <summary>
-        /// Construct a Job Reference
-        /// </summary>
-        /// <param name="data"></param>
-        public JobRef()
-        {
-            //ParseJobMessage(data);
-            //JobId = id;
-            //ProxyId = proxy_id;
-        }
-
-        /// <summary>
-        /// Parse the message containing
-        /// information about the job.
-        /// </summary>
-        /// <remarks>
-        /// looks like:
-        ///     job|[username]|[path to dll]|[user args ...]|end
-        /// </remarks>
-        /// <param name="data"></param>
-        private void ParseJobMessage(DataReceivedEventArgs data)
-        {
-            Username = data.args[1];
-            PathToDll = data.args[2];
-            RequestedNodes = int.Parse(data.args[3]);
-            if (RequestedNodes > 4)
-            {
-                RequestedNodes = 4;
-            }
-            Console.WriteLine("Requested = ");
-            UserArgs = new string[data.args.Length - 5];
-            for (int i = 0; i < data.args.Length - 5; i++)
-            {
-                UserArgs[i] = data.args[i + 4];
-            }
-        }
+        // Node state identifiers
+        public int SectionId { get; set; }
+        public int TotalNodes { get; set; }
 
         /// <summary>
         /// Overridden to string method
