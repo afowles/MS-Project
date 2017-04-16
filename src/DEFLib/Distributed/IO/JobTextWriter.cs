@@ -64,7 +64,7 @@ namespace Defcore.Distributed.IO
     /// <summary>
     /// Small class wrapped around user output
     /// </summary>
-    internal sealed class UserOutput
+    public sealed class UserOutput
     {
         public string ConsoleOutput { get; set; } = "";
     }

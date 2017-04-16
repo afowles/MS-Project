@@ -8,9 +8,11 @@ using Defcore.Distributed.Logging;
 using Defcore.Distributed.Network;
 using System.Threading.Tasks;
 using Defcore.Distributed.Assembly;
+using Defcore.Distributed.IO;
 using Defcore.Distributed.Jobs;
 using Defcore.Distributed.Manager;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 [assembly: InternalsVisibleTo("SubmitJob")]
 
@@ -196,10 +198,12 @@ namespace Defcore.Distributed
         private readonly ConcurrentQueue<JobEventArgs> _messageQueue = new ConcurrentQueue<JobEventArgs>();
 
         private readonly JobRef _job;
+        private CoreLoader<Job> _loader; 
 
         public JobSender(JobRef job)
         {
             _job = job;
+            _loader = new CoreLoader<Job>(_job.PathToDll);
         }
 
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
@@ -230,10 +234,23 @@ namespace Defcore.Distributed
 
                             break;
                         case JobEventArgs.MessageType.Results:
-                            Console.WriteLine(data.args[1]);
-                            count++;
-                            if (count == 4)
+                            //Console.WriteLine(data.args[1]);
+                            var j = JArray.Parse(data.args[1]);
+                            var userOut = JsonConvert.DeserializeObject<UserOutput>(j[0].ToString());
+                            Console.WriteLine(userOut.ConsoleOutput);
+
+                            if (j.Count > 1)
                             {
+                                for (var i = 1; i < j.Count; i++)
+                                {
+                                    var result = JobResult.DeserializeString(j[i].ToString());
+                                    _loader.CallMethod("AddResult", new object[] {result});
+                                }
+                            }
+                            count++;
+                            if (count == _job.RequestedNodes)
+                            {
+                                _loader.CallMethod("RunFinalTask", new object[] { });
                                 Console.WriteLine("Done");
                                 proxy.QueueDataEvent(new JobEventArgs("shutdown"));
                                 Environment.Exit(0);
@@ -245,10 +262,7 @@ namespace Defcore.Distributed
                         case JobEventArgs.MessageType.Quit:
                             SendMessage(new string[] { "connectionquit" });
                             // hack to get final message to actually send...
-                            Task t = new Task(() =>
-                            {
-                                FlushSender();
-                            });
+                            Task t = new Task(FlushSender);
                             // this will actually wait forever... 
                             // unless given a timeout TODO find out why
                             t.Wait(100);

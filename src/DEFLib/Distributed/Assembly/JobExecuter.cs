@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Defcore.Distributed.IO;
@@ -21,15 +22,13 @@ namespace Defcore.Distributed.Assembly
             // Save off the console.out text writer
             // before changing it, to restore at the end.
             var originalOut = Console.Out;
-            // Set the console output writer to a text writer
+            // Set the console output writer to a custom text writer
             // to capture output.
             var textWriter = new JobTextWriter();
             Console.SetOut(textWriter);
 
-         
             // Create a place for user arguments
             var userArgs = new string[args.Length - 2];
-            //Console.WriteLine("Arguments: ");
             for (var i = 0; i < args.Length - 2; i++)
             {
                 Console.WriteLine(args[i+2]);
@@ -38,8 +37,6 @@ namespace Defcore.Distributed.Assembly
             var cwd = Directory.GetCurrentDirectory();
             try
             {
-
-            
                 // parse the arguments needed for proper execution
                 var libArgs = ParseTokens(args);
 
@@ -63,7 +60,7 @@ namespace Defcore.Distributed.Assembly
                 
                 switch (schedule)
                 {
-                    case Schedule.FIXED:
+                    case Schedule.Fixed:
                         RunFixedSchedule(coreLoader, numTasks, libArgs);
                         break;
                     default:
@@ -72,11 +69,19 @@ namespace Defcore.Distributed.Assembly
                 }
                 // restore the output stream
                 Console.SetOut(originalOut);
-                // output the result as a json object
-                Console.WriteLine("Output is...: " + textWriter.GetJsonResult());
-                
-                //coreLoader.CallMethod()
+                // output the user console output result as a json object
+                Console.WriteLine( "[ " + textWriter.GetJsonResult());
+                // Compile the results
+                coreLoader.CallMethod("CompileResults", new object [] {});
 
+                var jobResults = (List<JobResult>)coreLoader.GetProperty("Results");
+                foreach (var result in jobResults)
+                {
+
+                    Console.WriteLine( "," + result.SerializeResult());
+                }
+                // close the json list
+                Console.WriteLine("]");
             }
             catch (Exception e)
             {

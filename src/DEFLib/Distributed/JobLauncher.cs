@@ -1,5 +1,4 @@
-﻿using Defcore.Distributed.Network;
-using Defcore.Distributed.Nodes;
+﻿using Defcore.Distributed.Nodes;
 using System;
 using System.IO;
 using System.Text;
@@ -10,24 +9,22 @@ namespace Defcore.Distributed
     /// <summary>
     /// Class to launch a job
     /// </summary>
-    class JobLauncher
+    internal class JobLauncher
     {
-        private string _DLLName;
-        private JobRef _job;
-        private Node parent;
-        // starting at -2 for dotnet run output
-        // TODO: look for a way to suppress dotnet run
-        private static int lineCount = -2;
+        private readonly string _dllName;
+        private readonly JobRef _job;
+        private readonly Node _parent;
 
         /// <summary>
         /// Constructor for a Job launcher
         /// </summary>
-        /// <param name="d"></param>
+        /// <param name="job">the job to be launched</param>
+        /// <param name="p">the parent node</param>
         public JobLauncher(JobRef job, Node p)
         {
             _job = job;
-            _DLLName = Path.GetFileName(_job.PathToDll);
-            parent = p;
+            _dllName = Path.GetFileName(_job.PathToDll);
+            _parent = p;
         }
 
         /// <summary>
@@ -37,19 +34,23 @@ namespace Defcore.Distributed
         public void LaunchJob()
         {
             System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo();
             // what is actually run is the dotnet process with
             // the loader application loading their dll which
             // is located in the StartNode directory since that is where
             // it was read in.
-            processStartInfo.FileName = "dotnet";
             // argumnets to donet run
-            processStartInfo.Arguments = "run ../StartNode/" + _DLLName;
             // redirect standard output so we can send it back
-            processStartInfo.RedirectStandardOutput = true;
             // redirect standard in, not using currently
-            processStartInfo.RedirectStandardInput = true;
-
+            System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "dotnet",
+                Arguments = "run ../StartNode/" + _dllName,
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true,
+                // run in the loader directory
+                WorkingDirectory = "../Loader/",
+                CreateNoWindow = true
+            };
             // give it the arguments required to section up work
             processStartInfo.Arguments += " " + _job.JobId + "," + _job.SectionId + "," + _job.TotalNodes;
 
@@ -58,34 +59,19 @@ namespace Defcore.Distributed
             {
                 processStartInfo.Arguments += " " + arg;
             }
-            // run in the loader directory
-            processStartInfo.WorkingDirectory = "../Loader/";
-
-            // cmd line only
-            processStartInfo.CreateNoWindow = true;
+            
             //processStartInfo.UseShellExecute = false;
             // setup the process info
             process.StartInfo = processStartInfo;
             // setup and allow an event
             process.EnableRaisingEvents = true;
             // for building output from standard out
-            StringBuilder outputBuilder = new StringBuilder(); ;
+            var outputBuilder = new StringBuilder();
             // add event handling for process
             process.OutputDataReceived += delegate (object sender, System.Diagnostics.DataReceivedEventArgs e)
             {
-                // append the output data to a string
-                lineCount++;
-                // remove the first two lines
-                if (lineCount == -1 || lineCount == 0)
-                {
-                    //return;
-                }
-                outputBuilder.Append("\n[" + lineCount + "]: " + e.Data);
-                
-                
-
+                outputBuilder.Append(e.Data);
             };
-            string error;
             try
             {
                 // start
@@ -100,14 +86,14 @@ namespace Defcore.Distributed
             // internal user exceptions will be caught by the loader programs
             catch(Exception e)
             {
-                error = e.ToString();
+                var error = e.ToString();
                 Console.WriteLine(error);
             }
-            parent.log.Log("JobLauncher: Process finished with ExitCode: " + process.ExitCode);
+            _parent.log.Log("JobLauncher: Process finished with ExitCode: " + process.ExitCode);
             // use the output
-            string output = outputBuilder.ToString();
-            
-            parent.QueueDataEvent(new NodeComm("finished|" 
+            var output = outputBuilder.ToString();
+
+            _parent.QueueDataEvent(new NodeComm("finished|" 
                 + _job.JobId + "|" + output));
         }
     }

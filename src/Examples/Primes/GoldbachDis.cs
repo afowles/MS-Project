@@ -26,6 +26,17 @@ namespace Examples.Primes
             }
         }
 
+        
+        public override void RunFinalTask()
+        {
+            foreach (JobResult j in Results)
+            {
+                var t = j as TestTask;
+                Console.WriteLine("WOO: " + t.Hello);
+
+            }
+        }
+
         /// <summary>
         /// A class to represent the task of verifying
         /// one set of integers for Goldbach.
@@ -98,6 +109,9 @@ namespace Examples.Primes
             /// </param>
             public override void Main(string[] args2)
             {
+                TestTask t = new TestTask(5);
+                t.doSomething();
+                AddResult(t);
                 Console.WriteLine(args[0] + " " + args[1]);
                 // Set the largest found
                 largestFound = 0;
@@ -147,6 +161,22 @@ namespace Examples.Primes
             {
                 Console.WriteLine(error +
                         "\nUsage: GoldbachSeq <lb> <ub>");
+            }
+        }
+
+        public class TestTask : JobResult
+        {
+            public int Hello { get; set; } = 0;
+
+            public TestTask(int id) 
+                : base(id)
+            {
+
+            }
+
+            public void doSomething()
+            {
+                Hello += 20;
             }
         }
     }
