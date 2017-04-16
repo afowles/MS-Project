@@ -12,7 +12,7 @@ namespace Defcore.Distributed.Network
     internal class DefaultDataComm : DataReceivedEventArgs
     {
         public MessageType Protocol { get; }
-        private static Dictionary<string, MessageType> MessageMap =
+        private static readonly Dictionary<string, MessageType> MessageMap =
             new Dictionary<string, MessageType> {
                 { "node", MessageType.Node },
                 { "query", MessageType.Query },
@@ -32,8 +32,8 @@ namespace Defcore.Distributed.Network
         public DefaultDataComm(string msg)
             : base(msg)
         {
-            MessageType m = MessageType.Unknown;
-            MessageMap.TryGetValue(args[0], out m);
+            MessageType m;
+            MessageMap.TryGetValue(Args[0], out m);
             Protocol = m;
         }
     }
@@ -51,11 +51,11 @@ namespace Defcore.Distributed.Network
     /// </remarks>
     internal class DefaultReceiver : AbstractReceiver
     {
-        public NodeManager manager;
+        public NodeManager Manager;
 
         public DefaultReceiver(NodeManager manager)
         {
-            this.manager = manager;
+            Manager = manager;
         }
 
         public override DataReceivedEventArgs CreateDataReceivedEvent(string data)
@@ -65,36 +65,35 @@ namespace Defcore.Distributed.Network
 
         public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
         {
-            switch ((e as DefaultDataComm).Protocol)
-            {
-                case DefaultDataComm.MessageType.Node:
-                    // hand off to proper sender and receiver
-                    proxy.HandOffSendReceive(new NodeManagerReceiver(),
-                        new NodeManagerSender(manager), ConnectionType.NODE);
-                    // leave and stop this thread.
-                    manager.AddConnectedNode(proxy);
-                    DoneReceiving = true;
-                    return;
-                case DefaultDataComm.MessageType.Job:
-                    // hand off to proper sender and receiver
-                    proxy.HandOffSendReceive(new NodeManagerReceiver(),
-                        new NodeManagerSender(manager), ConnectionType.JOB);
-                    // tell the job to submit their job info
-                    proxy.QueueDataEvent(new NodeManagerComm("submit"));
-                    // leave and stop this thread.
-                    DoneReceiving = true;
-                    return;
-                case DefaultDataComm.MessageType.Query:
-                    // hand off to proper sender and receiver
-                    proxy.HandOffSendReceive(new NodeManagerReceiver(), 
-                        new NodeManagerSender(manager), ConnectionType.QUERY);
-                    // leave and stop this thread.
-                    DoneReceiving = true;
-                    return;
-
-                default:
-                    break;
-            }
+            var defaultDataComm = e as DefaultDataComm;
+            if (defaultDataComm != null)
+                switch (defaultDataComm.Protocol)
+                {
+                    case DefaultDataComm.MessageType.Node:
+                        // hand off to proper sender and receiver
+                        Proxy.HandOffSendReceive(new NodeManagerReceiver(),
+                            new NodeManagerSender(Manager), ConnectionType.Node);
+                        // leave and stop this thread.
+                        Manager.AddConnectedNode(Proxy);
+                        DoneReceiving = true;
+                        return;
+                    case DefaultDataComm.MessageType.Job:
+                        // hand off to proper sender and receiver
+                        Proxy.HandOffSendReceive(new NodeManagerReceiver(),
+                            new NodeManagerSender(Manager), ConnectionType.Job);
+                        // tell the job to submit their job info
+                        Proxy.QueueDataEvent(new NodeManagerComm("submit"));
+                        // leave and stop this thread.
+                        DoneReceiving = true;
+                        return;
+                    case DefaultDataComm.MessageType.Query:
+                        // hand off to proper sender and receiver
+                        Proxy.HandOffSendReceive(new NodeManagerReceiver(), 
+                            new NodeManagerSender(Manager), ConnectionType.Query);
+                        // leave and stop this thread.
+                        DoneReceiving = true;
+                        return;
+                }
         }
 
     }
@@ -106,18 +105,18 @@ namespace Defcore.Distributed.Network
     internal class DefaultSender : AbstractSender
     {
         // ConcurrentQueue for TryDequeue method
-        ConcurrentQueue<DefaultDataComm> MessageQueue = new ConcurrentQueue<DefaultDataComm>();
-        private NodeManager manager;
+        readonly ConcurrentQueue<DefaultDataComm> _messageQueue = new ConcurrentQueue<DefaultDataComm>();
+        //private NodeManager _manager;
 
         /// <summary>
         /// Constructor to add initial message of id
         /// on start up that message will be send out to the connected host
         /// to gather identification info.
         /// </summary>
-        public DefaultSender(NodeManager manager)
+        public DefaultSender()
         {
-            this.manager = manager;
-            MessageQueue.Enqueue(new DefaultDataComm("id"));
+            //this._manager = manager;
+            _messageQueue.Enqueue(new DefaultDataComm("id"));
         }
 
         /// <summary>
@@ -128,7 +127,7 @@ namespace Defcore.Distributed.Network
         /// <param name="e"></param>
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
-            MessageQueue.Enqueue(e as DefaultDataComm);
+            _messageQueue.Enqueue(e as DefaultDataComm);
         }
 
         /// <summary>
@@ -140,7 +139,7 @@ namespace Defcore.Distributed.Network
             {
                 // grab the message
                 DefaultDataComm data;
-                if (MessageQueue.TryDequeue(out data))
+                if (_messageQueue.TryDequeue(out data))
                 {
                     // if we don't know who this is, the first message
                     // is an Id, request id.
@@ -148,7 +147,7 @@ namespace Defcore.Distributed.Network
                         || data.Protocol == DefaultDataComm.MessageType.Id)
                     {
                         Console.WriteLine("Default Handler: Requesting Id");
-                        SendMessage(new string[] { "id" });
+                        SendMessage(new [] { "id" });
                     }
                     else
                     {

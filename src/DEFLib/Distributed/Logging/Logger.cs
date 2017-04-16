@@ -19,18 +19,18 @@ namespace Defcore.Distributed.Logging
         /// <summary>
         /// Log output file name
         /// </summary>
-        const string NODE_LOG = "node_log.txt";
+        private const string NodeLog = "node_log.txt";
         /// <summary>
         /// Log output file name
         /// </summary>
-        const string MANAGER_LOG = "manager_log.txt";
+        private const string ManagerLog = "manager_log.txt";
 
         /// <summary>
         /// Logger is a Singleton
         /// </summary>
         private Logger(LogType t)
         {
-            _writer = File.AppendText(t == LogType.MANAGER ? MANAGER_LOG : NODE_LOG);
+            _writer = File.AppendText(t == LogType.Manager ? ManagerLog : NodeLog);
             StartLogging(t);
 
         }
@@ -40,8 +40,8 @@ namespace Defcore.Distributed.Logging
         /// </summary>
         public enum LogType
         {
-            NODE,
-            MANAGER
+            Node,
+            Manager
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Defcore.Distributed.Logging
                     {
                         if (_instance == null)
                         {
-                            _instance = new Logger(LogType.NODE);
+                            _instance = new Logger(LogType.Node);
                         }
                     }
                 }
@@ -95,7 +95,7 @@ namespace Defcore.Distributed.Logging
                     {
                         if (_instance == null)
                         {
-                            _instance = new Logger(LogType.MANAGER);
+                            _instance = new Logger(LogType.Manager);
                         }
                     }
                 }

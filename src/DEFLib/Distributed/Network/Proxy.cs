@@ -13,12 +13,12 @@ namespace Defcore.Distributed.Network
     /// </summary>
     public class Proxy
     {
-        private TcpClient client;
-        public NetworkStream iostream { get; private set; }
-        public ConnectionType connection { get; set; }
-        private AbstractReceiver receiver;
-        private AbstractSender sender;
-        public int id { get; private set; }
+        private readonly TcpClient _client;
+        public NetworkStream IOStream { get; }
+        public ConnectionType Connection { get; set; }
+        private AbstractReceiver _receiver;
+        private AbstractSender _sender;
+        public int Id { get; }
 
         /// <summary>
         /// A Proxy constructor that can be passed
@@ -27,14 +27,15 @@ namespace Defcore.Distributed.Network
         /// <param name="r">An Abstract Receiver</param>
         /// <param name="s">An Abstract Sender</param>
         /// <param name="client">An initalized TcpClient</param>
+        /// <param name="id">the id of the proxy</param>
         public Proxy(AbstractReceiver r, AbstractSender s, 
             TcpClient client, int id)
         {
-            this.client = client;
-            this.id = id;
-            iostream = client.GetStream();
-            receiver = r;
-            sender = s;
+            _client = client;
+            Id = id;
+            IOStream = client.GetStream();
+            _receiver = r;
+            _sender = s;
             ConfigureSenderReceiver();
         }
 
@@ -46,6 +47,7 @@ namespace Defcore.Distributed.Network
         /// <param name="s">An Abstract Sender</param>
         /// <param name="host">host name for tcp</param>
         /// <param name="port">port number for tcp</param>
+        /// <param name="id">the id of the proxy</param>
         public Proxy(AbstractReceiver r, AbstractSender s, 
             string host, int port, int id)
         {
@@ -53,14 +55,13 @@ namespace Defcore.Distributed.Network
             {
                 // this is not supported for .NET core...
                 // this.client = new TcpClient(host, port);
-                client = new TcpClient();
-                this.id = id;
-                Socket sock = client.Client;
+                _client = new TcpClient();
+                Id = id;
                 IPAddress ipAddress = IPAddress.Parse(host);
-                client.ConnectAsync(ipAddress, port);
+                _client.ConnectAsync(ipAddress, port);
                 
                 // wait until the client is connected.
-                while (!client.Connected) { }
+                while (!_client.Connected) { }
             }
             catch(SocketException e)
             {
@@ -69,9 +70,9 @@ namespace Defcore.Distributed.Network
                 // without the socket no communication
                 // will happen
             }
-            this.iostream = client.GetStream();
-            this.receiver = r;
-            this.sender = s;
+            IOStream = _client.GetStream();
+            _receiver = r;
+            _sender = s;
             ConfigureSenderReceiver();  
         }
 
@@ -82,20 +83,20 @@ namespace Defcore.Distributed.Network
         private void ConfigureSenderReceiver()
         {
             // allow sending of messages quickly
-            client.NoDelay = true;
+            _client.NoDelay = true;
             // add ourselves to the sender and receiver
             // so that they can grab the TcpInterface
             // and use proxy methods.
-            receiver.proxy = this;
-            sender.proxy = this;
+            _receiver.Proxy = this;
+            _sender.Proxy = this;
             // add sender to list of listeners for a data receive event
-            receiver.DataReceived += sender.HandleReceiverEvent;
+            _receiver.DataReceived += _sender.HandleReceiverEvent;
             // add the receivers abstract method for additional handling
-            receiver.DataReceived += receiver.HandleAdditionalReceiving;
+            _receiver.DataReceived += _receiver.HandleAdditionalReceiving;
             // start receiving
-            receiver.Start();
+            _receiver.Start();
             // start sender
-            sender.Start();
+            _sender.Start();
             
         }
 
@@ -105,12 +106,13 @@ namespace Defcore.Distributed.Network
         /// </summary>
         /// <param name="r">new receiver</param>
         /// <param name="s">new sender</param>
+        /// <param name="c">the connection type</param>
         public void HandOffSendReceive(AbstractReceiver r, 
             AbstractSender s, ConnectionType c)
         {
-            receiver = r;
-            sender = s;
-            connection = c;
+            _receiver = r;
+            _sender = s;
+            Connection = c;
             // reconfigure
             ConfigureSenderReceiver();
         }
@@ -123,7 +125,7 @@ namespace Defcore.Distributed.Network
         {
             // Can't call close in .NET core
             // client.Close();
-            iostream.Dispose();   
+            IOStream.Dispose();   
         }
 
         /// <summary>
@@ -136,8 +138,8 @@ namespace Defcore.Distributed.Network
         /// </remarks>
         public void Join()
         {
-            receiver.Join();
-            sender.Join();
+            _receiver.Join();
+            _sender.Join();
         }
 
         /// <summary>
@@ -147,7 +149,7 @@ namespace Defcore.Distributed.Network
         /// <param name="d">the data to queue</param>
         public void QueueDataEvent(DataReceivedEventArgs d)
         {
-            receiver.OnDataReceived(d);
+            _receiver.OnDataReceived(d);
         }
 
         /// <summary>
@@ -161,12 +163,7 @@ namespace Defcore.Distributed.Network
         {
             var other = obj as Proxy;
 
-            if (other == null)
-            {
-                return false;
-            }
-
-            return this.id == other.id;
+            return Id == other?.Id;
         }
 
         /// <summary>
@@ -179,7 +176,7 @@ namespace Defcore.Distributed.Network
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return this.id.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 
@@ -188,10 +185,10 @@ namespace Defcore.Distributed.Network
     /// </summary>
     public enum ConnectionType
     {
-        DEFAULT,
-        NODE,
-        JOB,
-        QUERY
+        Default,
+        Node,
+        Job,
+        Query
     }
 
     /// <summary>
@@ -202,21 +199,17 @@ namespace Defcore.Distributed.Network
     public abstract class DataReceivedEventArgs : EventArgs
     {
         // End of a message
-        public const string endl = "end*";
-        public const char split = '|';
-        private string data;
-        public string[] args { get; }
+        public const string Endl = "end*";
+        public const char Split = '|';
+        public string[] Args { get; }
 
-        public DataReceivedEventArgs(string msg)
+        protected DataReceivedEventArgs(string msg)
         {
-            data = msg;
-            args = ParseMessage(msg);
+            Message = msg;
+            Args = ParseMessage(msg);
         }
 
-        public string message
-        {
-            get { return data; }
-        }
+        public string Message { get; }
 
         /// <summary>
         /// Split incoming data on space.
@@ -225,7 +218,7 @@ namespace Defcore.Distributed.Network
         /// <returns></returns>
         protected static string[] ParseMessage(string message)
         {
-            return message.Split(new char[] { split });
+            return message.Split(Split);
         }
 
         /// <summary>
@@ -239,9 +232,9 @@ namespace Defcore.Distributed.Network
             string message = "";
             foreach (string s in args)
             {
-                message += s + split;
+                message += s + Split;
             }
-            message += endl;
+            message += Endl;
             return message;
 
         }
@@ -253,7 +246,7 @@ namespace Defcore.Distributed.Network
         /// <returns>a proper constructed message</returns>
         public static string ConstructMessage(string arg)
         {
-            return arg + split + endl;
+            return arg + Split + Endl;
         }
     }
 
@@ -292,10 +285,9 @@ namespace Defcore.Distributed.Network
         public override void Run()
         {
             // Grab the network IO stream from the proxy.
-            NetworkStream iostream = proxy.iostream;
+            NetworkStream iostream = Proxy.IOStream;
             // setup a byte buffer
-            byte[] bytes = new byte[BUFFER_SIZE];
-            string data;
+            byte[] bytes = new byte[BufferSize];
             try
             {
                 while (!DoneReceiving)
@@ -311,9 +303,9 @@ namespace Defcore.Distributed.Network
                         else if (iostream.Read(bytes, 0, bytes.Length) > 0)
                         {
                             // byte buffer to string
-                            data = System.Text.Encoding.ASCII.GetString(bytes);
+                            var data = System.Text.Encoding.ASCII.GetString(bytes);
                             // did the message fit into the buffer?
-                            if (data.Contains(DataReceivedEventArgs.endl))
+                            if (data.Contains(DataReceivedEventArgs.Endl))
                             {
                                 // if so don't use the entire buffer (lot of extra space)
                                 int index = data.LastIndexOf('*');
@@ -364,7 +356,7 @@ namespace Defcore.Distributed.Network
                 // a normal shutdown, close the proxy
                 if (!DoneReceiving)
                 {
-                    proxy.Shutdown();
+                    Proxy.Shutdown();
                 }
                    
             }
@@ -421,12 +413,12 @@ namespace Defcore.Distributed.Network
             string message = "";
             foreach(string s in args)
             {
-                message += s + DataReceivedEventArgs.split;
+                message += s + DataReceivedEventArgs.Split;
                 Console.WriteLine(s);
             }
-            message += DataReceivedEventArgs.endl;
+            message += DataReceivedEventArgs.Endl;
             byte[] b = System.Text.Encoding.ASCII.GetBytes(message);
-            proxy.iostream.Write(b, 0, b.Length);
+            Proxy.IOStream.Write(b, 0, b.Length);
             
         }
 
@@ -439,16 +431,16 @@ namespace Defcore.Distributed.Network
     public abstract class NetworkSendReceive
     {
         // Setup constant buffer size
-        public const int BUFFER_SIZE = 1024;
-        public const int SERVER_PORT = 12345;
-        public const int IO_SLEEP = 100; // in milliseconds
-        public const int SERVER_SLEEP = 500;
+        public const int BufferSize = 1024;
+        public const int ServerPort = 12345;
+        public const int IOSleep = 100; // in milliseconds
+        public const int ServerSleep = 500;
         // Thread object to handle from socket.
-        protected Thread thread;
+        protected Thread Thread;
 
         // The proxy object that the sender/receiver is
         // sending/receiving for.
-        public Proxy proxy { protected get; set; }
+        public Proxy Proxy { protected get; set; }
 
         /// <summary>
         /// Where the actual sending/receiving happens
@@ -461,8 +453,8 @@ namespace Defcore.Distributed.Network
         /// </summary>
         public virtual void Start()
         {
-            thread = new Thread(Run);
-            thread.Start();
+            Thread = new Thread(Run);
+            Thread.Start();
         }
 
         /// <summary>
@@ -470,7 +462,7 @@ namespace Defcore.Distributed.Network
         /// </summary>
         public virtual void Shutdown()
         {
-            proxy.Shutdown();
+            Proxy.Shutdown();
         }
 
         /// <summary>
@@ -478,7 +470,7 @@ namespace Defcore.Distributed.Network
         /// </summary>
         public virtual void Join()
         {
-            thread.Join();
+            Thread.Join();
         }
     }
 

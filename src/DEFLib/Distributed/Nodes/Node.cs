@@ -22,7 +22,7 @@ namespace Defcore.Distributed.Nodes
     internal class Node
     {
         private readonly Proxy _proxy;
-        public Logger log { get; private set; }
+        public Logger Logger { get; }
 
         /// <summary>
         /// Construct a node with proxy
@@ -33,8 +33,7 @@ namespace Defcore.Distributed.Nodes
         public Node(string host, int port)
         {
             _proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port, 0);
-            log = Logger.NodeLogInstance;
-            Action d = () => { };
+            Logger = Logger.NodeLogInstance;
         }
 
         /// <summary>
@@ -44,11 +43,11 @@ namespace Defcore.Distributed.Nodes
         /// <param name="e"></param>
         public void OnUserExit(object sender, ConsoleCancelEventArgs e)
         {
-            log.Log("Node - Shuting down, user hit ctrl-c");
+            Logger.Log("Node - Shuting down, user hit ctrl-c");
             // set cancel to true so we can do our own cleanup
             e.Cancel = true;
             // queue up the quitting message to the server
-            _proxy.QueueDataEvent(new NodeComm(NodeComm.ConstructMessage("quit")));
+            _proxy.QueueDataEvent(new NodeComm(DataReceivedEventArgs.ConstructMessage("quit")));
             
             // join on both sending and receiving threads
             _proxy.Join();
@@ -68,13 +67,13 @@ namespace Defcore.Distributed.Nodes
         public static void Main(string[] args)
         {
             // try to connect to the NodeManager
-            Node n = new Node(args[0], NetworkSendReceive.SERVER_PORT);
+            Node n = new Node(args[0], NetworkSendReceive.ServerPort);
             foreach(var v in Environment.GetEnvironmentVariables().Keys)
             {
-                n.log.Log("Key: " + v + " -> " + Environment.GetEnvironmentVariables()[v]);
+                n.Logger.Log("Key: " + v + " -> " + Environment.GetEnvironmentVariables()[v]);
             }
             Console.WriteLine(Environment.ProcessorCount);
-            n.log.Log("Node: Starting");
+            n.Logger.Log("Node: Starting");
             // handle ctrl c
             Console.CancelKeyPress += n.OnUserExit;
 
@@ -127,7 +126,7 @@ namespace Defcore.Distributed.Nodes
             : base(msg)
         {
             MessageType m;
-            MessageMap.TryGetValue(args[0], out m);
+            MessageMap.TryGetValue(Args[0], out m);
             Protocol = m;
         }
     }
@@ -138,8 +137,7 @@ namespace Defcore.Distributed.Nodes
     /// </summary>
     internal class NodeReceiver : AbstractReceiver
     {
-        private readonly Node parent;
-        //private Queue<DataReceivedEventArgs> jobs = new Queue<DataReceivedEventArgs>();
+        private readonly Node _parent;
         private JobRef _job;
 
         /// <summary>
@@ -149,7 +147,7 @@ namespace Defcore.Distributed.Nodes
         /// <param name="n">container class Node</param>
         public NodeReceiver(Node n)
         {
-            parent = n;
+            _parent = n;
         }
 
         /// <summary>
@@ -171,29 +169,30 @@ namespace Defcore.Distributed.Nodes
         public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
         {
             NodeComm receivedData = e as NodeComm;
-            switch(receivedData.Protocol)
-            {
-                case NodeComm.MessageType.File:
-                    // This will block on the iostream until the file reading
-                    // is over. The next thing sent over the network must be a file.
-                    _job = JsonConvert.DeserializeObject<JobRef>(receivedData.args[1]);
-                    FileRead.ReadInWriteOut(proxy.iostream, Path.GetFileName(_job.PathToDll));
-                    //job = receivedData;
-                    // after we have finished reading the data, let node manager know
-                    OnDataReceived(new NodeComm(NodeComm.ConstructMessage("fileread")));
-                    break;
-                case NodeComm.MessageType.Execute:
-                    //TODO, this should be its own task/thread
-                    parent.log.Log("Node: executing");
-                    JobLauncher j = new JobLauncher(_job, parent);
-                    j.LaunchJob();
-                    break;
-                case NodeComm.MessageType.Shutdown:
-                case NodeComm.MessageType.Quit:
-                    // shutting down or quitting, we are done receving
-                    DoneReceiving = true;
-                    break;
-            }
+            if (receivedData != null)
+                switch(receivedData.Protocol)
+                {
+                    case NodeComm.MessageType.File:
+                        // This will block on the IOStream until the file reading
+                        // is over. The next thing sent over the network must be a file.
+                        _job = JsonConvert.DeserializeObject<JobRef>(receivedData.Args[1]);
+                        FileRead.ReadInWriteOut(Proxy.IOStream, Path.GetFileName(_job.PathToDll));
+                        //job = receivedData;
+                        // after we have finished reading the data, let node manager know
+                        OnDataReceived(new NodeComm(DataReceivedEventArgs.ConstructMessage("fileread")));
+                        break;
+                    case NodeComm.MessageType.Execute:
+                        //TODO, this should be its own task/thread
+                        _parent.Logger.Log("Node: executing");
+                        JobLauncher j = new JobLauncher(_job, _parent);
+                        j.LaunchJob();
+                        break;
+                    case NodeComm.MessageType.Shutdown:
+                    case NodeComm.MessageType.Quit:
+                        // shutting down or quitting, we are done receving
+                        DoneReceiving = true;
+                        break;
+                }
         }
     }
 
@@ -202,12 +201,12 @@ namespace Defcore.Distributed.Nodes
     /// </summary>
     internal class NodeSender : AbstractSender
     {
-        private ConcurrentQueue<NodeComm> MessageQueue = new ConcurrentQueue<NodeComm>();
-        private Node parent;
+        private readonly ConcurrentQueue<NodeComm> _messageQueue = new ConcurrentQueue<NodeComm>();
+        private readonly Node _parent;
 
         public NodeSender(Node n)
         {
-            parent = n;
+            _parent = n;
         }
 
         /// <summary>
@@ -217,8 +216,8 @@ namespace Defcore.Distributed.Nodes
         /// <param name="e"></param>
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
-            parent.log.Log("NodeSender: HandleReceiverEvent called");
-            MessageQueue.Enqueue(e as NodeComm);
+            _parent.Logger.Log("NodeSender: HandleReceiverEvent called");
+            _messageQueue.Enqueue(e as NodeComm);
         }
 
         /// <summary>
@@ -231,37 +230,37 @@ namespace Defcore.Distributed.Nodes
                 while (!DoneSending)
                 {
                     NodeComm data;
-                    if (MessageQueue.TryDequeue(out data))
+                    if (_messageQueue.TryDequeue(out data))
                     {
                         switch (data.Protocol)
                         {
                             case NodeComm.MessageType.File:
-                                parent.log.Log("Node: requesting file");
+                                _parent.Logger.Log("Node: requesting file");
                                 // ask for the file with jobid from data.args[1]
                                 //string[] s = data.args[1].Split(',');
-                                var jobId = JsonConvert.DeserializeObject<JobRef>(data.args[1]).JobId;
-                                SendMessage(new string[] { "send", jobId.ToString() });
+                                var jobId = JsonConvert.DeserializeObject<JobRef>(data.Args[1]).JobId;
+                                SendMessage(new [] { "send", jobId.ToString() });
                                 break;
                             case NodeComm.MessageType.Id:
-                                parent.log.Log("Node: sending id");
+                                _parent.Logger.Log("Node: sending id");
                                 // Send the type of communication, in this case node
-                                SendMessage(new string[] { "node" });
+                                SendMessage(new [] { "node" });
                                 break;
                             case NodeComm.MessageType.FileRead:
                                 // let the manager know we have finished reading
-                                parent.log.Log("Node: sending done reading");
-                                SendMessage(new string[] { "fileread" });
+                                _parent.Logger.Log("Node: sending done reading");
+                                SendMessage(new [] { "fileread" });
                                 break;
                             case NodeComm.MessageType.Finished:
-                                parent.log.Log("Node: finished executing sending results");
-                                SendMessage(data.args);
+                                _parent.Logger.Log("Node: finished executing sending results");
+                                SendMessage(data.Args);
                                 break;
                             case NodeComm.MessageType.Shutdown:
                                 DoneSending = true;
                                 return;
                             case NodeComm.MessageType.Quit:
-                                parent.log.Log("Sending quit");
-                                SendMessage(new string[] { "nodequit" });
+                                _parent.Logger.Log("Sending quit");
+                                SendMessage(new [] { "nodequit" });
                                 // hack to get final message to actually send...
                                 Task t = new Task(() =>
                                 {
@@ -273,15 +272,15 @@ namespace Defcore.Distributed.Nodes
                                 DoneSending = true;
                                 break;
                             default:
-                                parent.log.Log("Bad message");
-                                parent.log.Log(data.message);
+                                _parent.Logger.Log("Bad message");
+                                _parent.Logger.Log(data.Message);
                                 break;
                         }
                     }
                     else
                     {
                         // Sleep to avoid high CPU usage
-                        Thread.Sleep(NetworkSendReceive.IO_SLEEP);
+                        Thread.Sleep(IOSleep);
                     }
 
                 }
@@ -296,7 +295,7 @@ namespace Defcore.Distributed.Nodes
 
         public async void FlushSender()
         {
-            await proxy.iostream.FlushAsync();
+            await Proxy.IOStream.FlushAsync();
         }
     }
 }

@@ -1,30 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Defcore.Distributed.Network;
-
+﻿
 namespace Defcore.Distributed.Manager
 {
+    /// <summary>
+    /// A reference to a job, contains all the information
+    /// related to a job object.
+    /// </summary>
     public class JobRef
     {
-        // how many nodes did this job request
+        /// <summary>
+        /// How many nodes did the user program request
+        /// </summary>
         public int RequestedNodes { get; set; }
-        // path to the dll on the users system
+        /// <summary>
+        /// The full path to the users assembly on their system 
+        /// </summary>
         public string PathToDll { get; set; }
-        // command line arguments the user passed
+        /// <summary>
+        /// The users command line arguments to their program
+        /// </summary>
         public string[] UserArgs { get; set; }
-        // username associated with job
+        /// <summary>
+        /// The username associated with the job
+        /// </summary>
         public string Username { get; set; }
-        // the jobs id (unique)
+        /// <summary>
+        /// The job id
+        /// </summary>
         public int JobId { get; set; }
 
+        /// <summary>
+        /// The proxy id
+        /// </summary>
         public int ProxyId;
 
         // TODO might want an Enum status instead
-        private bool completed = false;
+        //private bool completed = false;
 
-        // Node state identifiers
+        /// <summary>
+        /// The section id for the node executing some
+        /// section of work. Set before runtime
+        /// </summary>
         public int SectionId { get; set; }
+        /// <summary>
+        /// The total nodes in use for this job.
+        /// Set before runtime.
+        /// </summary>
         public int TotalNodes { get; set; }
 
         /// <summary>

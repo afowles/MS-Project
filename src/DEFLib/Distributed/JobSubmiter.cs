@@ -61,7 +61,7 @@ namespace Defcore.Distributed
             jobRef.PathToDll = args[1];
             jobRef.UserArgs = userArgs;
 
-            var sj = new SubmitJob(args[0], NetworkSendReceive.SERVER_PORT, jobRef);
+            var sj = new SubmitJob(args[0], NetworkSendReceive.ServerPort, jobRef);
             Console.CancelKeyPress += sj.OnUserExit;
         }
 
@@ -100,7 +100,6 @@ namespace Defcore.Distributed
 
                 }
             );
-            string error;
             try
             {
                 // start
@@ -113,7 +112,7 @@ namespace Defcore.Distributed
             }
             catch (Exception e)
             {
-                error = e.ToString();
+                var error = e.ToString();
                 Console.WriteLine(error);
                 outputBuilder.Clear();
                 outputBuilder.Append("Unknown");
@@ -168,7 +167,7 @@ namespace Defcore.Distributed
         public JobEventArgs(string msg) : base(msg)
         {
             MessageType m = MessageType.Unknown;
-            MessageMap.TryGetValue(args[0], out m);
+            MessageMap.TryGetValue(Args[0], out m);
             Protocol = m;
         }
     }
@@ -235,7 +234,7 @@ namespace Defcore.Distributed
                             break;
                         case JobEventArgs.MessageType.Results:
                             //Console.WriteLine(data.args[1]);
-                            var j = JArray.Parse(data.args[1]);
+                            var j = JArray.Parse(data.Args[1]);
                             var userOut = JsonConvert.DeserializeObject<UserOutput>(j[0].ToString());
                             Console.WriteLine(userOut.ConsoleOutput);
 
@@ -252,7 +251,7 @@ namespace Defcore.Distributed
                             {
                                 _loader.CallMethod("RunFinalTask", new object[] { });
                                 Console.WriteLine("Done");
-                                proxy.QueueDataEvent(new JobEventArgs("shutdown"));
+                                Proxy.QueueDataEvent(new JobEventArgs("shutdown"));
                                 Environment.Exit(0);
                             }
                             break;
@@ -280,7 +279,7 @@ namespace Defcore.Distributed
 
         public async void FlushSender()
         {
-            await proxy.iostream.FlushAsync();
+            await Proxy.IOStream.FlushAsync();
         }
     }
 }

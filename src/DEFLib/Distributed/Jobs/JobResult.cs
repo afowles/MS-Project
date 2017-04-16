@@ -3,25 +3,16 @@
 namespace Defcore.Distributed.Jobs
 {
     /// <summary>
-    /// Job Result
+    /// A class to represent a result from a job
     /// </summary>
     public class JobResult
     {
-        public int JobId { get; private set; }
+        public int JobId { get; set; }
 
         // Custom json handle settings
         private static readonly JsonSerializerSettings Settings 
             = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
 
-        /// <summary>
-        /// A job result object associated with the
-        /// job id it came from.
-        /// </summary>
-        /// <param name="id"></param>
-        public JobResult(int id)
-        {
-            JobId = id;
-        }
 
         /// <summary>
         /// 

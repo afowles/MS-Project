@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 
-using Defcore.Distributed.Network;
-using System;
 
 namespace Defcore.Distributed.Manager
 {
@@ -12,58 +10,57 @@ namespace Defcore.Distributed.Manager
     internal class JobScheduler
     {
         // manager associated with JobScheduler
-        private NodeManager manager;
-
+        private readonly NodeManager _manager;
         // Could use a concurrent dictionary but other variables
         // need a lock anyway, keep track of users and their jobs
-        private Dictionary<string, List<JobRef>> Jobs;
+        private readonly Dictionary<string, List<JobRef>> _jobs;
         // the queue for waiting jobs, TODO: maybe make priority queue instead
-        private Queue<JobRef> JobQueue;
+        private readonly Queue<JobRef> _jobQueue;
         
         public int JobCount { get; private set; }
 
         // lock object for thread safe operations
-        private object JobLock = new object();
+        private readonly object _jobLock = new object();
 
         // keeps the scheduler alive
-        private bool DoneScheduling;
+        private bool _doneScheduling;
 
         // Thread that acts as the independent scheudler
-        private Thread thread;
+        private Thread _thread;
         // id tracker for jobs
-        private static int id;
+        private static int _id;
 
         public JobScheduler(NodeManager m)
         {
             JobCount = 0;
-            Jobs = new Dictionary<string, List<JobRef>>();
-            JobQueue = new Queue<JobRef>();
-            DoneScheduling = false;
-            manager = m;
-            id = 1;
+            _jobs = new Dictionary<string, List<JobRef>>();
+            _jobQueue = new Queue<JobRef>();
+            _doneScheduling = false;
+            _manager = m;
+            _id = 1;
         }
 
         public void Start()
         {
-            thread = new Thread(Run);
-            thread.Start();
+            _thread = new Thread(Run);
+            _thread.Start();
         }
 
         public void Stop()
         {
-            DoneScheduling = true;
-            thread.Join();
+            _doneScheduling = true;
+            _thread.Join();
         }
 
         public void Run()
         {
-            while(!DoneScheduling)
+            while(!_doneScheduling)
             {
                 if (AvailableResources())
                 {
-                    lock (JobLock)
+                    lock (_jobLock)
                     {
-                        manager.SendJobOut(JobQueue.Dequeue());
+                        _manager.SendJobOut(_jobQueue.Dequeue());
                     }
                 }
                 else
@@ -87,8 +84,8 @@ namespace Defcore.Distributed.Manager
         private bool AvailableResources()
         {
             // if we have at least one job
-            if (JobQueue.Count > 0 &&
-                manager.GetAvailableNodes() >= JobQueue.Peek().RequestedNodes)
+            if (_jobQueue.Count > 0 &&
+                _manager.GetAvailableNodes() >= _jobQueue.Peek().RequestedNodes)
             {
                 return true;
             }
@@ -106,39 +103,39 @@ namespace Defcore.Distributed.Manager
         /// <param name="proxyId">who the job is for</param>
         public void AddJob(JobRef job, int proxyId)
         {
-            lock(JobLock)
+            lock(_jobLock)
             {
                 //JobRef j = new JobRef(job, id++, proxy_id);
                 // debug
-                job.JobId = id++;
+                job.JobId = _id++;
                 job.ProxyId = proxyId;
-                manager.log.Log("Adding job: " + job);
+                _manager.Logger.Log("Adding job: " + job);
                 // add the job to the queue
-                JobQueue.Enqueue(job);
+                _jobQueue.Enqueue(job);
                 // keep track of users and their job(s)
                 // if a user has already submitted a job before
-                if (Jobs.ContainsKey(job.Username))
+                if (_jobs.ContainsKey(job.Username))
                 { 
                     // add this job to their list
-                    Jobs[job.Username].Add(job);
+                    _jobs[job.Username].Add(job);
                 }
                 else
                 {
                     var jl = new List<JobRef> {job};
-                    Jobs.Add(job.Username, jl);
+                    _jobs.Add(job.Username, jl);
                 }
                 
                 JobCount++;
             }
         }
 
-        public JobRef GetJob(int job_id)
+        public JobRef GetJob(int jobId)
         {
-            foreach(List<JobRef> jobs in Jobs.Values )
+            foreach(List<JobRef> jobs in _jobs.Values )
             {
                 foreach(JobRef job in jobs)
                 {
-                    if (job.JobId == job_id)
+                    if (job.JobId == jobId)
                     {
                         return job;
                     }

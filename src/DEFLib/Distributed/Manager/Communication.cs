@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Defcore.Distributed.Network;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.IO;
 
 using Defcore.Distributed.IO;
+using Defcore.Distributed.Network;
 using Newtonsoft.Json;
 
 namespace Defcore.Distributed.Manager
@@ -17,7 +17,7 @@ namespace Defcore.Distributed.Manager
     internal class NodeManagerComm : DataReceivedEventArgs
     {
         public MessageType Protocol { get; }
-        private static Dictionary<string, MessageType> MessageMap =
+        private static readonly Dictionary<string, MessageType> MessageMap =
             new Dictionary<string, MessageType> {
                 { "send", MessageType.Send },
                 { "job", MessageType.NewJob },
@@ -49,8 +49,8 @@ namespace Defcore.Distributed.Manager
         public NodeManagerComm(string msg)
             : base(msg)
         {
-            MessageType m = MessageType.Unknown;
-            MessageMap.TryGetValue(args[0], out m);
+            MessageType m;
+            MessageMap.TryGetValue(Args[0], out m);
             Protocol = m;
         }
 
@@ -80,7 +80,8 @@ namespace Defcore.Distributed.Manager
         /// <param name="e">data event object from</param>
         public override void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)
         {
-            NodeManagerComm data = e as NodeManagerComm;
+            var data = e as NodeManagerComm;
+            if (data == null) return;
             switch(data.Protocol)
             {
                 case NodeManagerComm.MessageType.Shutdown:
@@ -88,6 +89,10 @@ namespace Defcore.Distributed.Manager
                 case NodeManagerComm.MessageType.ConnectionQuit:
                     DoneReceiving = true;
                     break;
+                case NodeManagerComm.MessageType.Unknown:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }
@@ -97,9 +102,9 @@ namespace Defcore.Distributed.Manager
     /// </summary>
     internal class NodeManagerSender : AbstractSender
     {
-        private ConcurrentQueue<DataReceivedEventArgs> MessageQueue 
+        private readonly ConcurrentQueue<DataReceivedEventArgs> _messageQueue 
             = new ConcurrentQueue<DataReceivedEventArgs>();
-        public NodeManager manager;
+        public NodeManager Manager;
 
         /// <summary>
         /// Constructor for NodeManagerSender
@@ -107,7 +112,7 @@ namespace Defcore.Distributed.Manager
         /// <param name="manager">parent container class</param>
         public NodeManagerSender(NodeManager manager)
         {
-            this.manager = manager;
+            Manager = manager;
         }
 
         /// <summary>
@@ -118,7 +123,7 @@ namespace Defcore.Distributed.Manager
         /// <param name="e"></param>
         public override void HandleReceiverEvent(object sender, DataReceivedEventArgs e)
         {
-            MessageQueue.Enqueue(e);
+            _messageQueue.Enqueue(e);
         }
 
         /// <summary>
@@ -131,7 +136,7 @@ namespace Defcore.Distributed.Manager
                 while (!DoneSending)
                 {
                     DataReceivedEventArgs data;
-                    if (MessageQueue.TryDequeue(out data))
+                    if (_messageQueue.TryDequeue(out data))
                     {
                         if (data is NodeManagerComm)
                         {
@@ -147,7 +152,7 @@ namespace Defcore.Distributed.Manager
             }
             catch(IOException e)
             {
-                manager.log.Log("NodeManagerSender caught exception: " + e.ToString());
+                Manager.Logger.Log("NodeManagerSender caught exception: " + e);
             }
         }
 
@@ -156,20 +161,20 @@ namespace Defcore.Distributed.Manager
             switch (data.Protocol)
             {
                 case NodeManagerComm.MessageType.SubmitJob:
-                    SendMessage(new string[] { "submit" });
+                    SendMessage(new [] { "submit" });
                     break;
                 // sent by a job file
                 case NodeManagerComm.MessageType.NewJob:
-                    Console.WriteLine("Received Job File: " + data.args[1]);
+                    Console.WriteLine("Received Job File: " + data.Args[1]);
                     // add it to the list of jobs for later
-                    var jobRef = JsonConvert.DeserializeObject<JobRef>(data.args[1]);
-                    manager.Scheduler.AddJob(jobRef, proxy.id);
-                    Console.WriteLine("Proxy id is:" + proxy.id);
+                    var jobRef = JsonConvert.DeserializeObject<JobRef>(data.Args[1]);
+                    Manager.Scheduler.AddJob(jobRef, Proxy.Id);
+                    Console.WriteLine("Proxy id is:" + Proxy.Id);
                     break;
 
                 case NodeManagerComm.MessageType.File:
                     Console.WriteLine("Node Manager: sending file info");
-                    SendMessage(data.args);
+                    SendMessage(data.Args);
                     break;
 
                 // the machine that submitted the job file
@@ -177,16 +182,16 @@ namespace Defcore.Distributed.Manager
                 // manager is running on as of now.
                 case NodeManagerComm.MessageType.Send:
 
-                    var jobId = int.Parse(data.args[1]);
+                    var jobId = int.Parse(data.Args[1]);
                     //var job = JsonConvert.DeserializeObject<JobRef>(data.args[1]);
-                    var j = manager.Scheduler.GetJob(jobId);
+                    var j = Manager.Scheduler.GetJob(jobId);
                     if (j != null)
                     {
                         Console.WriteLine("Sending file: " + Path.GetFileName(j.PathToDll));
                         //bool found = manager.Scheduler.GetJob(Path.GetFileName(data.args[1]), out d);
                         Console.WriteLine("Writing file: " + j.PathToDll);
-                        FileWrite.WriteOut(proxy.iostream, j.PathToDll);
-                        proxy.iostream.Flush();
+                        FileWrite.WriteOut(Proxy.IOStream, j.PathToDll);
+                        Proxy.IOStream.Flush();
                         Console.WriteLine("Sent file");
                     }
                     else
@@ -196,29 +201,29 @@ namespace Defcore.Distributed.Manager
                     break;
                 case NodeManagerComm.MessageType.FileRead:
                     Console.WriteLine("Node Manageer: Node has read file");
-                    SendMessage(new string[] { "execute" });
+                    SendMessage(new [] { "execute" });
                     break;
                 case NodeManagerComm.MessageType.NodeFinished:
-                    manager.ConnectedNodes[proxy.id].busy = false;
-                    manager.SendJobResults(data);
+                    Manager.ConnectedNodes[Proxy.Id].Busy = false;
+                    Manager.SendJobResults(data);
                     break;
                 case NodeManagerComm.MessageType.Results:
                     // forward along the results to the user
-                    SendMessage(data.args);
+                    SendMessage(data.Args);
                     break;
                 case NodeManagerComm.MessageType.NodeQuit:
                     // remove the entry associated with
                     // this proxy's id
-                    manager.ConnectedNodes.Remove(proxy.id);
+                    Manager.ConnectedNodes.Remove(Proxy.Id);
                     // goto case is not harmful (like a regular 'goto' in other languages)
                     goto case NodeManagerComm.MessageType.ConnectionQuit;
                 case NodeManagerComm.MessageType.ConnectionQuit:
                     // remove the connection
-                    manager.Connections.Remove(proxy);
+                    Manager.Connections.Remove(Proxy);
                     DoneSending = true;
                     break;
                 case NodeManagerComm.MessageType.Shutdown:
-                    SendMessage(new string[] { "shutdown" });
+                    SendMessage(new [] { "shutdown" });
                     // shutdown after we have sent the message
                     DoneSending = true;
                     break;

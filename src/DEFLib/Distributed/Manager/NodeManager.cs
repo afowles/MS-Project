@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.IO;
 
 using Defcore.Distributed.Network;
 using Defcore.Distributed.Logging;
@@ -14,10 +13,6 @@ using Newtonsoft.Json;
 [assembly: InternalsVisibleTo("StartManager")]
 [assembly: InternalsVisibleTo("defcore")]
 
-/// <summary>
-/// Manager namespace contains the classes to handle
-/// the logic involved with all aspects of the node server.
-/// </summary>
 namespace Defcore.Distributed.Manager
 {
 
@@ -27,28 +22,28 @@ namespace Defcore.Distributed.Manager
     /// </summary>
     internal class NodeManager
     {
-        private TcpListener server;
+        private readonly TcpListener _server;
         // Keeps the while loop running
-        private bool DoneAccepting;
+        private bool _doneAccepting;
         // Indicates whether we still want to accept
         // connections. Different than DoneAccepting.
-        private bool AcceptingConnections;
-        private static string IpAddr = "";
+        private bool _acceptingConnections;
+        private static string _ipAddr = "";
         
         // Keep track of all connections, not just Nodes
         public List<Proxy> Connections;
         // Next Id for a proxy
-        private static int NextId;
+        private static int _nextId;
 
         // Thread-safe, only accessed within lock
-        private object NodeLock = new object();
+        private readonly object _nodeLock = new object();
         public Dictionary<int, NodeRef> ConnectedNodes;
 
         // This is thread safe internally
-        public JobScheduler Scheduler { get; private set;}
+        public JobScheduler Scheduler { get;}
 
         // Handles Logging
-        public Logger log { get; private set; }
+        public Logger Logger { get; private set; }
 
         /// <summary>
         /// Creates a server listening
@@ -58,21 +53,21 @@ namespace Defcore.Distributed.Manager
         public NodeManager(string ip)
         {
             // create logging
-            log = Logger.ManagerLogInstance;
+            Logger = Logger.ManagerLogInstance;
             Connections = new List<Proxy>();
             ConnectedNodes = new Dictionary<int, NodeRef>();
-            NextId = 1;
+            _nextId = 1;
             // Create and start up a job scheduler
             Scheduler = new JobScheduler(this);
             Scheduler.Start();
             try
             {
                 IPAddress localAddr = IPAddress.Parse(ip);
-                server = new TcpListener(localAddr, NetworkSendReceive.SERVER_PORT);
+                _server = new TcpListener(localAddr, NetworkSendReceive.ServerPort);
             }
             catch (SocketException e)
             {
-                log.Log(String.Format("SocketException: {0}", e));
+                Logger.Log(String.Format("SocketException: {0}", e));
             }
         }
 
@@ -82,10 +77,10 @@ namespace Defcore.Distributed.Manager
         /// </summary>
         public async Task StartListening()
         {
-            log.Log("Starting Server");
-            DoneAccepting = false;
-            AcceptingConnections = true;
-            server.Start();
+            Logger.Log("Starting Server");
+            _doneAccepting = false;
+            _acceptingConnections = true;
+            _server.Start();
             await AcceptConnections();
         }
 
@@ -94,8 +89,8 @@ namespace Defcore.Distributed.Manager
         /// </summary>
         public void StopListening()
         {
-            DoneAccepting = true;
-            server.Stop();
+            _doneAccepting = true;
+            _server.Stop();
         }
 
         /// <summary>
@@ -105,13 +100,13 @@ namespace Defcore.Distributed.Manager
         /// <returns></returns>
         private async Task AcceptConnections()
         {
-            while (!DoneAccepting)
+            while (!_doneAccepting)
             {
                 // check if we have a pending connection
-                if (!server.Pending())
+                if (!_server.Pending())
                 {
                     // we don't so wait a bit
-                    Thread.Sleep(NetworkSendReceive.SERVER_SLEEP);
+                    Thread.Sleep(NetworkSendReceive.ServerSleep);
                     // skip to top
                     continue;
                 }
@@ -119,13 +114,13 @@ namespace Defcore.Distributed.Manager
                 // but not quite done with the while loop. During
                 // cleanup we do not want to accept connections
                 // but still need the server to be "running"
-                if (AcceptingConnections)
+                if (_acceptingConnections)
                 {
                     // await the client connection, this blocks
-                    var client = await server.AcceptTcpClientAsync();
-                    log.Log("Connected!");
+                    var client = await _server.AcceptTcpClientAsync();
+                    Logger.Log("Connected!");
                     // create a default proxy
-                    var proxy = new Proxy(new DefaultReceiver(this), new DefaultSender(this), client, NextId++);
+                    var proxy = new Proxy(new DefaultReceiver(this), new DefaultSender(), client, _nextId++);
                     // add it to the list of connections
                     Connections.Add(proxy);
                 }  
@@ -136,10 +131,10 @@ namespace Defcore.Distributed.Manager
         public static void Main()
         {     
             // Grab the IP address
-            Task getIp = GetLocalIPAddress();
+            Task getIp = GetLocalIpAddress();
             getIp.Wait();
             // create a NodeManager
-            NodeManager m = new NodeManager(IpAddr);
+            NodeManager m = new NodeManager(_ipAddr);
             // Setup handle of ctrl c
             Console.CancelKeyPress += m.OnUserExit;
             // This should never finish until StillActive is set
@@ -151,20 +146,19 @@ namespace Defcore.Distributed.Manager
         /// <summary>
         /// Gets the local IP address
         /// </summary>
-        public static async Task GetLocalIPAddress()
+        public static async Task GetLocalIpAddress()
         {
-            IPHostEntry host;
-            string localIP = "";
-            host = await Dns.GetHostEntryAsync(Dns.GetHostName());
+            string localIp = "";
+            var host = await Dns.GetHostEntryAsync(Dns.GetHostName());
             foreach (IPAddress ip in host.AddressList)
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    localIP = ip.ToString();
+                    localIp = ip.ToString();
                 }
             }
-            IpAddr = localIP;
-            Console.WriteLine("NodeManager IP is: " + localIP);
+            _ipAddr = localIp;
+            Console.WriteLine("NodeManager IP is: " + localIp);
         }
 
         /// <summary>
@@ -179,7 +173,7 @@ namespace Defcore.Distributed.Manager
             // set this to true so that we do not exit immediately
             e.Cancel = true;
             // don't allow any more connections while we clean up.
-            AcceptingConnections = false;
+            _acceptingConnections = false;
             // stop the scheduler
             Scheduler.Stop();
             // Queue up the kill message
@@ -203,9 +197,9 @@ namespace Defcore.Distributed.Manager
         /// <param name="p"></param>
         public void AddConnectedNode(Proxy p)
         {
-            lock(NodeLock)
+            lock(_nodeLock)
             {
-                ConnectedNodes.Add(p.id, new NodeRef(p, p.id));
+                ConnectedNodes.Add(p.Id, new NodeRef(p, p.Id));
             }
         }
 
@@ -215,7 +209,7 @@ namespace Defcore.Distributed.Manager
         /// <param name="job"></param>
         public void SendJobOut(JobRef job)
         {
-            lock(NodeLock)
+            lock(_nodeLock)
             {
                 var sectionId = 0;
                 var reqNodes = job.RequestedNodes;
@@ -229,7 +223,7 @@ namespace Defcore.Distributed.Manager
                     job.SectionId = sectionId;
                     job.TotalNodes = ConnectedNodes.Values.Count;
                     node.QueueDataEvent(new NodeManagerComm("file|" + JsonConvert.SerializeObject(job)));
-                    node.busy = true;
+                    node.Busy = true;
                     reqNodes--;
                     sectionId++;
                 }
@@ -244,12 +238,12 @@ namespace Defcore.Distributed.Manager
         public int GetAvailableNodes()
         {
             int available = 0;
-            lock(NodeLock)
+            lock(_nodeLock)
             {
                 //TODO: this is not a great approach, this is called often
                 foreach (NodeRef node in ConnectedNodes.Values)
                 {
-                    if (!node.busy)
+                    if (!node.Busy)
                     {
                         available += 1;
                     }
@@ -264,12 +258,12 @@ namespace Defcore.Distributed.Manager
         /// <param name="data"></param>
         public void SendJobResults(DataReceivedEventArgs data)
         {
-            JobRef j = Scheduler.GetJob(int.Parse(data.args[1]));
+            JobRef j = Scheduler.GetJob(int.Parse(data.Args[1]));
             foreach(Proxy p in Connections)
             {
-                if (p.id == j.ProxyId)
+                if (p.Id == j.ProxyId)
                 {
-                    p.QueueDataEvent(new NodeManagerComm("results|" + data.args[2]));
+                    p.QueueDataEvent(new NodeManagerComm("results|" + data.Args[2]));
                 }
             }
             
@@ -279,21 +273,21 @@ namespace Defcore.Distributed.Manager
 
     internal class NodeRef
     {
-        private Proxy proxy; 
-        public int id { get; private set; }
+        private readonly Proxy _proxy; 
+        public int Id { get; private set; }
 
-        public bool busy;
+        public bool Busy;
 
-        public NodeRef(Proxy p, int id_)
+        public NodeRef(Proxy p, int id)
         {
-            proxy = p;
-            id = id_;
-            busy = false;
+            _proxy = p;
+            Id = id;
+            Busy = false;
         }
 
         public void QueueDataEvent(DataReceivedEventArgs d)
         {
-            proxy.QueueDataEvent(d);
+            _proxy.QueueDataEvent(d);
         }
     }
 
