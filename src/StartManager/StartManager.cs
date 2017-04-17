@@ -22,7 +22,7 @@ namespace StartManager
         public string s = "works";
 
         public Test(int id) : 
-            base(id)
+            base()
         {
         }
     }

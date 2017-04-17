@@ -2,13 +2,12 @@
 using System;
 using Defcore.Distributed.Assembly;
 
-#if true
 namespace Examples.CodeFragments
 {
 
     internal class TestCoreLoader
     {
-        public static void Main(string[] args)
+        public static void Main2(string[] args)
         {
             CoreLoader<Foo> foo = new CoreLoader<Foo>("PathToDllContainingFoo");
             int x = (int)foo.GetProperty("MyIntegerProperty");
@@ -31,4 +30,3 @@ namespace Examples.CodeFragments
     }
 
 }
-#endif
