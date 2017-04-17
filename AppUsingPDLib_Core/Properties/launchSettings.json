@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "AppUsingPDLib_Core": {
-      "commandName": "Project",
-      "commandLineArgs": "1"
-    }
-  }
-}
