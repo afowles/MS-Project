@@ -5,11 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Namespace Defcore.Distributed.Logging
-   | defcore </title>
+    <title>Core Loader | defcore </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Namespace Defcore.Distributed.Logging
-   | defcore ">
+    <meta name="title" content="Core Loader | defcore ">
     <meta name="generator" content="docfx 2.15.5.0">
     
     <link rel="shortcut icon" href="../icons/favicon.ico">
@@ -57,7 +55,7 @@
           </div>
         </div>
       </header>
-      <div role="main" class="container body-content">
+      <div class="container body-content">
         
         <div id="search-results">
           <div class="search-list"></div>
@@ -75,25 +73,45 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="core-loader">Core Loader</h1>
               
-              <h1 id="Defcore_Distributed_Logging" data-uid="Defcore.Distributed.Logging">Namespace Defcore.Distributed.Logging
-              </h1>
-              <div class="markdown level0 summary"></div>
-              <div class="markdown level0 conceptual"></div>
-              <div class="markdown level0 remarks"></div>
-                <h3 id="classes">Classes
-              </h3>
-                  <h4><a class="xref" href="Defcore.Distributed.Logging.Logger.html">Logger</a></h4>
-                  <section><p>Class to handle logging, Logger is a singleton</p>
-</section>
-                        </article>
+<p>For documentation see <a href="https://acf5118.github.io/MS-Project/api/Defcore.Distributed.Assembly.CoreLoader.html">Core Loader</a></p>
+<p>The CoreLoader<t> class allows you to load up and initialize a class from an assembly (dll)
+and call methods and properties out of that class. <p>
+<p>Say you had a class Foo that looked like</p>
+<pre><code class="lang-csharp">public class Foo
+{
+    public int MyIntegerProperty { get; set; }
+
+    public void MySimpleMethod() { Console.WriteLine(&quot;Simple enough&quot;); }
+
+    public string MyLessSimpleMethod(int arg1, string arg2, double arg3)
+    {
+        return arg2 + arg1 + arg3;
+    }
+}
+</code></pre><p>Using Core Loader you could call methods and properties out of that class.</p>
+<pre><code class="lang-csharp">public static void Main(string[] args)
+{
+    CoreLoader&lt;Foo&gt; foo = new CoreLoader&lt;Foo&gt;(&quot;PathToDllContainingFoo&quot;);
+    int x = (int)foo.GetProperty(&quot;MyIntegerProperty&quot;);
+    foo.CallMethod(&quot;MySimpleMethod&quot;, new object[] {});
+    var result = (string) foo.CallMethod(
+        &quot;MyLessSimpleMethod&quot;, new object[] {1, &quot;hello&quot;, 3.4});
+}
+</code></pre><p>The Core Loader is how the defcore system calls methods out of a Job class. </p>
+</t>
+            </article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
+                  <li>
+                    <a href="https://github.com/acf5118/MS-Project/blob/master/docs/articles/core_loader.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">

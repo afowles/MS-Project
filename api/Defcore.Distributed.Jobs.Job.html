@@ -80,7 +80,10 @@
               
               <h1 id="Defcore_Distributed_Jobs_Job" data-uid="Defcore.Distributed.Jobs.Job">Class Job
               </h1>
-              <div class="markdown level0 summary"></div>
+              <div class="markdown level0 summary"><p>The abstract class that allows a user program to
+operate within the distributed system setup by defcore.
+Users must extend this class within their program exactly once.</p>
+</div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
@@ -123,7 +126,8 @@
               
               <a id="Defcore_Distributed_Jobs_Job__ctor_" data-uid="Defcore.Distributed.Jobs.Job.#ctor*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job__ctor" data-uid="Defcore.Distributed.Jobs.Job.#ctor">Job()</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Empty constructor for a job</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -159,6 +163,35 @@
               </h3>
               
               
+              <a id="Defcore_Distributed_Jobs_Job_RequestedNodes_" data-uid="Defcore.Distributed.Jobs.Job.RequestedNodes*"></a>
+              <h4 id="Defcore_Distributed_Jobs_Job_RequestedNodes" data-uid="Defcore.Distributed.Jobs.Job.RequestedNodes">RequestedNodes</h4>
+              <div class="markdown level1 summary"><p>The number of nodes a user wishes to request for their program
+This number will default to the total number of nodes 
+present if too large a number is provided.
+Defaults to 1.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public int RequestedNodes { get; set; }</code></pre>
+              </div>
+              <h5 class="propertyValue">Property Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
               <a id="Defcore_Distributed_Jobs_Job_Results_" data-uid="Defcore.Distributed.Jobs.Job.Results*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job_Results" data-uid="Defcore.Distributed.Jobs.Job.Results">Results</h4>
               <div class="markdown level1 summary"></div>
@@ -188,7 +221,8 @@
               
               <a id="Defcore_Distributed_Jobs_Job_AddResult_" data-uid="Defcore.Distributed.Jobs.Job.AddResult*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job_AddResult_Defcore_Distributed_Jobs_JobResult_" data-uid="Defcore.Distributed.Jobs.Job.AddResult(Defcore.Distributed.Jobs.JobResult)">AddResult(JobResult)</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Add a JobResult to the list of results</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -207,7 +241,8 @@
                   <tr>
                     <td><a class="xref" href="Defcore.Distributed.Jobs.JobResult.html">JobResult</a></td>
                     <td><span class="parametername">result</span></td>
-                    <td></td>
+                    <td><p>The job result</p>
+</td>
                   </tr>
                 </tbody>
               </table>
@@ -215,7 +250,8 @@
               
               <a id="Defcore_Distributed_Jobs_Job_AddTask_" data-uid="Defcore.Distributed.Jobs.Job.AddTask*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job_AddTask_Defcore_Distributed_Jobs_JobTask_" data-uid="Defcore.Distributed.Jobs.Job.AddTask(Defcore.Distributed.Jobs.JobTask)">AddTask(JobTask)</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Add a JobTask to the list to be executed.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -234,7 +270,8 @@
                   <tr>
                     <td><a class="xref" href="Defcore.Distributed.Jobs.JobTask.html">JobTask</a></td>
                     <td><span class="parametername">task</span></td>
-                    <td></td>
+                    <td><p>The jobtask to add</p>
+</td>
                   </tr>
                 </tbody>
               </table>
@@ -242,7 +279,9 @@
               
               <a id="Defcore_Distributed_Jobs_Job_CompileResults_" data-uid="Defcore.Distributed.Jobs.Job.CompileResults*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job_CompileResults" data-uid="Defcore.Distributed.Jobs.Job.CompileResults">CompileResults()</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Add all the results from a task to this Jobs
+result list.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -252,7 +291,8 @@
               
               <a id="Defcore_Distributed_Jobs_Job_GetClassName_" data-uid="Defcore.Distributed.Jobs.Job.GetClassName*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job_GetClassName" data-uid="Defcore.Distributed.Jobs.Job.GetClassName">GetClassName()</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Get the actual class name of this class.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -277,7 +317,8 @@
               
               <a id="Defcore_Distributed_Jobs_Job_GetNumberTasks_" data-uid="Defcore.Distributed.Jobs.Job.GetNumberTasks*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job_GetNumberTasks" data-uid="Defcore.Distributed.Jobs.Job.GetNumberTasks">GetNumberTasks()</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Get the nuber of tasks setup</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -302,7 +343,8 @@
               
               <a id="Defcore_Distributed_Jobs_Job_GetSchedule_" data-uid="Defcore.Distributed.Jobs.Job.GetSchedule*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job_GetSchedule" data-uid="Defcore.Distributed.Jobs.Job.GetSchedule">GetSchedule()</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Get the task execution schedule</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -327,7 +369,10 @@
               
               <a id="Defcore_Distributed_Jobs_Job_Main_" data-uid="Defcore.Distributed.Jobs.Job.Main*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job_Main_System_String___" data-uid="Defcore.Distributed.Jobs.Job.Main(System.String[])">Main(String[])</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>The main program to be run to setup some number
+of task programs. It is advised that large computations
+are not executed within here but rather the job task objects.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -352,9 +397,41 @@
               </table>
               
               
+              <a id="Defcore_Distributed_Jobs_Job_RunFinalTask_" data-uid="Defcore.Distributed.Jobs.Job.RunFinalTask*"></a>
+              <h4 id="Defcore_Distributed_Jobs_Job_RunFinalTask" data-uid="Defcore.Distributed.Jobs.Job.RunFinalTask">RunFinalTask()</h4>
+              <div class="markdown level1 summary"><p>Run a final task at the end, on the node that
+submitted the job.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public virtual void RunFinalTask()</code></pre>
+              </div>
+              <h5 id="Defcore_Distributed_Jobs_Job_RunFinalTask_remarks">Remarks</h5>
+              <div class="markdown level1 remarks"><p>This method will be called once all nodes
+have finished and will be run on the node that submitted
+the job.</p>
+</div>
+              
+              
+              <a id="Defcore_Distributed_Jobs_Job_RunOnce_" data-uid="Defcore.Distributed.Jobs.Job.RunOnce*"></a>
+              <h4 id="Defcore_Distributed_Jobs_Job_RunOnce" data-uid="Defcore.Distributed.Jobs.Job.RunOnce">RunOnce()</h4>
+              <div class="markdown level1 summary"><p>Run a section of code on exactly one node</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public virtual void RunOnce()</code></pre>
+              </div>
+              <h5 id="Defcore_Distributed_Jobs_Job_RunOnce_remarks">Remarks</h5>
+              <div class="markdown level1 remarks"><p>This method will be called once by only one node</p>
+</div>
+              
+              
               <a id="Defcore_Distributed_Jobs_Job_StartTask_" data-uid="Defcore.Distributed.Jobs.Job.StartTask*"></a>
               <h4 id="Defcore_Distributed_Jobs_Job_StartTask_System_Int32_" data-uid="Defcore.Distributed.Jobs.Job.StartTask(System.Int32)">StartTask(Int32)</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Start a job task at the given index</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -373,7 +450,9 @@
                   <tr>
                     <td><span class="xref">System.Int32</span></td>
                     <td><span class="parametername">index</span></td>
-                    <td></td>
+                    <td><p>index of the jobtask 
+within the list of tasks</p>
+</td>
                   </tr>
                 </tbody>
               </table>

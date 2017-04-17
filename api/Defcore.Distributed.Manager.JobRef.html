@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class AbstractReceiver
+    <title>Class JobRef
    | defcore </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class AbstractReceiver
+    <meta name="title" content="Class JobRef
    | defcore ">
     <meta name="generator" content="docfx 2.15.5.0">
     
@@ -78,51 +78,19 @@
             <article class="content wrap" id="_content">
               
               
-              <h1 id="Defcore_Distributed_Network_AbstractReceiver" data-uid="Defcore.Distributed.Network.AbstractReceiver">Class AbstractReceiver
+              <h1 id="Defcore_Distributed_Manager_JobRef" data-uid="Defcore.Distributed.Manager.JobRef">Class JobRef
               </h1>
-              <div class="markdown level0 summary"><p>Provides the methods
-nessesary to be the receiving side of a proxy
-object. </p>
+              <div class="markdown level0 summary"><p>A reference to a job, contains all the information
+related to a job object.</p>
 </div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
                   <div class="level0"><span class="xref">System.Object</span></div>
-                  <div class="level1"><a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html">NetworkSendReceive</a></div>
-                  <div class="level2"><span class="xref">AbstractReceiver</span></div>
+                  <div class="level1"><span class="xref">JobRef</span></div>
               </div>
               <div class="inheritedMembers">
                 <h5>Inherited Members</h5>
-                <div>
-                  <a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_BufferSize">NetworkSendReceive.BufferSize</a>
-                </div>
-                <div>
-                  <a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_ServerPort">NetworkSendReceive.ServerPort</a>
-                </div>
-                <div>
-                  <a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_IOSleep">NetworkSendReceive.IOSleep</a>
-                </div>
-                <div>
-                  <a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_ServerSleep">NetworkSendReceive.ServerSleep</a>
-                </div>
-                <div>
-                  <a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Thread">NetworkSendReceive.Thread</a>
-                </div>
-                <div>
-                  <a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Proxy">NetworkSendReceive.Proxy</a>
-                </div>
-                <div>
-                  <a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Start">NetworkSendReceive.Start()</a>
-                </div>
-                <div>
-                  <a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Shutdown">NetworkSendReceive.Shutdown()</a>
-                </div>
-                <div>
-                  <a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Join">NetworkSendReceive.Join()</a>
-                </div>
-                <div>
-                  <span class="xref">System.Object.ToString()</span>
-                </div>
                 <div>
                   <span class="xref">System.Object.Equals(System.Object)</span>
                 </div>
@@ -142,22 +110,23 @@ object. </p>
                   <span class="xref">System.Object.MemberwiseClone()</span>
                 </div>
               </div>
-              <h6><strong>Namespace</strong>:Defcore.Distributed.Network</h6>
+              <h6><strong>Namespace</strong>:Defcore.Distributed.Manager</h6>
               <h6><strong>Assembly</strong>:cs.temp.dll.dll</h6>
-              <h5 id="Defcore_Distributed_Network_AbstractReceiver_syntax">Syntax</h5>
+              <h5 id="Defcore_Distributed_Manager_JobRef_syntax">Syntax</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public abstract class AbstractReceiver : NetworkSendReceive</code></pre>
+                <pre><code class="lang-csharp hljs">public class JobRef</code></pre>
               </div>
               <h3 id="fields">Fields
               </h3>
               
               
-              <h4 id="Defcore_Distributed_Network_AbstractReceiver_DoneReceiving" data-uid="Defcore.Distributed.Network.AbstractReceiver.DoneReceiving">DoneReceiving</h4>
-              <div class="markdown level1 summary"></div>
+              <h4 id="Defcore_Distributed_Manager_JobRef_ProxyId" data-uid="Defcore.Distributed.Manager.JobRef.ProxyId">ProxyId</h4>
+              <div class="markdown level1 summary"><p>The proxy id</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">protected bool DoneReceiving</code></pre>
+                <pre><code class="lang-csharp hljs">public int ProxyId</code></pre>
               </div>
               <h5 class="fieldValue">Field Value</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -169,21 +138,183 @@ object. </p>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="xref">System.Boolean</span></td>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h3 id="properties">Properties
+              </h3>
+              
+              
+              <a id="Defcore_Distributed_Manager_JobRef_JobId_" data-uid="Defcore.Distributed.Manager.JobRef.JobId*"></a>
+              <h4 id="Defcore_Distributed_Manager_JobRef_JobId" data-uid="Defcore.Distributed.Manager.JobRef.JobId">JobId</h4>
+              <div class="markdown level1 summary"><p>The job id</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public int JobId { get; set; }</code></pre>
+              </div>
+              <h5 class="propertyValue">Property Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
               
               
-              <h4 id="Defcore_Distributed_Network_AbstractReceiver_Message" data-uid="Defcore.Distributed.Network.AbstractReceiver.Message">Message</h4>
-              <div class="markdown level1 summary"></div>
+              <a id="Defcore_Distributed_Manager_JobRef_PathToDll_" data-uid="Defcore.Distributed.Manager.JobRef.PathToDll*"></a>
+              <h4 id="Defcore_Distributed_Manager_JobRef_PathToDll" data-uid="Defcore.Distributed.Manager.JobRef.PathToDll">PathToDll</h4>
+              <div class="markdown level1 summary"><p>The full path to the users assembly on their system </p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">protected string Message</code></pre>
+                <pre><code class="lang-csharp hljs">public string PathToDll { get; set; }</code></pre>
               </div>
-              <h5 class="fieldValue">Field Value</h5>
+              <h5 class="propertyValue">Property Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <a id="Defcore_Distributed_Manager_JobRef_RequestedNodes_" data-uid="Defcore.Distributed.Manager.JobRef.RequestedNodes*"></a>
+              <h4 id="Defcore_Distributed_Manager_JobRef_RequestedNodes" data-uid="Defcore.Distributed.Manager.JobRef.RequestedNodes">RequestedNodes</h4>
+              <div class="markdown level1 summary"><p>How many nodes did the user program request</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public int RequestedNodes { get; set; }</code></pre>
+              </div>
+              <h5 class="propertyValue">Property Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <a id="Defcore_Distributed_Manager_JobRef_SectionId_" data-uid="Defcore.Distributed.Manager.JobRef.SectionId*"></a>
+              <h4 id="Defcore_Distributed_Manager_JobRef_SectionId" data-uid="Defcore.Distributed.Manager.JobRef.SectionId">SectionId</h4>
+              <div class="markdown level1 summary"><p>The section id for the node executing some
+section of work. Set before runtime</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public int SectionId { get; set; }</code></pre>
+              </div>
+              <h5 class="propertyValue">Property Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <a id="Defcore_Distributed_Manager_JobRef_TotalNodes_" data-uid="Defcore.Distributed.Manager.JobRef.TotalNodes*"></a>
+              <h4 id="Defcore_Distributed_Manager_JobRef_TotalNodes" data-uid="Defcore.Distributed.Manager.JobRef.TotalNodes">TotalNodes</h4>
+              <div class="markdown level1 summary"><p>The total nodes in use for this job.
+Set before runtime.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public int TotalNodes { get; set; }</code></pre>
+              </div>
+              <h5 class="propertyValue">Property Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <a id="Defcore_Distributed_Manager_JobRef_UserArgs_" data-uid="Defcore.Distributed.Manager.JobRef.UserArgs*"></a>
+              <h4 id="Defcore_Distributed_Manager_JobRef_UserArgs" data-uid="Defcore.Distributed.Manager.JobRef.UserArgs">UserArgs</h4>
+              <div class="markdown level1 summary"><p>The users command line arguments to their program</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public string[] UserArgs { get; set; }</code></pre>
+              </div>
+              <h5 class="propertyValue">Property Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span>[]</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <a id="Defcore_Distributed_Manager_JobRef_Username_" data-uid="Defcore.Distributed.Manager.JobRef.Username*"></a>
+              <h4 id="Defcore_Distributed_Manager_JobRef_Username" data-uid="Defcore.Distributed.Manager.JobRef.Username">Username</h4>
+              <div class="markdown level1 summary"><p>The username associated with the job</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public string Username { get; set; }</code></pre>
+              </div>
+              <h5 class="propertyValue">Property Value</h5>
               <table class="table table-bordered table-striped table-condensed">
                 <thead>
                   <tr>
@@ -202,34 +333,15 @@ object. </p>
               </h3>
               
               
-              <a id="Defcore_Distributed_Network_AbstractReceiver_CreateDataReceivedEvent_" data-uid="Defcore.Distributed.Network.AbstractReceiver.CreateDataReceivedEvent*"></a>
-              <h4 id="Defcore_Distributed_Network_AbstractReceiver_CreateDataReceivedEvent_System_String_" data-uid="Defcore.Distributed.Network.AbstractReceiver.CreateDataReceivedEvent(System.String)">CreateDataReceivedEvent(String)</h4>
-              <div class="markdown level1 summary"><p>Return a concrete DataReceivedEventArgs subclass, 
-for handling receive events.</p>
+              <a id="Defcore_Distributed_Manager_JobRef_ToString_" data-uid="Defcore.Distributed.Manager.JobRef.ToString*"></a>
+              <h4 id="Defcore_Distributed_Manager_JobRef_ToString" data-uid="Defcore.Distributed.Manager.JobRef.ToString">ToString()</h4>
+              <div class="markdown level1 summary"><p>Overridden to string method</p>
 </div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public abstract DataReceivedEventArgs CreateDataReceivedEvent(string data)</code></pre>
+                <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
               </div>
-              <h5 class="parameters">Parameters</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.String</span></td>
-                    <td><span class="parametername">data</span></td>
-                    <td><p>data from socket</p>
-</td>
-                  </tr>
-                </tbody>
-              </table>
               <h5 class="returns">Returns</h5>
               <table class="table table-bordered table-striped table-condensed">
                 <thead>
@@ -240,131 +352,13 @@ for handling receive events.</p>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="Defcore.Distributed.Network.DataReceivedEventArgs.html">DataReceivedEventArgs</a></td>
-                    <td><p>new DataRecivedEventArgs object type</p>
-</td>
-                  </tr>
-                </tbody>
-              </table>
-              <h5 id="Defcore_Distributed_Network_AbstractReceiver_CreateDataReceivedEvent_System_String__remarks">Remarks</h5>
-              <div class="markdown level1 remarks"><p>A subclass must be able to
-create and return a data received event object
-for its specific needs. </p>
-</div>
-              
-              
-              <a id="Defcore_Distributed_Network_AbstractReceiver_HandleAdditionalReceiving_" data-uid="Defcore.Distributed.Network.AbstractReceiver.HandleAdditionalReceiving*"></a>
-              <h4 id="Defcore_Distributed_Network_AbstractReceiver_HandleAdditionalReceiving_System_Object_Defcore_Distributed_Network_DataReceivedEventArgs_" data-uid="Defcore.Distributed.Network.AbstractReceiver.HandleAdditionalReceiving(System.Object,Defcore.Distributed.Network.DataReceivedEventArgs)">HandleAdditionalReceiving(Object, DataReceivedEventArgs)</h4>
-              <div class="markdown level1 summary"><p>Process received data in addition to simply sending it to the sender object.</p>
-</div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public abstract void HandleAdditionalReceiving(object sender, DataReceivedEventArgs e)</code></pre>
-              </div>
-              <h5 class="parameters">Parameters</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.Object</span></td>
-                    <td><span class="parametername">sender</span></td>
-                    <td><p>event raiser</p>
-</td>
-                  </tr>
-                  <tr>
-                    <td><a class="xref" href="Defcore.Distributed.Network.DataReceivedEventArgs.html">DataReceivedEventArgs</a></td>
-                    <td><span class="parametername">e</span></td>
-                    <td><p>data from receive event</p>
-</td>
-                  </tr>
-                </tbody>
-              </table>
-              <h5 id="Defcore_Distributed_Network_AbstractReceiver_HandleAdditionalReceiving_System_Object_Defcore_Distributed_Network_DataReceivedEventArgs__remarks">Remarks</h5>
-              <div class="markdown level1 remarks"><p>A subclass must implement any additional handling that they want done.
-when data is received.</p>
-</div>
-              
-              
-              <a id="Defcore_Distributed_Network_AbstractReceiver_OnDataReceived_" data-uid="Defcore.Distributed.Network.AbstractReceiver.OnDataReceived*"></a>
-              <h4 id="Defcore_Distributed_Network_AbstractReceiver_OnDataReceived_Defcore_Distributed_Network_DataReceivedEventArgs_" data-uid="Defcore.Distributed.Network.AbstractReceiver.OnDataReceived(Defcore.Distributed.Network.DataReceivedEventArgs)">OnDataReceived(DataReceivedEventArgs)</h4>
-              <div class="markdown level1 summary"><p>Raises the data received event.</p>
-</div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public virtual void OnDataReceived(DataReceivedEventArgs e)</code></pre>
-              </div>
-              <h5 class="parameters">Parameters</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a class="xref" href="Defcore.Distributed.Network.DataReceivedEventArgs.html">DataReceivedEventArgs</a></td>
-                    <td><span class="parametername">e</span></td>
-                    <td><p>The data received</p>
-</td>
-                  </tr>
-                </tbody>
-              </table>
-              
-              
-              <a id="Defcore_Distributed_Network_AbstractReceiver_Run_" data-uid="Defcore.Distributed.Network.AbstractReceiver.Run*"></a>
-              <h4 id="Defcore_Distributed_Network_AbstractReceiver_Run" data-uid="Defcore.Distributed.Network.AbstractReceiver.Run">Run()</h4>
-              <div class="markdown level1 summary"><p>Method that does the actual receiving loop,
-reads in the data then raises an on data received
-event for listeners.</p>
-</div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public override void Run()</code></pre>
-              </div>
-              <h5 class="overrides">Overrides</h5>
-              <div><a class="xref" href="Defcore.Distributed.Network.NetworkSendReceive.html#Defcore_Distributed_Network_NetworkSendReceive_Run">NetworkSendReceive.Run()</a></div>
-              <h3 id="events">Events
-              </h3>
-              
-              
-              <h4 id="Defcore_Distributed_Network_AbstractReceiver_DataReceived" data-uid="Defcore.Distributed.Network.AbstractReceiver.DataReceived">DataReceived</h4>
-              <div class="markdown level1 summary"><p>The event for receiving data.</p>
-</div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public event EventHandler&lt;DataReceivedEventArgs&gt; DataReceived</code></pre>
-              </div>
-              <h5 class="eventType">Event Type</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="Defcore.Distributed.Network.DataReceivedEventArgs.html">DataReceivedEventArgs</a>&gt;</td>
+                    <td><span class="xref">System.String</span></td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
-              <h5 id="Defcore_Distributed_Network_AbstractReceiver_DataReceived_remarks">Remarks</h5>
-              <div class="markdown level1 remarks"><p>To use this without a delegate
-the DataReceivedEventArgs class was created. </p>
-</div>
+              <h5 class="overrides">Overrides</h5>
+              <div><span class="xref">System.Object.ToString()</span></div>
                         </article>
           </div>
           

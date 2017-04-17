@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class JobResult
+    <title>Class QuickSortExtensions
    | defcore </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class JobResult
+    <meta name="title" content="Class QuickSortExtensions
    | defcore ">
     <meta name="generator" content="docfx 2.15.5.0">
     
@@ -78,15 +78,15 @@
             <article class="content wrap" id="_content">
               
               
-              <h1 id="Defcore_Distributed_Jobs_JobResult" data-uid="Defcore.Distributed.Jobs.JobResult">Class JobResult
+              <h1 id="Examples_Sorting_QuickSortExtensions" data-uid="Examples.Sorting.QuickSortExtensions">Class QuickSortExtensions
               </h1>
-              <div class="markdown level0 summary"><p>A class to represent a result from a job</p>
+              <div class="markdown level0 summary"><p>Array Extensions for supporting QuickSort (both Sequential and Parallel) on any array of Comparables.</p>
 </div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
                   <div class="level0"><span class="xref">System.Object</span></div>
-                  <div class="level1"><span class="xref">JobResult</span></div>
+                  <div class="level1"><span class="xref">QuickSortExtensions</span></div>
               </div>
               <div class="inheritedMembers">
                 <h5>Inherited Members</h5>
@@ -112,51 +112,23 @@
                   <span class="xref">System.Object.MemberwiseClone()</span>
                 </div>
               </div>
-              <h6><strong>Namespace</strong>:Defcore.Distributed.Jobs</h6>
+              <h6><strong>Namespace</strong>:Examples.Sorting</h6>
               <h6><strong>Assembly</strong>:cs.temp.dll.dll</h6>
-              <h5 id="Defcore_Distributed_Jobs_JobResult_syntax">Syntax</h5>
+              <h5 id="Examples_Sorting_QuickSortExtensions_syntax">Syntax</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public class JobResult</code></pre>
+                <pre><code class="lang-csharp hljs">public static class QuickSortExtensions</code></pre>
               </div>
-              <h3 id="properties">Properties
-              </h3>
-              
-              
-              <a id="Defcore_Distributed_Jobs_JobResult_JobId_" data-uid="Defcore.Distributed.Jobs.JobResult.JobId*"></a>
-              <h4 id="Defcore_Distributed_Jobs_JobResult_JobId" data-uid="Defcore.Distributed.Jobs.JobResult.JobId">JobId</h4>
-              <div class="markdown level1 summary"></div>
-              <div class="markdown level1 conceptual"></div>
-              <h5 class="decalaration">Declaration</h5>
-              <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public int JobId { get; set; }</code></pre>
-              </div>
-              <h5 class="propertyValue">Property Value</h5>
-              <table class="table table-bordered table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="xref">System.Int32</span></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
               <h3 id="methods">Methods
               </h3>
               
               
-              <a id="Defcore_Distributed_Jobs_JobResult_DeserializeString_" data-uid="Defcore.Distributed.Jobs.JobResult.DeserializeString*"></a>
-              <h4 id="Defcore_Distributed_Jobs_JobResult_DeserializeString_System_String_" data-uid="Defcore.Distributed.Jobs.JobResult.DeserializeString(System.String)">DeserializeString(String)</h4>
-              <div class="markdown level1 summary"><p>Deserialize the output string into a JobResult object</p>
-</div>
+              <a id="Examples_Sorting_QuickSortExtensions_QuicksortParallel_" data-uid="Examples.Sorting.QuickSortExtensions.QuicksortParallel*"></a>
+              <h4 id="Examples_Sorting_QuickSortExtensions_QuicksortParallel__1___0___" data-uid="Examples.Sorting.QuickSortExtensions.QuicksortParallel``1(``0[])">QuicksortParallel&lt;T&gt;(T[])</h4>
+              <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public static JobResult DeserializeString(string input)</code></pre>
+                <pre><code class="lang-csharp hljs">public static void QuicksortParallel&lt;T&gt;(this T[] arr)where T : IComparable&lt;T&gt;</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -169,48 +141,169 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="xref">System.String</span></td>
-                    <td><span class="parametername">input</span></td>
+                    <td>T[]</td>
+                    <td><span class="parametername">arr</span></td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
-              <h5 class="returns">Returns</h5>
+              <h5 class="typeParameters">Type Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
                 <thead>
                   <tr>
-                    <th>Type</th>
+                    <th>Name</th>
                     <th>Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="Defcore.Distributed.Jobs.JobResult.html">JobResult</a></td>
+                    <td><span class="parametername">T</span></td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
               
               
-              <a id="Defcore_Distributed_Jobs_JobResult_SerializeResult_" data-uid="Defcore.Distributed.Jobs.JobResult.SerializeResult*"></a>
-              <h4 id="Defcore_Distributed_Jobs_JobResult_SerializeResult" data-uid="Defcore.Distributed.Jobs.JobResult.SerializeResult">SerializeResult()</h4>
+              <a id="Examples_Sorting_QuickSortExtensions_QuicksortParallel_" data-uid="Examples.Sorting.QuickSortExtensions.QuicksortParallel*"></a>
+              <h4 id="Examples_Sorting_QuickSortExtensions_QuicksortParallel__1___0___System_Int32_System_Int32_" data-uid="Examples.Sorting.QuickSortExtensions.QuicksortParallel``1(``0[],System.Int32,System.Int32)">QuicksortParallel&lt;T&gt;(T[], Int32, Int32)</h4>
               <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public string SerializeResult()</code></pre>
+                <pre><code class="lang-csharp hljs">public static void QuicksortParallel&lt;T&gt;(this T[] arr, int start, int end)where T : IComparable&lt;T&gt;</code></pre>
               </div>
-              <h5 class="returns">Returns</h5>
+              <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
                 <thead>
                   <tr>
                     <th>Type</th>
+                    <th>Name</th>
                     <th>Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="xref">System.String</span></td>
+                    <td>T[]</td>
+                    <td><span class="parametername">arr</span></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td><span class="parametername">start</span></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td><span class="parametername">end</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="typeParameters">Type Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="parametername">T</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <a id="Examples_Sorting_QuickSortExtensions_QuicksortSequential_" data-uid="Examples.Sorting.QuickSortExtensions.QuicksortSequential*"></a>
+              <h4 id="Examples_Sorting_QuickSortExtensions_QuicksortSequential__1___0___" data-uid="Examples.Sorting.QuickSortExtensions.QuicksortSequential``1(``0[])">QuicksortSequential&lt;T&gt;(T[])</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public static void QuicksortSequential&lt;T&gt;(this T[] arr)where T : IComparable&lt;T&gt;</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>T[]</td>
+                    <td><span class="parametername">arr</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="typeParameters">Type Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="parametername">T</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <a id="Examples_Sorting_QuickSortExtensions_QuicksortSequential_" data-uid="Examples.Sorting.QuickSortExtensions.QuicksortSequential*"></a>
+              <h4 id="Examples_Sorting_QuickSortExtensions_QuicksortSequential__1___0___System_Int32_System_Int32_" data-uid="Examples.Sorting.QuickSortExtensions.QuicksortSequential``1(``0[],System.Int32,System.Int32)">QuicksortSequential&lt;T&gt;(T[], Int32, Int32)</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public static void QuicksortSequential&lt;T&gt;(this T[] arr, int start, int end)where T : IComparable&lt;T&gt;</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>T[]</td>
+                    <td><span class="parametername">arr</span></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td><span class="parametername">start</span></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td><span class="parametername">end</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="typeParameters">Type Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="parametername">T</span></td>
                     <td></td>
                   </tr>
                 </tbody>

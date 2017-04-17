@@ -80,8 +80,7 @@
               
               <h1 id="Defcore_Distributed_Logging_Logger" data-uid="Defcore.Distributed.Logging.Logger">Class Logger
               </h1>
-              <div class="markdown level0 summary"><p>Class to handle logging, it is either a logger
-for a manager or for a node.</p>
+              <div class="markdown level0 summary"><p>Class to handle logging, Logger is a singleton</p>
 </div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
@@ -119,6 +118,64 @@ for a manager or for a node.</p>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">public sealed class Logger</code></pre>
               </div>
+              <h3 id="fields">Fields
+              </h3>
+              
+              
+              <h4 id="Defcore_Distributed_Logging_Logger_LogFileName" data-uid="Defcore.Distributed.Logging.Logger.LogFileName">LogFileName</h4>
+              <div class="markdown level1 summary"><p>Name of the log file</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public static string LogFileName</code></pre>
+              </div>
+              <h5 class="fieldValue">Field Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 id="Defcore_Distributed_Logging_Logger_LogFileName_remarks">Remarks</h5>
+              <div class="markdown level1 remarks"><p>Only one instance can be used per program</p>
+</div>
+              
+              
+              <h4 id="Defcore_Distributed_Logging_Logger_LogFor" data-uid="Defcore.Distributed.Logging.Logger.LogFor">LogFor</h4>
+              <div class="markdown level1 summary"><p>Who to log for, can be used once per logger creation</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public static string LogFor</code></pre>
+              </div>
+              <h5 class="fieldValue">Field Value</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 id="Defcore_Distributed_Logging_Logger_LogFor_remarks">Remarks</h5>
+              <div class="markdown level1 remarks"><p>Used at start and not after</p>
+</div>
               <h3 id="properties">Properties
               </h3>
               
@@ -191,7 +248,7 @@ the same instance this will not be an issue.</p>
               
               <a id="Defcore_Distributed_Logging_Logger_Log_" data-uid="Defcore.Distributed.Logging.Logger.Log*"></a>
               <h4 id="Defcore_Distributed_Logging_Logger_Log_System_String_" data-uid="Defcore.Distributed.Logging.Logger.Log(System.String)">Log(String)</h4>
-              <div class="markdown level1 summary"><p>Log a message to the text file</p>
+              <div class="markdown level1 summary"><p>Logger a message to the text file</p>
 </div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
