@@ -40,3 +40,5 @@ debugSettings.json
 launchSettings.json
 project.lock.json
 *.sublime-workspace
+logo.svg
+favicon.ico

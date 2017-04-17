@@ -89,7 +89,7 @@ namespace Defcore.Distributed
                 var error = e.ToString();
                 Console.WriteLine(error);
             }
-            _parent.log.Log("JobLauncher: Process finished with ExitCode: " + process.ExitCode);
+            _parent.Logger.Log("JobLauncher: Process finished with ExitCode: " + process.ExitCode);
             // use the output
             var output = outputBuilder.ToString();
 

@@ -169,7 +169,7 @@ namespace Examples.Primes
             public int Hello { get; set; } = 0;
 
             public TestTask(int id) 
-                : base(id)
+                : base()
             {
 
             }

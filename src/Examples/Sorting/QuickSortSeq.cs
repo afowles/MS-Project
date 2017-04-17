@@ -1,22 +1,50 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Examples.Sorting
 {
-    public static class QuickSortSeq
+    public class SortTesting
     {
-
-        private static void QuicksortSequential<T>(this IList<T> arr, int left, int right) where T : IComparable<T>
+        public static void Main2(string[] args)
         {
-            if (right > left)
-            {
+            Stopwatch sw = new Stopwatch();
+            //sw.Start();
+            //GenerateRandomInts(25000000);
+            //sw.Stop();
+            //Console.WriteLine("Time for generating: " + sw.Elapsed);
+            //sw.Reset();
+            sw.Start();
+            var nums = File.ReadAllLines("testlargeints.txt");
+            sw.Stop();
+            Console.WriteLine("Time for reading: " + sw.Elapsed);
+            sw.Reset();
+            sw.Start();
+            QuickSortExtensions.QuicksortParallel(nums);
+            sw.Stop();
+            Console.WriteLine("Time for sorting: " + sw.Elapsed);
+            sw.Reset();
+            File.WriteAllLines("testlargeintsout.txt", nums);
+            Console.ReadKey();
+        }
 
-                //int pivot = Partition(arr, left, right);
-                //QuicksortSequential(arr, left, pivot - 1);
-                //QuicksortSequential(arr, pivot + 1, right);
+        public static void GenerateRandomInts(int num)
+        {
+            Random rand = new Random(5);
+            var ints = new List<string>();
+
+            while (num > 0)
+            {
+                ints.Add(rand.Next().ToString());
+                num--;
             }
+            
+            File.WriteAllLines("testlargeints.txt", ints);
         }
     }
 }

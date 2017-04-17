@@ -33,6 +33,8 @@ namespace Defcore.Distributed.Nodes
         public Node(string host, int port)
         {
             _proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port, 0);
+            Logger.LogFileName = "NodeLog.txt";
+            Logger.LogFor = "Node";
             Logger = Logger.NodeLogInstance;
         }
 

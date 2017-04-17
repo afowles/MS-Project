@@ -4,8 +4,7 @@ using System.IO;
 namespace Defcore.Distributed.Logging
 {
     /// <summary>
-    /// Class to handle logging, it is either a logger
-    /// for a manager or for a node.
+    /// Class to handle logging, Logger is a singleton
     /// </summary>
     public sealed class Logger
     {
@@ -17,31 +16,25 @@ namespace Defcore.Distributed.Logging
         private readonly TextWriter _writer;
 
         /// <summary>
-        /// Log output file name
+        /// Name of the log file
         /// </summary>
-        private const string NodeLog = "node_log.txt";
+        /// <remarks>Only one instance can be used per program</remarks>
+        public static string LogFileName = "log.txt";
+
         /// <summary>
-        /// Log output file name
+        /// Who to log for, can be used once per logger creation
         /// </summary>
-        private const string ManagerLog = "manager_log.txt";
+        /// <remarks>Used at start and not after</remarks>
+        public static string LogFor = "";
 
         /// <summary>
         /// Logger is a Singleton
         /// </summary>
-        private Logger(LogType t)
+        private Logger()
         {
-            _writer = File.AppendText(t == LogType.Manager ? ManagerLog : NodeLog);
-            StartLogging(t);
+            _writer = File.AppendText(LogFileName);
+            StartLogging(LogFor);
 
-        }
-
-        /// <summary>
-        /// Type of log
-        /// </summary>
-        public enum LogType
-        {
-            Node,
-            Manager
         }
 
         /// <summary>
@@ -57,16 +50,14 @@ namespace Defcore.Distributed.Logging
         {
             get
             {
-                if (_instance == null)
+                if (_instance != null) {return _instance;}
+                // thread safety is instance
+                // is not yet initalized.
+                lock (LoggerLock)
                 {
-                    // thread safety is instance
-                    // is not yet initalized.
-                    lock (LoggerLock)
+                    if (_instance == null)
                     {
-                        if (_instance == null)
-                        {
-                            _instance = new Logger(LogType.Node);
-                        }
+                        _instance = new Logger();
                     }
                 }
 
@@ -87,16 +78,14 @@ namespace Defcore.Distributed.Logging
         {
             get
             {
-                if (_instance == null)
+                if (_instance != null) {return _instance;}
+                // thread safety is instance
+                // is not yet initalized.
+                lock (LoggerLock)
                 {
-                    // thread safety is instance
-                    // is not yet initalized.
-                    lock (LoggerLock)
+                    if (_instance == null)
                     {
-                        if (_instance == null)
-                        {
-                            _instance = new Logger(LogType.Manager);
-                        }
+                        _instance = new Logger();
                     }
                 }
 
@@ -107,17 +96,17 @@ namespace Defcore.Distributed.Logging
         /// <summary>
         /// Start Logging
         /// </summary>
-        private void StartLogging(LogType t)
+        private void StartLogging(string logFor)
         {
             
-            _writer.Write("Start Log for {0}: ", t.ToString());
+            _writer.Write("Start Logger for {0}: ", logFor);
             _writer.WriteLine("{0}", DateTime.Now.ToUniversalTime());
             _writer.WriteLine("-------------------------------");
             _writer.Flush();
         }
 
         /// <summary>
-        /// Log a message to the text file
+        /// Logger a message to the text file
         /// </summary>
         /// <remarks>
         /// Print to console if in debug

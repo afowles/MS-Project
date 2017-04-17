@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <AssemblyName>Examples</AssemblyName>
+    <AssemblyName>Primes</AssemblyName>
     <OutputType>Exe</OutputType>
-    <PackageId>Examples</PackageId>
+    <PackageId>Primes</PackageId>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<CSFile Include="Primes\*.cs" />
     <Compile Remove="archive\**" />
     <EmbeddedResource Remove="archive\**" />
     <None Remove="archive\**" />
@@ -20,21 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DEFLib\DEFLib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

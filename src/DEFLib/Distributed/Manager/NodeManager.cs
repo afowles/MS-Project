@@ -43,7 +43,7 @@ namespace Defcore.Distributed.Manager
         public JobScheduler Scheduler { get;}
 
         // Handles Logging
-        public Logger Logger { get; private set; }
+        public Logger Logger { get; }
 
         /// <summary>
         /// Creates a server listening
@@ -52,8 +52,11 @@ namespace Defcore.Distributed.Manager
         /// <param name="ip">IP to listen on</param>
         public NodeManager(string ip)
         {
+            Logger.LogFileName = "NodeManagerLog.txt";
+            Logger.LogFor = "Node Manager";
             // create logging
             Logger = Logger.ManagerLogInstance;
+            
             Connections = new List<Proxy>();
             ConnectedNodes = new Dictionary<int, NodeRef>();
             _nextId = 1;

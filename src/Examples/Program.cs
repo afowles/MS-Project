@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Examples.Sorting;
 
 namespace Examples
 {
@@ -11,6 +12,7 @@ namespace Examples
     {
         public static void Main(string[] args)
         {
+            /*
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             GoldbachSeq q = new GoldbachSeq();
@@ -26,6 +28,8 @@ namespace Examples
             Console.WriteLine("        " + "Hours:Minutes:Seconds:Milliseconds");
             Console.WriteLine("RunTime " + elapsedTime);
             Console.ReadKey();
+            */
+            SortTesting.Main2(args);
         }
     }
 }

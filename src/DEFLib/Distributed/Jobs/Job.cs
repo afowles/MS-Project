@@ -108,7 +108,16 @@ namespace Defcore.Distributed.Jobs
         /// Run a final task at the end, on the node that
         /// submitted the job.
         /// </summary>
+        /// <remarks>This method will be called once all nodes
+        /// have finished and will be run on the node that submitted
+        /// the job.</remarks>
         public virtual void RunFinalTask(){}
+
+        /// <summary>
+        /// Run a section of code on exactly one node
+        /// </summary>
+        /// <remarks>This method will be called once by only one node</remarks>
+        public virtual void RunOnce() {}
     }
 
     /// <summary>
