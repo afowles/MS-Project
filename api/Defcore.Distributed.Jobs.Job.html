@@ -414,17 +414,18 @@ the job.</p>
 </div>
               
               
-              <a id="Defcore_Distributed_Jobs_Job_RunOnce_" data-uid="Defcore.Distributed.Jobs.Job.RunOnce*"></a>
-              <h4 id="Defcore_Distributed_Jobs_Job_RunOnce" data-uid="Defcore.Distributed.Jobs.Job.RunOnce">RunOnce()</h4>
-              <div class="markdown level1 summary"><p>Run a section of code on exactly one node</p>
+              <a id="Defcore_Distributed_Jobs_Job_RunInitialTask_" data-uid="Defcore.Distributed.Jobs.Job.RunInitialTask*"></a>
+              <h4 id="Defcore_Distributed_Jobs_Job_RunInitialTask" data-uid="Defcore.Distributed.Jobs.Job.RunInitialTask">RunInitialTask()</h4>
+              <div class="markdown level1 summary"><p>Run a section of code at the start before anything else</p>
 </div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public virtual void RunOnce()</code></pre>
+                <pre><code class="lang-csharp hljs">public virtual void RunInitialTask()</code></pre>
               </div>
-              <h5 id="Defcore_Distributed_Jobs_Job_RunOnce_remarks">Remarks</h5>
-              <div class="markdown level1 remarks"><p>This method will be called once by only one node</p>
+              <h5 id="Defcore_Distributed_Jobs_Job_RunInitialTask_remarks">Remarks</h5>
+              <div class="markdown level1 remarks"><p>This method will be called once 
+by the node that submitted the job. </p>
 </div>
               
               

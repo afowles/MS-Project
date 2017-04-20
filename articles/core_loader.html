@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Core Loader | defcore </title>
+    <title>CoreLoader | defcore </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Core Loader | defcore ">
+    <meta name="title" content="CoreLoader | defcore ">
     <meta name="generator" content="docfx 2.15.5.0">
     
     <link rel="shortcut icon" href="../icons/favicon.ico">
@@ -74,34 +74,37 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="core-loader">Core Loader</h1>
+              <h1 id="coreloadert">CoreLoader<t></t></h1>
               
-<p>For documentation see <a href="https://acf5118.github.io/MS-Project/api/Defcore.Distributed.Assembly.CoreLoader.html">Core Loader</a></p>
-<p>The CoreLoader<t> class allows you to load up and initialize a class from an assembly (dll)
+<p>For documentation see <a href="https://acf5118.github.io/MS-Project/api/Defcore.Distributed.Assembly.CoreLoader-1.html">CoreLoader<t></t></a></p>
+<p>The CoreLoader<t> class allows a user to load up and initialize a class from an assembly (dll)
 and call methods and properties out of that class. <p>
 <p>Say you had a class Foo that looked like</p>
 <pre><code class="lang-csharp">public class Foo
 {
+    // Some C# Property
     public int MyIntegerProperty { get; set; }
 
+    // A method with no return type and no parameters
     public void MySimpleMethod() { Console.WriteLine(&quot;Simple enough&quot;); }
 
+    // A method with return type and multiple arguments of different types
     public string MyLessSimpleMethod(int arg1, string arg2, double arg3)
     {
         return arg2 + arg1 + arg3;
     }
 }
-</code></pre><p>Using Core Loader you could call methods and properties out of that class.</p>
+</code></pre><p>Using CoreLoader<foo> you could call methods and properties out of that class.<p>
 <pre><code class="lang-csharp">public static void Main(string[] args)
 {
-    CoreLoader&lt;Foo&gt; foo = new CoreLoader&lt;Foo&gt;(&quot;PathToDllContainingFoo&quot;);
+    CoreLoader&lt;Foo&gt; foo = new CoreLoader&lt;Foo&gt;(&quot;/Path/To/Dll/Containing/Foo.dll&quot;);
     int x = (int)foo.GetProperty(&quot;MyIntegerProperty&quot;);
     foo.CallMethod(&quot;MySimpleMethod&quot;, new object[] {});
     var result = (string) foo.CallMethod(
         &quot;MyLessSimpleMethod&quot;, new object[] {1, &quot;hello&quot;, 3.4});
 }
-</code></pre><p>The Core Loader is how the defcore system calls methods out of a Job class. </p>
-</t>
+</code></pre><p>The CoreLoader<t> is how the defcore system calls methods out of a Job class. <p>
+</t></foo></t>
             </article>
           </div>
           

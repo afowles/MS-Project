@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Program
+    <title>Class SortTask
    | defcore </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Program
+    <meta name="title" content="Class SortTask
    | defcore ">
     <meta name="generator" content="docfx 2.15.5.0">
     
@@ -78,56 +78,76 @@
             <article class="content wrap" id="_content">
               
               
-              <h1 id="defcore_Program" data-uid="defcore.Program">Class Program
+              <h1 id="Examples_Sorting_SortTask" data-uid="Examples.Sorting.SortTask">Class SortTask
               </h1>
               <div class="markdown level0 summary"></div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
                   <div class="level0"><span class="xref">System.Object</span></div>
-                  <div class="level1"><span class="xref">Program</span></div>
+                  <div class="level1"><span class="xref">SortTask</span></div>
               </div>
-              <div class="inheritedMembers">
-                <h5>Inherited Members</h5>
-                <div>
-                  <span class="xref">System.Object.ToString()</span>
-                </div>
-                <div>
-                  <span class="xref">System.Object.Equals(System.Object)</span>
-                </div>
-                <div>
-                  <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-                </div>
-                <div>
-                  <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-                </div>
-                <div>
-                  <span class="xref">System.Object.GetHashCode()</span>
-                </div>
-                <div>
-                  <span class="xref">System.Object.GetType()</span>
-                </div>
-                <div>
-                  <span class="xref">System.Object.MemberwiseClone()</span>
-                </div>
-              </div>
-              <h6><strong>Namespace</strong>:defcore</h6>
+              <h6><strong>Namespace</strong>:Examples.Sorting</h6>
               <h6><strong>Assembly</strong>:cs.temp.dll.dll</h6>
-              <h5 id="defcore_Program_syntax">Syntax</h5>
+              <h5 id="Examples_Sorting_SortTask_syntax">Syntax</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public class Program</code></pre>
+                <pre><code class="lang-csharp hljs">public class SortTask : JobTask</code></pre>
               </div>
-              <h3 id="methods">Methods
+              <h3 id="constructors">Constructors
               </h3>
               
               
-              <a id="defcore_Program_Main_" data-uid="defcore.Program.Main*"></a>
-              <h4 id="defcore_Program_Main_System_String___" data-uid="defcore.Program.Main(System.String[])">Main(String[])</h4>
+              <a id="Examples_Sorting_SortTask__ctor_" data-uid="Examples.Sorting.SortTask.#ctor*"></a>
+              <h4 id="Examples_Sorting_SortTask__ctor_System_String_System_Int32_System_Int32_System_Int32_" data-uid="Examples.Sorting.SortTask.#ctor(System.String,System.Int32,System.Int32,System.Int32)">SortTask(String, Int32, Int32, Int32)</h4>
               <div class="markdown level1 summary"></div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public static void Main(string[] args)</code></pre>
+                <pre><code class="lang-csharp hljs">public SortTask(string filename, int lineCount, int section, int splitSize)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><span class="parametername">filename</span></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td><span class="parametername">lineCount</span></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td><span class="parametername">section</span></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.Int32</span></td>
+                    <td><span class="parametername">splitSize</span></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h3 id="methods">Methods
+              </h3>
+              
+              
+              <a id="Examples_Sorting_SortTask_Main_" data-uid="Examples.Sorting.SortTask.Main*"></a>
+              <h4 id="Examples_Sorting_SortTask_Main_System_String___" data-uid="Examples.Sorting.SortTask.Main(System.String[])">Main(String[])</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public override void Main(string[] args)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -146,6 +166,42 @@
                   </tr>
                 </tbody>
               </table>
+              
+              
+              <a id="Examples_Sorting_SortTask_Sort_" data-uid="Examples.Sorting.SortTask.Sort*"></a>
+              <h4 id="Examples_Sorting_SortTask_Sort" data-uid="Examples.Sorting.SortTask.Sort">Sort()</h4>
+              <div class="markdown level1 summary"><p>Sort the resulting split files into chunks</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public List&lt;string&gt; Sort()</code></pre>
+              </div>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.String</span>&gt;</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              <a id="Examples_Sorting_SortTask_Split_" data-uid="Examples.Sorting.SortTask.Split*"></a>
+              <h4 id="Examples_Sorting_SortTask_Split" data-uid="Examples.Sorting.SortTask.Split">Split()</h4>
+              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public void Split()</code></pre>
+              </div>
                         </article>
           </div>
           

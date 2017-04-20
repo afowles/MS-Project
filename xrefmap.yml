@@ -1,63 +1,12 @@
 ### YamlMime:XRefMap
 sorted: true
 references:
-- uid: defcore
-  name: defcore
-  href: api/defcore.html
-  commentId: N:defcore
-  fullName: defcore
-  nameWithType: defcore
 - uid: Defcore.Distributed.Assembly
   name: Defcore.Distributed.Assembly
   href: api/Defcore.Distributed.Assembly.html
   commentId: N:Defcore.Distributed.Assembly
   fullName: Defcore.Distributed.Assembly
   nameWithType: Defcore.Distributed.Assembly
-- uid: Defcore.Distributed.Assembly.CoreLoader
-  name: CoreLoader
-  href: api/Defcore.Distributed.Assembly.CoreLoader.html
-  commentId: T:Defcore.Distributed.Assembly.CoreLoader
-  fullName: Defcore.Distributed.Assembly.CoreLoader
-  nameWithType: CoreLoader
-- uid: Defcore.Distributed.Assembly.CoreLoader.#ctor(System.String)
-  name: CoreLoader(String)
-  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader__ctor_System_String_
-  commentId: M:Defcore.Distributed.Assembly.CoreLoader.#ctor(System.String)
-  fullName: Defcore.Distributed.Assembly.CoreLoader.CoreLoader(System.String)
-  nameWithType: CoreLoader.CoreLoader(String)
-- uid: Defcore.Distributed.Assembly.CoreLoader.#ctor*
-  name: CoreLoader
-  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader__ctor_
-  commentId: Overload:Defcore.Distributed.Assembly.CoreLoader.#ctor
-  fullName: Defcore.Distributed.Assembly.CoreLoader.CoreLoader
-  nameWithType: CoreLoader.CoreLoader
-- uid: Defcore.Distributed.Assembly.CoreLoader.CallMethod(System.String,System.Object[])
-  name: CallMethod(String, Object[])
-  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader_CallMethod_System_String_System_Object___
-  commentId: M:Defcore.Distributed.Assembly.CoreLoader.CallMethod(System.String,System.Object[])
-  name.vb: CallMethod(String, Object())
-  fullName: Defcore.Distributed.Assembly.CoreLoader.CallMethod(System.String, System.Object[])
-  fullName.vb: Defcore.Distributed.Assembly.CoreLoader.CallMethod(System.String, System.Object())
-  nameWithType: CoreLoader.CallMethod(String, Object[])
-  nameWithType.vb: CoreLoader.CallMethod(String, Object())
-- uid: Defcore.Distributed.Assembly.CoreLoader.CallMethod*
-  name: CallMethod
-  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader_CallMethod_
-  commentId: Overload:Defcore.Distributed.Assembly.CoreLoader.CallMethod
-  fullName: Defcore.Distributed.Assembly.CoreLoader.CallMethod
-  nameWithType: CoreLoader.CallMethod
-- uid: Defcore.Distributed.Assembly.CoreLoader.FindJobClass
-  name: FindJobClass()
-  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader_FindJobClass
-  commentId: M:Defcore.Distributed.Assembly.CoreLoader.FindJobClass
-  fullName: Defcore.Distributed.Assembly.CoreLoader.FindJobClass()
-  nameWithType: CoreLoader.FindJobClass()
-- uid: Defcore.Distributed.Assembly.CoreLoader.FindJobClass*
-  name: FindJobClass
-  href: api/Defcore.Distributed.Assembly.CoreLoader.html#Defcore_Distributed_Assembly_CoreLoader_FindJobClass_
-  commentId: Overload:Defcore.Distributed.Assembly.CoreLoader.FindJobClass
-  fullName: Defcore.Distributed.Assembly.CoreLoader.FindJobClass
-  nameWithType: CoreLoader.FindJobClass
 - uid: Defcore.Distributed.Assembly.CoreLoader`1
   name: CoreLoader<T>
   href: api/Defcore.Distributed.Assembly.CoreLoader-1.html
@@ -407,18 +356,18 @@ references:
   commentId: Overload:Defcore.Distributed.Jobs.Job.RunFinalTask
   fullName: Defcore.Distributed.Jobs.Job.RunFinalTask
   nameWithType: Job.RunFinalTask
-- uid: Defcore.Distributed.Jobs.Job.RunOnce
-  name: RunOnce()
-  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_RunOnce
-  commentId: M:Defcore.Distributed.Jobs.Job.RunOnce
-  fullName: Defcore.Distributed.Jobs.Job.RunOnce()
-  nameWithType: Job.RunOnce()
-- uid: Defcore.Distributed.Jobs.Job.RunOnce*
-  name: RunOnce
-  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_RunOnce_
-  commentId: Overload:Defcore.Distributed.Jobs.Job.RunOnce
-  fullName: Defcore.Distributed.Jobs.Job.RunOnce
-  nameWithType: Job.RunOnce
+- uid: Defcore.Distributed.Jobs.Job.RunInitialTask
+  name: RunInitialTask()
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_RunInitialTask
+  commentId: M:Defcore.Distributed.Jobs.Job.RunInitialTask
+  fullName: Defcore.Distributed.Jobs.Job.RunInitialTask()
+  nameWithType: Job.RunInitialTask()
+- uid: Defcore.Distributed.Jobs.Job.RunInitialTask*
+  name: RunInitialTask
+  href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_RunInitialTask_
+  commentId: Overload:Defcore.Distributed.Jobs.Job.RunInitialTask
+  fullName: Defcore.Distributed.Jobs.Job.RunInitialTask
+  nameWithType: Job.RunInitialTask
 - uid: Defcore.Distributed.Jobs.Job.StartTask(System.Int32)
   name: StartTask(Int32)
   href: api/Defcore.Distributed.Jobs.Job.html#Defcore_Distributed_Jobs_Job_StartTask_System_Int32_
@@ -590,24 +539,6 @@ references:
   commentId: F:Defcore.Distributed.Logging.Logger.LogFor
   fullName: Defcore.Distributed.Logging.Logger.LogFor
   nameWithType: Logger.LogFor
-- uid: Defcore.Distributed.Logging.Logger.LogType
-  name: Logger.LogType
-  href: api/Defcore.Distributed.Logging.Logger.LogType.html
-  commentId: T:Defcore.Distributed.Logging.Logger.LogType
-  fullName: Defcore.Distributed.Logging.Logger.LogType
-  nameWithType: Logger.LogType
-- uid: Defcore.Distributed.Logging.Logger.LogType.MANAGER
-  name: MANAGER
-  href: api/Defcore.Distributed.Logging.Logger.LogType.html#Defcore_Distributed_Logging_Logger_LogType_MANAGER
-  commentId: F:Defcore.Distributed.Logging.Logger.LogType.MANAGER
-  fullName: Defcore.Distributed.Logging.Logger.LogType.MANAGER
-  nameWithType: Logger.LogType.MANAGER
-- uid: Defcore.Distributed.Logging.Logger.LogType.NODE
-  name: NODE
-  href: api/Defcore.Distributed.Logging.Logger.LogType.html#Defcore_Distributed_Logging_Logger_LogType_NODE
-  commentId: F:Defcore.Distributed.Logging.Logger.LogType.NODE
-  fullName: Defcore.Distributed.Logging.Logger.LogType.NODE
-  nameWithType: Logger.LogType.NODE
 - uid: Defcore.Distributed.Logging.Logger.ManagerLogInstance
   name: ManagerLogInstance
   href: api/Defcore.Distributed.Logging.Logger.html#Defcore_Distributed_Logging_Logger_ManagerLogInstance
@@ -1208,27 +1139,6 @@ references:
   commentId: Overload:Defcore.Distributed.Network.Proxy.Shutdown
   fullName: Defcore.Distributed.Network.Proxy.Shutdown
   nameWithType: Proxy.Shutdown
-- uid: defcore.Program
-  name: Program
-  href: api/defcore.Program.html
-  commentId: T:defcore.Program
-  fullName: defcore.Program
-  nameWithType: Program
-- uid: defcore.Program.Main(System.String[])
-  name: Main(String[])
-  href: api/defcore.Program.html#defcore_Program_Main_System_String___
-  commentId: M:defcore.Program.Main(System.String[])
-  name.vb: Main(String())
-  fullName: defcore.Program.Main(System.String[])
-  fullName.vb: defcore.Program.Main(System.String())
-  nameWithType: Program.Main(String[])
-  nameWithType.vb: Program.Main(String())
-- uid: defcore.Program.Main*
-  name: Main
-  href: api/defcore.Program.html#defcore_Program_Main_
-  commentId: Overload:defcore.Program.Main
-  fullName: defcore.Program.Main
-  nameWithType: Program.Main
 - uid: Examples
   name: Examples
   href: api/Examples.html
@@ -1574,12 +1484,114 @@ references:
   fullName.vb: Examples.Sorting.QuickSortExtensions.QuicksortSequential(Of T)(T(), System.Int32, System.Int32)
   nameWithType: QuickSortExtensions.QuicksortSequential<T>(T[], Int32, Int32)
   nameWithType.vb: QuickSortExtensions.QuicksortSequential(Of T)(T(), Int32, Int32)
-- uid: Examples.Sorting.QuickSortSeq
-  name: QuickSortSeq
-  href: api/Examples.Sorting.QuickSortSeq.html
-  commentId: T:Examples.Sorting.QuickSortSeq
-  fullName: Examples.Sorting.QuickSortSeq
-  nameWithType: QuickSortSeq
+- uid: Examples.Sorting.SortingDis
+  name: SortingDis
+  href: api/Examples.Sorting.SortingDis.html
+  commentId: T:Examples.Sorting.SortingDis
+  fullName: Examples.Sorting.SortingDis
+  nameWithType: SortingDis
+- uid: Examples.Sorting.SortingDis.Main(System.String[])
+  name: Main(String[])
+  href: api/Examples.Sorting.SortingDis.html#Examples_Sorting_SortingDis_Main_System_String___
+  commentId: M:Examples.Sorting.SortingDis.Main(System.String[])
+  name.vb: Main(String())
+  fullName: Examples.Sorting.SortingDis.Main(System.String[])
+  fullName.vb: Examples.Sorting.SortingDis.Main(System.String())
+  nameWithType: SortingDis.Main(String[])
+  nameWithType.vb: SortingDis.Main(String())
+- uid: Examples.Sorting.SortingDis.Main*
+  name: Main
+  href: api/Examples.Sorting.SortingDis.html#Examples_Sorting_SortingDis_Main_
+  commentId: Overload:Examples.Sorting.SortingDis.Main
+  fullName: Examples.Sorting.SortingDis.Main
+  nameWithType: SortingDis.Main
+- uid: Examples.Sorting.SortingDis.RunFinalTask
+  name: RunFinalTask()
+  href: api/Examples.Sorting.SortingDis.html#Examples_Sorting_SortingDis_RunFinalTask
+  commentId: M:Examples.Sorting.SortingDis.RunFinalTask
+  fullName: Examples.Sorting.SortingDis.RunFinalTask()
+  nameWithType: SortingDis.RunFinalTask()
+- uid: Examples.Sorting.SortingDis.RunFinalTask*
+  name: RunFinalTask
+  href: api/Examples.Sorting.SortingDis.html#Examples_Sorting_SortingDis_RunFinalTask_
+  commentId: Overload:Examples.Sorting.SortingDis.RunFinalTask
+  fullName: Examples.Sorting.SortingDis.RunFinalTask
+  nameWithType: SortingDis.RunFinalTask
+- uid: Examples.Sorting.SortResult
+  name: SortResult
+  href: api/Examples.Sorting.SortResult.html
+  commentId: T:Examples.Sorting.SortResult
+  fullName: Examples.Sorting.SortResult
+  nameWithType: SortResult
+- uid: Examples.Sorting.SortResult.ResultPaths
+  name: ResultPaths
+  href: api/Examples.Sorting.SortResult.html#Examples_Sorting_SortResult_ResultPaths
+  commentId: P:Examples.Sorting.SortResult.ResultPaths
+  fullName: Examples.Sorting.SortResult.ResultPaths
+  nameWithType: SortResult.ResultPaths
+- uid: Examples.Sorting.SortResult.ResultPaths*
+  name: ResultPaths
+  href: api/Examples.Sorting.SortResult.html#Examples_Sorting_SortResult_ResultPaths_
+  commentId: Overload:Examples.Sorting.SortResult.ResultPaths
+  fullName: Examples.Sorting.SortResult.ResultPaths
+  nameWithType: SortResult.ResultPaths
+- uid: Examples.Sorting.SortTask
+  name: SortTask
+  href: api/Examples.Sorting.SortTask.html
+  commentId: T:Examples.Sorting.SortTask
+  fullName: Examples.Sorting.SortTask
+  nameWithType: SortTask
+- uid: Examples.Sorting.SortTask.#ctor(System.String,System.Int32,System.Int32,System.Int32)
+  name: SortTask(String, Int32, Int32, Int32)
+  href: api/Examples.Sorting.SortTask.html#Examples_Sorting_SortTask__ctor_System_String_System_Int32_System_Int32_System_Int32_
+  commentId: M:Examples.Sorting.SortTask.#ctor(System.String,System.Int32,System.Int32,System.Int32)
+  fullName: Examples.Sorting.SortTask.SortTask(System.String, System.Int32, System.Int32, System.Int32)
+  nameWithType: SortTask.SortTask(String, Int32, Int32, Int32)
+- uid: Examples.Sorting.SortTask.#ctor*
+  name: SortTask
+  href: api/Examples.Sorting.SortTask.html#Examples_Sorting_SortTask__ctor_
+  commentId: Overload:Examples.Sorting.SortTask.#ctor
+  fullName: Examples.Sorting.SortTask.SortTask
+  nameWithType: SortTask.SortTask
+- uid: Examples.Sorting.SortTask.Main(System.String[])
+  name: Main(String[])
+  href: api/Examples.Sorting.SortTask.html#Examples_Sorting_SortTask_Main_System_String___
+  commentId: M:Examples.Sorting.SortTask.Main(System.String[])
+  name.vb: Main(String())
+  fullName: Examples.Sorting.SortTask.Main(System.String[])
+  fullName.vb: Examples.Sorting.SortTask.Main(System.String())
+  nameWithType: SortTask.Main(String[])
+  nameWithType.vb: SortTask.Main(String())
+- uid: Examples.Sorting.SortTask.Main*
+  name: Main
+  href: api/Examples.Sorting.SortTask.html#Examples_Sorting_SortTask_Main_
+  commentId: Overload:Examples.Sorting.SortTask.Main
+  fullName: Examples.Sorting.SortTask.Main
+  nameWithType: SortTask.Main
+- uid: Examples.Sorting.SortTask.Sort
+  name: Sort()
+  href: api/Examples.Sorting.SortTask.html#Examples_Sorting_SortTask_Sort
+  commentId: M:Examples.Sorting.SortTask.Sort
+  fullName: Examples.Sorting.SortTask.Sort()
+  nameWithType: SortTask.Sort()
+- uid: Examples.Sorting.SortTask.Sort*
+  name: Sort
+  href: api/Examples.Sorting.SortTask.html#Examples_Sorting_SortTask_Sort_
+  commentId: Overload:Examples.Sorting.SortTask.Sort
+  fullName: Examples.Sorting.SortTask.Sort
+  nameWithType: SortTask.Sort
+- uid: Examples.Sorting.SortTask.Split
+  name: Split()
+  href: api/Examples.Sorting.SortTask.html#Examples_Sorting_SortTask_Split
+  commentId: M:Examples.Sorting.SortTask.Split
+  fullName: Examples.Sorting.SortTask.Split()
+  nameWithType: SortTask.Split()
+- uid: Examples.Sorting.SortTask.Split*
+  name: Split
+  href: api/Examples.Sorting.SortTask.html#Examples_Sorting_SortTask_Split_
+  commentId: Overload:Examples.Sorting.SortTask.Split
+  fullName: Examples.Sorting.SortTask.Split
+  nameWithType: SortTask.Split
 - uid: Examples.Sorting.SortTesting
   name: SortTesting
   href: api/Examples.Sorting.SortTesting.html
