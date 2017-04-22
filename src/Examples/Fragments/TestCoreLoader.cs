@@ -17,7 +17,7 @@ namespace Examples.CodeFragments
         }
     }
 
-    public class Foo
+    internal class Foo
     {
         public int MyIntegerProperty { get; set; }
 

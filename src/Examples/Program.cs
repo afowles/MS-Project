@@ -29,7 +29,15 @@ namespace Examples
             Console.WriteLine("RunTime " + elapsedTime);
             Console.ReadKey();
             */
-            SortTesting.Main2(args);
+            //SortTesting.Main2(args);
+            SortingDis d = new SortingDis();
+            d.Main(args);
+            for(var i = 0; i < d.GetNumberTasks(); i++)
+            {
+                d.StartTask(i);
+            }
+            d.CompileResults();
+            d.RunFinalTask();
         }
     }
 }

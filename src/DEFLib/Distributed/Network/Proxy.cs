@@ -212,7 +212,7 @@ namespace Defcore.Distributed.Network
         public string Message { get; }
 
         /// <summary>
-        /// Split incoming data on space.
+        /// Split incoming data on split.
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>

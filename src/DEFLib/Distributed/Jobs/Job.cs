@@ -72,11 +72,12 @@ namespace Defcore.Distributed.Jobs
         /// </summary>
         /// <param name="index">index of the jobtask 
         /// within the list of tasks</param>
+        /// <param name="args">the arguments to main</param>
         public void StartTask(int index)
         {
             if (_tasks.Count > index)
             {
-                _tasks[index].Main(new[] {index.ToString()});
+                _tasks[index].Main(new []{index.ToString()});
             }
         }
 
@@ -114,10 +115,11 @@ namespace Defcore.Distributed.Jobs
         public virtual void RunFinalTask(){}
 
         /// <summary>
-        /// Run a section of code on exactly one node
+        /// Run a section of code at the start before anything else
         /// </summary>
-        /// <remarks>This method will be called once by only one node</remarks>
-        public virtual void RunOnce() {}
+        /// <remarks>This method will be called once 
+        /// by the node that submitted the job. </remarks>
+        public virtual void RunInitialTask() {}
     }
 
     /// <summary>

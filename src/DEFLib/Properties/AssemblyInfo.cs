@@ -9,6 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DEFLib")]
 [assembly: AssemblyTrademark("")]
+[assembly: AssemblyTitle("DEFLib")]
+[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

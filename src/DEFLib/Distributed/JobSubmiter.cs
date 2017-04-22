@@ -60,7 +60,8 @@ namespace Defcore.Distributed
             jobRef.Username = GetUserName();
             jobRef.PathToDll = args[1];
             jobRef.UserArgs = userArgs;
-
+            // call the initial method
+            loader.CallMethod("RunInitialTask", new object[]{});
             var sj = new SubmitJob(args[0], NetworkSendReceive.ServerPort, jobRef);
             Console.CancelKeyPress += sj.OnUserExit;
         }
