@@ -33,13 +33,15 @@ namespace Examples.Sorting
         public override void RunFinalTask()
         {
             var paths = new List<string>();
+            var dir = "";
             foreach(JobResult job in Results)
             {
 
                 var t = job as SortResult;
-                if (t == null) { Console.WriteLine("shit");
+                if (t == null) { Console.WriteLine("bad file");
                     return;
                 }
+                dir = t.Directory;
                 paths.AddRange(t.ResultPaths);
             }
 
@@ -68,7 +70,7 @@ namespace Examples.Sorting
                 LoadQueue(queues[i], readers[i], bufferlen);
 
             // Merge!
-            StreamWriter sw = new StreamWriter(File.Create("Sorted.txt"));
+            StreamWriter sw = new StreamWriter(File.Create(dir+"/Sorted.txt"));
             bool done = false;
             int lowest_index, j, progress = 0;
             string lowest_value;
@@ -147,16 +149,18 @@ namespace Examples.Sorting
         private const int MaxMemory = 100000000;
 
         private readonly string _filename;
+        private readonly string _dir;
         private readonly int _lineCount;
         private readonly int _section;
         private readonly int _splitSize;
-
+        
         private readonly List<string> _resultPaths;
 
         public SortTask(string filename,
             int lineCount, int section, int splitSize)
         {
             _filename = filename;
+            _dir = Path.GetDirectoryName(filename);
             _lineCount = lineCount;
             _section = section;
             _splitSize = splitSize;
@@ -168,7 +172,7 @@ namespace Examples.Sorting
             // split the file up into smaller pieces
             Split();
             // create a job result from the sorted pieces
-            var jobResult = new SortResult { ResultPaths = Sort() };
+            var jobResult = new SortResult { ResultPaths = Sort(), Directory = _dir };
             // add the result to our results
             AddResult(jobResult);
         }
@@ -180,7 +184,7 @@ namespace Examples.Sorting
             // calculate the number of lines we are sorting
             var numLines = _lineCount / _splitSize;
             var sectionNum = 1;
-            var path = string.Format("SplitSection{0}{1:d5}.txt", _section, sectionNum);
+            var path = string.Format("{0}/SplitSection{1}{2:d5}.txt", _dir, _section, sectionNum);
             // add the first path to the list
             _resultPaths.Add(path);
 
@@ -210,7 +214,7 @@ namespace Examples.Sorting
                         writer.Dispose();
                         sectionNum++;
                         // add additional paths if nessesary
-                        path = string.Format("SplitSection{0}{1:d5}.txt", _section, sectionNum);
+                        path = string.Format("{0}/SplitSection{1}{2:d5}.txt", _dir, _section, sectionNum);
                         writer = new StreamWriter(File.Create(path));
                         _resultPaths.Add(path);
                     }
@@ -248,5 +252,6 @@ namespace Examples.Sorting
     public class SortResult : JobResult
     {
         public List<string> ResultPaths { get; set; }
+        public string Directory { get; set; }
     }
 }
