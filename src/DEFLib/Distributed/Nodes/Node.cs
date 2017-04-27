@@ -13,6 +13,7 @@ using Defcore.Distributed.Manager;
 using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo("StartNode")]
+[assembly: InternalsVisibleTo("defcore")]
 
 namespace Defcore.Distributed.Nodes
 {
@@ -35,7 +36,7 @@ namespace Defcore.Distributed.Nodes
             _proxy = new Proxy(new NodeReceiver(this), new NodeSender(this), host, port, 0);
             Logger.LogFileName = "NodeLog.txt";
             Logger.LogFor = "Node";
-            Logger = Logger.NodeLogInstance;
+            Logger = Logger.LogInstance;
         }
 
         /// <summary>
@@ -70,6 +71,11 @@ namespace Defcore.Distributed.Nodes
         {
             // try to connect to the NodeManager
             Node n = new Node(args[0], NetworkSendReceive.ServerPort);
+            if (n._proxy.IOStream == null)
+            {
+                Console.WriteLine("Could not create proxy to network");
+                return;
+            }
             foreach(var v in Environment.GetEnvironmentVariables().Keys)
             {
                 n.Logger.Log("Key: " + v + " -> " + Environment.GetEnvironmentVariables()[v]);

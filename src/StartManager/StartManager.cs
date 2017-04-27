@@ -9,10 +9,6 @@ namespace StartManager
     {
         public static void Main(string[] args)
         {
-            //Test t1 = new Test(20);
-            //Console.WriteLine(t1.SerializeResult());
-            //Console.ReadKey();
-
             NodeManager.Main();
         }
     }

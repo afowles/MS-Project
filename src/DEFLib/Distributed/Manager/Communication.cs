@@ -91,8 +91,6 @@ namespace Defcore.Distributed.Manager
                     break;
                 case NodeManagerComm.MessageType.Unknown:
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
     }

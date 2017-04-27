@@ -55,7 +55,7 @@ namespace Defcore.Distributed.Manager
             Logger.LogFileName = "NodeManagerLog.txt";
             Logger.LogFor = "Node Manager";
             // create logging
-            Logger = Logger.ManagerLogInstance;
+            Logger = Logger.LogInstance;
             
             Connections = new List<Proxy>();
             ConnectedNodes = new Dictionary<int, NodeRef>();

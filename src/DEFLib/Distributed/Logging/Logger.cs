@@ -41,17 +41,13 @@ namespace Defcore.Distributed.Logging
         /// Accesser for the logger instance
         /// </summary>
         /// <remarks>
-        /// Whichever property gets called first
-        /// is what the Logger instance will be.
-        /// since a Node and NodeManager are not running
-        /// the same instance this will not be an issue.
         /// </remarks>
-        public static Logger NodeLogInstance
+        public static Logger LogInstance
         {
             get
             {
                 if (_instance != null) {return _instance;}
-                // thread safety is instance
+                // thread safety if instance
                 // is not yet initalized.
                 lock (LoggerLock)
                 {
@@ -65,33 +61,6 @@ namespace Defcore.Distributed.Logging
             }     
         }
 
-        /// <summary>
-        /// Accesser for the Manager logger instance
-        /// </summary>
-        /// <remarks>
-        /// Whichever property gets called first
-        /// is what the Logger instance will be.
-        /// since a Node and NodeManager are not running
-        /// the same instance this will not be an issue.
-        /// </remarks>
-        public static Logger ManagerLogInstance
-        {
-            get
-            {
-                if (_instance != null) {return _instance;}
-                // thread safety is instance
-                // is not yet initalized.
-                lock (LoggerLock)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new Logger();
-                    }
-                }
-
-                return _instance;
-            }
-        }
 
         /// <summary>
         /// Start Logging

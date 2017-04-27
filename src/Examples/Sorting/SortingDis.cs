@@ -10,6 +10,7 @@ namespace Examples.Sorting
 
         public override void Main(string[] args)
         {
+            Console.WriteLine("hello there friends");
             // Count the number of lines in the file
             var lineCount = 0;
             var filename = args[0];

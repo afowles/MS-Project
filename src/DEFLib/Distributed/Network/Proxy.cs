@@ -58,14 +58,20 @@ namespace Defcore.Distributed.Network
                 _client = new TcpClient();
                 Id = id;
                 IPAddress ipAddress = IPAddress.Parse(host);
-                _client.ConnectAsync(ipAddress, port);
                 
-                // wait until the client is connected.
-                while (!_client.Connected) { }
+                // wait for the client to connect for a few seconds
+                var success =_client.ConnectAsync(ipAddress, port)
+                    .Wait(NetworkSendReceive.NetworkTimeout);
+                if (!success)
+                {
+                    return;
+                }
+                
             }
             catch(SocketException e)
             {
                 Console.WriteLine(e);
+                return;
                 // should stop or throw exception
                 // without the socket no communication
                 // will happen
@@ -435,6 +441,7 @@ namespace Defcore.Distributed.Network
         public const int ServerPort = 12345;
         public const int IOSleep = 100; // in milliseconds
         public const int ServerSleep = 500;
+        public const int NetworkTimeout = 2000;
         // Thread object to handle from socket.
         protected Thread Thread;
 

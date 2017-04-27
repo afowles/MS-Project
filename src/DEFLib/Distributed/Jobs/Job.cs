@@ -11,7 +11,6 @@ namespace Defcore.Distributed.Jobs
     {
         protected Schedule TaskSchedule;
         private readonly List<JobTask> _tasks = new List<JobTask>();
-
         public List<JobResult> Results { get; }
 
         /// <summary>
@@ -20,7 +19,10 @@ namespace Defcore.Distributed.Jobs
         /// present if too large a number is provided.
         /// Defaults to 1.
         /// </summary>
-        public int RequestedNodes { get; set; }
+        public virtual int RequestedNodes()
+        {
+            return 1;
+        }
 
         /// <summary>
         /// Empty constructor for a job
@@ -29,7 +31,6 @@ namespace Defcore.Distributed.Jobs
         {
             TaskSchedule = Schedule.Fixed;
             Results = new List<JobResult>();
-            RequestedNodes = 1;
         }
 
         /// <summary>

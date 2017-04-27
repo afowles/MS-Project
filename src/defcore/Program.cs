@@ -1,18 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection.Metadata;
+using Defcore.Distributed;
+using Defcore.Distributed.Assembly;
 using Microsoft.Extensions.CommandLineUtils;
 
 using Defcore.Distributed.Manager;
+using Defcore.Distributed.Nodes;
 
 namespace defcore
 {
+    /// <summary>
+    /// The main launcher program for defcore
+    /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// Main method, run with --help for details
+        /// </summary>
+        /// <param name="args">program arguments</param>
         public static void Main(string[] args)
         {
-            
             var commandLineApp = new CommandLineApplication(false)
             {
                 Name = "defcore"
@@ -21,67 +28,85 @@ namespace defcore
             // Set up the command for running the server        
             commandLineApp.Command("server", c =>
             {
+                c.HelpOption("-?|-h|--help");
                 c.Description = "Runs the NodeManager server on a local IP address";
+                // specifiy and option
+                var directoryOption = c.Option("-d|--directory <PATH>", 
+                    "Path to the working directory of the server, input will be relative to current directory", CommandOptionType.SingleValue);
                 c.OnExecute(() =>
                     {
+                        if (directoryOption.HasValue())
+                        {
+                            SetOrCreateWorkingDirectory(directoryOption.Value());
+                        }
                         NodeManager.Main();
                         return 0;
                     }
                 );
             });
-
-            // test
-            commandLineApp.Command("calc", c =>
+            // set up a command for running the node
+            commandLineApp.Command("node", c =>
             {
-                c.Description = "Evaluates arguments with the operation specified.";
-
-                var operationOption = c.Option("-o|--operation <OPERATION>",
-                    "You can add or multiply the terms specified using 'add' or 'mul'.", CommandOptionType.SingleValue);
-                var termsArg = c.Argument("[terms]", "The numbers to use as a term", true);
                 c.HelpOption("-?|-h|--help");
+                c.Description = "Runs the Node on a local IP address";
+                
+                // specifiy and option
+                var directoryOption = c.Option("-d|--directory <PATH>",
+                    "Path to the working directory of the node, input will be relative to current directory", CommandOptionType.SingleValue);
+                var ipArgument = c.Argument("[IP]", "The IP address for the server");
                 c.OnExecute(() =>
                 {
-                    // check to see if we got what we were expecting
-                    if (!operationOption.HasValue())
+                    if (directoryOption.HasValue())
                     {
-                        Console.WriteLine("No operation specified.");
+                        SetOrCreateWorkingDirectory(directoryOption.Value());
+                    }
+                    if (ipArgument.Values.Count == 0)
+                    {
+                        Console.WriteLine("Must provide an ip address, use --help for more details");
                         return 1;
                     }
-                    if (termsArg.Values.Count != 2)
-                    {
-                        Console.WriteLine("You must specify exactly 2 terms.");
-                        return 1;
-                    }
-
-                    // perform the operation
-                    var operation = operationOption.Value();
-                    var term1 = int.Parse(termsArg.Values[0]);
-                    var term2 = int.Parse(termsArg.Values[1]);
-                    if (operation.ToLower() == "mul")
-                    {
-                        var result = term1 * term2;
-                        Console.WriteLine($" {term1} x {term2} = {result}");
-                    }
-                    else
-                    {
-                        var result = term1 + term2;
-                        Console.WriteLine($" {term1} + {term2} = {result}");
-                    }
+                    Node.Main(new []{ipArgument.Value});
                     return 0;
                 });
             });
-            
-            CommandOption greeting = commandLineApp.Option(
-              "-$|-g |--greeting <greeting>",
-              "The greeting to display. The greeting supports"
-              + " a format string where {fullname} will be "
-              + "substituted with the full name.",
-              CommandOptionType.SingleValue);
-            CommandOption uppercase = commandLineApp.Option(
-              "-u | --uppercase", "Display the greeting in uppercase.",
-              CommandOptionType.NoValue);
+
+            // set up a command for submitting a job
+            commandLineApp.Command("submit", c =>
+            {
+                c.HelpOption("-?|-h|--help");
+                c.Description = "submits a job to the system";
+
+                // specifiy and option
+                var directoryOption = c.Option("-d|--directory <PATH>",
+                    "Path to the working directory, input will be relative to current directory", CommandOptionType.SingleValue);
+                //var ipArgument = c.Argument("[IP]", "The IP address for the server");
+                var program = c.Argument("program", "User program and arguments", true);
+                c.OnExecute(() =>
+                {
+                    if (directoryOption.HasValue())
+                    {
+                        SetOrCreateWorkingDirectory(directoryOption.Value());
+                    }
+                    SubmitJob.Main(program.Values.ToArray());
+                    return 0;
+                });
+            });
+
+            // setup a command for loading an executable
+            commandLineApp.Command("load", c =>
+            {
+                c.HelpOption("-?|-h|--help");
+                c.Description = "loads a job to and executes it";
+
+                var program = c.Argument("arguments", "program arguments", true);
+                c.OnExecute(() =>
+                {
+                    JobExecuter.Main(program.Values.ToArray());
+                    return 0;
+                });
+            });
+
             commandLineApp.HelpOption("-? | -h | --help");
-            commandLineApp.VersionOption("-v | --version", "1.0.0");
             commandLineApp.OnExecute(() =>
             {
                 if (args.Length == 0)
@@ -100,6 +125,19 @@ namespace defcore
                 Console.WriteLine(e.Message);
             }
             
+        }
+
+        /// <summary>
+        /// Set or create the working directory
+        /// </summary>
+        /// <param name="directory">the directory to set</param>
+        public static void SetOrCreateWorkingDirectory(string directory)
+        {
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            Directory.SetCurrentDirectory(directory);
         }
     }
 }

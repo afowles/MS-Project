@@ -109,7 +109,7 @@ namespace Examples.Primes
             /// </param>
             public override void Main(string[] args2)
             {
-                TestTask t = new TestTask(5);
+                TestTask t = new TestTask();
                 t.doSomething();
                 AddResult(t);
                 Console.WriteLine(args[0] + " " + args[1]);
@@ -167,12 +167,6 @@ namespace Examples.Primes
         public class TestTask : JobResult
         {
             public int Hello { get; set; } = 0;
-
-            public TestTask(int id) 
-                : base()
-            {
-
-            }
 
             public void doSomething()
             {

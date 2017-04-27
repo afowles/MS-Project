@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -15,7 +17,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 [assembly: InternalsVisibleTo("SubmitJob")]
-
+[assembly: InternalsVisibleTo("defcore")]
 namespace Defcore.Distributed
 {
     /// <summary>
@@ -24,7 +26,9 @@ namespace Defcore.Distributed
     internal class SubmitJob
     {
         private readonly Proxy _proxy;
+        private static string _ipAddr = "";
         public Logger Logger { get; }
+
 
         /// <summary>
         /// construct a submit node at host and port
@@ -36,7 +40,9 @@ namespace Defcore.Distributed
         public SubmitJob(string host, int port, JobRef job)
         {
             _proxy = new Proxy(new JobReceiver(), new JobSender(job), host, port, 0);
-            Logger = Logger.NodeLogInstance;
+            Logger.LogFileName = "SubmitLogFile.txt";
+            Logger.LogFor = "Submit";
+            Logger = Logger.LogInstance;
         }
 
         /// <summary>
@@ -45,25 +51,45 @@ namespace Defcore.Distributed
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
+            var getIp = GetLocalIpAddress();
+            getIp.Wait();
+
             // try to connect to the NodeManager
             Console.WriteLine("Starting Job Launcher");
             Console.WriteLine("Username is: " + GetUserName());
             var jobRef = new JobRef();
-            var loader = new CoreLoader<Job>(args[1]);
-            var userArgs = new string[args.Length - 2];
-            for (var i = 2; i < args.Length; i++)
+            var loader = new CoreLoader<Job>(args[0]);
+            var userArgs = new string[args.Length - 1];
+            for (var i = 1; i < args.Length; i++)
             {
-                userArgs[i - 2] = args[i];
+                userArgs[i - 1] = args[i];
             }
             // setup the job reference
-            jobRef.RequestedNodes = (int)loader.GetProperty("RequestedNodes");
+            jobRef.RequestedNodes = (int)loader.CallMethod("RequestedNodes", new object[]{});
             jobRef.Username = GetUserName();
-            jobRef.PathToDll = args[1];
+            jobRef.PathToDll = args[0];
             jobRef.UserArgs = userArgs;
             // call the initial method
             loader.CallMethod("RunInitialTask", new object[]{});
-            var sj = new SubmitJob(args[0], NetworkSendReceive.ServerPort, jobRef);
+            var sj = new SubmitJob(_ipAddr, NetworkSendReceive.ServerPort, jobRef);
             Console.CancelKeyPress += sj.OnUserExit;
+        }
+
+        /// <summary>
+        /// Gets the local IP address
+        /// </summary>
+        public static async Task GetLocalIpAddress()
+        {
+            string localIp = "";
+            var host = await Dns.GetHostEntryAsync(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    localIp = ip.ToString();
+                }
+            }
+            _ipAddr = localIp;
         }
 
         /// <summary>

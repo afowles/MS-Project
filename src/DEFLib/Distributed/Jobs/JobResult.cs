@@ -7,7 +7,7 @@ namespace Defcore.Distributed.Jobs
     /// </summary>
     public class JobResult
     {
-        public int JobId { get; set; }
+        //public int JobId { get; set; }
 
         // Custom json handle settings
         private static readonly JsonSerializerSettings Settings 

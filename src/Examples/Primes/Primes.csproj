@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <AssemblyName>Primes</AssemblyName>
-    <OutputType>Exe</OutputType>
+    <OutputType>library</OutputType>
     <PackageId>Primes</PackageId>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
@@ -13,14 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<CSFile Include="Primes\*.cs" />
     <Compile Remove="archive\**" />
     <EmbeddedResource Remove="archive\**" />
     <None Remove="archive\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DEFLib\DEFLib.csproj" />
+    <ProjectReference Include="..\..\DEFLib\DEFLib.csproj" />
   </ItemGroup>
 
 </Project>

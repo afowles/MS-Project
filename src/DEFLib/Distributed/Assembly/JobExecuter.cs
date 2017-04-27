@@ -6,7 +6,7 @@ using Defcore.Distributed.IO;
 using Defcore.Distributed.Jobs;
 
 [assembly: InternalsVisibleTo("Loader")]
-
+[assembly: InternalsVisibleTo("defcore")]
 namespace Defcore.Distributed.Assembly
 {
     internal class JobExecuter
@@ -86,9 +86,9 @@ namespace Defcore.Distributed.Assembly
             catch (Exception e)
             {
                 Console.SetOut(originalOut);
-                Console.WriteLine(e);
-                Console.WriteLine("WHAT: " + e.Message);
+                Console.WriteLine("[{ \"error\":" + e.Message + "},");
                 Console.WriteLine(textWriter.GetJsonResult());
+                Console.WriteLine("]");
             }
         }
 

@@ -44,11 +44,11 @@ namespace Defcore.Distributed
             System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo
             {
                 FileName = "dotnet",
-                Arguments = "run ../StartNode/" + _dllName,
+                Arguments = System.Reflection.Assembly.GetEntryAssembly().Location + " load " + _dllName,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 // run in the loader directory
-                WorkingDirectory = "../Loader/",
+                WorkingDirectory = ".",
                 CreateNoWindow = true
             };
             // give it the arguments required to section up work
