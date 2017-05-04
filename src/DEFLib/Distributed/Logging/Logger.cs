@@ -15,6 +15,8 @@ namespace Defcore.Distributed.Logging
         private static readonly object LoggerLock = new object();
         private readonly TextWriter _writer;
 
+        public static bool Disable = false;
+
         /// <summary>
         /// Name of the log file
         /// </summary>
@@ -83,7 +85,10 @@ namespace Defcore.Distributed.Logging
         /// <param name="logMessage"></param>
         public void Log(string logMessage)
         {
-
+            if (Disable)
+            {
+                return;
+            }
 #if DEBUG
 Console.WriteLine(logMessage);
 #endif

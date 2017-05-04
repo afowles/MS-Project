@@ -184,7 +184,7 @@ namespace Defcore.Distributed.Nodes
                         // This will block on the IOStream until the file reading
                         // is over. The next thing sent over the network must be a file.
                         _job = JsonConvert.DeserializeObject<JobRef>(receivedData.Args[1]);
-                        FileRead.ReadInWriteOut(Proxy.IOStream, Path.GetFileName(_job.FileName));
+                        FileRead.ReadInWriteOut(Proxy.IOStream, _job.FileName);
                         //job = receivedData;
                         // after we have finished reading the data, let node manager know
                         OnDataReceived(new NodeComm(DataReceivedEventArgs.ConstructMessage("fileread")));

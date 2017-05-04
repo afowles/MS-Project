@@ -317,7 +317,7 @@ namespace Defcore.Distributed.Network
                         else if (iostream.Read(bytes, 0, bytes.Length) > 0)
                         {
                             // byte buffer to string
-                            var data = System.Text.Encoding.ASCII.GetString(bytes);
+                            var data = Encoding.ASCII.GetString(bytes);
                             // did the message fit into the buffer?
                             if (data.Contains(DataReceivedEventArgs.Endl))
                             {
@@ -340,7 +340,7 @@ namespace Defcore.Distributed.Network
                                 // the message is larger than the buffer
                                 Message += data;
                             }
-                            _logger.Log("Received: " + data);
+                            //_logger.Log("Received: " + data);
                             // Clear out buffer to prevent odd messages
                             Array.Clear(bytes, 0, bytes.Length);
 
@@ -428,7 +428,7 @@ namespace Defcore.Distributed.Network
             foreach(string s in args)
             {
                 message += s + DataReceivedEventArgs.Split;
-                Console.WriteLine(s);
+                Console.WriteLine(s.Length < 100 ? s : "...");
             }
             message += DataReceivedEventArgs.Endl;
             byte[] b = System.Text.Encoding.ASCII.GetBytes(message);
