@@ -10,4 +10,8 @@
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\DEFLib\DEFLib.csproj" />
+  </ItemGroup>
+
 </Project>

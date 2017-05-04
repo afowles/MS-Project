@@ -10,92 +10,78 @@ namespace Buddhabrot
 {
     internal class BuddhabrotAlgo
     {
-        public volatile bool IsStopping;
+        private long _total;
 
-        private readonly int threadCount;
-        private readonly int width;
-        private readonly int iterations;
-        private readonly double[][] arrays;
-        private readonly double xMin = -2;
-        private readonly double xMax = 2;
-        private readonly double yMin = -2;
-        private readonly double yMax = 2;
+        private readonly int threadCount, width, iterations;
+        private readonly double[][] _data;
+        private readonly double _xMin, _yMin, _xMax, _yMax, _nx, _ny;
+        private readonly long _samples;
+        
 
-        private readonly double nxFactor;
-        private readonly double nyFactor;
-        private readonly long? maxSamples;
-        private long totalSamples;
-        private Stopwatch sw;
-
-        public BuddhabrotAlgo(int width, int height, double xMin, double xMax, int iterations, long maxSamples)
+        public BuddhabrotAlgo(int width, int height, double xMin, 
+            double xMax, int iterations, long maxSamples)
         {
             var aspectRatio = width / (double)height;
             threadCount = Environment.ProcessorCount;
             this.width = width;
             this.iterations = iterations;
-            this.xMin = xMin;
-            this.xMax = xMax;
-            this.maxSamples = maxSamples;
-            totalSamples = 0L;
+            _xMin = xMin;
+            _xMax = xMax;
+            _samples = maxSamples;
+            _total = 0L;
 
             double xSize = xMax - xMin;
             double ySize = xSize / aspectRatio;
-            yMin = -ySize / 2;
-            yMax = ySize / 2;
+            _yMin = -ySize / 2;
+            _yMax = ySize / 2;
 
-            arrays = new double[threadCount][];
+            _data = new double[threadCount][];
             for (int i = 0; i < threadCount; i++)
             {
-                arrays[i] = new double[width * height];
+                _data[i] = new double[width * height];
             }
 
-            nxFactor = 1 / xSize * width;
-            nyFactor = 1 / ySize * height;
+            _nx = 1 / xSize * width;
+            _ny = 1 / ySize * height;
         }
 
         public double[][] Run()
         {
-            sw = Stopwatch.StartNew();
             var tasks = Enumerable
                 .Range(0, threadCount)
-                .Select(thread => Task.Run(() => Run(arrays[thread], new Random(thread))))
+                .Select(thread => Task.Run(() => Run(_data[thread], new Random(thread))))
                 .ToArray();
 
             Console.WriteLine(tasks.Length);
             Task.WaitAll(tasks);
-            return arrays;
+            return _data;
         }
 
         private void Run(double[] array, Random random)
         {
-            long n = 0;
-            while (!IsStopping)
+            long currentCount = 0;
+            while (true)
             {
-                // all points in mandelbrot set are between -2...2
-                var x = random.NextDouble() * 2 * (xMax - xMin) + xMin;
-                var y = random.NextDouble() * 2 * (yMax - yMin) + yMin;
+                var x = random.NextDouble() * 2 * (_xMax - _xMin) + _xMin;
+                var y = random.NextDouble() * 2 * (_yMax - _yMin) + _yMin;
 
-                var zr = 0.0;
-                var zi = 0.0;
-                var cr = x;
-                var ci = y;
+                double zr = 0.0, zi = 0.0, cr = x, ci = y;
 
-                // check for escape
+                var escape = false;
+                // have we escaped
                 for (var i = 0; i < iterations; i++)
                 {
                     var zzr = zr * zr - zi * zi;
                     var zzi = zr * zi + zi * zr;
                     zr = zzr + cr;
                     zi = zzi + ci;
-
-                    if ((zr * zr + zi * zi) > 4)
-                        break;
+                    escape = (zr * zr + zi * zi) > 4;
+                    if (escape) {break;}
                 }
 
-                if ((zr * zr + zi * zi) > 4) // did escape
+                if (escape)
                 {
-                    zr = 0;
-                    zi = 0;
+                    zr = 0; zi = 0;
                     for (var i = 0; i < iterations; i++)
                     {
                         var zzr = zr * zr - zi * zi;
@@ -111,28 +97,28 @@ namespace Buddhabrot
                     }
                 }
 
-                n++;
+                currentCount++;
 
-                if (n % 10000000 == 0)
+                if (currentCount % 10000000 != 0) continue;
+
+                Interlocked.Add(ref _total, currentCount);
+                currentCount = 0;
+
+                if (_total >= _samples)
                 {
-                    Interlocked.Add(ref totalSamples, n);
-                    n = 0;
-                    Console.WriteLine("Calculated {0:0.0} Million samples in {1:0.000} sec", totalSamples / 1000000.0, sw.ElapsedMilliseconds / 1000.0);
-                    if (maxSamples.HasValue && totalSamples >= maxSamples)
-                        break;
+                    return;
                 }
             }
         }
 
         private void IncreasePixel(double[] arr, double x, double y)
         {
-            if (x >= xMax || x < xMin)
-                return;
-            if (y >= yMax || y < yMin)
-                return;
-
-            var nx = (int)((x - xMin) * nxFactor);
-            var ny = (int)((y - yMin) * nyFactor);
+            // don't increase if not in range
+            if (x >= _xMax || x < _xMin) { return; }
+            if (y >= _yMax || y < _yMin) { return; }
+              // find the pixel
+            var nx = (int)((x - _xMin) * _nx);
+            var ny = (int)((y - _yMin) * _ny);
             var idx = nx + ny * width;
             arr[idx]++;
         }

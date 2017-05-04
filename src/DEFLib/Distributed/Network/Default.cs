@@ -106,15 +106,16 @@ namespace Defcore.Distributed.Network
     {
         // ConcurrentQueue for TryDequeue method
         readonly ConcurrentQueue<DefaultDataComm> _messageQueue = new ConcurrentQueue<DefaultDataComm>();
-        //private NodeManager _manager;
+        private NodeManager _manager;
 
         /// <summary>
         /// Constructor to add initial message of id
         /// on start up that message will be send out to the connected host
         /// to gather identification info.
         /// </summary>
-        public DefaultSender()
+        public DefaultSender(NodeManager nodeManager)
         {
+            _manager = nodeManager;
             //this._manager = manager;
             _messageQueue.Enqueue(new DefaultDataComm("id"));
         }
@@ -146,7 +147,7 @@ namespace Defcore.Distributed.Network
                     if (data.Protocol == DefaultDataComm.MessageType.Unknown 
                         || data.Protocol == DefaultDataComm.MessageType.Id)
                     {
-                        Console.WriteLine("Default Handler: Requesting Id");
+                        _manager.Logger.Log("Default Handler: Requesting Id");
                         SendMessage(new [] { "id" });
                     }
                     else

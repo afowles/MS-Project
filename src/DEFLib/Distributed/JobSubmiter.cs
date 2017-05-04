@@ -39,10 +39,12 @@ namespace Defcore.Distributed
         /// <param name="job">job reference for the job to be submitted</param>
         public SubmitJob(string host, int port, JobRef job)
         {
-            _proxy = new Proxy(new JobReceiver(), new JobSender(job), host, port, 0);
+            _proxy = new Proxy(new JobReceiver(), new JobSender(job,this), host, port, 0);
             Logger.LogFileName = "SubmitLogFile.txt";
             Logger.LogFor = "Submit";
             Logger = Logger.LogInstance;
+            Logger.Log("Starting Job Launcher");
+            Logger.Log("Username is: " + GetUserName());
         }
 
         /// <summary>
@@ -55,8 +57,7 @@ namespace Defcore.Distributed
             getIp.Wait();
 
             // try to connect to the NodeManager
-            Console.WriteLine("Starting Job Launcher");
-            Console.WriteLine("Username is: " + GetUserName());
+            
             var jobRef = new JobRef();
             var loader = new CoreLoader<Job>(args[0]);
             var userArgs = new string[args.Length - 1];
@@ -224,10 +225,12 @@ namespace Defcore.Distributed
         private readonly ConcurrentQueue<JobEventArgs> _messageQueue = new ConcurrentQueue<JobEventArgs>();
 
         private readonly JobRef _job;
-        private CoreLoader<Job> _loader; 
+        private CoreLoader<Job> _loader;
+        private SubmitJob _parent;
 
-        public JobSender(JobRef job)
+        public JobSender(JobRef job, SubmitJob parent)
         {
+            _parent = parent;
             _job = job;
             _loader = new CoreLoader<Job>(_job.PathToDll);
         }
@@ -245,25 +248,24 @@ namespace Defcore.Distributed
                 JobEventArgs data;
                 if (_messageQueue.TryDequeue(out data))
                 {
-                    Console.WriteLine("Job Sending Message");
+                    _parent.Logger.Log("Job Sending Message");
                     switch (data.Protocol)
                     {
                         case JobEventArgs.MessageType.Id:
-                            Console.WriteLine("Sending Job Id");
+                            _parent.Logger.Log("Sending Job Id");
                             SendMessage(new string[] { "job" });
                             break;
                         case JobEventArgs.MessageType.Submit:
-                            Console.WriteLine("Sending Job");
+                            _parent.Logger.Log("Sending Job");
                             // job in this context corresponds to job manager.
                             var args = new List<string> {"job", JsonConvert.SerializeObject(_job)};
                             SendMessage(args.ToArray());
 
                             break;
                         case JobEventArgs.MessageType.Results:
-                            //Console.WriteLine(data.args[1]);
                             var j = JArray.Parse(data.Args[1]);
                             var userOut = JsonConvert.DeserializeObject<UserOutput>(j[0].ToString());
-                            Console.WriteLine(userOut.ConsoleOutput);
+                            _parent.Logger.Log(userOut.ConsoleOutput);
 
                             if (j.Count > 1)
                             {
@@ -277,7 +279,7 @@ namespace Defcore.Distributed
                             if (count == _job.RequestedNodes)
                             {
                                 _loader.CallMethod("RunFinalTask", new object[] { });
-                                Console.WriteLine("Done");
+                                _parent.Logger.Log("Done");
                                 Proxy.QueueDataEvent(new JobEventArgs("shutdown"));
                                 Environment.Exit(0);
                             }

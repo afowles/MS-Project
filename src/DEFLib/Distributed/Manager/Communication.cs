@@ -163,15 +163,15 @@ namespace Defcore.Distributed.Manager
                     break;
                 // sent by a job file
                 case NodeManagerComm.MessageType.NewJob:
-                    Console.WriteLine("Received Job File: " + data.Args[1]);
+                    Manager.Logger.Log("Received Job File: " + data.Args[1]);
                     // add it to the list of jobs for later
                     var jobRef = JsonConvert.DeserializeObject<JobRef>(data.Args[1]);
                     Manager.Scheduler.AddJob(jobRef, Proxy.Id);
-                    Console.WriteLine("Proxy id is:" + Proxy.Id);
+                    Manager.Logger.Log("Proxy id is:" + Proxy.Id);
                     break;
 
                 case NodeManagerComm.MessageType.File:
-                    Console.WriteLine("Node Manager: sending file info");
+                    Manager.Logger.Log("Node Manager: sending file info");
                     SendMessage(data.Args);
                     break;
 
@@ -185,20 +185,20 @@ namespace Defcore.Distributed.Manager
                     var j = Manager.Scheduler.GetJob(jobId);
                     if (j != null)
                     {
-                        Console.WriteLine("Sending file: " + Path.GetFileName(j.PathToDll));
+                        Manager.Logger.Log("Sending file: " + Path.GetFileName(j.PathToDll));
                         //bool found = manager.Scheduler.GetJob(Path.GetFileName(data.args[1]), out d);
-                        Console.WriteLine("Writing file: " + j.PathToDll);
+                        Manager.Logger.Log("Writing file: " + j.PathToDll);
                         FileWrite.WriteOut(Proxy.IOStream, j.PathToDll);
                         Proxy.IOStream.Flush();
-                        Console.WriteLine("Sent file");
+                        Manager.Logger.Log("Sent file");
                     }
                     else
                     {
-                        Console.WriteLine("No jobs... bad");
+                        Manager.Logger.Log("No jobs... bad");
                     }
                     break;
                 case NodeManagerComm.MessageType.FileRead:
-                    Console.WriteLine("Node Manageer: Node has read file");
+                    Manager.Logger.Log("Node Manageer: Node has read file");
                     SendMessage(new [] { "execute" });
                     break;
                 case NodeManagerComm.MessageType.NodeFinished:

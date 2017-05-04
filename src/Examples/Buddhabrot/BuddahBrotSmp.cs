@@ -20,7 +20,7 @@ namespace Buddhabrot
 
         public static void Main(string[] args)
         {
-           
+           /*
             var width = 3160;
             var height = 4840;
             var iter = 2000;
@@ -34,6 +34,20 @@ namespace Buddhabrot
 
             process.Wait();
             SaveImage("test", width, height, arrays);
+            */
+            BuddhabrotDis d = new BuddhabrotDis();
+            d.Main(args);
+            d.StartTask(0);
+            Console.WriteLine("Finished First");
+            d.StartTask(1);
+            Console.WriteLine("Finished Second");
+            d.StartTask(2);
+            Console.WriteLine("Finished Third");
+            d.StartTask(3);
+            Console.WriteLine("Finished Four");
+            d.CompileResults();
+            d.RunFinalTask();
+
         }
 
 

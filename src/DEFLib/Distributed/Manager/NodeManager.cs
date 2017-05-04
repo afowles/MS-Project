@@ -123,7 +123,7 @@ namespace Defcore.Distributed.Manager
                     var client = await _server.AcceptTcpClientAsync();
                     Logger.Log("Connected!");
                     // create a default proxy
-                    var proxy = new Proxy(new DefaultReceiver(this), new DefaultSender(), client, _nextId++);
+                    var proxy = new Proxy(new DefaultReceiver(this), new DefaultSender(this), client, _nextId++);
                     // add it to the list of connections
                     Connections.Add(proxy);
                 }  
@@ -222,7 +222,7 @@ namespace Defcore.Distributed.Manager
                     {
                         break;
                     }
-                    Console.WriteLine("Enqueing for Node");
+                    Logger.Log("Enqueing for Node");
                     job.SectionId = sectionId;
                     job.TotalNodes = ConnectedNodes.Values.Count;
                     node.QueueDataEvent(new NodeManagerComm("file|" + JsonConvert.SerializeObject(job)));

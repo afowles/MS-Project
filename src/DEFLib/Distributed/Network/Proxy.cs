@@ -2,7 +2,9 @@
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
+using Defcore.Distributed.Logging;
 
 namespace Defcore.Distributed.Network
 {
@@ -19,6 +21,7 @@ namespace Defcore.Distributed.Network
         private AbstractReceiver _receiver;
         private AbstractSender _sender;
         public int Id { get; }
+        private Logger _logger;
 
         /// <summary>
         /// A Proxy constructor that can be passed
@@ -31,6 +34,7 @@ namespace Defcore.Distributed.Network
         public Proxy(AbstractReceiver r, AbstractSender s, 
             TcpClient client, int id)
         {
+            _logger = Logger.LogInstance;
             _client = client;
             Id = id;
             IOStream = client.GetStream();
@@ -51,8 +55,10 @@ namespace Defcore.Distributed.Network
         public Proxy(AbstractReceiver r, AbstractSender s, 
             string host, int port, int id)
         {
+            _logger = Logger.LogInstance;
             try
             {
+
                 // this is not supported for .NET core...
                 // this.client = new TcpClient(host, port);
                 _client = new TcpClient();
@@ -70,7 +76,7 @@ namespace Defcore.Distributed.Network
             }
             catch(SocketException e)
             {
-                Console.WriteLine(e);
+                _logger.Log(e.ToString());
                 return;
                 // should stop or throw exception
                 // without the socket no communication
@@ -267,6 +273,8 @@ namespace Defcore.Distributed.Network
 
         protected string Message = "";
 
+        private Logger _logger = Logger.LogInstance;
+
         /// <summary>
         /// The event for receiving data.
         /// </summary>
@@ -332,7 +340,7 @@ namespace Defcore.Distributed.Network
                                 // the message is larger than the buffer
                                 Message += data;
                             }
-                            Console.WriteLine("Received: {0}", data);
+                            _logger.Log("Received: " + data);
                             // Clear out buffer to prevent odd messages
                             Array.Clear(bytes, 0, bytes.Length);
 
