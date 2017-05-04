@@ -28,6 +28,9 @@ namespace Defcore.Distributed.Manager
         /// </summary>
         public int JobId { get; set; }
 
+
+        public string FileName { get; set; }
+
         /// <summary>
         /// The proxy id
         /// </summary>

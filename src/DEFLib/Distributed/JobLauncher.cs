@@ -11,7 +11,7 @@ namespace Defcore.Distributed
     /// </summary>
     internal class JobLauncher
     {
-        private readonly string _dllName;
+        //private readonly string _dllName;
         private readonly JobRef _job;
         private readonly Node _parent;
 
@@ -23,7 +23,7 @@ namespace Defcore.Distributed
         public JobLauncher(JobRef job, Node p)
         {
             _job = job;
-            _dllName = Path.GetFileName(_job.PathToDll);
+            //_dllName = Path.GetFileName(_job.PathToDll);
             _parent = p;
         }
 
@@ -44,7 +44,7 @@ namespace Defcore.Distributed
             System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo
             {
                 FileName = "dotnet",
-                Arguments = System.Reflection.Assembly.GetEntryAssembly().Location + " load " + _dllName,
+                Arguments = System.Reflection.Assembly.GetEntryAssembly().Location + " load " + _job.FileName,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 // run in the loader directory

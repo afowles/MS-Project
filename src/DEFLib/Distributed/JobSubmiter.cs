@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -69,6 +70,8 @@ namespace Defcore.Distributed
             jobRef.RequestedNodes = (int)loader.CallMethod("RequestedNodes", new object[]{});
             jobRef.Username = GetUserName();
             jobRef.PathToDll = args[0];
+            jobRef.FileName = Path.GetFileName(args[0]);
+            Console.WriteLine(jobRef.FileName);
             jobRef.UserArgs = userArgs;
             // call the initial method
             loader.CallMethod("RunInitialTask", new object[]{});
