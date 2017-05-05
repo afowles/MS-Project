@@ -340,7 +340,7 @@ namespace Defcore.Distributed.Network
                                 // the message is larger than the buffer
                                 Message += data;
                             }
-                            //_logger.Log("Received: " + data);
+                            _logger.Log("Received: " + data);
                             // Clear out buffer to prevent odd messages
                             Array.Clear(bytes, 0, bytes.Length);
 
