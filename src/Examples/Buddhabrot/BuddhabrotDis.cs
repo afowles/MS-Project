@@ -19,8 +19,8 @@ namespace Buddhabrot
         private const int DesiredNodes = 4;
 
         private const int Width = 1000; private const int Height = 1500;
-        private const int Iter = 5000; private const double Xmin = -1.5;
-        private const double Xmax = 1.1; private const int Samples = 200000000;
+        private const int Iter = 1000; private const double Xmin = -1.5;
+        private const double Xmax = 1.1; private const int Samples = 40000000;
 
         public override int RequestedNodes()
         {
@@ -64,7 +64,7 @@ namespace Buddhabrot
                 });
             }
 
-            img.Save(".jpg");
+            img.Save("distributed.jpg");
         }
 
         private static double Brighten(double[] totalMatrix, double sammpleThreshold = 0.01, double threshold = 0.9995)

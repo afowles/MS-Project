@@ -21,7 +21,7 @@ namespace Buddhabrot
             const int iter = 1000;
             const double xmin = -1.5;
             const double xmax = 1.1;
-            const int samples = 10000000;
+            const int samples = 40000000;
 
             double[][] arrays = null;
             var brot = new BuddhabrotSmpAlgo(width, height, xmin, xmax, iter, samples);
@@ -45,7 +45,7 @@ namespace Buddhabrot
             var totalMatrix = new double[width * height];
             Parallel.For(0, arrays[0].Length, i => { totalMatrix[i] = arrays.Sum(x => x[i]); });
             // Used to normalize the intensity of the pixels
-            var limit = GetNormalizer(totalMatrix);
+            var limit = Brighten(totalMatrix);
      
             //var imageData = new byte[width * height * ch];
             var img = new Image(width, height);
@@ -67,7 +67,15 @@ namespace Buddhabrot
 
         }
 
-        private static double GetNormalizer(double[] totalMatrix, double sammpleThreshold = 0.01, double threshold = 0.9995)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="totalMatrix"></param>
+        /// <param name="sammpleThreshold"></param>
+        /// <param name="threshold"></param>
+        /// <returns></returns>
+        private static double Brighten(double[] totalMatrix, 
+            double sammpleThreshold = 0.01, double threshold = 0.9995)
         {
             var rand = new Random();
             var sampleCount = (int)(totalMatrix.Length * sammpleThreshold);
@@ -82,16 +90,9 @@ namespace Buddhabrot
                 .OrderBy(x => x)
                 .ToArray();
 
-            // pull out the 2% brightest pixels
+            // pull out the 20% brightest pixels
             var sampleThreshold = samples[(int)(samples.Length * 0.80)];
-            var brightSamples = new List<double>();
-            for (int i = 0; i < totalMatrix.Length; i++)
-            {
-                var sample = totalMatrix[i];
-                if (sample > sampleThreshold)
-                    brightSamples.Add(sample);
-            }
-
+            var brightSamples = totalMatrix.Where(sample => sample > sampleThreshold).ToList();
             var values = brightSamples.OrderBy(x => x).ToArray();
             var k = values.Length - (int)(values.Length * threshold);
             var limit = values[values.Length - k - 1];
