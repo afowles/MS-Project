@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Defcore.Distributed.Jobs;
 using ImageSharp;
 using ImageSharp.PixelFormats;
+using Newtonsoft.Json.Linq;
 
 namespace Buddhabrot
 {
+    /// <summary>
+    /// The Job class for distributed
+    /// </summary>
     public class BuddhabrotDis : Job
     {
-        private const int DesiredNodes = 1;
+        private const int DesiredNodes = 4;
 
-        private const int Width = 3160; private const int Height = 4840;
+        private const int Width = 1000; private const int Height = 1500;
         private const int Iter = 5000; private const double Xmin = -1.5;
         private const double Xmax = 1.1; private const int Samples = 200000000;
 
@@ -26,7 +31,7 @@ namespace Buddhabrot
         {
             for (var i = 0; i < DesiredNodes; i++)
             {
-                AddTask(new BuddhabrotTask(Width, Height, Xmin, Xmax, Iter, Samples));
+                AddTask(new BuddhabrotTask(Width, Height, Xmin, Xmax, Iter, Samples, i));
             }
         }
 
@@ -35,9 +40,12 @@ namespace Buddhabrot
             var totalMatrix = new double[Width * Height];
             foreach (var jobResult in Results)
             {
-                var r = jobResult as BuddhabrotResult;
-                if (r == null) { return;}
-                Parallel.For(0, r.Data[0].Length, i => { totalMatrix[i] = r.Data.Sum(x => x[i]); });
+
+                var r = jobResult as FileResult;
+                JObject o1 = JObject.Parse(File.ReadAllText(r.Filename));
+                BuddhabrotResult b = o1.ToObject<BuddhabrotResult>();
+                if (b == null) { return;}
+                Parallel.For(0, b.Data[0].Length, i => { totalMatrix[i] = b.Data.Sum(x => x[i]); });
             }
             
             var limit = Brighten(totalMatrix);
@@ -51,11 +59,12 @@ namespace Buddhabrot
                     var val = totalMatrix[x + y * Width] / limit * 256;
                     if (val > 255) { val = 255; }
                     // ImageSharp lib
-                    pixels[x, y] = new Rgba32((byte)(val), (byte)(val), (byte)(val));
+                    //pixels[x, y] = new Rgba32((byte)(val), (byte)(val), (byte)(val));
+                    pixels[x, y] = new Rgba32(0, (byte)(val),0);
                 });
             }
 
-            img.Save("crazy.jpg");
+            img.Save(".jpg");
         }
 
         private static double Brighten(double[] totalMatrix, double sammpleThreshold = 0.01, double threshold = 0.9995)
@@ -88,11 +97,12 @@ namespace Buddhabrot
         private readonly double[][] _data;
         private readonly double _xMin, _yMin, _xMax, _yMax, _nx, _ny;
         private readonly long _samples;
-
+        private int _id;
 
         public BuddhabrotTask(int width, int height, double xMin, 
-            double xMax, int iterations, long maxSamples)
+            double xMax, int iterations, long maxSamples, int id)
         {
+            _id = id;
             // use the processor count on the node for number of threads
             _threadCount = Environment.ProcessorCount;
             _width = width; _iterations = iterations; _xMin = xMin;
@@ -119,7 +129,10 @@ namespace Buddhabrot
 
             Console.WriteLine(tasks.Length);
             Task.WaitAll(tasks);
-            AddResult(new BuddhabrotResult { Data = _data });
+            var result = new BuddhabrotResult {Data = _data};
+            var json = result.SerializeResult();
+            File.WriteAllText("~/json" + _id + ".txt",json);
+            AddResult(new FileResult{Filename = "~/json" + _id + ".txt" });
         }
 
         private void Run(IList<double> array, int threadId)
@@ -199,5 +212,10 @@ namespace Buddhabrot
     public class BuddhabrotResult : JobResult
     {
         public double[][] Data { get; set; }
+    }
+
+    public class FileResult : JobResult
+    {
+        public string Filename { get; set; }
     }
 }
