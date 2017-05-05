@@ -131,8 +131,8 @@ namespace Buddhabrot
             Task.WaitAll(tasks);
             var result = new BuddhabrotResult {Data = _data};
             var json = result.SerializeResult();
-            File.WriteAllText("~/json" + _id + ".txt",json);
-            AddResult(new FileResult{Filename = "~/json" + _id + ".txt" });
+            File.WriteAllText("/home/stu10/s3/acf5118/json" + _id + ".txt",json);
+            AddResult(new FileResult{Filename = "/home/stu10/s3/acf5118/json" + _id + ".txt" });
         }
 
         private void Run(IList<double> array, int threadId)
