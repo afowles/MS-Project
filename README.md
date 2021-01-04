@@ -8,4 +8,4 @@ applications in a distributed nature along with a framework for writing distribu
 
 All code is built against .NET Core 1.1
 
-https://acf5118.github.io/MS-Project/index.html
+https://afowles.github.io/MS-Project/index.html
